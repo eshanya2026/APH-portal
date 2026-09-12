@@ -45,6 +45,26 @@
       color: #0f172a;
     }
 
+    /* Forms active list scrollbar */
+    .custom-forms-scrollbar {
+      scrollbar-width: thin;
+      scrollbar-color: #94a3b8 #f1f5f9;
+    }
+    .custom-forms-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+    .custom-forms-scrollbar::-webkit-scrollbar-track {
+      background: #f8fafc;
+      border-radius: 9999px;
+    }
+    .custom-forms-scrollbar::-webkit-scrollbar-thumb {
+      background: #94a3b8;
+      border-radius: 9999px;
+    }
+    .custom-forms-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #64748b;
+    }
+
     /* Custom scrollbar */
     ::-webkit-scrollbar {
       width: 8px;
@@ -197,36 +217,31 @@
   </nav>
 
   <!-- ========================================================================= -->
+  <!-- ========================================================================= -->
   <!-- 3. HERO SECTION & INTEGRATED SEARCH                                       -->
   <!-- ========================================================================= -->
-  <section class="relative w-full bg-[#0b1021] text-white pt-14 sm:pt-20 md:pt-24 pb-36 sm:pb-44 md:pb-52 lg:pb-60 min-h-[580px] sm:min-h-[640px] lg:min-h-[700px] px-4 sm:px-6 lg:px-12 overflow-hidden flex flex-col justify-center">
-    <!-- Authentic Hospital Building Aerial Campus Background Image -->
-    <div class="absolute inset-0 bg-cover bg-[center_24%] bg-no-repeat pointer-events-none transform scale-105 transition-transform duration-1000" style="background-image: url('assets/images/hospital-campus-full.jpg'); opacity: 0.82;"></div>
-    <!-- Ambient Overlay: Balances the illuminated hospital building with high text readability while revealing lush grounds at bottom -->
-    <div class="absolute inset-0 bg-gradient-to-b from-[#070b19]/80 via-[#070e24]/45 to-[#070e24]/75 pointer-events-none backdrop-blur-[0.5px]"></div>
-    <!-- Ambient glowing backgrounds -->
-    <div class="hero-glow absolute inset-0 pointer-events-none opacity-60"></div>
-    <div class="absolute -top-16 sm:-top-32 -left-16 sm:-left-32 w-52 sm:w-96 h-52 sm:h-96 bg-blue-600/20 rounded-full blur-3xl pointer-events-none"></div>
-    <div class="absolute -bottom-16 sm:-bottom-32 -right-16 sm:-right-32 w-52 sm:w-96 h-52 sm:h-96 bg-indigo-600/20 rounded-full blur-3xl pointer-events-none"></div>
-
-    <div class="relative max-w-4xl mx-auto text-center z-10">
+  <section class="relative w-full text-white pt-20 sm:pt-28 md:pt-32 pb-36 sm:pb-44 md:pb-52 lg:pb-60 px-4 sm:px-6 lg:px-12 overflow-hidden flex flex-col justify-center bg-cover bg-no-repeat"
+           style="background: linear-gradient(180deg, rgba(7, 20, 45, 0.82), rgba(7, 20, 45, 0.68)), url('assets/images/hospital-campus-full.jpg') center 24% / cover no-repeat, #07142d;">
+    
+    <div class="relative max-w-3xl mx-auto text-center z-10">
       
       <!-- Main Portal Heading -->
-      <h1 class="text-2xl min-[380px]:text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-tight mb-4 drop-shadow-sm">
-        Integrated Hospital Operations Portal
+      <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.15] mb-4">
+        Integrated Hospital<br class="hidden sm:inline" /> Operations Portal
       </h1>
 
       <!-- Subtitle -->
-      <p class="text-xs sm:text-base md:text-lg text-slate-300 max-w-2xl mx-auto font-normal leading-relaxed mb-6 sm:mb-8 px-2 sm:px-0">
-        Access clinical HIS records, diagnostic imaging PACS, committee governance guidelines, HR self-service, and real-time inventory protocols.
+      <p class="text-sm sm:text-base md:text-lg text-slate-300 max-w-2xl mx-auto font-normal leading-relaxed mb-8 sm:mb-10 px-2 sm:px-0">
+        One place for hospital systems, clinical documents, policies, forms and operational resources.
       </p>
 
-      <!-- Search Container (Glassmorphic with Live Dropdown) -->
-      <div class="relative max-w-2xl mx-auto bg-white/10 border border-white/20 p-2 sm:p-2.5 rounded-2xl backdrop-blur-xl shadow-2xl mb-5">
-        <form onsubmit="handleSearch(event)" class="flex flex-col sm:flex-row items-center gap-2">
-          <div class="relative flex-1 w-full">
-            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-              <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <!-- Search Bar with Outer Transparent Line & Search Button -->
+      <div class="relative max-w-2xl mx-auto mb-6">
+        <!-- Outer Transparent Line Container -->
+        <div class="p-1.5 sm:p-2 bg-white/10 border border-white/25 rounded-2xl sm:rounded-3xl backdrop-blur-md shadow-2xl">
+          <form onsubmit="handleSearch(event)" class="relative flex items-center bg-white rounded-xl sm:rounded-2xl overflow-hidden group">
+            <div class="absolute inset-y-0 left-0 pl-4 sm:pl-5 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-600 transition-colors">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
               </svg>
             </div>
@@ -235,35 +250,36 @@
               type="text" 
               autocomplete="off"
               oninput="handleSearchInput(event)"
-              placeholder="Search clinical documents, staff intercoms, forms, lab tariffs, or circulars..."
-              class="w-full pl-10 pr-4 py-2.5 sm:py-3.5 bg-white text-slate-900 placeholder-slate-400 rounded-xl text-xs sm:text-sm font-normal focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-inner transition-all"
+              placeholder="Search forms, systems, policies &amp; documents"
+              class="w-full pl-11 sm:pl-13 pr-24 sm:pr-28 py-3.5 sm:py-4 bg-transparent text-slate-900 placeholder-slate-400 text-sm sm:text-base font-normal focus:outline-none transition-all"
             />
-          </div>
-          <button 
-            type="submit" 
-            class="w-full sm:w-auto px-6 py-2.5 sm:py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 transition-all duration-200 shrink-0"
-          >
-            <span>Search Intranet</span>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-            </svg>
-          </button>
-        </form>
+            <div class="absolute inset-y-0 right-0 pr-1.5 sm:pr-2 flex items-center">
+              <button 
+                type="submit" 
+                class="px-4 sm:px-6 py-2 sm:py-2.5 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-semibold text-xs sm:text-sm rounded-lg sm:rounded-xl transition-all duration-150 flex items-center gap-1.5 shadow-md shadow-blue-600/30"
+              >
+                <span>Search</span>
+              </button>
+            </div>
+          </form>
+        </div>
 
         <!-- Live Instant Search Dropdown -->
-        <div id="search-dropdown" class="hidden absolute top-full left-0 right-0 mt-2 bg-white text-slate-900 rounded-2xl shadow-2xl border border-slate-200 overflow-hidden z-50 text-left divide-y divide-slate-100 max-h-80 overflow-y-auto">
+        <div id="search-dropdown" class="hidden absolute top-full left-0 right-0 mt-3 bg-white text-slate-900 rounded-2xl shadow-2xl border border-slate-200 overflow-hidden z-50 text-left divide-y divide-slate-100 max-h-80 overflow-y-auto">
           <!-- Results injected by JS -->
         </div>
       </div>
 
-      <!-- Trending Lookups -->
-      <div class="flex items-center justify-center flex-wrap gap-2 text-xs text-slate-300">
-        <span class="text-slate-400 font-medium">Trending Lookups:</span>
-        <button type="button" onclick="quickFilter('Lab Tariff', '#tariff-stock')" class="px-2.5 sm:px-3 py-1 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 text-slate-200 text-[11px] sm:text-xs transition-all duration-150">Lab Tariff</button>
-        <button type="button" onclick="quickFilter('Blood Bank Inventory', '#tariff-stock')" class="px-2.5 sm:px-3 py-1 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 text-slate-200 text-[11px] sm:text-xs transition-all duration-150">Blood Bank Inventory</button>
-        <button type="button" onclick="quickFilter('Surgery Consent Form', '#forms')" class="px-2.5 sm:px-3 py-1 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 text-slate-200 text-[11px] sm:text-xs transition-all duration-150">Surgery Consent Form</button>
-        <button type="button" onclick="quickFilter('LineLoom Token', '#in-house-apps')" class="px-2.5 sm:px-3 py-1 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 text-slate-200 text-[11px] sm:text-xs transition-all duration-150">LineLoom Token</button>
-        <button type="button" onclick="quickFilter('Emergency Intercom 2200', './intercom.html')" class="px-2.5 sm:px-3 py-1 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 text-slate-200 text-[11px] sm:text-xs transition-all duration-150">Emergency Intercom 2200</button>
+      <!-- Popular: HRMS • HIS • Forms • Tariff -->
+      <div class="flex items-center justify-center flex-wrap gap-2.5 sm:gap-3 text-xs sm:text-sm text-slate-300">
+        <span class="text-slate-400 font-medium">Popular:</span>
+        <button type="button" onclick="quickFilter('HRMS', '#core-systems')" class="text-slate-200 hover:text-white font-medium hover:underline underline-offset-4 transition-colors">HRMS</button>
+        <span class="text-slate-500 select-none font-bold">•</span>
+        <button type="button" onclick="quickFilter('HIS', '#core-systems')" class="text-slate-200 hover:text-white font-medium hover:underline underline-offset-4 transition-colors">HIS</button>
+        <span class="text-slate-500 select-none font-bold">•</span>
+        <button type="button" onclick="quickFilter('Forms', '#forms')" class="text-slate-200 hover:text-white font-medium hover:underline underline-offset-4 transition-colors">Forms</button>
+        <span class="text-slate-500 select-none font-bold">•</span>
+        <button type="button" onclick="quickFilter('Tariff', '#tariff-stock')" class="text-slate-200 hover:text-white font-medium hover:underline underline-offset-4 transition-colors">Tariff</button>
       </div>
 
     </div>
@@ -1044,289 +1060,263 @@
   </section>
 
   <!-- ========================================================================= -->
-  <!-- 9. ESSENTIAL HOSPITAL FORMS & REQUISITIONS                                -->
+  <!-- 9. ESSENTIAL HOSPITAL FORMS & REQUISITIONS (ZIGZAG SPLIT VIEW)            -->
   <!-- ========================================================================= -->
-  <section id="forms" class="py-16 px-4 sm:px-6 lg:px-12 max-w-7xl mx-auto border-t border-slate-200/70">
+  <section id="forms" class="py-16 sm:py-20 px-4 sm:px-6 lg:px-12 max-w-7xl mx-auto border-t border-[#E6EAF0]">
     
     <!-- Section Header -->
-    <div class="text-center max-w-3xl mx-auto mb-12">
-      <span class="inline-block text-[11px] font-extrabold tracking-wider uppercase px-3 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200/60 mb-3">
-        STANDARDIZED TEMPLATES &amp; PROTOCOLS
-      </span>
-      <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
-        Essential Hospital Forms &amp; Requisitions
+    <div class="text-center max-w-2xl mx-auto mb-8">
+      <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#0F172A] tracking-tight mb-2.5">
+        Essential Hospital Forms
       </h2>
-      <p class="text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
-        Access, fill, and download officially approved hospital forms for clinical consent, emergency processes, HR recruitment &amp; appraisal, and IT provisioning.
+      <p class="text-sm sm:text-base text-[#64748B] leading-relaxed">
+        Access approved forms and requisitions for clinical, HR and operational workflows.
       </p>
     </div>
 
-    <!-- 4 Cards Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-
-      <!-- Form Card 1: Consent Forms (Blue) -->
-      <div class="bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm flex flex-col justify-between hover:shadow-md transition-all">
-        <div>
-          <!-- Header -->
-          <div class="bg-blue-600 text-white p-5">
-            <span class="inline-block text-[10px] font-extrabold tracking-wider uppercase px-2.5 py-0.5 rounded-full bg-white/20 text-white mb-2">
-              MEDICOLEGAL PROTOCOLS
-            </span>
-            <h3 class="text-xl font-bold text-white mb-1">Consent Forms</h3>
-            <p class="text-xs text-blue-100">Bilingual operative &amp; procedural consents</p>
-          </div>
-
-          <!-- Items list -->
-          <div class="divide-y divide-slate-100 p-2 sm:p-3 text-xs">
-            <div class="p-2.5 flex items-center justify-between hover:bg-slate-50 transition-colors rounded-xl">
-              <span class="font-medium text-slate-800 pr-2">Informed Consent - Surgery (English)</span>
-              <a href="http://192.168.101.75:3000/files/INFORMED%20CONSENT%20FORM%20FOR%20SURGERY%20OR%20PROCEDURES%20-English.pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-blue-600 hover:text-blue-700 shrink-0 flex items-center gap-1">
-                <span>PDF</span> <span>&rarr;</span>
-              </a>
-            </div>
-            <div class="p-2.5 flex items-center justify-between hover:bg-slate-50 transition-colors rounded-xl">
-              <span class="font-medium text-slate-800 pr-2">Informed Consent - Surgery (Tamil)</span>
-              <a href="http://192.168.101.75:3000/files/INFORMED%20CONSENT%20FORM%20FOR%20SURGERY%20OR%20PROCEDURES-Tamil.pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-blue-600 hover:text-blue-700 shrink-0 flex items-center gap-1">
-                <span>PDF</span> <span>&rarr;</span>
-              </a>
-            </div>
-            <div class="p-2.5 flex items-center justify-between hover:bg-slate-50 transition-colors rounded-xl">
-              <span class="font-medium text-slate-800 pr-2">Blood Component Transfusions Consent</span>
-              <a href="http://192.168.101.75:3000/files/Blood%20Transfusion%20Reaction%20Form%20version%202.pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-blue-600 hover:text-blue-700 shrink-0 flex items-center gap-1">
-                <span>PDF</span> <span>&rarr;</span>
-              </a>
-            </div>
-            <div class="p-2.5 flex items-center justify-between hover:bg-slate-50 transition-colors rounded-xl">
-              <span class="font-medium text-slate-800 pr-2">DAMA (Discharge Against Advice)</span>
-              <a href="http://192.168.101.75:3000/files/Dama%20Consent%20Form.pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-blue-600 hover:text-blue-700 shrink-0 flex items-center gap-1">
-                <span>PDF</span> <span>&rarr;</span>
-              </a>
-            </div>
-            <div class="p-2.5 flex items-center justify-between hover:bg-slate-50 transition-colors rounded-xl">
-              <span class="font-medium text-slate-800 pr-2">Not Willing Treatment Refusal</span>
-              <a href="http://192.168.101.75:3000/files/Not%20Willing%20Consent.pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-blue-600 hover:text-blue-700 shrink-0 flex items-center gap-1">
-                <span>PDF</span> <span>&rarr;</span>
-              </a>
-            </div>
-            <div class="p-2.5 flex items-center justify-between hover:bg-slate-50 transition-colors rounded-xl">
-              <span class="font-medium text-slate-800 pr-2">Visiting Consultant Requisition Form</span>
-              <a href="http://192.168.101.75:3000/files/Visiting%20Consultant%20Requisition%20letter.pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-blue-600 hover:text-blue-700 shrink-0 flex items-center gap-1">
-                <span>PDF</span> <span>&rarr;</span>
-              </a>
-            </div>
-            <div class="p-2.5 flex items-center justify-between hover:bg-slate-50 transition-colors rounded-xl">
-              <span class="font-medium text-slate-800 pr-2">General Admission &amp; Paediatric Consent</span>
-              <a href="http://192.168.101.75:3000/files/consent.pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-blue-600 hover:text-blue-700 shrink-0 flex items-center gap-1">
-                <span>PDF</span> <span>&rarr;</span>
-              </a>
-            </div>
-          </div>
+    <!-- Search Bar -->
+    <div class="max-w-2xl mx-auto mb-6 relative">
+      <div class="relative flex items-center">
+        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-[#64748B]">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
         </div>
+        <input
+          type="text"
+          id="forms-search-input"
+          placeholder="Search forms..."
+          autocomplete="off"
+          class="w-full pl-11 pr-10 py-3.5 bg-white border border-[#E6EAF0] rounded-2xl text-sm sm:text-base text-[#0F172A] placeholder-[#64748B] shadow-sm focus:outline-none focus:ring-2 focus:ring-[#2563EB]/20 focus:border-[#2563EB] transition-all"
+          oninput="handleFormsSearch(this.value)"
+        />
+        <button
+          id="forms-search-clear"
+          type="button"
+          onclick="clearFormsSearch()"
+          class="hidden absolute inset-y-0 right-0 pr-3.5 flex items-center text-[#64748B] hover:text-[#0F172A]"
+          aria-label="Clear search"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
 
-        <!-- Footer Link -->
-        <div class="p-4 pt-2">
-          <a href="./consent.html" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5 border border-blue-200">
-            <span>Explore Full Consent Vault</span>
-            <span>&rarr;</span>
-          </a>
+      <!-- Live Search Results Dropdown -->
+      <div id="forms-search-results" class="hidden absolute left-0 right-0 top-full mt-2 bg-white border border-[#E6EAF0] rounded-2xl shadow-xl z-30 max-h-80 overflow-y-auto divide-y divide-[#E6EAF0]">
+      </div>
+    </div>
+
+    <!-- Category Filter Tabs -->
+    <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 mb-10" id="forms-filter-tabs">
+      <button type="button" onclick="selectFormsCategory('consent', true)" data-tab="consent" class="forms-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-[#0F172A] text-white shadow-sm">
+        Consent
+      </button>
+      <button type="button" onclick="selectFormsCategory('clinical', true)" data-tab="clinical" class="forms-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-white text-[#64748B] border border-[#E6EAF0] hover:text-[#0F172A] hover:bg-slate-50">
+        Common Forms
+      </button>
+      <button type="button" onclick="selectFormsCategory('hr', true)" data-tab="hr" class="forms-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-white text-[#64748B] border border-[#E6EAF0] hover:text-[#0F172A] hover:bg-slate-50">
+        HR
+      </button>
+      <button type="button" onclick="selectFormsCategory('it', true)" data-tab="it" class="forms-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-white text-[#64748B] border border-[#E6EAF0] hover:text-[#0F172A] hover:bg-slate-50">
+        IT
+      </button>
+    </div>
+
+    <!-- Zigzag Showcase Grid (Left: Active Form PDF List; Right: Zigzag Staggered Cards) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- LEFT SIDE: Active Category Forms List & Direct PDF Downloads -->
+      <div class="lg:col-span-5 order-2 lg:order-1">
+        <div id="forms-active-panel" class="bg-white rounded-3xl border border-[#E6EAF0] border-t-4 border-t-blue-600 p-5 sm:p-7 shadow-sm lg:sticky lg:top-24 transition-all">
+          
+          <!-- Active Header Row -->
+          <div class="flex items-center justify-between gap-3 mb-4">
+            <div class="flex items-center gap-3">
+              <div id="active-cat-icon-container" class="w-11 h-11 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold shrink-0 transition-colors">
+                <svg id="active-cat-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+              </div>
+              <div>
+                <span id="active-cat-badge" class="inline-block text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200/60">
+                  Medicolegal Protocols
+                </span>
+                <h3 id="active-cat-title" class="text-lg sm:text-xl font-bold text-[#0F172A] mt-0.5">
+                  Consent Forms List
+                </h3>
+              </div>
+            </div>
+            <span id="active-cat-count-badge" class="text-xs font-bold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full border border-blue-200/50 shrink-0">
+              6 Forms Available
+            </span>
+          </div>
+
+          <!-- Description -->
+          <p id="active-cat-desc" class="text-xs sm:text-sm text-[#64748B] leading-relaxed mb-4">
+            Bilingual operative, procedural, anaesthesia, blood transfusion &amp; patient refusal protocols.
+          </p>
+
+          <!-- Filter within active category -->
+          <div class="relative mb-3">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#64748B]">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              </svg>
+            </div>
+            <input
+              type="text"
+              id="forms-active-filter-input"
+              placeholder="Filter these forms..."
+              class="w-full pl-8 pr-3 py-2 bg-slate-50 border border-[#E6EAF0] rounded-xl text-xs text-[#0F172A] placeholder-[#64748B] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#2563EB]/20 focus:border-[#2563EB] transition-all"
+              oninput="filterActiveFormsList(this.value)"
+            />
+          </div>
+
+          <!-- Scrollable List of PDFs (Generous height for scrolling all forms smoothly without Explore All button) -->
+          <div id="forms-active-items-list" class="divide-y divide-[#E6EAF0] max-h-[300px] sm:max-h-[310px] overflow-y-auto pr-1.5 custom-forms-scrollbar" style="scrollbar-width: thin; scrollbar-color: #94a3b8 #f1f5f9;">
+            <!-- Populated dynamically via JS -->
+          </div>
+
         </div>
       </div>
 
-      <!-- Form Card 2: Common Forms (Amber) -->
-      <div class="bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm flex flex-col justify-between hover:shadow-md transition-all">
-        <div>
-          <!-- Header -->
-          <div class="bg-amber-600 text-white p-5">
-            <span class="inline-block text-[10px] font-extrabold tracking-wider uppercase px-2.5 py-0.5 rounded-full bg-white/20 text-white mb-2">
-              CLINICAL INDENT &amp; OPS
-            </span>
-            <h3 class="text-xl font-bold text-white mb-1">Common Forms</h3>
-            <p class="text-xs text-amber-100">ICU checklists, SBAR handover, ADR &amp; clinical policies</p>
+      <!-- RIGHT SIDE: Zigzag Staggered Category Cards -->
+      <div class="lg:col-span-7 order-1 lg:order-2">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 items-start">
+          
+          <!-- Sub-column 1: Consent (top) & HR (bottom) -->
+          <div class="space-y-5">
+            
+            <!-- Card 1: Consent -->
+            <div id="cat-card-consent" onclick="selectFormsCategory('consent', true)" class="forms-card-item cursor-pointer bg-white rounded-2xl sm:rounded-3xl border border-[#E6EAF0] border-t-4 border-t-blue-600 p-5 sm:p-6 shadow-sm hover:shadow-md hover:border-blue-300 transition-all group ring-2 ring-blue-600">
+              <div class="flex items-center justify-between mb-3">
+                <div class="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center transition-transform group-hover:scale-105">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                </div>
+                <span class="active-badge text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200">
+                  Viewing on Left
+                </span>
+              </div>
+              <h4 class="text-lg font-bold text-[#0F172A] group-hover:text-blue-600 transition-colors">
+                Consent
+              </h4>
+              <div class="text-xs font-semibold text-blue-600 mt-0.5 mb-2">6 Forms Available</div>
+              <p class="text-xs text-[#64748B] leading-relaxed mb-3">
+                Operative, procedural, anaesthesia, blood transfusion &amp; refusal protocols.
+              </p>
+              <div class="flex flex-wrap gap-1 mb-3">
+                <span class="px-2 py-0.5 rounded bg-slate-50 text-slate-600 text-[11px] border border-[#E6EAF0]">Surgical Consent</span>
+                <span class="px-2 py-0.5 rounded bg-slate-50 text-slate-600 text-[11px] border border-[#E6EAF0]">Blood Transfusion</span>
+                <span class="px-2 py-0.5 rounded bg-slate-50 text-slate-600 text-[11px] border border-[#E6EAF0]">DAMA</span>
+              </div>
+              <div class="pt-3 border-t border-[#E6EAF0] flex items-center justify-between text-xs">
+                <span class="font-bold text-blue-600 flex items-center gap-1 group-hover:underline">
+                  <span>View Forms List</span> <span>&larr;</span>
+                </span>
+                <span class="text-slate-400 text-[11px] font-medium">Approved PDF</span>
+              </div>
+            </div>
+
+            <!-- Card 3: HR -->
+            <div id="cat-card-hr" onclick="selectFormsCategory('hr', true)" class="forms-card-item cursor-pointer bg-white rounded-2xl sm:rounded-3xl border border-[#E6EAF0] border-t-4 border-t-purple-500 p-5 sm:p-6 shadow-sm hover:shadow-md hover:border-purple-300 transition-all group">
+              <div class="flex items-center justify-between mb-3">
+                <div class="w-10 h-10 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center transition-transform group-hover:scale-105">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                </div>
+                <span class="active-badge hidden text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-purple-50 text-purple-700 border border-purple-200">
+                  Viewing on Left
+                </span>
+              </div>
+              <h4 class="text-lg font-bold text-[#0F172A] group-hover:text-purple-600 transition-colors">
+                HR
+              </h4>
+              <div class="text-xs font-semibold text-purple-600 mt-0.5 mb-2">13 Forms Available</div>
+              <p class="text-xs text-[#64748B] leading-relaxed mb-3">
+                Faculty applications, non-teaching jobs, promotion &amp; HR manual.
+              </p>
+              <div class="flex flex-wrap gap-1 mb-3">
+                <span class="px-2 py-0.5 rounded bg-slate-50 text-slate-600 text-[11px] border border-[#E6EAF0]">Faculty</span>
+                <span class="px-2 py-0.5 rounded bg-slate-50 text-slate-600 text-[11px] border border-[#E6EAF0]">Staff Jobs</span>
+                <span class="px-2 py-0.5 rounded bg-slate-50 text-slate-600 text-[11px] border border-[#E6EAF0]">Appraisals</span>
+              </div>
+              <div class="pt-3 border-t border-[#E6EAF0] flex items-center justify-between text-xs">
+                <span class="font-bold text-purple-600 flex items-center gap-1 group-hover:underline">
+                  <span>View Forms List</span> <span>&larr;</span>
+                </span>
+                <span class="text-slate-400 text-[11px] font-medium">Approved PDF</span>
+              </div>
+            </div>
+
           </div>
 
-          <!-- Items list -->
-          <div class="divide-y divide-slate-100 p-2 sm:p-3 text-xs">
-            <div class="p-2.5 flex items-center justify-between hover:bg-slate-50 transition-colors rounded-xl">
-              <span class="font-medium text-slate-800 pr-2">ICU Casesheet Checklist</span>
-              <a href="http://192.168.101.75:3000/files/ICU Casesheet Checklist.pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-amber-600 hover:text-amber-700 shrink-0 flex items-center gap-1">
-                <span>PDF</span> <span>&rarr;</span>
-              </a>
-            </div>
-            <div class="p-2.5 flex items-center justify-between hover:bg-slate-50 transition-colors rounded-xl">
-              <span class="font-medium text-slate-800 pr-2">HANDING OVER SBAR</span>
-              <a href="http://192.168.101.75:3000/files/HANDING OVER SBAR.pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-amber-600 hover:text-amber-700 shrink-0 flex items-center gap-1">
-                <span>PDF</span> <span>&rarr;</span>
-              </a>
-            </div>
-            <div class="p-2.5 flex items-center justify-between hover:bg-slate-50 transition-colors rounded-xl">
-              <span class="font-medium text-slate-800 pr-2">Narcotic Drugs Indent Form</span>
-              <a href="http://192.168.101.75:3000/files/NARCOTIC DRUGS FORM.pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-amber-600 hover:text-amber-700 shrink-0 flex items-center gap-1">
-                <span>PDF</span> <span>&rarr;</span>
-              </a>
-            </div>
-            <div class="p-2.5 flex items-center justify-between hover:bg-slate-50 transition-colors rounded-xl">
-              <span class="font-medium text-slate-800 pr-2">Emergency Medication List (Jan 2026)</span>
-              <a href="http://192.168.101.75:3000/files/EMERGENCY MEDICATION LIST - JAN 2026.pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-amber-600 hover:text-amber-700 shrink-0 flex items-center gap-1">
-                <span>PDF</span> <span>&rarr;</span>
-              </a>
-            </div>
-            <div class="p-2.5 flex items-center justify-between hover:bg-slate-50 transition-colors rounded-xl">
-              <span class="font-medium text-slate-800 pr-2">Code Blue Event Analysis Form</span>
-              <a href="http://192.168.101.75:3000/files/Code Blue Post Event Analysis Form.pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-amber-600 hover:text-amber-700 shrink-0 flex items-center gap-1">
-                <span>PDF</span> <span>&rarr;</span>
-              </a>
-            </div>
-            <div class="p-2.5 flex items-center justify-between hover:bg-slate-50 transition-colors rounded-xl">
-              <span class="font-medium text-slate-800 pr-2">Adverse Drug Reaction (ADR) Form</span>
-              <a href="http://192.168.101.75:3000/files/ADR-Form.pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-amber-600 hover:text-amber-700 shrink-0 flex items-center gap-1">
-                <span>PDF</span> <span>&rarr;</span>
-              </a>
-            </div>
-            <div class="p-2.5 flex items-center justify-between hover:bg-slate-50 transition-colors rounded-xl">
-              <span class="font-medium text-slate-800 pr-2">Antimicrobial Policy 2026-2027</span>
-              <a href="http://192.168.101.75:3000/files/Antimicrobial Policy 2026-2027.pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-amber-600 hover:text-amber-700 shrink-0 flex items-center gap-1">
-                <span>PDF</span> <span>&rarr;</span>
-              </a>
-            </div>
-          </div>
-        </div>
+          <!-- Sub-column 2: Common Forms (top, STAGGERED FOR ZIGZAG) & IT (bottom, STAGGERED) -->
+          <div class="space-y-5 sm:mt-10">
 
-        <!-- Footer Link -->
-        <div class="p-4 pt-2">
-          <a href="./commonforms.html" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-amber-50 hover:bg-amber-100 text-amber-800 rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5 border border-amber-200">
-            <span>Explore All 44 Common Forms</span>
-            <span>&rarr;</span>
-          </a>
-        </div>
-      </div>
+            <!-- Card 2: Common Forms -->
+            <div id="cat-card-clinical" onclick="selectFormsCategory('clinical', true)" class="forms-card-item cursor-pointer bg-white rounded-2xl sm:rounded-3xl border border-[#E6EAF0] border-t-4 border-t-amber-500 p-5 sm:p-6 shadow-sm hover:shadow-md hover:border-amber-300 transition-all group">
+              <div class="flex items-center justify-between mb-3">
+                <div class="w-10 h-10 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center transition-transform group-hover:scale-105">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+                </div>
+                <span class="active-badge hidden text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200">
+                  Viewing on Left
+                </span>
+              </div>
+              <h4 class="text-lg font-bold text-[#0F172A] group-hover:text-amber-600 transition-colors">
+                Common Forms
+              </h4>
+              <div class="text-xs font-semibold text-amber-600 mt-0.5 mb-2">44 Forms Available</div>
+              <p class="text-xs text-[#64748B] leading-relaxed mb-3">
+                ICU checklists, SBAR handover, narcotic indents &amp; emergency protocols.
+              </p>
+              <div class="flex flex-wrap gap-1 mb-3">
+                <span class="px-2 py-0.5 rounded bg-slate-50 text-slate-600 text-[11px] border border-[#E6EAF0]">ICU Case</span>
+                <span class="px-2 py-0.5 rounded bg-slate-50 text-slate-600 text-[11px] border border-[#E6EAF0]">SBAR Handover</span>
+                <span class="px-2 py-0.5 rounded bg-slate-50 text-slate-600 text-[11px] border border-[#E6EAF0]">Narcotics</span>
+                <span class="px-2 py-0.5 rounded bg-slate-50 text-slate-600 text-[11px] border border-[#E6EAF0]">Code Blue</span>
+              </div>
+              <div class="pt-3 border-t border-[#E6EAF0] flex items-center justify-between text-xs">
+                <span class="font-bold text-amber-600 flex items-center gap-1 group-hover:underline">
+                  <span>View Forms List</span> <span>&larr;</span>
+                </span>
+                <span class="text-slate-400 text-[11px] font-medium">Approved PDF</span>
+              </div>
+            </div>
 
-      <!-- Form Card 3: HR Forms (Purple) -->
-      <div class="bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm flex flex-col justify-between hover:shadow-md transition-all">
-        <div>
-          <!-- Header -->
-          <div class="bg-purple-600 text-white p-5">
-            <span class="inline-block text-[10px] font-extrabold tracking-wider uppercase px-2.5 py-0.5 rounded-full bg-white/20 text-white mb-2">
-              PEOPLE &amp; PRIVILEGING
-            </span>
-            <h3 class="text-xl font-bold text-white mb-1">HR Forms</h3>
-            <p class="text-xs text-purple-100">Joining, appraisals, leaves &amp; credentials</p>
+            <!-- Card 4: IT -->
+            <div id="cat-card-it" onclick="selectFormsCategory('it', true)" class="forms-card-item cursor-pointer bg-white rounded-2xl sm:rounded-3xl border border-[#E6EAF0] border-t-4 border-t-teal-500 p-5 sm:p-6 shadow-sm hover:shadow-md hover:border-teal-300 transition-all group">
+              <div class="flex items-center justify-between mb-3">
+                <div class="w-10 h-10 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center transition-transform group-hover:scale-105">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                </div>
+                <span class="active-badge hidden text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-teal-50 text-teal-700 border border-teal-200">
+                  Viewing on Left
+                </span>
+              </div>
+              <h4 class="text-lg font-bold text-[#0F172A] group-hover:text-teal-600 transition-colors">
+                IT
+              </h4>
+              <div class="text-xs font-semibold text-teal-600 mt-0.5 mb-2">8 Forms Available</div>
+              <p class="text-xs text-[#64748B] leading-relaxed mb-3">
+                HIS user access, Wi-Fi authorization, toner, PC &amp; hardware tickets.
+              </p>
+              <div class="flex flex-wrap gap-1 mb-3">
+                <span class="px-2 py-0.5 rounded bg-slate-50 text-slate-600 text-[11px] border border-[#E6EAF0]">HIS Access</span>
+                <span class="px-2 py-0.5 rounded bg-slate-50 text-slate-600 text-[11px] border border-[#E6EAF0]">Wi-Fi Requisition</span>
+                <span class="px-2 py-0.5 rounded bg-slate-50 text-slate-600 text-[11px] border border-[#E6EAF0]">Breakdown</span>
+              </div>
+              <div class="pt-3 border-t border-[#E6EAF0] flex items-center justify-between text-xs">
+                <span class="font-bold text-teal-600 flex items-center gap-1 group-hover:underline">
+                  <span>View Forms List</span> <span>&larr;</span>
+                </span>
+                <span class="text-slate-400 text-[11px] font-medium">Approved PDF</span>
+              </div>
+            </div>
+
           </div>
 
-          <!-- Items list -->
-          <div class="divide-y divide-slate-100 p-2 sm:p-3 text-xs">
-            <div class="p-2.5 flex items-center justify-between hover:bg-slate-50 transition-colors rounded-xl">
-              <span class="font-medium text-slate-800 pr-2">Teaching Faculty Application</span>
-              <a href="http://192.168.101.75:3000/files/Teaching.pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-purple-600 hover:text-purple-700 shrink-0 flex items-center gap-1">
-                <span>PDF</span> <span>&rarr;</span>
-              </a>
-            </div>
-            <div class="p-2.5 flex items-center justify-between hover:bg-slate-50 transition-colors rounded-xl">
-              <span class="font-medium text-slate-800 pr-2">Non-Teaching Staff Application</span>
-              <a href="http://192.168.101.75:3000/files/Non%20Teaching.pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-purple-600 hover:text-purple-700 shrink-0 flex items-center gap-1">
-                <span>PDF</span> <span>&rarr;</span>
-              </a>
-            </div>
-            <div class="p-2.5 flex items-center justify-between hover:bg-slate-50 transition-colors rounded-xl">
-              <span class="font-medium text-slate-800 pr-2">Promotion Form (Non-Teaching)</span>
-              <a href="http://192.168.101.75:3000/files/For%20promotion%20-%20Non%20Teaching.pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-purple-600 hover:text-purple-700 shrink-0 flex items-center gap-1">
-                <span>PDF</span> <span>&rarr;</span>
-              </a>
-            </div>
-            <div class="p-2.5 flex items-center justify-between hover:bg-slate-50 transition-colors rounded-xl">
-              <span class="font-medium text-slate-800 pr-2">Staff Training Feedback Form</span>
-              <a href="http://192.168.101.75:3000/files/Training%20Feedback%20Form.pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-purple-600 hover:text-purple-700 shrink-0 flex items-center gap-1">
-                <span>PDF</span> <span>&rarr;</span>
-              </a>
-            </div>
-            <div class="p-2.5 flex items-center justify-between hover:bg-slate-50 transition-colors rounded-xl">
-              <span class="font-medium text-slate-800 pr-2">Non-Performer Review Form</span>
-              <a href="http://192.168.101.75:3000/files/Non%20performer-%20Non%20Teaching.pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-purple-600 hover:text-purple-700 shrink-0 flex items-center gap-1">
-                <span>PDF</span> <span>&rarr;</span>
-              </a>
-            </div>
-            <div class="p-2.5 flex items-center justify-between hover:bg-slate-50 transition-colors rounded-xl">
-              <span class="font-medium text-slate-800 pr-2">HR Operations Manual (2025)</span>
-              <a href="http://192.168.101.75:3000/files/HRM%202025.pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-purple-600 hover:text-purple-700 shrink-0 flex items-center gap-1">
-                <span>PDF</span> <span>&rarr;</span>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Footer Link -->
-        <div class="p-4 pt-2">
-          <a href="./hrforms.html" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-purple-50 hover:bg-purple-100 text-purple-700 rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5 border border-purple-200">
-            <span>Explore Full HR Downloads</span>
-            <span>&rarr;</span>
-          </a>
-        </div>
-      </div>
-
-      <!-- Form Card 4: IT Forms (Teal) -->
-      <div class="bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm flex flex-col justify-between hover:shadow-md transition-all">
-        <div>
-          <!-- Header -->
-          <div class="bg-teal-600 text-white p-5">
-            <span class="inline-block text-[10px] font-extrabold tracking-wider uppercase px-2.5 py-0.5 rounded-full bg-white/20 text-white mb-2">
-              HARDWARE &amp; NETWORK
-            </span>
-            <h3 class="text-xl font-bold text-white mb-1">IT Forms</h3>
-            <p class="text-xs text-teal-100">Workstation, Wi-Fi, toner &amp; accounts</p>
-          </div>
-
-          <!-- Items list -->
-          <div class="divide-y divide-slate-100 p-2 sm:p-3 text-xs">
-            <div class="p-2.5 flex items-center justify-between hover:bg-slate-50 transition-colors rounded-xl">
-              <span class="font-medium text-slate-800 pr-2">New HIS User Request Form</span>
-              <a href="http://192.168.101.75:3000/files/His User Creation.pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-teal-600 hover:text-teal-700 shrink-0 flex items-center gap-1">
-                <span>PDF</span> <span>&rarr;</span>
-              </a>
-            </div>
-            <div class="p-2.5 flex items-center justify-between hover:bg-slate-50 transition-colors rounded-xl">
-              <span class="font-medium text-slate-800 pr-2">Computer / System Request Form</span>
-              <a href="http://192.168.101.75:3000/files/System Request Form.pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-teal-600 hover:text-teal-700 shrink-0 flex items-center gap-1">
-                <span>PDF</span> <span>&rarr;</span>
-              </a>
-            </div>
-            <div class="p-2.5 flex items-center justify-between hover:bg-slate-50 transition-colors rounded-xl">
-              <span class="font-medium text-slate-800 pr-2">Printer &amp; Toner Request Form</span>
-              <a href="http://192.168.101.75:3000/files/Printer Request Form.pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-teal-600 hover:text-teal-700 shrink-0 flex items-center gap-1">
-                <span>PDF</span> <span>&rarr;</span>
-              </a>
-            </div>
-            <div class="p-2.5 flex items-center justify-between hover:bg-slate-50 transition-colors rounded-xl">
-              <span class="font-medium text-slate-800 pr-2">Campus Wi-Fi Access Request</span>
-              <a href="http://192.168.101.75:3000/files/Wifi Request Form.pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-teal-600 hover:text-teal-700 shrink-0 flex items-center gap-1">
-                <span>PDF</span> <span>&rarr;</span>
-              </a>
-            </div>
-            <div class="p-2.5 flex items-center justify-between hover:bg-slate-50 transition-colors rounded-xl">
-              <span class="font-medium text-slate-800 pr-2">Official Staff Mail ID Requisition</span>
-              <a href="http://192.168.101.75:3000/files/Mail Request.pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-teal-600 hover:text-teal-700 shrink-0 flex items-center gap-1">
-                <span>PDF</span> <span>&rarr;</span>
-              </a>
-            </div>
-            <div class="p-2.5 flex items-center justify-between hover:bg-slate-50 transition-colors rounded-xl">
-              <span class="font-medium text-slate-800 pr-2">CUG Mobile SIM Request Form</span>
-              <a href="http://192.168.101.75:3000/files/Cug Request Form.pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-teal-600 hover:text-teal-700 shrink-0 flex items-center gap-1">
-                <span>PDF</span> <span>&rarr;</span>
-              </a>
-            </div>
-            <div class="p-2.5 flex items-center justify-between hover:bg-slate-50 transition-colors rounded-xl">
-              <span class="font-medium text-slate-800 pr-2">IT Hardware Breakdown Ticket</span>
-              <button type="button" onclick="openTicketModal()" class="font-bold text-teal-600 hover:text-teal-700 shrink-0 flex items-center gap-1">
-                <span>Log</span> <span>&rarr;</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Footer Link -->
-        <div class="p-4 pt-2">
-          <a href="./itforms.html" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-teal-50 hover:bg-teal-100 text-teal-800 rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5 border border-teal-200">
-            <span>Explore Full IT Forms Hub</span>
-            <span>&rarr;</span>
-          </a>
         </div>
       </div>
 
@@ -1804,6 +1794,386 @@
       }, 3500);
     }
 
+    // =========================================================================
+    // Forms Section Interactive Zigzag Split View & PDF List Logic
+    // =========================================================================
+    let currentFormsCategory = 'consent';
+
+    const categoryIcons = {
+      consent: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>`,
+      clinical: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>`,
+      hr: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>`,
+      it: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>`
+    };
+
+    const formsCategoryVaults = {
+      consent: {
+        id: 'consent',
+        title: 'Consent Forms',
+        fullName: 'Medicolegal Consent Forms',
+        count: '6 Forms Available',
+        badge: 'Medicolegal Protocols',
+        color: 'blue',
+        accentBorder: 'border-t-blue-600',
+        accentRing: 'ring-blue-600',
+        accentIconBg: 'bg-blue-50',
+        accentIconText: 'text-blue-600',
+        accentBadgeClasses: 'bg-blue-50 text-blue-700 border-blue-200/60',
+        accentCountClasses: 'text-blue-600 bg-blue-50 border-blue-200/50',
+        description: 'Bilingual operative, procedural, blood transfusion & patient refusal consent protocols.',
+        hubUrl: './consent.html',
+        hubText: 'Explore All 6 Consent Forms in Full Vault',
+        forms: [
+          { name: "CONSENT FOR BLOOD COMPONENT TRANSFUSIONS", desc: "Blood and blood components transfusion consent", url: "http://192.168.101.75:3000/files/Blood%20Transfusion%20Reaction%20Form%20version%202.pdf" },
+          { name: "Dama Consent Form", desc: "Discharge against medical advice declaration", url: "http://192.168.101.75:3000/files/Dama%20Consent%20Form.pdf" },
+          { name: "Not Willing Consent", desc: "Clinical treatment or procedure refusal document", url: "http://192.168.101.75:3000/files/Not%20Willing%20Consent.pdf" },
+          { name: "Visiting Consultant Requisition Form", desc: "Specialist consultation requisition protocol", url: "http://192.168.101.75:3000/files/Visiting%20Consultant%20Requisition%20letter.pdf" },
+          { name: "Informed Consent Form For Surgery or Procedures -English", desc: "Standard operative & invasive surgical consent", url: "http://192.168.101.75:3000/files/INFORMED%20CONSENT%20FORM%20FOR%20SURGERY%20OR%20PROCEDURES%20-English.pdf" },
+          { name: "Informed Consent Form For Surgery or Procedures-Tamil", desc: "அறுவை சிகிச்சைக்கான தகவலறிந்த ஒப்புதல் படிவம்", url: "http://192.168.101.75:3000/files/INFORMED%20CONSENT%20FORM%20FOR%20SURGERY%20OR%20PROCEDURES-Tamil.pdf" }
+        ]
+      },
+      clinical: {
+        id: 'clinical',
+        title: 'Common Forms',
+        fullName: 'Common Clinical & Departmental Forms',
+        count: '44 Forms Available',
+        badge: 'Clinical Indent & Ops',
+        color: 'amber',
+        accentBorder: 'border-t-amber-500',
+        accentRing: 'ring-amber-500',
+        accentIconBg: 'bg-amber-50',
+        accentIconText: 'text-amber-600',
+        accentBadgeClasses: 'bg-amber-50 text-amber-700 border-amber-200/60',
+        accentCountClasses: 'text-amber-600 bg-amber-50 border-amber-200/50',
+        description: 'Approved ICU checklists, SBAR handover, narcotic indents, ADR reporting, emergency & infection control protocols.',
+        hubUrl: './commonforms.html',
+        hubText: 'Explore All 44 Common Forms in Full Vault',
+        forms: [
+          { name: "ICU Casesheet Checklist", desc: "Comprehensive clinical casesheet audit checklist for intensive care", url: "http://192.168.101.75:3000/files/ICU%20Casesheet%20Checklist.pdf" },
+          { name: "ICU to Ward Shifting Criteria Checklist", desc: "Step-down stability criteria and vital sign transfer checklist", url: "http://192.168.101.75:3000/files/ICU%20to%20Ward%20Shifting%20Criteria%20Checklist.pdf" },
+          { name: "HANDING OVER SBAR", desc: "Situation, Background, Assessment, Recommendation handover protocol", url: "http://192.168.101.75:3000/files/HANDING%20OVER%20SBAR.pdf" },
+          { name: "NARCOTIC DRUGS FORM", desc: "Controlled substances indent & dispensing register", url: "http://192.168.101.75:3000/files/NARCOTIC%20DRUGS%20FORM.pdf" },
+          { name: "DRUG - FOOD INTERACTION LIST", desc: "Clinical formulary guide on drug and dietary interactions", url: "http://192.168.101.75:3000/files/DRUG%20-%20FOOD%20INTERACTION%20LIST.pdf" },
+          { name: "DRUG - DRUG INTERACTION LIST", desc: "Reference chart for medication contraindications", url: "http://192.168.101.75:3000/files/DRUG%20-%20DRUG%20INTERACTION%20LIST.pdf" },
+          { name: "Approved abbreviation July 2025 -2026", desc: "Official NABH accredited medical abbreviations list", url: "http://192.168.101.75:3000/files/Approved%20abbreviation%20July%202025%20-2026.pdf" },
+          { name: "EMERGENCY MEDICATION LIST - JAN 2026", desc: "Official emergency drugs, crash cart & antidotes inventory", url: "http://192.168.101.75:3000/files/EMERGENCY%20MEDICATION%20LIST%20-%20JAN%202026.pdf" },
+          { name: "HIGH ALERT MEDICATIONS", desc: "High-alert medication safety storage and double-check protocol", url: "http://192.168.101.75:3000/files/HIGH%20ALERT%20MEDICATIONS.pdf" },
+          { name: "48 Hour Antibiotics Review From", desc: "Stewardship review form for broad-spectrum antimicrobials", url: "http://192.168.101.75:3000/files/48%20Hour%20Antibiotics%20Review%20From.pdf" },
+          { name: "Day Care Assessment Form", desc: "Same-day surgical and medical assessment sheet", url: "http://192.168.101.75:3000/files/Day%20Care%20Assessment%20Form.pdf" },
+          { name: "Day Care Discharge Summary", desc: "Day care procedure completion and discharge summary", url: "http://192.168.101.75:3000/files/Day%20Care%20-%20Discharge%20Summary.pdf" },
+          { name: "Emergency Transfer Record", desc: "Critical patient inter-hospital transfer documentation", url: "http://192.168.101.75:3000/files/EMERGENCY%20TRANSFER%20RECORD%20(3).pdf" },
+          { name: "ER - Discharge Summary Form", desc: "Emergency room treatment completion & discharge summary", url: "http://192.168.101.75:3000/files/ER%20-%20DISCHARGE%20SUMMARY%20FORM.pdf" },
+          { name: "ER - Doctors Initial Assessment Form", desc: "Emergency medicine physician admission evaluation", url: "http://192.168.101.75:3000/files/DOCTORS%20INITIAL%20ASSESSMENT%20FOR%20EMERGENCY%20ROOM.pdf" },
+          { name: "ER - Nurses Initial Assessment Form", desc: "Triage nursing vital signs and priority assessment", url: "http://192.168.101.75:3000/files/Nurses%20Initial%20Assessment%20for%20Emergency%20Room.pdf" },
+          { name: "Modified Early Warning Score", desc: "Bedside physiological scoring chart (MEWS) for deterioration", url: "http://192.168.101.75:3000/files/MODIFIED%20EARLY%20WARNING%20SCORE%20(1).pdf" },
+          { name: "Food Token", desc: "Patient & attender dietary meal token requisition", url: "http://192.168.101.75:3000/files/food.pdf" },
+          { name: "Code Blue", desc: "Cardiac arrest emergency response algorithm & protocol", url: "http://192.168.101.75:3000/files/Code.pdf" },
+          { name: "Code Blue Post Event Analysis Form", desc: "CPR event debrief, timeline audit & resuscitation analysis", url: "http://192.168.101.75:3000/files/Code%20Blue%20Post%20Event%20Analysis%20Form.pdf" },
+          { name: "ADR-Form", desc: "Adverse drug reaction pharmacovigilance incident report", url: "http://192.168.101.75:3000/files/ADR-Form.pdf" },
+          { name: "Incident Report", desc: "Clinical & operational sentinel event incident documentation", url: "http://192.168.101.75:3000/files/Incident.pdf" },
+          { name: "Transfusion Technique Protocol", desc: "Clinical protocol for safe whole blood and component delivery", url: "http://192.168.101.75:3000/files/transfusionprotocol.pdf" },
+          { name: "Antibiogram", desc: "Institutional pathogen surveillance and antibiotic sensitivity", url: "http://192.168.101.75:3000/files/ANTIBIOGRAM.pdf" },
+          { name: "Restricted Anti-biotic Form", desc: "HIC committee authorization for restricted reserve antimicrobials", url: "http://192.168.101.75:3000/files/HIC.pdf" },
+          { name: "Restricted Anti-biotic Drug List", desc: "Approved list of reserved high-tier antimicrobial agents", url: "http://192.168.101.75:3000/files/antibiotic.pdf" },
+          { name: "Performance Management System Policy", desc: "Staff KPIs, annual appraisal guidelines and HR policy", url: "http://192.168.101.75:3000/files/PMS.pdf" },
+          { name: "Purchase Process", desc: "Hospital instruments and biomedical equipment procurement (APR 2025)", url: "http://192.168.101.75:3000/files/Instruments%20and%20Equipment%20APR%202025.pdf" },
+          { name: "General Medicine", desc: "Clinical Privileges - General Medicine core competency credentialing", url: "http://192.168.101.75:3000/files/hrmedicine.pdf" },
+          { name: "Ent", desc: "Clinical Privileges - ENT diagnostic & surgical authorization", url: "http://192.168.101.75:3000/files/hrent.pdf" },
+          { name: "Anaesthesia", desc: "Clinical Privileges - Anaesthesiology and critical care sedation", url: "http://192.168.101.75:3000/files/hranaesthesia.pdf" },
+          { name: "CMO Policy", desc: "Chief Medical Officer administrative jurisdiction and duty roles", url: "http://192.168.101.75:3000/files/CMO%20Policy.pdf" },
+          { name: "Junior Resident Policy", desc: "Resident medical officer shift rosters and clinical guidelines", url: "http://192.168.101.75:3000/files/Junior%20resident%20Policy.pdf" },
+          { name: "Transport Policy", desc: "Hospital fleet, patient ambulance and transport requisition guidelines", url: "http://192.168.101.75:3000/files/Transport.pdf" },
+          { name: "HVAC PM schedule", desc: "Facility management preventative maintenance plan for OT & ICU HVAC", url: "http://192.168.101.75:3000/files/PMSheduleHVACsystem2021.xlsx" },
+          { name: "Antimicrobial Policy 2026-2027", desc: "Official hospital antibiotic stewardship and empiric therapy manual", url: "http://192.168.101.75:3000/files/Antimicrobial%20Policy%202026-2027.pdf" },
+          { name: "Antimicrobial policy 2024-2025", desc: "Prior edition hospital antimicrobial policy reference", url: "http://192.168.101.75:3000/files/Antimicrobial%20policy%202024-25.pdf" },
+          { name: "Aph Disinfection Policy", desc: "Infection control disinfection and sterilization procedures", url: "http://192.168.101.75:3000/files/APHDISINFECTIONPOLICY.pdf" },
+          { name: "Hospital Linen Policy", desc: "Clean linen distribution, laundry sanitization and OT protocols", url: "http://192.168.101.75:3000/files/HOSPITALLINENPOLICY.pdf" },
+          { name: "Counselling Documentation", desc: "Patient and family counselling interview notes", url: "http://192.168.101.75:3000/files/Counselling%20Documentation%20Form.pdf" },
+          { name: "Catheter Associtated Urinary Tract Infection", desc: "HIC bundle: CAUTI insertion and maintenance surveillance", url: "http://192.168.101.75:3000/files/Catheter%20Associtated%20Urinary%20Tract%20Infection.pdf" },
+          { name: "Central Line \u2013 Associated Bloodstream Infection", desc: "HIC bundle: CLABSI prevention checklist and surveillance", url: "http://192.168.101.75:3000/files/Central%20Line%20Associated%20Bloodstream%20Infection.pdf" },
+          { name: "Surgical Site Infection", desc: "HIC bundle: SSI pre-op prep and post-op wound surveillance", url: "http://192.168.101.75:3000/files/Surgical%20Site%20Infection.pdf" },
+          { name: "Ventilator-associated Event (Vae)", desc: "HIC bundle: VAE/VAP prevention bundle and daily checklist", url: "http://192.168.101.75:3000/files/Ventilator-associated%20Event%20(Vae).pdf" }
+        ]
+      },
+      hr: {
+        id: 'hr',
+        title: 'HR Forms',
+        fullName: 'HR & Staff Privileging Downloads',
+        count: '13 Forms Available',
+        badge: 'People & Culture',
+        color: 'purple',
+        accentBorder: 'border-t-purple-500',
+        accentRing: 'ring-purple-500',
+        accentIconBg: 'bg-purple-50',
+        accentIconText: 'text-purple-600',
+        accentBadgeClasses: 'bg-purple-50 text-purple-700 border-purple-200/60',
+        accentCountClasses: 'text-purple-600 bg-purple-50 border-purple-200/50',
+        description: 'Faculty applications, non-teaching jobs, promotion, training feedback, HR manual & clinical privileging.',
+        hubUrl: './hrforms.html',
+        hubText: 'Explore All 13 HR Forms in Full Vault',
+        forms: [
+          { name: "List of Holidays - 2026", desc: "Official institutional gazetted holiday schedule, national festivals, and sanctioned institutional leave dates for 2026.", url: "http://192.168.101.75:3000/files/Holiday 2025.pdf" },
+          { name: "Teaching Faculty Application & Appraisal Form", desc: "Standard recruitment biodata, teaching credentials, research publications, and annual self-appraisal form for medical faculty.", url: "http://192.168.101.75:3000/files/Teaching.pdf" },
+          { name: "Non-Teaching Staff Application Form", desc: "Formal employment application for nursing staff, paramedical professionals, laboratory technicians, and administrative personnel.", url: "http://192.168.101.75:3000/files/Non Teaching.pdf" },
+          { name: "For Promotion - Non Teaching", desc: "Department head appraisal, service seniority verification, and career elevation recommendation form for non-teaching employees.", url: "http://192.168.101.75:3000/files/For promotion - Non Teaching.pdf" },
+          { name: "Non Performer - Non Teaching", desc: "Departmental evaluation log for identifying performance gaps, structuring retraining modules, and mentoring non-performing staff.", url: "http://192.168.101.75:3000/files/Non performer- Non Teaching.pdf" },
+          { name: "Staff Training Feedback Form", desc: "Post-training assessment and participant feedback form for hospital induction, fire safety drills, and clinical CME courses.", url: "http://192.168.101.75:3000/files/Training Feedback Form.pdf" },
+          { name: "Performance Management System (PMS) Policy", desc: "Institutional framework establishing key performance indicators (KPIs), 360-degree appraisal benchmarks, and merit increments.", url: "http://192.168.101.75:3000/files/PMS Policy.pdf" },
+          { name: "Human Resources Manual (HRM - 2025)", desc: "Comprehensive institutional manual governing recruitment rules, attendance, leave entitlements, code of conduct, and disciplinary actions.", url: "http://192.168.101.75:3000/files/HRM 2025.pdf" },
+          { name: "Clinical Privileges - General Medicine", desc: "Formal clinical credentialing, procedural scope of practice, and inpatient admission privileges for General Medicine consultants.", url: "http://192.168.101.75:3000/files/hrmedicine.pdf" },
+          { name: "Clinical Privileges - ENT", desc: "Surgical scope of clinical practice, outpatient procedures, and operating theatre credentialing for ENT surgeons.", url: "http://192.168.101.75:3000/files/hrent.pdf" },
+          { name: "Clinical Privileges - Anaesthesia", desc: "Privileging matrix for general, neuraxial, and regional blocks, difficult airway management, and critical care procedures.", url: "http://192.168.101.75:3000/files/hranaesthesia.pdf" },
+          { name: "Chief Medical Officer (CMO) Policy", desc: "Institutional charter delineating casualty management protocols, emergency response leadership, and clinical shift handover duties.", url: "http://192.168.101.75:3000/files/CMO Policy.pdf" },
+          { name: "Junior Resident Policy", desc: "Academic governance, patient care documentation standards, night duty schedules, and consultant supervisory guidelines for residents.", url: "http://192.168.101.75:3000/files/Junior resident Policy.pdf" }
+        ]
+      },
+      it: {
+        id: 'it',
+        title: 'IT Forms',
+        fullName: 'IT & Systems Requisition Hub',
+        count: '8 Forms Available',
+        badge: 'Hardware & Access',
+        color: 'teal',
+        accentBorder: 'border-t-teal-500',
+        accentRing: 'ring-teal-500',
+        accentIconBg: 'bg-teal-50',
+        accentIconText: 'text-teal-600',
+        accentBadgeClasses: 'bg-teal-50 text-teal-700 border-teal-200/60',
+        accentCountClasses: 'text-teal-600 bg-teal-50 border-teal-200/50',
+        description: 'HIS user accounts, clinician IDs, workstation requests, campus Wi-Fi, toner & hardware requisitions.',
+        hubUrl: './itforms.html',
+        hubText: 'Explore All 8 IT Forms in Full Vault',
+        forms: [
+          { name: "New HIS User Request Form", desc: "Hospital Information System user credentials & access permissions", url: "http://192.168.101.75:3000/files/His%20User%20Creation.pdf" },
+          { name: "System Request Form", desc: "Desktop PC, CPU, dual monitor hardware indent & workstation setup", url: "http://192.168.101.75:3000/files/System%20Request%20Form.pdf" },
+          { name: "Printer Request Form", desc: "Network laser printer, barcode label printer & toner requisitions", url: "http://192.168.101.75:3000/files/Printer%20Request%20Form.pdf" },
+          { name: "New Doctor Name and ID Creation in HIS", desc: "Consultant clinician ID generation and OPD roster registration", url: "http://192.168.101.75:3000/files/Doctor%20Name%20and%20ID%20Creation.pdf" },
+          { name: "Item Creation in HIS", desc: "Master catalogue addition for pharmacy drugs, lab tests & tariffs", url: "http://192.168.101.75:3000/files/Item%20Creation.pdf" },
+          { name: "Employee WIFI Request Form", desc: "Secure campus wireless network authorization via MAC address binding", url: "http://192.168.101.75:3000/files/Wifi%20Request%20Form.pdf" },
+          { name: "CUG Request Form", desc: "Closed User Group departmental mobile line & SIM allocation voucher", url: "http://192.168.101.75:3000/files/Cug%20Request%20Form.pdf" },
+          { name: "Official Email Request", desc: "@mapims.edu.in institutional email domain credentials form", url: "http://192.168.101.75:3000/files/Mail%20Request.pdf" }
+        ]
+      }
+    };
+
+    // Global catalog for search bar autocomplete
+    const hospitalFormsCatalog = [
+      ...formsCategoryVaults.consent.forms.map(f => ({ ...f, title: f.name, category: 'consent', categoryLabel: 'Consent', color: 'blue' })),
+      ...formsCategoryVaults.clinical.forms.map(f => ({ ...f, title: f.name, category: 'clinical', categoryLabel: 'Common Forms', color: 'amber' })),
+      ...formsCategoryVaults.hr.forms.map(f => ({ ...f, title: f.name, category: 'hr', categoryLabel: 'HR', color: 'purple' })),
+      ...formsCategoryVaults.it.forms.map(f => ({ ...f, title: f.name, category: 'it', categoryLabel: 'IT', color: 'teal' }))
+    ];
+
+    function selectFormsCategory(catId, shouldScroll = false) {
+      if (!formsCategoryVaults[catId]) return;
+      currentFormsCategory = catId;
+      const vault = formsCategoryVaults[catId];
+
+      // 1. Update active tab buttons
+      document.querySelectorAll('.forms-tab-btn').forEach(btn => {
+        const tab = btn.getAttribute('data-tab');
+        if (tab === catId) {
+          btn.className = 'forms-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-[#0F172A] text-white shadow-sm';
+        } else {
+          btn.className = 'forms-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-white text-[#64748B] border border-[#E6EAF0] hover:text-[#0F172A] hover:bg-slate-50';
+        }
+      });
+
+      // 2. Update category cards active ring & badge
+      ['consent', 'clinical', 'hr', 'it'].forEach(id => {
+        const card = document.getElementById(`cat-card-${id}`);
+        if (!card) return;
+        const badge = card.querySelector('.active-badge');
+        const v = formsCategoryVaults[id];
+
+        if (id === catId) {
+          card.classList.add('ring-2', v.accentRing);
+          if (badge) badge.classList.remove('hidden');
+        } else {
+          card.classList.remove('ring-2', 'ring-blue-600', 'ring-amber-500', 'ring-purple-500', 'ring-teal-500');
+          if (badge) badge.classList.add('hidden');
+        }
+      });
+
+      // 3. Update Left Panel View
+      const panel = document.getElementById('forms-active-panel');
+      if (panel) {
+        // Clear previous border-t accent
+        panel.classList.remove('border-t-blue-600', 'border-t-amber-500', 'border-t-purple-500', 'border-t-teal-500');
+        panel.classList.add(vault.accentBorder);
+      }
+
+      // Icon container & SVG
+      const iconContainer = document.getElementById('active-cat-icon-container');
+      if (iconContainer) {
+        iconContainer.className = `w-11 h-11 rounded-2xl ${vault.accentIconBg} ${vault.accentIconText} flex items-center justify-center font-bold shrink-0 transition-colors`;
+        iconContainer.innerHTML = categoryIcons[catId];
+      }
+
+      // Badge
+      const badgeEl = document.getElementById('active-cat-badge');
+      if (badgeEl) {
+        badgeEl.textContent = vault.badge;
+        badgeEl.className = `inline-block text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full ${vault.accentBadgeClasses}`;
+      }
+
+      // Title & Count
+      const titleEl = document.getElementById('active-cat-title');
+      if (titleEl) titleEl.textContent = vault.fullName;
+
+      const countEl = document.getElementById('active-cat-count-badge');
+      if (countEl) {
+        countEl.textContent = vault.count;
+        countEl.className = `text-xs font-bold px-2.5 py-1 rounded-full border shrink-0 ${vault.accentCountClasses}`;
+      }
+
+      // Description
+      const descEl = document.getElementById('active-cat-desc');
+      if (descEl) descEl.textContent = vault.description;
+
+      // Vault button
+      const vaultBtn = document.getElementById('active-cat-vault-link');
+      const vaultText = document.getElementById('active-cat-vault-text');
+      if (vaultBtn) vaultBtn.href = vault.hubUrl;
+      if (vaultText) vaultText.textContent = vault.hubText;
+
+      // Reset inside filter input and render all forms
+      const filterInput = document.getElementById('forms-active-filter-input');
+      if (filterInput) filterInput.value = '';
+      renderActiveFormsList(vault.forms);
+
+      if (shouldScroll && window.innerWidth < 1024) {
+        if (panel) {
+          panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      }
+    }
+
+    function renderActiveFormsList(items) {
+      const container = document.getElementById('forms-active-items-list');
+      if (!container) return;
+
+      if (!items || items.length === 0) {
+        container.innerHTML = `
+          <div class="py-10 text-center text-xs text-[#64748B]">
+            No forms found matching your filter in this category.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = items.map(item => `
+        <div class="py-2.5 px-2 hover:bg-slate-50 transition-colors rounded-xl flex items-center justify-between gap-3 group">
+          <div class="min-w-0 pr-1">
+            <div class="text-xs sm:text-sm font-semibold text-[#0F172A] group-hover:text-blue-600 truncate">
+              ${escapeHtml(item.name || item.title)}
+            </div>
+            <div class="text-[11px] text-[#64748B] truncate mt-0.5">
+              ${escapeHtml(item.desc || 'Approved Departmental Document')}
+            </div>
+          </div>
+          ${item.action ? `
+            <button type="button" onclick="${item.action}" class="shrink-0 px-3 py-1.5 rounded-xl bg-teal-50 hover:bg-teal-100 text-teal-700 border border-teal-200 text-xs font-bold transition-all flex items-center gap-1 shadow-2xs">
+              <span>Log Ticket</span> &rarr;
+            </button>
+          ` : `
+            <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="shrink-0 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-blue-50 text-slate-700 hover:text-blue-700 border border-slate-200/80 hover:border-blue-300 text-xs font-bold transition-all flex items-center gap-1 shadow-2xs">
+              <span>PDF</span> &rarr;
+            </a>
+          `}
+        </div>
+      `).join('');
+    }
+
+    function filterActiveFormsList(query) {
+      const q = query.trim().toLowerCase();
+      const vault = formsCategoryVaults[currentFormsCategory];
+      if (!vault) return;
+
+      if (!q) {
+        renderActiveFormsList(vault.forms);
+        return;
+      }
+
+      const filtered = vault.forms.filter(f => 
+        f.name.toLowerCase().includes(q) || (f.desc && f.desc.toLowerCase().includes(q))
+      );
+      renderActiveFormsList(filtered);
+    }
+
+    function handleFormsSearch(val) {
+      const query = val.trim().toLowerCase();
+      const clearBtn = document.getElementById('forms-search-clear');
+      const resultsDropdown = document.getElementById('forms-search-results');
+      
+      if (clearBtn) {
+        clearBtn.classList.toggle('hidden', !query);
+      }
+      
+      if (!query) {
+        if (resultsDropdown) {
+          resultsDropdown.classList.add('hidden');
+          resultsDropdown.innerHTML = '';
+        }
+        return;
+      }
+      
+      const matches = hospitalFormsCatalog.filter(item => 
+        item.title.toLowerCase().includes(query) || 
+        item.categoryLabel.toLowerCase().includes(query) ||
+        (item.desc && item.desc.toLowerCase().includes(query))
+      ).slice(0, 7);
+      
+      if (resultsDropdown) {
+        if (matches.length === 0) {
+          resultsDropdown.innerHTML = `
+            <div class="p-4 text-xs text-[#64748B] text-center">
+              No hospital forms matching "<strong>${escapeHtml(query)}</strong>". Select a category below to explore all approved files.
+            </div>
+          `;
+        } else {
+          resultsDropdown.innerHTML = matches.map(item => `
+            <div onclick="selectFormsCategory('${item.category}'); const d = document.getElementById('forms-search-results'); if (d) d.classList.add('hidden');" class="p-3 sm:p-3.5 hover:bg-slate-50 flex items-center justify-between gap-3 text-left transition-colors cursor-pointer group">
+              <div class="min-w-0">
+                <div class="text-xs sm:text-sm font-semibold text-[#0F172A] group-hover:text-blue-600 truncate">${escapeHtml(item.title)}</div>
+                <div class="flex items-center gap-2 mt-0.5">
+                  <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${
+                    item.color === 'blue' ? 'bg-blue-50 text-blue-700 border border-blue-200/60' :
+                    item.color === 'amber' ? 'bg-amber-50 text-amber-700 border border-amber-200/60' :
+                    item.color === 'purple' ? 'bg-purple-50 text-purple-700 border border-purple-200/60' :
+                    'bg-teal-50 text-teal-700 border border-teal-200/60'
+                  }">${item.categoryLabel}</span>
+                  <span class="text-[11px] text-[#64748B]">Click to view on left</span>
+                </div>
+              </div>
+              ${item.action ? `
+                <button type="button" onclick="event.stopPropagation(); ${item.action}" class="shrink-0 text-xs font-bold text-teal-600 hover:text-teal-700 flex items-center gap-1 bg-teal-50 px-3 py-1.5 rounded-xl border border-teal-200">
+                  <span>Log Ticket</span> &rarr;
+                </button>
+              ` : `
+                <a href="${item.url}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="shrink-0 text-xs font-bold text-[#2563EB] hover:text-blue-700 flex items-center gap-1 bg-blue-50 px-3 py-1.5 rounded-xl border border-blue-200">
+                  <span>Open PDF</span> &rarr;
+                </a>
+              `}
+            </div>
+          `).join('');
+        }
+        resultsDropdown.classList.remove('hidden');
+      }
+    }
+
+    function clearFormsSearch() {
+      const input = document.getElementById('forms-search-input');
+      if (input) {
+        input.value = '';
+        handleFormsSearch('');
+        input.focus();
+      }
+    }
+
+    // Initialize forms category viewer on page load
+    selectFormsCategory('consent');
+
     // Modal helpers
     function openTicketModal() {
       document.getElementById('ticket-modal').classList.remove('hidden');
@@ -2035,12 +2405,18 @@
       return str.replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[m]);
     }
 
-    // Close search dropdown on click outside
+    // Close search dropdowns on click outside
     document.addEventListener('click', (e) => {
       const dropdown = document.getElementById('search-dropdown');
       const searchInput = document.getElementById('intranet-search');
       if (dropdown && !dropdown.contains(e.target) && e.target !== searchInput) {
         dropdown.classList.add('hidden');
+      }
+
+      const formsDropdown = document.getElementById('forms-search-results');
+      const formsSearchInput = document.getElementById('forms-search-input');
+      if (formsDropdown && !formsDropdown.contains(e.target) && e.target !== formsSearchInput) {
+        formsDropdown.classList.add('hidden');
       }
     });
 
@@ -2108,6 +2484,19 @@
       }
     }
 
+    // Global shortcut Ctrl+K / Cmd+K to focus search bar
+    window.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        const searchInput = document.getElementById('intranet-search');
+        if (searchInput) {
+          searchInput.focus();
+          searchInput.select();
+          searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+    });
+
     // Close all modals on Escape key
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
@@ -2117,6 +2506,8 @@
         closePaperZeroModal();
         const dropdown = document.getElementById('search-dropdown');
         if (dropdown) dropdown.classList.add('hidden');
+        const formsDropdown = document.getElementById('forms-search-results');
+        if (formsDropdown) formsDropdown.classList.add('hidden');
       }
     });
 
