@@ -1,0 +1,2217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APH - Manuals</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-page: #f0ebe3;
+            --bg-card: #ffffff;
+            --bg-card-hover: #f8f6f2;
+            --border: #d4cfc4;
+            --border-strong: #a39e93;
+            --text: #2c2825;
+            --text-muted: #5c574f;
+            --color-green: #2e7d32;
+            --color-green-soft: #e8f5e9;
+            --color-blue: #1565c0;
+            --color-blue-soft: #e3f2fd;
+            --color-amber: #e65100;
+            --color-amber-soft: #fff3e0;
+            --color-purple: #6a1b9a;
+            --color-purple-soft: #f3e5f5;
+            --color-teal: #00695c;
+            --color-teal-soft: #e0f2f1;
+            --radius: 8px;
+            --radius-sm: 6px;
+            --shadow: 0 2px 8px rgba(44, 40, 37, 0.08);
+            --shadow-strong: 0 4px 12px rgba(44, 40, 37, 0.12);
+            --transition: 0.2s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-page);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            line-height: 1.5;
+        }
+
+        .page-wrap {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 3rem;
+        }
+
+        /* Header \Uffffffff classic with teal accent */
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 1.5rem 1rem;
+            background: linear-gradient(180deg, #ffffff 0%, #faf8f5 100%);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .page-title {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            font-weight: 700;
+            margin: 0 0 0.25rem 0;
+            color: var(--color-teal);
+        }
+
+        .page-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin: 0;
+            font-weight: 500;
+        }
+
+        /* Level 1 tabs \Uffffffff 5th = green, 6th = blue */
+        .level1-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 0.75rem 1.75rem;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--bg-card);
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition);
+            user-select: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .tab[data-level="5"]:hover {
+            border-color: var(--color-green);
+            color: var(--color-green);
+            background: var(--color-green-soft);
+        }
+
+        .tab[data-level="6"]:hover {
+            border-color: var(--color-blue);
+            color: var(--color-blue);
+            background: var(--color-blue-soft);
+        }
+
+        .tab[data-level="5"].active {
+            background: var(--color-green);
+            border-color: var(--color-green);
+            color: #fff;
+        }
+
+        .tab[data-level="6"].active {
+            background: var(--color-blue);
+            border-color: var(--color-blue);
+            color: #fff;
+        }
+
+        /* Level 2 tabs \Uffffffff different color per category */
+        .level2-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1.75rem;
+            flex-wrap: wrap;
+        }
+
+        .sub-tab {
+            padding: 0.6rem 1.2rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            background: var(--bg-card);
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition);
+            user-select: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .sub-tab[data-tab="nabh"]:hover,
+        .sub-tab[data-tab="nabh"].active {
+            border-color: var(--color-green);
+            color: var(--color-green);
+            background: var(--color-green-soft);
+        }
+
+        .sub-tab[data-tab="nabh"].active {
+            font-weight: 600;
+        }
+
+        .sub-tab[data-tab="clinical"]:hover,
+        .sub-tab[data-tab="clinical"].active {
+            border-color: var(--color-blue);
+            color: var(--color-blue);
+            background: var(--color-blue-soft);
+        }
+
+        .sub-tab[data-tab="clinical"].active {
+            font-weight: 600;
+        }
+
+        .sub-tab[data-tab="nonclinical"]:hover,
+        .sub-tab[data-tab="nonclinical"].active {
+            border-color: var(--color-amber);
+            color: var(--color-amber);
+            background: var(--color-amber-soft);
+        }
+
+        .sub-tab[data-tab="nonclinical"].active {
+            font-weight: 600;
+        }
+
+        .sub-tab[data-tab="policy"]:hover,
+        .sub-tab[data-tab="policy"].active {
+            border-color: var(--color-purple);
+            color: var(--color-purple);
+            background: var(--color-purple-soft);
+        }
+
+        .sub-tab[data-tab="policy"].active {
+            font-weight: 600;
+        }
+
+        /* Content card */
+        .tab-content {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        /* Table \Uffffffff classic striped header */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+
+        thead th {
+            padding: 1rem 1.25rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #fff;
+            background: linear-gradient(180deg, var(--color-teal) 0%, #004d40 100%);
+        }
+
+        thead th:last-child {
+            text-align: center;
+            width: 100px;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid var(--border);
+            transition: background var(--transition);
+        }
+
+        tbody tr:nth-child(even) {
+            background: #fafaf8;
+        }
+
+        tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        tbody tr:hover {
+            background: var(--bg-card-hover);
+        }
+
+        tbody tr:nth-child(even):hover {
+            background: var(--bg-card-hover);
+        }
+
+        td {
+            padding: 1rem 1.25rem;
+            color: var(--text);
+            vertical-align: middle;
+        }
+
+        td:first-child {
+            font-weight: 500;
+        }
+
+        td:last-child {
+            text-align: center;
+        }
+
+        .doc-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 1rem;
+            background: var(--color-blue-soft);
+            color: var(--color-blue);
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            border: 1px solid rgba(21, 101, 192, 0.3);
+            transition: var(--transition);
+            font-family: inherit;
+        }
+
+        .doc-link:hover {
+            background: var(--color-blue);
+            color: #fff;
+            border-color: var(--color-blue);
+        }
+
+        .doc-link:focus-visible {
+            outline: 2px solid var(--color-blue);
+            outline-offset: 2px;
+        }
+
+        .git-gif {
+            height: 16px;
+            width: 30px;
+            vertical-align: middle;
+            margin-left: 0.25rem;
+        }
+
+        @media (max-width: 768px) {
+            .page-wrap {
+                padding: 1.25rem 1rem 2rem;
+            }
+
+            .level1-tabs,
+            .level2-tabs {
+                gap: 0.4rem;
+            }
+
+            .tab {
+                padding: 0.65rem 1.1rem;
+                font-size: 0.875rem;
+            }
+
+            .sub-tab {
+                padding: 0.5rem 0.9rem;
+                font-size: 0.8rem;
+            }
+
+            .tab-content {
+                padding: 1rem;
+                overflow-x: auto;
+            }
+
+            thead th,
+            td {
+                padding: 0.75rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            thead th:last-child {
+                width: 80px;
+            }
+
+            .doc-link {
+                padding: 0.45rem 0.85rem;
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header style="background: #ffffff; border-bottom: 1px solid #d4cfc4; padding: 0.85rem 1.5rem; position: sticky; top: 0; z-index: 40; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+        <div style="max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between;">
+            <a href="./index.html#quality" style="display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; color: #1565c0; font-weight: 700; font-size: 0.9rem;">
+                <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                <span>Back to Main Portal</span>
+            </a>
+            <span style="font-size: 0.85rem; color: #5c574f; font-weight: 600;">Adhiparasakthi Hospitals &bull; Accreditation Manuals Hub</span>
+        </div>
+    </header>
+    <div class="page-wrap">
+        <header class="page-header">
+            <h1 class="page-title">APH Manuals</h1>
+            <p class="page-subtitle">NABH documentation &amp; policies</p>
+        </header>
+
+        <!-- LEVEL 1 -->
+        <div class="level1-tabs">
+            <div class="tab " data-level="5">NABH 5TH Edition</div>
+            <div class="tab active" data-level="6">NABH 6TH Edition</div>
+        </div>
+
+        <!-- LEVEL 2 -->
+        <div class="level2-tabs">
+
+            <!-- For 5th -->
+            <div class="sub-tab" data-parent="5" data-tab="nabh">Clinical Manuals</div>
+            <div class="sub-tab" data-parent="5" data-tab="clinical">NABH Manuals</div>
+            <div class="sub-tab" data-parent="5" data-tab="nonclinical">Non-Clinical Manuals</div>
+            <div class="sub-tab" data-parent="5" data-tab="policy">Policy & Procedures</div>
+
+            <!-- For 6th -->
+            <div class="sub-tab active" data-parent="6" data-tab="nabh">NABH Manuals</div>
+            <div class="sub-tab" data-parent="6" data-tab="clinical">Clinical Manuals</div>
+            <div class="sub-tab" data-parent="6" data-tab="nonclinical">Non-Clinical Manuals</div>
+            <div class="sub-tab" data-parent="6" data-tab="policy">Policy & Procedures</div>
+
+        </div>
+
+        <!-- ================= CONTENT ================= -->
+
+        <!-- 5TH EDITION -->
+        <div class="tab-content" data-content="5-nabh">
+            <table>
+                <tr>
+                    <th>Title</th>
+                    <th>Document</th>
+                </tr>
+                <!-- Clinical files -->
+
+
+                <tr>
+                    <td>Anaesthesiology &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/nabh/ANAESTHESIOLOGY.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Dermatology &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/nabh/DERMATOLOGY.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                <tr>
+                    <td>Dietician &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/nabh/Dietician.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>Emergency Department &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/EMERGENCY DEPARTMENT.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>General Medicine&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/GENERAL MEDICINE.pdf">view</a></td>
+                <tr>
+
+                    <td>General Surgery &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/nabh/GENERAL SURGERY.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Intensive Care Unit &nbsp;
+                        <!-- GIF next to QC MOM -->
+
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/INTENSIVE CARE UNIT.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>Nursing &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/nabh/NURSING.pdf">view</a></td>
+                </tr>
+                </tr>
+                <td>Obstetrics And Gynaecology
+                </td>
+                <td><a target="_blank" class="doc-link"
+                        href="http://192.168.101.75:3000/files/nabh/OBSTETRICS AND GYNAECOLOGY.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>Opthalmology &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/nabh/OPTHALMOLOGY.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Orthopaedics &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/nabh/ORTHOPAEDICS.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Oto-Rhino-Laryngology &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/OTO-RHINO-LARYNGOLOGY.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>Paediatrics &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/nabh/PAEDIATRICS.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Psychiatry &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/nabh/PSYCHIATRY.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>
+                        Radiology &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/nabh/RADIOLOGY.pdf">view</a></td>
+                </tr>
+                <!-- Add more clinical files here -->
+            </table>
+        </div>
+
+        <div class="tab-content" data-content="5-clinical" hidden>
+            <table>
+                <tr>
+                    <th>Title</th>
+                    <th>Document</th>
+                </tr>
+                <!-- Clinical files -->
+
+
+                <tr>
+                    <td>ANNEXURES TO NABH 6th EDITION
+                        <img src="assets/images/newmain.gif" alt="Git Icon" class="git-gif">
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Annexures to NABH  6th Edition.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>GUIDE BOOK TO NABH 6th EDITION
+                        <img src="assets/images/newmain.gif" alt="Git Icon" class="git-gif">
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Guide Book to NABH 6th Edition.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>NABH CHECKLIST
+                        <img src="assets/images/newmain.gif" alt="Git Icon" class="git-gif">
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/APH NABH Checklist-2025.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>NABH GUIDE BOOK
+                        <img src="assets/images/newmain.gif" alt="Git Icon" class="git-gif">
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/Nabh Guide Book-2025.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>AAC
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/AAC 2025.pdf">view</a></td>
+                </tr>
+                <tr>
+                <tr>
+                    <td>COP - PART I&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/COP - PART I 2025.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>COP - PART II&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/COP - PART II 2025.pdf">view</a>
+                    </td>
+                <tr>
+
+                    <td>MOM &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/MOM MANUAL-2025.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>PRE &nbsp;
+                        <!-- GIF next to QC MOM -->
+
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/PRE 2025.pdf">view</a></td>
+                </tr>
+                </tr>
+                <td>HIC
+                </td>
+                <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/HIC 2025.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>PSQ &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/PSQ Manual 2025.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>ROM &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/ROM 2025.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>FMS &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/FMS 2025 Manual.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>HRM &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/HRM 2025.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>IMS &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/IMS 2025.pdf">view</a></td>
+                </tr>
+                <!-- Add more clinical files here -->
+            </table>
+        </div>
+
+        <div class="tab-content" data-content="5-nonclinical" hidden>
+            <table>
+                <tr>
+                    <th>Title</th>
+                    <th>Document</th>
+                </tr>
+                <!-- Non-clinical files -->
+
+
+
+
+                <tr>
+                    <td>MRD Manual-2025 &nbsp;
+                        <!-- GIF next to QC MOM -->
+                        <img src="assets/images/newmain.gif" alt="New" class="git-gif">
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/MRD Manual-2025.pdf">view</a></td>
+                </tr>
+                <td>FMS - Laundry Manual &nbsp;
+                    <!-- GIF next to QC MOM -->
+                    <!-- <img src="assets/images/newmain.gif" alt="New" class="git-gif"> -->
+                </td>
+                <td><a target="_blank" class="doc-link"
+                        href="http://192.168.101.75:3000/files/FMS - Laundry Manual-2025.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>FMS - Security Manual &nbsp;
+                        <!-- GIF next to QC MOM -->
+                        <!-- <img src="assets/images/newmain.gif" alt="New" class="git-gif"> -->
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/FMS -  Security Manual-2025.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>CSSD &nbsp;
+                        <!-- GIF next to QC MOM -->
+                        <!-- <img src="assets/images/newmain.gif" alt="New" class="git-gif"> -->
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/CSSD 2025.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>FMS - Bio Medical Manual &nbsp;
+                        <!-- GIF next to QC MOM -->
+                        <!-- <img src="assets/images/newmain.gif" alt="New" class="git-gif"> -->
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/FMS - Bio Medical Manual-2025.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>FMS - HK Manual &nbsp;
+                        <!-- GIF next to QC MOM -->
+                        <!-- <img src="assets/images/newmain.gif" alt="New" class="git-gif"> -->
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/FMS - HK Manual-2025.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>FMS - Maintenance Manual &nbsp;
+                        <!-- GIF next to QC MOM -->
+                        <!-- <img src="assets/images/newmain.gif" alt="New" class="git-gif"> -->
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/FMS - Maintenance  Manual-2025.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>FMS - Safety manual &nbsp;
+                        <!-- GIF next to QC MOM -->
+                        <!-- <img src="assets/images/newmain.gif" alt="New" class="git-gif"> -->
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/FMS - Safety manual-2025.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>FMS - Transport Manual &nbsp;
+                        <!-- GIF next to QC MOM -->
+                        <!-- <img src="assets/images/newmain.gif" alt="New" class="git-gif"> -->
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/FMS - Transport Manual-2025.pdf">view</a></td>
+                </tr>
+                <!-- Add more non-clinical files here -->
+            </table>
+        </div>
+
+        <div class="tab-content" data-content="5-policy" hidden>
+            <table>
+                <tr>
+                    <th>Title</th>
+                    <th>Document</th>
+                </tr>
+                <tr>
+                    <td>Billing and Insurance Policies</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/Billing and Insurance Policies.pdf" target="_blank">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Patient Transfer To And From Imaging Services</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/Patient Transfer To And FROM Imaging Services.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Pharmacy Standard Operative Procedures</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/PHARMACY STANDARD OPERATIVE PROCEDURES.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Policy And Procedure on Sedation</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/-POLICY AND PROCEDURE ON SEDATION.pdf" target="_blank">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Acquisition of medical supplies and consumables</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/Acquisition of medical supplies and consumables.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Adheres Transmission Based Precautions</td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/Qc/ADHERES TRANSMISSION BASED.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Antenatel Services</td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/Qc/ANTENATEL SERVICES.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Brought Dead Protocol</td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/Qc/BROUGHT DEAD PROTOCOL.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Criteria for Vendor Selection Evaluation</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/criteria for vendor selection evaluation.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Disaster Management</td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/Qc/DISASTER MANAGEMENT.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Discharge Against Medical Advice</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/DISCHARGE AGAINST MEDICAL ADVICE.pdf" target="_blank">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Discharge Summary</td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/Qc/discharge summary.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Effective and Enhanced</td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/Qc/EFFECTIVE AND ENHANCED.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Effective Communication With Paitent & Family</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/EFFECTIVE COMMUNICATION WITH PATIENT & FAMILY.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>End of Life Care</td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/Qc/END OF LIFE CARE.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Guidance on Medications Return</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/Guidance on medication return.pdf" target="_blank">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Guideline for Infection Control Practices ICU</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/Guideline for infection control practices ICU.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Guideline for Medical Clinical Services</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/Guideline for medical clinical services.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Guideline for CPR</td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/Qc/GUIDELINES for CPR.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Guidelines for Registration, Admission, Nonavailability of beds</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/Guidelines for registration, admission, nonavailability of beds.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Guidelines for the Rational Prescriptions of Medication</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/Guidelines for the rational prescriptions of medication.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Guidelines Minimum Requirement</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/GUIDELINES MINIMUM REQUIREMENT.pdf" target="_blank">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Hand Hygine</td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/Qc/HAND HYGIENE.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>High Risk Activities</td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/Qc/HIGH RISK ACTIVITIES.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Hospital Infection Control Committee</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/HOSPITAL INFECTION CONTROL COMMITTEE.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>ICU Bed Shortage</td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/Qc/ICU BED SHORTAGE.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Imaging Results are Available Within a Defined Time Frame</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/Imaging results are available within a defined time frame.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Implantable Prosthesis</td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/Qc/IMPLANTABLE PROSTHESIS.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Infection Control Programme</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/INFECTION CONTROL PROGRAMME.pdf" target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Informed Consent Taking Process</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/INFORMED CONSENT TAKING PROCESS.pdf" target="_blank">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Interdept Referral</td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/Qc/interdept referral.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Labelling Requirements of Medicine </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/LABELLING REQUIREMENTS OF MEDICINE.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>List of Emergency Medicine and its Storage</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/list of emergency medicine and its storage.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>List of High Risk Medicine</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/LIST OF HIGH RISK MEDICINE..pdf" target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Medication Recall</td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/Qc/Medication recall.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Monitoring of Patients After Medication Administration</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/Monitoring of patients after medication administration.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Pain Assesment</td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/Qc/PAIN ASSESMENT.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Paitent And Visitors Complaints</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/PATIENT AND VISITORS COMPLAINTS.pdf" target="_blank">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Paitent Rights and Responsibilities</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/PATIENT RIGHTS AND RESPONSIBILITIES ,.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Paitent Transfer from Recovery</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/PATIENTS TRANSFER FROM RECOVERY.pdf" target="_blank">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Paitent's Self Administration</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/PATIENT\UffffffffS SELF \UffffffffADMINISTRATION.pdf" target="_blank">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Physiotherapy</td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/Qc/PHYSIOTHERAPY.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Policy and Process on Verbal Orders of Medications</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/Policy and process on verbal orders of medications.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Prescription of Medicine</td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/Qc/PRESCRIPTION OF MEDICINE.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Procedure for Near Expiry Medication</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/procedure for near expiry medication.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Procedure for Usage of Narcotic Drugs and Psychotropic Medications</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/PROCEDURE FOR USAGE OF NARCOTIC DRUGS AND PSYCHOTROPIC MEDICATIONS.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Process Addresses Registering and Admitting Outpatients</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/Process addresses registering and admitting outpatients.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Process of Acquisition of Medicine Not Listed in the Formulary</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/Process of acquisition of medicine not listed in the formulary.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Process on Communication for Medication Usage and Shortage</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/process on communication for medication usage and shortage.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Protocal For Five Common Emergencies</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/PROTOCOL FOR FIVE COMMON EMERGENCIES..pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Protocals Pretaining To Medications</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/PROTOCOLS PERTAINING TO MEDICATION.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Quality Assurance Program</td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/Qc/QUALITY ASSURANCE PROGRAM.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Recording and Reporting of Medication Errors, Adverse Events And Near Misses</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/Recording and reporting of medication errors, adverse events and near misses..pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Safe Administration Of Medications</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/SAFE ADMINISTRATION OF MEDICATION.pdf" target="_blank">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Safe Dispensing of Medications</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/Safe dispensing of medications.pdf" target="_blank">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Safe Injection And Infusion Practices</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/SAFE INJECTION AND INFUSION PRACTICES.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Safe Storage And Handling Of Look Alike And Sound Alike Medications</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/SAFE STORAGE AND HANDLING OF LOOK ALIKE AND SOUND AlLIKE MEDICATION..pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Safe Transport In And Out Of Radiology</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/safe transport in and out of radiology.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Sample Collection CL</td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/Qc/SAMPLE COLLECTION CL.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Scope Of Services</td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/Qc/SCOPE OF SERVICES.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>SOP On Procedure For Acquisition Of Formulary Medications</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/SOP on procedure for cquisition of formulary medications.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>SOP On Transplant</td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/Qc/SOP ON TRANSPLANT.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Sound Clinical Anaesthesia</td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/Qc/SOUND CLINICAL ANAESTHESIA.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Standard Precautions</td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/Qc/STANDARD PRECAUTIONS.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Surgical Service I</td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/Qc/SURGICAL SERVICES.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Surgical Service II</td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/Qc/SURGICAL SERVICES.2.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Surrogate Consent</td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/Qc/SURROGATE CONSENT.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>TAT For Crossmatch MAPIMS</td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/Qc/TAT for crossmatch MAPIMS.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>TAT Lab</td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/Qc/TAT LAB.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Telemedicine</td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/Qc/TELEMEDICINE.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Traige Policy</td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/Qc/Traige Policy..pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Transfer In Of The Paitent To The Hospital</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/TRANSFER IN OF THE PATIENT TO THE HOSPITAL.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Transfer Out Or Refferal Of Patients</td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Qc/TRANSFER OUT OR REFERRAL OF PATIENTS.1.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Uniform Paient Care</td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/Qc/uniform paient care.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+                <tr>
+                    <td>Vulnerable Paitents</td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/Qc/VULNERABLE PATIENTS.pdf"
+                            target="_blank">view</a></td>
+                </tr>
+
+            </table>
+        </div>
+
+
+        <!-- 6TH EDITION -->
+        <div class="tab-content" data-content="6-nabh" hidden>
+            <table>
+
+                <tr>
+                    <th>Title</th>
+                    <th>Document</th>
+                </tr>
+                <tr>
+                    <td>ACCESS, ASSESSMENT & CONTINUITY OF CARE
+                        (AAC)&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/nabh/AAC.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>CARE OF PATIENT - VOL 1 &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/nabh/COPV1.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>CARE OF PATIENT - VOL 2&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/nabh/COPV2.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>MEDICATION
+                        MANAGEMENT (MOM)&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/nabh/MOM.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>PATIENT RIGHTS & EDUCATION
+                        (PRE)
+                        &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/nabh/PRE.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>INFECTION PREVENTION AND CONTROL
+                        (IPC)
+                        &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/nabh/IPC.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>PATIENT SAFETY AND QUALITY
+                        (PSQ)&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/nabh/PSQ.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>RESPONSIBILITIES OF MANAGEMENT (ROM)
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/nabh/ROM.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>FACILITY MANAGEMENT & SAFETY (FMS)&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/nabh/FMS.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>HUMAN RESOURCE MANAGEMENT (HRM)&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/nabh/HRM.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>INFORMATION MANAGEMENT SYSTEM (IMS)&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/nabh/IMS.pdf">view</a></td>
+                </tr>
+
+
+
+
+            </table>
+        </div>
+
+        <div class="tab-content" data-content="6-clinical" hidden>
+            <table>
+                <tr>
+                    <th>Title</th>
+                    <th>Document</th>
+                </tr>
+
+                <tr>
+                    <td>ER MANUAL NABH - 2026
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/ER mannual NABH -2026.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>CARDIO THORASIC SURGERY
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/Cardio thorasic surgery.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>CARDIOLOGY
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/nabh/Cardiology.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>GEN SURGERY
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/nabh/General surgery.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>GENERAL MEDICINE
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/General Medicine.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>HEPATOLOGY
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/nabh/Hepatology.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>MEDICAL GASTROENTEROLOGY
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/Medical Gastroenterology.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>MEDICAL ONCOLOGY
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/Medical Oncology.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>NEPHROLOGY
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/nabh/Nephrology.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>NEURO SURGERY
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/nabh/Neuro Surgery.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>NEUROLOGY
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/nabh/Neurology.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>ONCOLOGY SURGERY
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/Oncology surgery.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>PAEDIATRIC DEPT
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/Paediatric Dept.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>PLASTIC SURGERY
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/Plastic Surgery.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>PULMONARY MEDICINE
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/Pulmonary Medicine Manual.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>SGE
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/nabh/SGE MANUAL.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>UROLOGY
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/nabh/Urology.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>VASCULAR SURGERY
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/vascular surgery.pdf">view</a></td>
+                </tr>
+
+                
+                <tr>
+                    <td>ANAESTHESIA&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/nabh/ANAESTHESIA.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>ENT&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/nabh/ENT.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>KRIYASAKTHI FERTILITY CENTRE&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/KRIYASAKTHI FERTILITY CENTRE.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>OG&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/nabh/OG.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>OPTHAL&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/nabh/OPTHAL Manual.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>ORTHOPAEDICS&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/ORTHOPAEDICS NABH MANUAL 2026 (1) (1).pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>PAEDIATRICS&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/Paediatrics Manual Version 4 FINAL.pdf">view</a></td>
+                </tr>
+                
+                <tr>
+                    <td>RADIOLOGY&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/RADIOLOGY MANUAL.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>OPTHAL DEPT&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/DEP-OPTHAL Manual.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>PSYCHIATRY&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/PSYCHIATRY.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>CENTRAL LAB BIOCHEMISTRY&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/CENTRAL LAB BIOCHEMISTRY MANUAL.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>PSQ1 SAFETY MANUAL
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/PSQ1 SAFETY MANUAL.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>AAC 7 E LAB SAFETY MANUAL
+                
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/AAC 7 E LAB SAFETY MANUAL.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>HAZARD IDENTIFICATION AND RISK ASSESSMENT (HIRA)
+                
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/HAZARD IDENTIFICATION AND RISK ASSESSMENT (HIRA).pdf">view</a>
+                    </td>
+                </tr>
+                
+            </table>
+        </div>
+
+        <div class="tab-content" data-content="6-nonclinical" hidden>
+            <table>
+                <tr>
+                    <th>Title</th>
+                    <th>Document</th>
+                </tr>
+                <!-- <tr>
+            <td>FMS Safety Manual</td>
+            <td><a class="doc-link" href="#">View</a></td>
+        </tr> -->
+                <tr>
+                    <td>NURSING MANUAL&nbsp;
+                        <!-- GIF next to QC MOM -->
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/Nursing Manual New.pdf">view</a></td>
+                </tr>
+
+                <tr>
+                    <td> FMS - Bio Medical Manual &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/FMS - Bio Medical Manual New.pdf ">view</a></td>
+                </tr>
+                <tr>
+                    <td> FMS - Engineering Manual &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/FMS - Engineering Manual New.pdf ">view</a></td>
+                </tr>
+                <tr>
+                    <td> FMS - HK Manual &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/FMS - HK Manual New.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td> FMS - Laundry Manual &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/FMS - Laundry Manual New.pdf ">view</a></td>
+                </tr>
+                <tr>
+                    <td> FMS - Safety manual &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/FMS - Safety Manual New.pdf ">view</a></td>
+                </tr>
+                <tr>
+                    <td> FMS - Security manual &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/FMS - Security Manual New.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td> FMS - Transport Manual &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/FMS - Transport Manual New.pdf">view</a></td>
+                </tr>
+
+
+
+            </table>
+        </div>
+
+        <div class="tab-content" data-content="6-policy" hidden>
+            <table>
+                <tr>
+                    <th>Title</th>
+                    <th>Document</th>
+                </tr>
+                
+                <tr>
+                    <td>CODE YELLOW POLICY &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/code yellow policy.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>BROUGHT DEATH POLICY REVISED&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/Brought death policy revised (1).pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>AMBULANCE POLICY REVISED&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/AMBULANCE POLICY REVISED (2).pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>FMS - CGSS SOP FINAL &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/FMS - CGSS SOP FINAL  05.03.2026.pdf ">view</a></td>
+                </tr>
+                <tr>
+                    <td>FMS - ELECTRICAL SOP FINAL &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/FMS - ELECTRICAL SOP FINAL 05-03-2026.pdf ">view</a></td>
+                </tr>
+                <tr>
+                    <td>FMS - Eng. SOP FINAL &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/FMS - Eng. SOP FINAL 05-03-2026.pdf ">view</a></td>
+                </tr>
+                <tr>
+                    <td>FMS - HK SOP FINAL &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/FMS - HK SOP FINAL 05-03-2026.pdf ">view</a></td>
+                </tr>
+                <tr>
+                    <td>FMS - HVAC SOP FINAL &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/FMS - HVAC SOP FINAL 05-03-2026.pdf ">view</a></td>
+                </tr>
+                <tr>
+                    <td>FMS - Laundry SOP &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/FMS - Laundry SOP 05-03-2026.pdf ">view</a></td>
+                </tr>
+                <tr>
+                    <td>FMS - PLUMBING SOP FINAL &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/FMS - PLUMBING SOP FINAL 05-03-2026.pdf ">view</a></td>
+                </tr>
+                <tr>
+                    <td>FMS - Safety SOP FINAL &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/FMS - Safety SOP FINAL 05-03-2026.pdf ">view</a></td>
+                </tr>
+                <tr>
+                    <td>FMS - Transport SOP FINAL - &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/FMS - Transport  SOP FINAL - 05-3-2026.pdf ">view</a></td>
+                </tr>
+                <tr>
+                    <td>FMS - BME SOP FINAL &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/FMS  - BME SOP FINAL 05.03.2026.docx.pdf ">view</a></td>
+                </tr>
+                <tr>
+                    <td>FMS - Security SOP FINAL &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/FMS -  Security SOP FINAL 07.03.2026.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>Approved abbreviation July 2025 -2026 &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/Approved abbreviation July 2025 -2026.pdf">view</a></td>
+                </tr>
+
+                <tr>
+                    <td>MOM 1 D,E STOCK OUT MEDICINE PURCHASE POLICY &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/MOM 1 D,E STOCK OUT MEDICINE PURCHASE POLICY.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>MOM 10 MEDICAL DEVICES & IMPLANT USAGE AND RECALL POLICY &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/MOM 10 MEDICAL DEVICES & IMPLANT USAGE AND RECALL POLICY.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>MOM 11 MEDICAL SUPPLIES AND CONSUMABLES STORAGE POLICY &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/MOM 11 MEDICAL SUPPLIES AND CONSUMABLES STORAGE POLICY.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>MOM 2 E PROCEDURE FOR THE ACQUISITION OF FORMULARY MEDICATIONS &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/MOM 2 E PROCEDURE FOR THE ACQUISITION OF FORMULARY MEDICATIONS.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>MOM 2 F PROCEDURE FOR THE ACQUISITION OF NON FORMULARY MEDICATIONS &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/MOM 2 F PROCEDURE FOR THE ACQUISITION OF NON FORMULARY MEDICATIONS.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>MOM 3 C HIGH RISK MEDICATION LIST &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/MOM 3 C HIGH RISK MEDICATION LIST.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>MOM 3 E LASA DRUGS LIST &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/MOM 3 E LASA DRUGS LIST.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>MOM 3 F LIST OF EMERGENCY MEDICINES &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/MOM 3 F LIST OF EMERGENCY MEDICINES.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>MOM 4 A,B MEDICATION PRESCRIPTION GUIDELINES &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/MOM 4 A,B MEDICATION PRESCRIPTION GUIDELINES.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>MOM 4 F VERBAL ORDER POLICY &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/MOM 4 F VERBAL ORDER POLICY.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>MOM 5 A MEDICATION PRESCRIPTION PREVILEGES &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/MOM 5 A MEDICATION PRESCRIPTION PREVILEGES.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>MOM 6 MEDICATION DISPENSING, RECALL, RETURN POLICY &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/MOM 6 MEDICATION DISPENSING, RECALL, RETURN POLICY.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>MOM 7 H CATHETER TUBING MISCONNECTION &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/MOM 7 H CATHETER TUBING MISCONNECTION.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>MOM 7 J K SELF ADMINISTRATION AND OWN MEDICATION POLICY &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/MOM 7 J K SELF ADMINISTRATION AND OWN MEDICATION POLICY.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>MOM 8 A MEDICATION ADMINISTRATION POLICY &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/MOM 8 A MEDICATION ADMINISTRATION POLICY.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>MOM 8 C,D,E MEDICATION ERROR MANAGEMENT &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/MOM 8 C,D,E MEDICATION ERROR MANAGEMENT.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>MOM 9 NARCOTICS AND CHEMOTHERAPY POLICY &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/MOM 9 NARCOTICS AND CHEMOTHERAPY POLICY.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>Pharmacy SOP Updated June 2025-2026 &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/Pharmacy SOP Updated June 2025-2026.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>UPDATED DRUG FORMULARY 2026 &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/UPDATED DRUG FORMULARY 2026.pdf">view</a></td>
+                </tr>
+
+
+                <tr>
+                    <td>AAC 10 E SAFE TRANSPORT OF PATIENT WITHIN THE HOSPITAL &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/AAC 10 E SAFE TRANSPORT OF PATIENT WITHIN THE HOSPITAL.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>AAC 10 F REFERRAL OF PATIENTS TO OTHER DEPARTMENTS &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/AAC 10 F REFERRAL OF PATIENTS TO OTHER DEPARTMENTS.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>AAC 11 PREVENTIVE AND PROMOTIVE HEALTH SERVICE POLICY &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/AAC 11 PREVENTIVE AND PROMOTIVE HEALTH SERVICE POLICY.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>AAC 12 DISCHARGE PROCESS &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/AAC 12 DISCHARGE PROCESS.pdf">view</a></td>
+                </tr>
+                </tr>
+                <tr>
+                    <td>AAC 13 POLICY ON DISCHARGE SUMMARY CONTENT &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/AAC 13 POLICY ON DISCHARGE SUMMARY CONTENT.pdf">view</a></td>
+                </tr>
+                </tr>
+                <tr>
+                    <td>AAC 2 A DEFINED REGISTRATION AND ADMISSION PROCESS &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/AAC 2 A DEFINED REGISTRATION AND ADMISSION PROCESS.pdf">view</a>
+                    </td>
+                </tr>
+                </tr>
+                <tr>
+                    <td>AAC 2 D POLICY ON NON AVAILABILITY OF BEDS &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/AAC 2 D POLICY ON NON AVAILABILITY OF BEDS.pdf">view</a></td>
+                </tr>
+                </tr>
+                <tr>
+                    <td>AAC 3 TRANSFER IN OF PLANNED, UNPLANNED OR UNSTABLE PATIENT &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/AAC 3 TRANSFER IN OF  PLANNED, UNPLANNED OR UNSTABLE PATIENT.pdf">view</a>
+                    </td>
+                </tr>
+                </tr>
+                <tr>
+                    <td>AAC 3B TRANSFER OUT REFERRAL &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/AAC 3B TRANSFER OUT REFERRAL.pdf">view</a></td>
+                </tr>
+                </tr>
+                <tr>
+                    <td>AAC 4 POLICY ON ESTABLISHED INITIAL ASSESSMENT &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/AAC 4 POLICY ON ESTABLISHED INITIAL ASSESSMENT.pdf">view</a>
+                    </td>
+                </tr>
+                </tr>
+                <tr>
+                    <td>AAC 5 A POLICY ON PATIENT REASSESSMENT &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/AAC 5 A POLICY ON PATIENT REASSESSMENT.pdf">view</a></td>
+                </tr>
+                </tr>
+                <tr>
+                    <td>AAC 5 E MEWS PROTOCOL &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/AAC 5 E MEWS PROTOCOL.pdf">view</a></td>
+                </tr>
+                </tr>
+                <tr>
+                    <td>AAC 6 E REQUESITION, COLLECTION, TRANSPORT LAB &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/AAC 6 E REQUESITION, COLLECTION, TRANSPORT LAB.pdf">view</a>
+                    </td>
+                </tr>
+                </tr>
+                <tr>
+                    <td>AAC 6 F TAT LAB &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link" href="http://192.168.101.75:3000/files/nabh/AAC 6 F TAT LAB.pdf">view</a>
+                    </td>
+                </tr>
+                </tr>
+                <tr>
+                    <td>AAC 6 G CRITICAL RESULT INTIMATION LAB &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/AAC 6 G CRITICAL RESULT INTIMATION LAB.pdf">view</a></td>
+                </tr>
+                </tr>
+                <tr>
+                    <td>AAC 6 J LAB OUTSOURCE POLICY &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/AAC 6 J LAB OUTSOURCE POLICY.pdf">view</a></td>
+                </tr>
+                </tr>
+                <tr>
+                    <td>AAC 7 A LAB QUALITY ASSURANCE MANUAL &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/AAC 7 A LAB QUALITY ASSURANCE MANUAL.pdf">view</a></td>
+                </tr>
+                </tr>
+                <tr>
+                    <td>AAC 7 E LAB SAFETY MANUAL &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/AAC 7 E LAB SAFETY MANUAL.pdf">view</a></td>
+                </tr>
+                </tr>
+                <tr>
+                    <td>AAC 8 E RADIOLOGY TAT TIME &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/AAC 8 E RADIOLOGY TAT TIME.pdf">view</a></td>
+                </tr>
+                </tr>
+                <tr>
+                    <td>AAC 8 F RADIOLOGY CRITICAL ALERT POLICY &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/AAC 8 F RADIOLOGY CRITICAL ALERT POLICY.pdf">view</a></td>
+                </tr>
+                </tr>
+                <tr>
+                    <td>AAC 9 A RADIOLOGY QUALITY MANUAL &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/AAC 9 A RADIOLOGY QUALITY MANUAL.pdf">view</a></td>
+                </tr>
+                </tr>
+                <tr>
+                    <td>AAC 9 F RADIATION SAFETY MANUAL &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/AAC 9 F RADIATION SAFETY MANUAL.pdf">view</a></td>
+                </tr>
+                </tr>
+                <tr>
+                    <td>APH - SCOPE OF SERVICES &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/APH - Scope of Services.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>LAB SAMPLE COLLECTION MANUAL &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/LAB SAMPLE COLLECTION MANUAL.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>APH ANTIBIOGRAM 2025 &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/APH ANTIBIOGRAM 2025.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>AWARE CLASSIFICATION 2025 &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/AWaRe classification 2025.xlsx">view</a></td>
+                </tr>
+                <tr>
+                    <td>ANTIMICROBIAL POLICY 2025-26 &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/Antimicrobial policy 2025-26.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>AMSP TEACHING MATERIAL &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/AMSP teaching material.pdf">view</a></td>
+                </tr>
+                <tr>
+                    <td>'25 ANTIMICROBIAL RESISTANCE PATTERN LAB DATA &nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/'25 antimicrobial resistance pattern Lab data.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>AMBULANCE SERVICES&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/AMBULANCE SERVICES.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>ANTE-NATAL SERVICES&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/ANTE-NATAL SERVICES.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>CHILD ABDUCTION AND ABUSE&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/CHILD ABDUCTION AND ABUSE.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>CODE YELLOW&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/CODE YELLOW.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>COP 1 f TELEMEDICINE&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/COP 1 f TELEMEDICINE.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>COP 1 UNIFORM CARE OF PATIENT&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/COP 1 UNIFORM CARE OF PATIENT.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>COP 2 d TRIAGE PROTOCOL FOLLOWED IN THE CASUALTY&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/COP 2 d TRIAGE PROTOCOL FOLLOWED IN THE CASUALTY.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>COP 2 I BROUGHT DEATH POLICY&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/COP 2 I BROUGHT DEATH POLICY.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>COP 2 i PATIENT FOUND DEAD ON ARRIVAL&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/COP 2 i PATIENT FOUND DEAD ON ARRIVAL.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>COP 3 AMBULANCE SERVICE&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/COP 3 AMBULANCE SERVICE.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>COP 4 DISASTER MANAGEMENT&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/COP 4 DISASTER MANAGEMENT.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>COP 5 GUIDELINE FOR CPR&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/COP 5 GUIDELINE FOR CPR.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>COP 6 f NURSING EMPOWERMENT&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/COP 6 f NURSING EMPOWERMENT.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>COP 6 NURSING CARE&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/COP 6 NURSING CARE.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>COP 7 CLINICAL PROCEDURES IN SAFE MANNER&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/COP 7 CLINICAL PROCEDURES IN SAFE MANNER.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>COP 7 D CARE IS TAKEN TO PREVENT ADVERSE EVENTS LIKE A WRONG PATIENT, WRONG PROCEDURE AND WRONG SITE&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/COP 7 D CARE IS TAKEN TO PREVENT ADVERSE EVENTS LIKE A WRONG PATIENT, WRONG PROCEDURE AND WRONG SITE.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>COP 8 GUIDELINE FOR PACKED RED BLOOD CELL TRANSFUSION&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/COP 8 GUIDELINE FOR PACKED RED BLOOD CELL TRANSFUSION.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>COP 9 B ADMISSION AND DISCHARGE CRITERIA FOR INTENSIVE CARE&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/COP 9 B ADMISSION AND DISCHARGE CRITERIA FOR INTENSIVE CARE.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>COP 9 d ICU BED SHORTAGE&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/COP 9 d ICU BED SHORTAGE.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>COP 9 e INFECTION CONTROL PRACTICES IN ICU&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/COP 9 e INFECTION CONTROL PRACTICES IN ICU.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>COP 17 PAIN MANAGEMENT&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/COP 17 PAIN MANAGEMENT.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>COP 18 PHYSIOTHERAPY MANUAL&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/COP 18 PHYSIOTHERAPY MANUAL.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>COP 19 DIETICIAN MANUAL&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/COP 19 DIETICIAN MANUAL.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>COP.15 ORGAN TRANSPLANT PROGRAMME&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/COP.15 ORGAN TRANSPLANT PROGRAMME.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>COP.16.a IDENTIFIES & MANAGES VULNERABLE PATIENTS&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/COP.16.a IDENTIFIES & MANAGES VULNERABLE PATIENTS.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>COP.16.e RESTRAINT MANAGEMENT&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/COP.16.e RESTRAINT MANAGEMENT.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>SEDATION & ANAESTHESIA SERVICE&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/SEDATION & ANAESTHESIA SERVICE.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>SURGICAL SERVICE&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/SURGICAL  SERVICE.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>UNIFORM CARE OF PATIENT&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/UNIFORM CARE OF PATIENT.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>PRE 8 c - Communication with Family members&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/PRE 8 c - Communication with Family members.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>PRE 1b - Patient and Family Rights and Responsibilities&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/PRE 1b - Patient and Family Rights and Responsibilities.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>PRE 4d - Incapable of independent decision-making&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/PRE 4d - Incapable of independent decision-making.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>PRE 1a - Patient Rights and Responsibility&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/PRE 1a - Patient Rights and Responsibility.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>PRE 8 a - Effective Communication with Patient and Families&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/PRE 8 a - Effective Communication with Patient and Families.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>PRE 8 b - ENHANCED COMMUNICATION&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/PRE 8 b - ENHANCED COMMUNICATION.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>PRE 4a - Patient and family rights include informed consent&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/PRE 4a - Patient and family rights include informed consent.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>The Enhanced Communication&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/The Enhanced Communication.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>The 7 C\Uffffffffs of Effective Communication&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/The 7 C\Uffffffffs of Effective Communication.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>PRE.1 D - Violation of Patient and Family Rights&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/PRE.1 D - Violation of Patient and Family Rights.pdf">view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>IPC - SOP FOR REPROCESSING OF DIALYSIS TUBING&nbsp;
+                    </td>
+                    <td><a target="_blank" class="doc-link"
+                            href="http://192.168.101.75:3000/files/nabh/SOP FOR REPROCESSING OF SINGLE USE TUBINGS - DIALYSIS.pdf">view</a>
+                    </td>
+                </tr>
+
+                <!-- <tr>
+            <td>Medication Policy</td>
+            <td><a class="doc-link" href="#">View</a></td>
+        </tr> -->
+            </table>
+        </div>
+
+    </div><!-- /.page-wrap -->
+
+    <!-- ================= JS ================= -->
+    <script>
+
+        const levelTabs = document.querySelectorAll('.level1-tabs .tab');
+        const subTabs = document.querySelectorAll('.level2-tabs .sub-tab');
+        const contents = document.querySelectorAll('.tab-content');
+
+        let currentLevel = "5";
+
+        // LEVEL 1
+        levelTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+
+                levelTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                currentLevel = tab.dataset.level;
+
+                subTabs.forEach(st => {
+                    st.style.display = st.dataset.parent === currentLevel ? 'block' : 'none';
+                    st.classList.remove('active');
+                });
+
+                const firstSub = document.querySelector(`.sub-tab[data-parent="${currentLevel}"]`);
+                firstSub.classList.add('active');
+                showContent(currentLevel, firstSub.dataset.tab);
+            });
+        });
+
+        // LEVEL 2
+        subTabs.forEach(st => {
+            st.addEventListener('click', () => {
+
+                if (st.dataset.parent !== currentLevel) return;
+
+                subTabs.forEach(t => t.classList.remove('active'));
+                st.classList.add('active');
+
+                showContent(currentLevel, st.dataset.tab);
+            });
+        });
+
+        function showContent(level, tab) {
+            contents.forEach(c => c.hidden = true);
+            const active = document.querySelector(`[data-content="${level}-${tab}"]`);
+            if (active) active.hidden = false;
+        }
+
+        // INIT
+        document.querySelector('.tab.active').click();
+
+    </script>
+
+</body>
+
+</html>

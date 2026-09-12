@@ -1,0 +1,1828 @@
+
+<html>
+
+<head>
+    <meta charset=utf-8>
+    <title>Intercom Directory</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Segoe UI;
+            background: #edf4ff
+        }
+
+        .wrapper {
+            max-width: 1100px;
+            margin: auto
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            background: linear-gradient(90deg, #0d47a1, #1976d2);
+            padding: 20px;
+            color: #fff;
+            box-shadow: 0 2px 8px #0004;
+            z-index: 9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 12px
+        }
+
+        header h1 {
+            margin: 0
+        }
+
+        #search {
+            width: 100%;
+            max-width: 500px;
+            padding: 12px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            display: block
+        }
+
+        .container {
+            padding: 20px;
+            display: grid;
+            gap: 18px
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, .12);
+            overflow: hidden
+        }
+
+        .card h2 {
+            margin: 0;
+            padding: 14px 18px;
+            background: #42a5f5;
+            color: #fff;
+            text-transform: uppercase
+        }
+
+        .tbl {
+            width: 100%;
+            border-collapse: collapse
+        }
+
+        th {
+            background: #e3f2fd;
+            color: #0d47a1
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: center
+        }
+
+        tr:hover {
+            background: #f1f8ff
+        }
+
+        td:first-child {
+            font-weight: bold;
+            color: #1565c0;
+            width: 140px
+        }
+    </style>
+</head>
+
+<body>
+    <div class='wrapper'>
+        <header>
+            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1050px; flex-wrap: wrap; gap: 10px;">
+                <a href="./index.html" style="color: #ffffff; text-decoration: none; font-size: 13px; font-weight: 600; background: rgba(255,255,255,0.2); padding: 8px 14px; border-radius: 20px; transition: background 0.2s;">&larr; Back to Main Portal</a>
+                <a href="./Intercom%20Directory.pdf" target="_blank" rel="noopener noreferrer" style="color: #ffffff; text-decoration: none; font-size: 13px; font-weight: 600; background: rgba(255,255,255,0.2); padding: 8px 14px; border-radius: 20px; transition: background 0.2s;">&#128196; View Official PDF</a>
+            </div>
+            <div class="logo-header">
+                <img style="filter: drop-shadow(0px 0px 0.5px white);" src="./assets/images/logo2.png" onerror="this.src='http://192.168.101.75/assets/images/logo2.png'" width="200" alt="LOGO">
+                <input id='search' style="min-width: 400px; margin-top: 10px;" placeholder='Search extension or description...'>
+            </div>
+        </header>
+        <div class='container'>
+            <section class='card'>
+                <h3 style='margin:18px;color:#0d47a1'>?? Campus</h3>
+                
+                <h2>General</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2800</td>
+                        <td>Main Gate</td>
+                    </tr>
+                    <tr>
+                        <td>2799</td>
+                        <td>Vehicle Shed</td>
+                    </tr>
+                    <tr>
+                        <td>2779</td>
+                        <td>Patient Waiting</td>
+                    </tr>
+                    <tr>
+                        <td>2627</td>
+                        <td>Sakthi Catering Serivces (Kitchen)</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h3 style='margin:18px;color:#0d47a1'>?? Ground Floor</h3>
+                
+                <h2>MS Office</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2880</td>
+                        <td>Medical Superintendent</td>
+                    </tr>
+                    <tr>
+                        <td>2881</td>
+                        <td>MS Secretary</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>Emergency Medicine</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2001</td>
+                        <td>Emergency Reception</td>
+                    </tr>
+                    <tr>
+                        <td>2002</td>
+                        <td>Emergency Priority</td>
+                    </tr>
+                    <tr>
+                        <td>2004</td>
+                        <td>Emergency OP Room</td>
+                    </tr>
+                    <tr>
+                        <td>2005</td>
+                        <td>Emergency Registration</td>
+                    </tr>
+                    <tr>
+                        <td>2008</td>
+                        <td>EMS OT</td>
+                    </tr>
+                    <tr>
+                        <td>2807</td>
+                        <td>Emergency HOD</td>
+                    </tr>
+                    <tr>
+                        <td>2802</td>
+                        <td>Duty Doctor Room Female (Medicine)</td>
+                    </tr>
+                    <tr>
+                        <td>2803</td>
+                        <td>Duty Doctor Room (Surgery)</td>
+                    </tr>
+                    <tr>
+                        <td>2804</td>
+                        <td>Emergency Major Ward</td>
+                    </tr>
+                    <tr>
+                        <td>2805</td>
+                        <td>Emergency Unscreen Ward</td>
+                    </tr>
+                    <tr>
+                        <td>2806</td>
+                        <td>EMS X Ray</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>Sash</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2091</td>
+                        <td>Ayurveda OP (Sash)</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>Dietetics</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2018</td>
+                        <td>Dietician</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>General Surgery</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2021</td>
+                        <td>GS Reception</td>
+                    </tr>
+                    <tr>
+                        <td>2026</td>
+                        <td>Consultation Male</td>
+                    </tr>
+                    <tr>
+                        <td>2028</td>
+                        <td>Consultation Female</td>
+                    </tr>
+                    <tr>
+                        <td>2087</td>
+                        <td>GS Dressing OPD</td>
+                    </tr>
+                    <tr>
+                        <td>2019</td>
+                        <td>Review OPD</td>
+                    </tr>
+                    <tr>
+                        <td>2089</td>
+                        <td>Review OPD II</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>Paediatrics</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2030</td>
+                        <td>Paediatrics HOD</td>
+                    </tr>
+                    <tr>
+                        <td>2031</td>
+                        <td>Paediatric OP</td>
+                    </tr>
+                    <tr>
+                        <td>2032</td>
+                        <td>Consultation Room 2</td>
+                    </tr>
+                    <tr>
+                        <td>2033</td>
+                        <td>Consultation Room 1</td>
+                    </tr>
+                    <tr>
+                        <td>2038</td>
+                        <td>Feeding Room</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>Ophthalmology</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2090</td>
+                        <td>Ophthal HOD</td>
+                    </tr>
+                    <tr>
+                        <td>2670</td>
+                        <td>Ophthal Professor</td>
+                    </tr>
+                    <tr>
+                        <td>2671</td>
+                        <td>Ophthal Reception</td>
+                    </tr>
+                    <tr>
+                        <td>2672</td>
+                        <td>Ophthal Counseling</td>
+                    </tr>
+                    <tr>
+                        <td>2095</td>
+                        <td>GB Opticals</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>Ortho</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2040</td>
+                        <td>Ortho HOD</td>
+                    </tr>
+                    <tr>
+                        <td>2041</td>
+                        <td>Ortho Reception</td>
+                    </tr>
+                    <tr>
+                        <td>2044</td>
+                        <td>Duty Doctor Room</td>
+                    </tr>
+                    <tr>
+                        <td>2047</td>
+                        <td>Consultation Room</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>Radiology</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2700</td>
+                        <td>Radiology Reception</td>
+                    </tr>
+                    <tr>
+                        <td>2699</td>
+                        <td>Radiology HOD</td>
+                    </tr>
+                    <tr>
+                        <td>2695</td>
+                        <td>Radiology Steno Typist</td>
+                    </tr>
+                    <tr>
+                        <td>2690</td>
+                        <td>MRI Console</td>
+                    </tr>
+                    <tr>
+                        <td>2691</td>
+                        <td>Ultra Sound 1</td>
+                    </tr>
+                    <tr>
+                        <td>2693</td>
+                        <td>Ultra Sound 3</td>
+                    </tr>
+                    <tr>
+                        <td>2696</td>
+                        <td>Duty Doctor Room</td>
+                    </tr>
+                    <tr>
+                        <td>2697</td>
+                        <td>DR X-ray &amp; Mammography</td>
+                    </tr>
+                    <tr>
+                        <td>2698</td>
+                        <td>Reporting Room</td>
+                    </tr>
+                    <tr>
+                        <td>2688</td>
+                        <td>Radiology Technician</td>
+                    </tr>
+                    <tr>
+                        <td>2689</td>
+                        <td>CT Console</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>RJ Medical</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2781</td>
+                        <td>RJ Medical 1</td>
+                    </tr>
+                    <tr>
+                        <td>2782</td>
+                        <td>RJ Medical 2</td>
+                    </tr>
+                    <tr>
+                        <td>2783</td>
+                        <td>RJ Medical 3</td>
+                    </tr>
+                    <tr>
+                        <td>2303</td>
+                        <td>RJ Medical 3rd Floor</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>Reception</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>3003</td>
+                        <td>Reception</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>Operation</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2771</td>
+                        <td>Operations Manager</td>
+                    </tr>
+                    <tr>
+                        <td>2615</td>
+                        <td>Gre Help Desk</td>
+                    </tr>
+                    <tr>
+                        <td>2618</td>
+                        <td>OP Registration</td>
+                    </tr>
+                    <tr>
+                        <td>2619</td>
+                        <td>OP Registration</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>Gynaecology</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2050</td>
+                        <td>Dr.Sri Lekha Mam</td>
+                    </tr>
+                    <tr>
+                        <td>2051</td>
+                        <td>GYNAEC Reception</td>
+                    </tr>
+                    <tr>
+                        <td>2054</td>
+                        <td>GYNAEC OP</td>
+                    </tr>
+                    <tr>
+                        <td>2055</td>
+                        <td>Ante-natal OP</td>
+                    </tr>
+                    <tr>
+                        <td>2877</td>
+                        <td>OG Duty Doctor Room (PG)</td>
+                    </tr>
+                    <tr>
+                        <td>2876</td>
+                        <td>OG Duty Doctor Room</td>
+                    </tr>
+                    <tr>
+                        <td>2808</td>
+                        <td>Unscreened Labour</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>ENT</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2060</td>
+                        <td>ENT HOD/Stenotypist</td>
+                    </tr>
+                    <tr>
+                        <td>2061</td>
+                        <td>ENT Reception</td>
+                    </tr>
+                    <tr>
+                        <td>2062</td>
+                        <td>ENT Asso.p 1</td>
+                    </tr>
+                    <tr>
+                        <td>2069</td>
+                        <td>Audiometry</td>
+                    </tr>
+                    <tr>
+                        <td>2067</td>
+                        <td>Endoscopy</td>
+                    </tr>
+                    <tr>
+                        <td>2066</td>
+                        <td>BERA/OAE Room</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>Dermatology</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2070</td>
+                        <td>Dermatology HOD</td>
+                    </tr>
+                    <tr>
+                        <td>2071</td>
+                        <td>Dermatology Reception</td>
+                    </tr>
+                    <tr>
+                        <td>2027</td>
+                        <td>Dermatology Consultation</td>
+                    </tr>
+                    <tr>
+                        <td>2072</td>
+                        <td>Dermatology Consultation</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>Psychiatry</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2080</td>
+                        <td>Psychiatry HOD</td>
+                    </tr>
+                    <tr>
+                        <td>2082</td>
+                        <td>Psychiatry Consultation</td>
+                    </tr>
+                    <tr>
+                        <td>2023</td>
+                        <td>Psychiatry Consultation</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>Siddha</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2085</td>
+                        <td>Siddha HOD</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>Labour</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2871</td>
+                        <td>Labour Casualty</td>
+                    </tr>
+                    <tr>
+                        <td>2875</td>
+                        <td>Labour High Risk Room</td>
+                    </tr>
+                    <tr>
+                        <td>2873</td>
+                        <td>Clean Labour Room</td>
+                    </tr>
+                    <tr>
+                        <td>2878</td>
+                        <td>Labour OT</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>MRD</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2601</td>
+                        <td>MRO</td>
+                    </tr>
+                    <tr>
+                        <td>2602</td>
+                        <td>MRD 1</td>
+                    </tr>
+                    <tr>
+                        <td>2603</td>
+                        <td>MRD 2</td>
+                    </tr>
+                    <tr>
+                        <td>2604</td>
+                        <td>MRD 3</td>
+                    </tr>
+                    <tr>
+                        <td>2605</td>
+                        <td>MRD 4</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>Billing</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2610</td>
+                        <td>Billing Manager</td>
+                    </tr>
+                    <tr>
+                        <td>2611</td>
+                        <td>IP Billing 1</td>
+                    </tr>
+                    <tr>
+                        <td>2612</td>
+                        <td>IP Billing 2</td>
+                    </tr>
+                    <tr>
+                        <td>2613</td>
+                        <td>IP Billing 3</td>
+                    </tr>
+                    <tr>
+                        <td>2609</td>
+                        <td>Insurance</td>
+                    </tr>
+                    <tr>
+                        <td>2614</td>
+                        <td>Insurance</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>Physiotherapy</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2637</td>
+                        <td>Physiotherapy HOD</td>
+                    </tr>
+                    <tr>
+                        <td>2636</td>
+                        <td>Physiotherapy</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>Pharmacy</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2656</td>
+                        <td>Pharmacy</td>
+                    </tr>
+                    <tr>
+                        <td>2635</td>
+                        <td>OP Pharmacy</td>
+                    </tr>
+                    <tr>
+                        <td>2135, 2136</td>
+                        <td>IP Pharmacy</td>
+                    </tr>
+                    <tr>
+                        <td>2801</td>
+                        <td>Casualty Pharmacy</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>Lab Collection</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2007</td>
+                        <td>EMS Collection</td>
+                    </tr>
+                    <tr>
+                        <td>2809</td>
+                        <td>GM Collection</td>
+                    </tr>
+                    <tr>
+                        <td>2819</td>
+                        <td>GS Collection</td>
+                    </tr>
+                    <tr>
+                        <td>2849</td>
+                        <td>OG Collection</td>
+                    </tr>
+                    <tr>
+                        <td>2673</td>
+                        <td>Ophthal Collection</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h3 style='margin:18px;color:#0d47a1'>?? First Floor</h3>
+                
+                <h2>ICU Billing</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2181</td>
+                        <td>ICU Billing</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>CSSD</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2119</td>
+                        <td>CSSD Incharge</td>
+                    </tr>
+                    <tr>
+                        <td>2120</td>
+                        <td>CSSD</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>Laboratory</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2123</td>
+                        <td>LAB Director</td>
+                    </tr>
+                    <tr>
+                        <td>2121</td>
+                        <td>LAB Sample Reporting</td>
+                    </tr>
+                    <tr>
+                        <td>2124</td>
+                        <td>FNAC Room</td>
+                    </tr>
+                    <tr>
+                        <td>2125</td>
+                        <td>Cytology</td>
+                    </tr>
+                    <tr>
+                        <td>2126</td>
+                        <td>Clinical Microbiology</td>
+                    </tr>
+                    <tr>
+                        <td>2127</td>
+                        <td>Microbiology LAB</td>
+                    </tr>
+                    <tr>
+                        <td>2128</td>
+                        <td>PCR</td>
+                    </tr>
+                    <tr>
+                        <td>2811</td>
+                        <td>LAB Molecular Biology</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>Blood Bank</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2130</td>
+                        <td>Blood Bank HOD</td>
+                    </tr>
+                    <tr>
+                        <td>2131</td>
+                        <td>Blood Bank</td>
+                    </tr>
+                    <tr>
+                        <td>2132</td>
+                        <td>Blood Bank Donor Collection</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>Anaesthesia &amp; Operation Theatre</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2111</td>
+                        <td>Anaesthesia HOD</td>
+                    </tr>
+                    <tr>
+                        <td>2114</td>
+                        <td>Anaesthesia Secretary</td>
+                    </tr>
+                    <tr>
+                        <td>2110</td>
+                        <td>Pre OP</td>
+                    </tr>
+                    <tr>
+                        <td>2112</td>
+                        <td>Post OP</td>
+                    </tr>
+                    <tr>
+                        <td>2113</td>
+                        <td>OT Store</td>
+                    </tr>
+                    <tr>
+                        <td>2114</td>
+                        <td>Minor OT</td>
+                    </tr>
+                    <tr>
+                        <td>2117</td>
+                        <td>Anaesthetic Lounge</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>ICU</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2766</td>
+                        <td>ICU Security</td>
+                    </tr>
+                    <tr>
+                        <td>2156</td>
+                        <td>ICU HOD</td>
+                    </tr>
+                    <tr>
+                        <td>2163</td>
+                        <td>TICU 1</td>
+                    </tr>
+                    <tr>
+                        <td>2164</td>
+                        <td>TICU II/ICU Ward Secretary</td>
+                    </tr>
+                    <tr>
+                        <td>2160</td>
+                        <td>PACU</td>
+                    </tr>
+                    <tr>
+                        <td>2159</td>
+                        <td>IMCU</td>
+                    </tr>
+                    <tr>
+                        <td>2161</td>
+                        <td>NICU</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>Admin Office</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2100</td>
+                        <td>MD Room</td>
+                    </tr>
+                    <tr>
+                        <td>2183</td>
+                        <td>MD PA</td>
+                    </tr>
+                    <tr>
+                        <td>2173</td>
+                        <td>HR Senior Manager</td>
+                    </tr>
+                    <tr>
+                        <td>2169</td>
+                        <td>HR Jr Executive</td>
+                    </tr>
+                    <tr>
+                        <td>2168</td>
+                        <td>HR Assistant</td>
+                    </tr>
+                    <tr>
+                        <td>2193</td>
+                        <td>CFMS</td>
+                    </tr>
+                    <tr>
+                        <td>2192</td>
+                        <td>Maintenance Asst</td>
+                    </tr>
+                    <tr>
+                        <td>2199</td>
+                        <td>Maintenance &amp; Transport</td>
+                    </tr>
+                    <tr>
+                        <td>2189</td>
+                        <td>Accounts DGM</td>
+                    </tr>
+                    <tr>
+                        <td>2175</td>
+                        <td>Accountant</td>
+                    </tr>
+                    <tr>
+                        <td>2174</td>
+                        <td>Auditor</td>
+                    </tr>
+                    <tr>
+                        <td>2170</td>
+                        <td>Marketing</td>
+                    </tr>
+                    <tr>
+                        <td>2225</td>
+                        <td>DGM &amp; IT Head</td>
+                    </tr>
+                    <tr>
+                        <td>2227</td>
+                        <td>IT Manager</td>
+                    </tr>
+                    <tr>
+                        <td>2226</td>
+                        <td>IT Hardware Support</td>
+                    </tr>
+                    <tr>
+                        <td>2228</td>
+                        <td>IT Software Support</td>
+                    </tr>
+                    <tr>
+                        <td>2770</td>
+                        <td>PA Room</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>Specialty</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2150</td>
+                        <td>Specialty Billing</td>
+                    </tr>
+                    <tr>
+                        <td>2151</td>
+                        <td>Neurology</td>
+                    </tr>
+                    <tr>
+                        <td>2153</td>
+                        <td>Plastic Surgery</td>
+                    </tr>
+                    <tr>
+                        <td>2142</td>
+                        <td>MHC 1</td>
+                    </tr>
+                    <tr>
+                        <td>2143</td>
+                        <td>MHC 2</td>
+                    </tr>
+                    <tr>
+                        <td>2154</td>
+                        <td>Urology OP</td>
+                    </tr>
+                    <tr>
+                        <td>2149</td>
+                        <td>Urology Consultation 1</td>
+                    </tr>
+                    <tr>
+                        <td>2146</td>
+                        <td>Urology Consultation 2</td>
+                    </tr>
+                    <tr>
+                        <td>2148</td>
+                        <td>Endoscopy</td>
+                    </tr>
+                    <tr>
+                        <td>2147</td>
+                        <td>Ophthal Investigations Room</td>
+                    </tr>
+                    <tr>
+                        <td>2145</td>
+                        <td>Ophthal HOD</td>
+                    </tr>
+                    <tr>
+                        <td>2140</td>
+                        <td>Ophthal Laser Room</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>Cardiology OP</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2813</td>
+                        <td>Cardiology OP</td>
+                    </tr>
+                    <tr>
+                        <td>2814</td>
+                        <td>Cardiology Billing</td>
+                    </tr>
+                    <tr>
+                        <td>2815</td>
+                        <td>Cardiology Echo</td>
+                    </tr>
+                    <tr>
+                        <td>2816</td>
+                        <td>Cardiology Doctor</td>
+                    </tr>
+                    <tr>
+                        <td>2817</td>
+                        <td>Cardiology Collection</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h3 style='margin:18px;color:#0d47a1'>?? Second Floor</h3>
+                
+                <h2>Shree Surgicals</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2201</td>
+                        <td>Shree Surgicals Billing</td>
+                    </tr>
+                    <tr>
+                        <td>2202</td>
+                        <td>Second Floor Billing</td>
+                    </tr>
+                </table>
+            </section>
+                        <section class='card'>
+                <h2>Paediatrics</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2230</td>
+                        <td>Paediatric HOD</td>
+                    </tr>
+                    <tr>
+                        <td>2231</td>
+                        <td>Paediatric Stenotypist</td>
+                    </tr>
+                    <tr>
+                        <td>2232</td>
+                        <td>Paediatric Ward</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>Ophthal</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2270</td>
+                        <td>Ophthal Steno</td>
+                    </tr>
+                    <tr>
+                        <td>2271</td>
+                        <td>Ophthal DBCS Room</td>
+                    </tr>
+                    <tr>
+                        <td>2287</td>
+                        <td>Ophthal Ward</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>ENT Ward</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2289</td>
+                        <td>ENT Stenotypist</td>
+                    </tr>
+                    <tr>
+                        <td>2234</td>
+                        <td>ENT Ward</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>Gynaecology &amp; Obstetric</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2251</td>
+                        <td>GYNAEC HOD</td>
+                    </tr>
+                    <tr>
+                        <td>2252</td>
+                        <td>GYNAEC Stenotypist</td>
+                    </tr>
+                    <tr>
+                        <td>2284, 2285</td>
+                        <td>Gynaecology &amp; Obstetric Ward</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>Surgery Ward</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2354, 2355</td>
+                        <td>Male Surgery Ward</td>
+                    </tr>
+                    <tr>
+                        <td>2353</td>
+                        <td>Female Surgery Ward</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>PG/CRRI Duty Room</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2273</td>
+                        <td>PG/CRRI Male Doctor Duty Room</td>
+                    </tr>
+                    <tr>
+                        <td>2274</td>
+                        <td>PG/CRRI Male Doctor Duty Room</td>
+                    </tr>
+                    <tr>
+                        <td>2275</td>
+                        <td>PG/CRRI Female Doctor Duty Room</td>
+                    </tr>
+                    <tr>
+                        <td>2276</td>
+                        <td>PG/CRRI Female Doctor Duty Room</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h3 style='margin:18px;color:#0d47a1'>?? Third Floor</h3>
+                
+                <h2>MD</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2300</td>
+                        <td>Medical Director</td>
+                    </tr>
+                    <tr>
+                        <td>2334</td>
+                        <td>MD PA</td>
+                    </tr>
+                    <tr>
+                        <td>2333</td>
+                        <td>Dean Room</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>Quality</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2380</td>
+                        <td>Quality Manager</td>
+                    </tr>
+                    <tr>
+                        <td>2381</td>
+                        <td>Quality Team</td>
+                    </tr>
+                    <tr>
+                        <td>2382</td>
+                        <td>Quality Team</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>NS Office</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2377</td>
+                        <td>Nursing Superintendent</td>
+                    </tr>
+                    <tr>
+                        <td>2378</td>
+                        <td>NS Office</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>Surgery</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2320</td>
+                        <td>GS HOD</td>
+                    </tr>
+                    <tr>
+                        <td>2321</td>
+                        <td>GS Stenotypist</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>Ortho Ward</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2340</td>
+                        <td>Ortho HOD</td>
+                    </tr>
+                    <tr>
+                        <td>2341</td>
+                        <td>Ortho Stenotypist</td>
+                    </tr>
+                    <tr>
+                        <td>2342</td>
+                        <td>Ortho Male Ward</td>
+                    </tr>
+                    <tr>
+                        <td>2343</td>
+                        <td>Ortho Female Ward</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h3 style='margin:18px;color:#0d47a1'>?? Fourth Floor</h3>
+                
+                <h2>House Keeping</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2400</td>
+                        <td>House Keeping HOD</td>
+                    </tr>
+                    <tr>
+                        <td>2401</td>
+                        <td>House Keeping 1</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>General Medicine Ward</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2010</td>
+                        <td>General Medicine HOD</td>
+                    </tr>
+                    <tr>
+                        <td>2011</td>
+                        <td>GM Reception</td>
+                    </tr>
+                    <tr>
+                        <td>2015</td>
+                        <td>Consultation I</td>
+                    </tr>
+                    <tr>
+                        <td>2016</td>
+                        <td>Consultation II</td>
+                    </tr>
+                    <tr>
+                        <td>2410</td>
+                        <td>GM HOD</td>
+                    </tr>
+                    <tr>
+                        <td>2411</td>
+                        <td>GM Stenotypist</td>
+                    </tr>
+                    <tr>
+                        <td>2412</td>
+                        <td>Male Medicine Ward</td>
+                    </tr>
+                    <tr>
+                        <td>2485</td>
+                        <td>Female Medicine Ward</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h3 style='margin:18px;color:#0d47a1'>?? Fifth Floor</h3>
+                
+                <h2>Biomedical</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2535</td>
+                        <td>Biomedical HOD</td>
+                    </tr>
+                    <tr>
+                        <td>2536</td>
+                        <td>Biomedical Engg</td>
+                    </tr>
+                    <tr>
+                        <td>2537</td>
+                        <td>Biomedical Engg</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>Cardiology</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2510</td>
+                        <td>Cardiology HOD</td>
+                    </tr>
+                    <tr>
+                        <td>2508</td>
+                        <td>Cardiology LAB</td>
+                    </tr>
+                    <tr>
+                        <td>2509</td>
+                        <td>Cardiology LAB</td>
+                    </tr>
+                    <tr>
+                        <td>2511</td>
+                        <td>Cardiology Billing</td>
+                    </tr>
+                    <tr>
+                        <td>2513</td>
+                        <td>Echo</td>
+                    </tr>
+                    <tr>
+                        <td>2514</td>
+                        <td>CTVS</td>
+                    </tr>
+                    <tr>
+                        <td>2515</td>
+                        <td>Cath LAB</td>
+                    </tr>
+                    <tr>
+                        <td>2516</td>
+                        <td>Cath LAB</td>
+                    </tr>
+                    <tr>
+                        <td>2517</td>
+                        <td>Cath LAB</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>Dialysis</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2520</td>
+                        <td>Nephro HOD</td>
+                    </tr>
+                    <tr>
+                        <td>2521</td>
+                        <td>Nephro OPD</td>
+                    </tr>
+                    <tr>
+                        <td>2528</td>
+                        <td>Dialysis Billing</td>
+                    </tr>
+                    <tr>
+                        <td>2526</td>
+                        <td>Dialysis Incharge</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>Organ Transplant</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2530</td>
+                        <td>Organ Transplant</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>Special Ward</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2548</td>
+                        <td>Special Ward Billing</td>
+                    </tr>
+                    <tr>
+                        <td>2549</td>
+                        <td>Special Ward Reception 1</td>
+                    </tr>
+                    <tr>
+                        <td>2550</td>
+                        <td>Special Ward Reception 2</td>
+                    </tr>
+                    <tr>
+                        <td>2591</td>
+                        <td>Suite Room 1</td>
+                    </tr>
+                    <tr>
+                        <td>2592</td>
+                        <td>Suite Room 2</td>
+                    </tr>
+                    <tr>
+                        <td>2593</td>
+                        <td>Suite Room 3</td>
+                    </tr>
+                    <tr>
+                        <td>2551</td>
+                        <td>Deluxe Room 1</td>
+                    </tr>
+                    <tr>
+                        <td>2552</td>
+                        <td>Deluxe Room 2</td>
+                    </tr>
+                    <tr>
+                        <td>2553</td>
+                        <td>Deluxe Room 3</td>
+                    </tr>
+                    <tr>
+                        <td>2554</td>
+                        <td>Deluxe Room 4</td>
+                    </tr>
+                    <tr>
+                        <td>2555</td>
+                        <td>Deluxe Room 5</td>
+                    </tr>
+                    <tr>
+                        <td>2556</td>
+                        <td>Deluxe Room 6</td>
+                    </tr>
+                    <tr>
+                        <td>2557</td>
+                        <td>Deluxe Room 7</td>
+                    </tr>
+                    <tr>
+                        <td>2558</td>
+                        <td>Deluxe Room 8</td>
+                    </tr>
+                    <tr>
+                        <td>2559</td>
+                        <td>Deluxe Room 9</td>
+                    </tr>
+                    <tr>
+                        <td>2560</td>
+                        <td>Deluxe Room 10</td>
+                    </tr>
+                    <tr>
+                        <td>2561</td>
+                        <td>Deluxe Room 11</td>
+                    </tr>
+                    <tr>
+                        <td>2562</td>
+                        <td>Deluxe Room 12</td>
+                    </tr>
+                    <tr>
+                        <td>2563</td>
+                        <td>Deluxe Room 13</td>
+                    </tr>
+                    <tr>
+                        <td>2564</td>
+                        <td>Deluxe Room 14</td>
+                    </tr>
+                    <tr>
+                        <td>2565</td>
+                        <td>Deluxe Room 15</td>
+                    </tr>
+                    <tr>
+                        <td>2566</td>
+                        <td>Deluxe Room 16</td>
+                    </tr>
+                    <tr>
+                        <td>2567</td>
+                        <td>Deluxe Room 17</td>
+                    </tr>
+                    <tr>
+                        <td>2568</td>
+                        <td>Deluxe Room 18</td>
+                    </tr>
+                    <tr>
+                        <td>2569</td>
+                        <td>Deluxe Room 19</td>
+                    </tr>
+                    <tr>
+                        <td>2570</td>
+                        <td>Deluxe Room 20</td>
+                    </tr>
+                    <tr>
+                        <td>2571</td>
+                        <td>Deluxe Room 21</td>
+                    </tr>
+                    <tr>
+                        <td>2572</td>
+                        <td>Deluxe Room 22</td>
+                    </tr>
+                    <tr>
+                        <td>2574</td>
+                        <td>Deluxe Room 24</td>
+                    </tr>
+                    <tr>
+                        <td>2575</td>
+                        <td>Deluxe Room 25</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h3 style='margin:18px;color:#0d47a1'>?? Service Block</h3>
+                
+                <h2>Purchase</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2702</td>
+                        <td>Purchase Manager</td>
+                    </tr>
+                    <tr>
+                        <td>2701</td>
+                        <td>Purchase Stores I</td>
+                    </tr>
+                    <tr>
+                        <td>2711</td>
+                        <td>Purchase Stores II</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>Laundry</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2704</td>
+                        <td>Laundry AGM</td>
+                    </tr>
+                    <tr>
+                        <td>2703</td>
+                        <td>Laundry Technician</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>Maintenance</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2705</td>
+                        <td>Air Conditioning</td>
+                    </tr>
+                    <tr>
+                        <td>2706</td>
+                        <td>Gas Plant</td>
+                    </tr>
+                    <tr>
+                        <td>2707</td>
+                        <td>Carpentor/Plumber</td>
+                    </tr>
+                    <tr>
+                        <td>2709</td>
+                        <td>Maintenance 1</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>ART</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2712</td>
+                        <td>ART Reception</td>
+                    </tr>
+                    <tr>
+                        <td>2713</td>
+                        <td>ART Senior Medical Officer</td>
+                    </tr>
+                    <tr>
+                        <td>2714</td>
+                        <td>ART Medical Officer</td>
+                    </tr>
+                    <tr>
+                        <td>2715</td>
+                        <td>ART Consulting</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>Security</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2767</td>
+                        <td>A Zone Security</td>
+                    </tr>
+                    <tr>
+                        <td>2768</td>
+                        <td>B Zone Security</td>
+                    </tr>
+                    <tr>
+                        <td>2769</td>
+                        <td>C Zone Security</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>A Zone</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2751</td>
+                        <td>Lift 4</td>
+                    </tr>
+                    <tr>
+                        <td>2752</td>
+                        <td>Lift 5</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>B Zone</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2753</td>
+                        <td>Lift 1</td>
+                    </tr>
+                    <tr>
+                        <td>2754</td>
+                        <td>Lift 2</td>
+                    </tr>
+                    <tr>
+                        <td>2755</td>
+                        <td>Lift 3</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>C Zone</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2759</td>
+                        <td>Lift 8</td>
+                    </tr>
+                    <tr>
+                        <td>2758</td>
+                        <td>Lift 9</td>
+                    </tr>
+                </table>
+            </section>
+            <section class='card'>
+                <h2>Service Lift</h2>
+                <table class='tbl'>
+                    <tr>
+                        <th>Extension</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2756</td>
+                        <td>Lift 6</td>
+                    </tr>
+                    <tr>
+                        <td>2757</td>
+                        <td>Lift 7</td>
+                    </tr>
+                </table>
+            </section>
+        </div>
+        <script>
+            const s = document.getElementById('search');
+            s.onkeyup = () => {
+                let q = s.value.toLowerCase();
+                document.querySelectorAll('.card').forEach(c => {
+                    let vis = 0;
+                    c.querySelectorAll('tbody tr,tr').forEach((r, i) => {
+                        if (i == 0) return;
+                        let ok = r.innerText.toLowerCase().includes(q);
+                        r.style.display = ok ? '' : 'none';
+                        if (ok) vis++;
+                    });
+                    c.style.display = vis ? 'block' : 'none';
+                });
+            };
+        </script>
+    </div>
+</body>
+
+</html>

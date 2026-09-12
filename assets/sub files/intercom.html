@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Campus Intercom Directory - Adhiparasakthi Hospitals</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-900 font-['Plus_Jakarta_Sans',sans-serif] min-h-screen flex flex-col">
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <a href="../../index.html" class="flex items-center gap-2 text-slate-600 hover:text-blue-600 transition-colors text-sm font-semibold">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+        <span>Back to Main Portal</span>
+      </a>
+      <a href="../../Intercom%20Directory.pdf" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-red-50 text-red-700 text-xs font-bold hover:bg-red-100 transition-colors">
+        Official PDF Directory &rarr;
+      </a>
+    </div>
+  </header>
+
+  <div class="bg-[#0b1021] text-white py-12 px-4 sm:px-6">
+    <div class="max-w-4xl mx-auto text-center">
+      <span class="inline-block px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 text-xs font-extrabold uppercase tracking-wider mb-3">INTERNAL TELEPHONY DIRECTORY</span>
+      <h1 class="text-2xl sm:text-4xl font-extrabold mb-3 tracking-tight">Campus Intercoms Directory</h1>
+      <p class="text-xs sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
+        Priority emergency lines, casualty extensions, intensive care units, and department intercom numbers.
+      </p>
+    </div>
+  </div>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-10 flex-1 w-full space-y-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="p-5 rounded-2xl bg-rose-50 border border-rose-200">
+        <span class="text-xs font-bold text-rose-700 uppercase">CASUALTY / TRAUMA</span>
+        <div class="text-2xl font-black text-rose-900 font-mono mt-1">2100 / 2101</div>
+        <p class="text-xs text-rose-600 mt-1">24/7 Emergency triage line</p>
+      </div>
+      <div class="p-5 rounded-2xl bg-red-50 border border-red-200">
+        <span class="text-xs font-bold text-red-700 uppercase">CODE BLUE / ICU</span>
+        <div class="text-2xl font-black text-red-900 font-mono mt-1">5555</div>
+        <p class="text-xs text-red-600 mt-1">Cardiopulmonary arrest team</p>
+      </div>
+      <div class="p-5 rounded-2xl bg-blue-50 border border-blue-200">
+        <span class="text-xs font-bold text-blue-700 uppercase">BLOOD BANK</span>
+        <div class="text-2xl font-black text-blue-900 font-mono mt-1">2450</div>
+        <p class="text-xs text-blue-600 mt-1">Emergency blood issue desk</p>
+      </div>
+      <div class="p-5 rounded-2xl bg-emerald-50 border border-emerald-200">
+        <span class="text-xs font-bold text-emerald-700 uppercase">IT DESK / SERVER</span>
+        <div class="text-2xl font-black text-emerald-900 font-mono mt-1">8888</div>
+        <p class="text-xs text-emerald-600 mt-1">HIS & network support desk</p>
+      </div>
+    </div>
+
+    <!-- Embedded Intercom Directory PDF Document -->
+    <div class="bg-white rounded-3xl p-4 sm:p-8 border border-slate-200 shadow-sm space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="px-2.5 py-0.5 rounded-md bg-red-100 text-red-700 text-xs font-bold uppercase tracking-wider">OFFICIAL DOCUMENT</span>
+            <span class="text-xs text-slate-400 font-medium">&bull; Intercom Directory.pdf</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">Campus Intercom Directory PDF</h2>
+          <p class="text-xs sm:text-sm text-slate-500 mt-1 max-w-xl">
+            Complete extension list for clinical departments, consultant chambers, diagnostic labs, ICUs, and administrative wings.
+          </p>
+        </div>
+        <div class="flex flex-wrap items-center gap-2.5 shrink-0">
+          <a href="http://192.168.101.75:3000/files/email.pdf" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition-all">
+            Email Directory PDF
+          </a>
+          <a href="../../Intercom%20Directory.pdf" download="Intercom Directory.pdf" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl flex items-center gap-2 transition-all">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+            <span>Download PDF</span>
+          </a>
+          <a href="../../Intercom%20Directory.pdf" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold text-xs rounded-xl flex items-center gap-2 shadow-md shadow-red-900/20 transition-all">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            <span>Open in Full Tab</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Live PDF Embed Viewer -->
+      <div class="w-full h-[750px] sm:h-[880px] rounded-2xl overflow-hidden border border-slate-200 shadow-inner bg-slate-100">
+        <iframe src="../../Intercom%20Directory.pdf#toolbar=1&navpanes=0" class="w-full h-full border-0" title="Intercom Directory PDF">
+          <div class="p-8 text-center text-slate-600">
+            <p class="mb-4">Inline PDF viewing is not supported on this device.</p>
+            <a href="../../Intercom%20Directory.pdf" target="_blank" class="px-5 py-2.5 bg-red-600 text-white font-bold rounded-xl text-xs inline-flex items-center gap-2">
+              Click here to Open Intercom Directory PDF &rarr;
+            </a>
+          </div>
+        </iframe>
+      </div>
+    </div>
+  </main>
+  <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500">
+    &copy; 2026 Adhiparasakthi Hospitals &amp; Research Institute. Telecommunication Division.
+  </footer>
+</body>
+</html>

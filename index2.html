@@ -1,0 +1,2204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gabriela&family=Gantari:ital,wght@0,100..900;1,100..900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="./assets/images/favicon_io/favicon-16x16.ico" type="image/x-icon">
+    <title>APH - PORTAL</title>
+    <!--
+SOFTY PINKO
+https://templatemo.com/tm-535-softy-pinko
+-->
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/templatemo-softy-pinko.css">
+
+    <style>
+        /* Responsive reset and overflow fix */
+        html, body {
+            overflow-x: hidden !important;
+            max-width: 100vw !important;
+            width: 100% !important;
+            margin: 0;
+            padding: 0;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Fixed upload FAB icon */
+        .upload-fab {
+            position: fixed;
+            top: 100px;
+            right: 25px;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 46px;
+            height: 46px;
+            background-color: #00520e;
+            color: #ffffff !important;
+            border-radius: 50%;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.22);
+            text-decoration: none !important;
+            transition: all 0.3s ease;
+        }
+        .upload-fab:hover {
+            background-color: #007014;
+            color: #ffffff !important;
+            transform: scale(1.08);
+        }
+        .upload-fab svg {
+            width: 20px;
+            height: 20px;
+        }
+        @media (max-width: 991px) {
+            .upload-fab {
+                top: auto !important;
+                bottom: 20px !important;
+                right: 20px !important;
+                width: 44px !important;
+                height: 44px !important;
+                box-shadow: 0 6px 20px rgba(0,0,0,0.3) !important;
+            }
+            .upload-fab svg {
+                width: 18px !important;
+                height: 18px !important;
+            }
+        }
+
+        /* Header & Navigation Responsiveness */
+        .header-area {
+            position: fixed;
+            top: 20px;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: transparent;
+            box-shadow: none;
+            transition: all 0.3s ease;
+        }
+        @media (max-width: 991px) {
+            .header-area {
+                top: 15px;
+            }
+        }
+        @media (max-width: 767px) {
+            .header-area {
+                top: 10px;
+            }
+        }
+        .header-area.header-sticky {
+            min-height: 80px;
+        }
+        .header-area .main-nav {
+            min-height: 80px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            padding: 0 25px !important;
+            border-radius: 40px !important;
+            box-shadow: 0px 4px 20px rgba(0,0,0,0.08) !important;
+            background: #ffffff !important;
+            position: relative;
+        }
+        .header-area .main-nav:before {
+            display: none !important;
+        }
+        .header-area .main-nav .logo {
+            float: none !important;
+            margin: 0 !important;
+            display: flex !important;
+            align-items: center !important;
+            flex-shrink: 0;
+        }
+        .header-area .main-nav .logo img {
+            max-height: 48px !important;
+            width: auto !important;
+            object-fit: contain;
+        }
+        @media (min-width: 992px) {
+            .header-area .main-nav .nav {
+                display: flex !important;
+                flex-wrap: nowrap !important;
+                align-items: center !important;
+                margin: 0 15px 0 auto !important;
+                float: none !important;
+                padding: 0 !important;
+            }
+        }
+        .header-area .main-nav .nav li {
+            padding: 0 8px !important;
+            float: none !important;
+        }
+        .header-area .main-nav .nav li a {
+            color: #1e293b !important;
+            font-weight: 600;
+            font-size: 13px;
+            padding: 8px 6px !important;
+            height: auto !important;
+            line-height: normal !important;
+            letter-spacing: 0.5px;
+            transition: color 0.25s ease;
+            white-space: nowrap;
+        }
+        .header-area .main-nav .nav li a:hover,
+        .header-area .main-nav .nav li a.active {
+            color: #ff589b !important;
+        }
+
+        /* Desktop IP badge in navbar */
+        .desktop-ip-badge {
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+            padding: 5px 6px 5px 14px !important;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important;
+            color: #ffffff !important;
+            border-radius: 30px !important;
+            border: 1px solid rgba(255, 255, 255, 0.18) !important;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.18) !important;
+            white-space: nowrap !important;
+            margin: 0 !important;
+            flex-shrink: 0;
+            transition: all 0.25s ease;
+        }
+        .desktop-ip-badge:hover {
+            box-shadow: 0 6px 16px rgba(15, 23, 42, 0.28) !important;
+            border-color: rgba(56, 189, 248, 0.45) !important;
+        }
+        .desktop-ip-badge .ip-icon {
+            color: #38bdf8 !important;
+            font-size: 13px !important;
+        }
+        .desktop-ip-badge .ip-label {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+            font-size: 11.5px !important;
+            font-weight: 600 !important;
+            color: #cbd5e1 !important;
+            letter-spacing: 0.3px !important;
+            text-transform: uppercase;
+        }
+        .desktop-ip-badge .ip-number {
+            font-family: 'JetBrains Mono', 'SF Mono', 'Segoe UI Mono', 'Roboto Mono', Menlo, Consolas, monospace !important;
+            font-size: 13.5px !important;
+            font-weight: 700 !important;
+            color: #38bdf8 !important;
+            background: rgba(56, 189, 248, 0.14) !important;
+            border: 1px solid rgba(56, 189, 248, 0.35) !important;
+            padding: 3px 10px !important;
+            border-radius: 8px !important;
+            letter-spacing: 0.8px !important;
+            font-variant-numeric: tabular-nums !important;
+            line-height: 1.2 !important;
+            display: inline-block;
+        }
+
+        /* Mobile IP badge */
+        .mobile-ip-badge {
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 7px !important;
+            padding: 5px 6px 5px 12px !important;
+            background: rgba(255, 255, 255, 0.96) !important;
+            color: #1e293b !important;
+            border-radius: 25px !important;
+            border: 1px solid rgba(0, 0, 0, 0.1) !important;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08) !important;
+            backdrop-filter: blur(8px);
+        }
+        .mobile-ip-badge .ip-icon {
+            color: #0284c7 !important;
+            font-size: 12px !important;
+        }
+        .mobile-ip-badge .ip-label {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+            font-size: 11px !important;
+            font-weight: 600 !important;
+            color: #64748b !important;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .mobile-ip-badge .ip-number {
+            font-family: 'JetBrains Mono', 'SF Mono', 'Segoe UI Mono', 'Roboto Mono', Menlo, Consolas, monospace !important;
+            font-size: 12.5px !important;
+            font-weight: 700 !important;
+            color: #0369a1 !important;
+            background: #e0f2fe !important;
+            border: 1px solid #bae6fd !important;
+            padding: 2px 8px !important;
+            border-radius: 6px !important;
+            letter-spacing: 0.6px !important;
+            font-variant-numeric: tabular-nums !important;
+            line-height: 1.2 !important;
+            display: inline-block;
+        }
+
+        @media (max-width: 991px) {
+            .header-area {
+                height: auto !important;
+                padding: 0 15px !important;
+            }
+            .header-area .main-nav {
+                min-height: 70px !important;
+                padding: 0 15px !important;
+                overflow: visible !important;
+            }
+            .header-area .main-nav .logo {
+                margin: 0 !important;
+            }
+            .header-area .main-nav .logo img {
+                max-height: 40px !important;
+            }
+            .header-area .main-nav .menu-trigger {
+                display: block !important;
+                top: 15px !important;
+                right: 15px !important;
+            }
+            .header-area .main-nav .nav {
+                display: none;
+                flex-direction: column !important;
+                width: 100% !important;
+                background: #ffffff;
+                box-shadow: 0 12px 30px rgba(0,0,0,0.14);
+                border-radius: 16px;
+                padding: 10px 0 !important;
+                margin: 70px 0 0 0 !important;
+                border: 1px solid rgba(0,0,0,0.06);
+            }
+            .header-area .main-nav .nav li {
+                width: 100% !important;
+                padding: 0 !important;
+                border-bottom: 1px solid #f1f5f9;
+                text-align: left;
+            }
+            .header-area .main-nav .nav li:last-child {
+                border-bottom: none;
+            }
+            .header-area .main-nav .nav li a {
+                height: auto !important;
+                line-height: normal !important;
+                padding: 12px 20px !important;
+                display: block !important;
+                font-size: 14px !important;
+                color: #334155 !important;
+            }
+            .header-area .main-nav .nav li a:hover,
+            .header-area .main-nav .nav li a.active {
+                background: #f8fafc;
+                color: #ff589b !important;
+            }
+            .nav-ip-item {
+                padding: 12px 20px !important;
+                text-align: center;
+                background: #f8fafc;
+                border-radius: 0 0 16px 16px;
+            }
+        }
+
+        /* Welcome Area & Search */
+        .welcome-area {
+            min-height: 520px;
+            height: 55vh;
+            max-height: 640px;
+            padding: 150px 20px 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-size: cover;
+            background-position: center;
+        }
+        @media (max-width: 991px) {
+            .welcome-area {
+                min-height: 380px;
+                height: auto !important;
+                padding: 120px 15px 50px;
+            }
+        }
+        @media (max-width: 767px) {
+            .welcome-area {
+                min-height: 260px;
+                height: auto !important;
+                padding: 95px 15px 35px;
+            }
+        }
+        .search-container {
+            width: 100%;
+            max-width: 650px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+        #searchForm {
+            display: flex;
+            align-items: center;
+            background: #ffffff;
+            border-radius: 50px;
+            padding: 6px 8px 6px 22px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.16);
+            border: 1px solid rgba(0,0,0,0.06);
+        }
+        .search-bar {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            padding: 10px 5px;
+            color: #1e293b;
+            background: transparent;
+            min-width: 0;
+        }
+        .search-button {
+            background: linear-gradient(135deg, #ff589b 0%, #ff1361 100%);
+            color: #fff;
+            border: none;
+            outline: none;
+            border-radius: 50px;
+            padding: 11px 26px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+        }
+        .search-button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(255, 88, 155, 0.4);
+        }
+        @media (max-width: 480px) {
+            #searchForm {
+                flex-direction: column;
+                border-radius: 18px;
+                padding: 12px;
+                gap: 10px;
+            }
+            .search-bar {
+                width: 100%;
+                text-align: center;
+                font-size: 14px;
+            }
+            .search-button {
+                width: 100%;
+                border-radius: 12px;
+                padding: 11px;
+            }
+        }
+
+        /* Features Section Container & Desktop Card Sizing */
+        @media (min-width: 1200px) {
+            .home-feature .container {
+                max-width: 1360px !important;
+            }
+        }
+        @media (min-width: 1400px) {
+            .home-feature .container {
+                max-width: 1480px !important;
+            }
+        }
+
+        /* Features Small Items (Cards) - Desktop Default */
+        .features-small-item {
+            min-height: 275px !important;
+            padding: 24px 12px 20px 12px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important;
+            align-items: center !important;
+            text-align: center !important;
+            overflow: hidden !important;
+            border-radius: 20px !important;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.07) !important;
+            transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+            margin-bottom: 25px !important;
+            background: #ffffff !important;
+            width: 100% !important;
+        }
+        .features-small-item:hover {
+            transform: translateY(-6px) !important;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.13) !important;
+        }
+        .features-small-item .icon {
+            width: 88px !important;
+            height: 88px !important;
+            line-height: normal !important;
+            margin: 0 auto 16px auto !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            overflow: hidden !important;
+            background: #f8fafc !important;
+            border-radius: 50% !important;
+            border: 1px solid #e2e8f0 !important;
+            transition: all 0.3s ease !important;
+        }
+        .features-small-item:hover .icon {
+            background: rgba(255, 88, 158, 0.1) !important;
+            border-color: rgba(255, 88, 158, 0.3) !important;
+        }
+        .features-small-item .icon i {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+        .features-small-item .icon img,
+        .features-small-item img,
+        .contain-img {
+            max-width: 66px !important;
+            max-height: 66px !important;
+            width: auto !important;
+            height: auto !important;
+            object-fit: contain !important;
+        }
+        .features-small-item .features-title {
+            font-size: 17px !important;
+            font-weight: 700 !important;
+            color: #1e293b !important;
+            margin-bottom: 8px !important;
+            letter-spacing: 0.4px !important;
+            word-break: break-word;
+        }
+        .features-small-item p {
+            font-size: 13.5px !important;
+            line-height: 1.45 !important;
+            color: #64748b !important;
+            margin-bottom: 0 !important;
+        }
+
+        /* Tablet Responsive (768px - 991px) */
+        @media (max-width: 991px) {
+            .features-small-item {
+                min-height: 255px !important;
+                padding: 20px 10px !important;
+                margin-bottom: 20px !important;
+                border-radius: 16px !important;
+            }
+            .features-small-item .icon {
+                width: 76px !important;
+                height: 76px !important;
+                margin: 0 auto 12px auto !important;
+            }
+            .features-small-item .icon img,
+            .features-small-item img,
+            .contain-img {
+                max-width: 54px !important;
+                max-height: 54px !important;
+            }
+            .features-small-item .features-title {
+                font-size: 15px !important;
+                margin-bottom: 6px !important;
+            }
+            .features-small-item p {
+                font-size: 12px !important;
+                line-height: 1.35 !important;
+            }
+        }
+
+        /* Mobile Responsive (577px - 767px) */
+        @media (max-width: 767px) {
+            .features-small-item {
+                min-height: 215px !important;
+                padding: 16px 8px !important;
+                margin-bottom: 16px !important;
+                border-radius: 14px !important;
+            }
+            .features-small-item .icon {
+                width: 66px !important;
+                height: 66px !important;
+                margin: 0 auto 10px auto !important;
+            }
+            .features-small-item .icon img,
+            .features-small-item img,
+            .contain-img {
+                max-width: 46px !important;
+                max-height: 46px !important;
+            }
+            .features-small-item .features-title {
+                font-size: 13.5px !important;
+                margin-bottom: 5px !important;
+            }
+            .features-small-item p {
+                font-size: 11px !important;
+                line-height: 1.3 !important;
+            }
+        }
+
+        /* Small Mobile Responsive (<= 576px) */
+        @media (max-width: 576px) {
+            .features-small-item {
+                min-height: 185px !important;
+                padding: 12px 6px !important;
+                margin-bottom: 12px !important;
+                border-radius: 12px !important;
+            }
+            .features-small-item .icon {
+                width: 56px !important;
+                height: 56px !important;
+                margin-bottom: 8px !important;
+            }
+            .features-small-item .icon img,
+            .features-small-item img,
+            .contain-img {
+                max-width: 40px !important;
+                max-height: 40px !important;
+            }
+            .features-small-item .features-title {
+                font-size: 12px !important;
+                margin-bottom: 4px !important;
+            }
+            .features-small-item p {
+                font-size: 10.5px !important;
+                line-height: 1.25 !important;
+            }
+        }
+
+        .inhouse-applications-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1e293b;
+            margin: 25px 0 20px 0;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        @media (max-width: 767px) {
+            .inhouse-applications-title {
+                font-size: 16px;
+                margin: 18px 0 14px 0;
+            }
+        }
+
+        /* Floating Quick Links (Sides) matching image copy 3.png */
+        .quick-links-right {
+            position: fixed;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 990;
+        }
+        .quick-links-left {
+            position: fixed;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 990;
+        }
+        .quick-links-right a,
+        .quick-links-left a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            background: #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            padding: 3px;
+        }
+        .quick-links-right a:hover,
+        .quick-links-left a:hover {
+            transform: scale(1.12);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+        }
+        .quick-links-right img,
+        .quick-links-left img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+        @media (max-width: 991px) {
+            .quick-links-right,
+            .quick-links-left {
+                display: none !important;
+            }
+        }
+
+        /* Sections spacing on mobile */
+        @media (max-width: 767px) {
+            .section.padding-top-70 {
+                padding-top: 35px !important;
+            }
+            .section.padding-bottom-100 {
+                padding-bottom: 35px !important;
+            }
+            .mini {
+                padding: 35px 0 !important;
+            }
+            .pricing-item {
+                margin-bottom: 20px !important;
+            }
+            .blog-post-thumb {
+                margin-bottom: 20px !important;
+            }
+        }
+
+        /* Feature section spacing & signature banner overlap */
+        .home-feature {
+            margin-top: -95px !important;
+            padding-top: 0px !important;
+            position: relative;
+            z-index: 10;
+        }
+        @media (max-width: 1199px) {
+            .home-feature {
+                margin-top: -75px !important;
+                padding-top: 0px !important;
+            }
+        }
+        @media (max-width: 991px) {
+            .home-feature {
+                margin-top: -40px !important;
+                padding-top: 10px !important;
+            }
+        }
+        @media (max-width: 767px) {
+            .home-feature {
+                margin-top: 0px !important;
+                padding-top: 20px !important;
+            }
+        }
+        [data-scroll-reveal] {
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: none !important;
+        }
+
+        /* Scoped Popup Modal */
+        .popup-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 18, 35, 0.45);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.35s ease;
+            z-index: 9999;
+        }
+        .popup-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .popup {
+            position: relative;
+            width: min(92%, 640px);
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+            animation: bounceIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes bounceIn {
+            0% { opacity: 0; transform: translateY(80px) scale(0.65); }
+            60% { opacity: 1; transform: translateY(-10px) scale(1.05); }
+            80% { transform: translateY(5px) scale(0.98); }
+            100% { transform: translateY(0) scale(1); }
+        }
+        .popup .header {
+            background: linear-gradient(135deg, #2563eb, #0ea5e9);
+            padding: 35px 25px;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+        .popup .header h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            color: #ffffff;
+        }
+        .popup .header p {
+            font-size: 15px;
+            opacity: 0.95;
+            color: #ffffff;
+            margin-bottom: 0;
+        }
+        .popup .close {
+            position: absolute;
+            top: 14px;
+            right: 18px;
+            font-size: 26px;
+            cursor: pointer;
+            color: #ffffff;
+            opacity: 0.9;
+            transition: 0.3s;
+        }
+        .popup .close:hover {
+            transform: rotate(90deg);
+            opacity: 1;
+        }
+        .popup .content {
+            padding: 25px;
+        }
+        .popup .content h2 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: #0f172a;
+        }
+        .popup .content p {
+            line-height: 1.6;
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        .popup .features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .popup .feature {
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 13px;
+            transition: 0.25s;
+        }
+        .popup .footer {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            padding: 0 25px 25px;
+        }
+        .popup button {
+            padding: 12px 24px;
+            font-size: 14px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 600;
+        }
+        .popup .primary {
+            background: #2563eb;
+            color: white;
+        }
+        .popup .primary:hover {
+            transform: translateY(-2px);
+            background: #1d4ed8;
+        }
+        .popup .secondary {
+            background: #e2e8f0;
+            color: #334155;
+        }
+        .popup .secondary:hover {
+            background: #cbd5e1;
+        }
+        @media (max-width: 576px) {
+            .popup .features {
+                grid-template-columns: 1fr;
+            }
+            .popup .footer {
+                flex-direction: column;
+            }
+            .popup button {
+                width: 100%;
+            }
+        }
+    </style>
+
+    <!-- Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+</head>
+
+<body>
+
+    <a href="http://192.168.101.75:8000/server" class="upload-fab" title="Replace PDF" aria-label="Open Replace PDF page">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="17 8 12 3 7 8"/>
+            <line x1="12" y1="3" x2="12" y2="15"/>
+        </svg>
+    </a>
+
+    <!-- ***** Preloader Start ***** -->
+    <div id="preloader" style="display: none !important;">
+        <div class="jumper">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <!-- ***** Preloader End ***** -->
+
+
+    <!-- ***** Header Area Start ***** -->
+    <header class="header-area header-sticky">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+                        <!-- ***** Logo Start ***** -->
+                        <a href="index.html" class="logo">
+                            <img src="assets/images/logo2.png" loading="lazy" alt="Logo" />
+                        </a>
+                        <!-- ***** Logo End ***** -->
+                        <!-- ***** Menu Start ***** -->
+                        <ul class="nav">
+                            <li><a href="#welcome" class="active">HOME</a></li>
+                            <li><a href="#features">QUALITY</a></li>
+                            <li><a href="#work-process">CIRCULAR</a></li>
+                            <!-- <li><a href="#testimonials">EVENTS</a></li> -->
+                            <li><a href="#pricing-plans">TARIFF & STOCK</a></li>
+                            <li><a href="#blog">FORMS</a></li>
+                            <li><a href="./intercom.html" target="_blank" rel="noopener noreferrer">INTERCOM'S</a></li>
+                            <li class="d-lg-none nav-ip-item">
+                                <div class="mobile-ip-badge">
+                                    <i class="fa fa-desktop ip-icon"></i>
+                                    <span class="ip-label">IP Address:</span>
+                                    <span class="ip-number ip-display-value">192.168.101.45</span>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="d-none d-lg-flex align-items-center ml-auto">
+                            <div id="local-ip" class="desktop-ip-badge">
+                                <i class="fa fa-desktop ip-icon"></i>
+                                <span class="ip-label">IP Address:</span>
+                                <span class="ip-number ip-display-value">192.168.101.45</span>
+                            </div>
+                        </div>
+                        <a class='menu-trigger'>
+                            <span>Menu</span>
+                        </a>
+
+                        <script>
+                            function updateIpBadges(ip) {
+                                if (!ip) return;
+                                document.querySelectorAll('.ip-display-value').forEach(el => {
+                                    el.textContent = ip;
+                                });
+                            }
+
+                            // Fetch the local IP address from the backend
+                            fetch('http://192.168.101.75:3000/api/get-local-ip')
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data && data.ip) {
+                                        updateIpBadges(data.ip);
+                                    }
+                                })
+                                .catch(error => {
+                                    console.warn('Could not fetch dynamic IP, using default:', error);
+                                    updateIpBadges('192.168.101.45');
+                                });           
+                        </script>
+
+                        <!-- ***** Menu End ***** -->
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- ***** Header Area End ***** -->
+
+    <!-- ***** Welcome Area Start ***** -->
+    <div class="welcome-area" id="welcome">
+        <div class="search-container">
+            <form id="searchForm">
+                <input type="text" id="searchInput" placeholder="Search any document here.." class="search-bar">
+                <button type="submit" class="search-button">Search</button>
+            </form>
+            <div id="searchResults" class="results-container"></div>
+            <div class="d-lg-none text-center mt-3">
+                <div class="mobile-ip-badge">
+                    <i class="fa fa-desktop ip-icon"></i>
+                    <span class="ip-label">IP Address:</span>
+                    <span class="ip-number ip-display-value">192.168.101.45</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ***** Welcome Area End ***** -->
+
+    <!-- ***** Features Small Start ***** -->
+    <section class="section home-feature">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <div class="row justify-content-center">
+                        <!-- ***** Features Small Item Start ***** -->
+                        <div class="col-lg-2 col-md-4 col-sm-6 col-6 px-1 px-sm-2"
+                            data-scroll-reveal="enter bottom move 50px over 0.6s after 0.2s">
+                            <a href="http://192.168.103.37/BB15SE/Backbone/admin/login.aspx" target="_blank"
+                                style="text-decoration: none;">
+                                <div class="features-small-item">
+                                    <div class="icon">
+                                        <i><img class="contain-img" src="assets/images/aosta-logo.png" loading="lazy" alt="HIS"></i>
+                                    </div>
+                                    <h5 class="features-title">HIS</h5>
+                                    <p>Click here to login <br> HIS</p>
+                                </div>
+                            </a>
+                        </div>
+                        <!-- ***** Features Small Item End ***** -->
+                        <!-- ***** Features Small Item Start ***** -->
+
+                        <div class="col-lg-2 col-md-4 col-sm-6 col-6 px-1 px-sm-2"
+                            data-scroll-reveal="enter bottom move 50px over 0.6s after 0.2s">
+                            <a href="https://mapims-hrms.tecvinesolutions.com" target="_blank"
+                                style="text-decoration: none;">
+                                <div class="features-small-item">
+                                    <div class="icon">
+                                        <i><img class="contain-img" src="https://mapims-hrms.tecvinesolutions.com/images/logo/pruwork-full-logo.png" loading="lazy" alt="Pruworks"></i>
+                                    </div>
+                                    <h5 class="features-title">PRUWORKS HRMS</h5>
+                                    <p>Click here to login <br> NEW HRMS</p>
+                                </div>
+                            </a>
+                        </div>
+                        <!-- ***** Features Small Item End ***** -->
+                        <!-- ***** Features Small Item Start ***** -->
+                        <div class="col-lg-2 col-md-4 col-sm-6 col-6 px-1 px-sm-2"
+                            data-scroll-reveal="enter bottom move 50px over 0.6s after 0.2s">
+                            <a href="http://192.168.101.224/User_Login.asp" target="_blank"
+                                style="text-decoration: none;">
+                                <div class="features-small-item">
+                                    <div class="icon">
+                                        <i><img src="assets/images/Medsnaptics-logo.png" loading="lazy" alt="M-PACS"></i>
+                                    </div>
+                                    <h5 class="features-title">M - PACS</h5>
+                                    <p>Click here to login <br> PACS</p>
+                                </div>
+                            </a>
+                        </div>
+                        <!-- ***** Features Small Item End ***** -->
+
+                        <!-- ***** Features Small Item Start ***** -->
+                        <div class="col-lg-2 col-md-4 col-sm-6 col-6 px-1 px-sm-2"
+                            data-scroll-reveal="enter bottom move 50px over 0.6s after 0.2s">
+                            <a href="http://www.mapims.online/" target="_blank" style="text-decoration: none;">
+                                <div class="features-small-item">
+                                    <div class="icon">
+                                        <i><img src="assets/images/HRMS-Admin.png" loading="lazy" alt="HRMS Admin"></i>
+                                    </div>
+                                    <h5 class="features-title">HRMS - ADMIN</h5>
+                                    <p>Click here to login <br> Admin</p>
+                                </div>
+                            </a>
+                        </div>
+                        <!-- ***** Features Small Item End ***** -->
+
+                        <!-- ***** Features Small Item Start ***** -->
+                        <div class="col-lg-2 col-md-4 col-sm-6 col-6 px-1 px-sm-2"
+                            data-scroll-reveal="enter bottom move 50px over 0.6s after 0.2s">
+                            <a href="http://www.mapims.online/staff" target="_blank" style="text-decoration: none;">
+                                <div class="features-small-item">
+                                    <div class="icon">
+                                        <i><img src="assets/images/HRMS-STAFF.png" loading="lazy" alt="HRMS Staff"></i>
+                                    </div>
+                                    <h5 class="features-title">HRMS - STAFF</h5>
+                                    <p>Click here to login <br> Staff Portal</p>
+                                </div>
+                            </a>
+                        </div>
+                        <!-- ***** Features Small Item End ***** -->
+
+                        <!-- ***** Features Small Item Start ***** -->
+                        <div class="col-lg-2 col-md-4 col-sm-6 col-6 px-1 px-sm-2"
+                            data-scroll-reveal="enter bottom move 50px over 0.6s after 0.2s">
+                            <a href="http://www.mapimsmrd.com/mapimsmrd/" target="_blank"
+                                style="text-decoration: none;">
+                                <div class="features-small-item">
+                                    <div class="icon">
+                                        <i><img src="assets/images/FIT-LOGO.png" loading="lazy" alt="MRD"></i>
+                                    </div>
+                                    <h5 class="features-title">MRD</h5>
+                                    <p>Click here to login <br> MRD Login</p>
+                                </div>
+                            </a>
+                        </div>
+                        <!-- ***** Features Small Item End ***** -->
+
+                        <!-- ***** Features Small Item Start ***** -->
+                        <div class="col-lg-2 col-md-4 col-sm-6 col-6 px-1 px-sm-2"
+                            data-scroll-reveal="enter bottom move 50px over 0.6s after 0.2s">
+                            <a href="http://www.mapimshis.com/mapims/" target="_blank" style="text-decoration: none;">
+                                <div class="features-small-item">
+                                    <div class="icon">
+                                        <i><img src="assets/images/FIT-LOGO.png" loading="lazy" alt="Ticketing"></i>
+                                    </div>
+                                    <h5 class="features-title">TICKETING </h5>
+                                    <p>Click here to login ticketing and job order his</p>
+                                </div>
+                            </a>
+                        </div>
+                        <!-- ***** Features Small Item End ***** -->
+
+                    </div>
+
+                    <!-- ***** Title for Inhouse Applications ***** -->
+                    <div class="row justify-content-center">
+                        <div class="col-12 text-center">
+                            <h2 class="inhouse-applications-title">OUR DEVELOPED INHOUSE APPLICATIONS</h2>
+                        </div>
+                    </div>
+
+                    <!-- ***** Second Row of Login Boxes ***** -->
+                    <div class="row justify-content-center">
+                        <!-- ***** Features Small Item Start ***** -->
+
+                        <div class="col-lg-2 col-md-4 col-sm-6 col-6 px-1 px-sm-2"
+                            data-scroll-reveal="enter bottom move 50px over 0.6s after 0.2s">
+                            <a href="http://192.168.103.158:8081" target="_blank" style="text-decoration: none;">
+                                <div class="features-small-item">
+                                    <div class="icon">
+                                        <i><img src="assets/images/Pathology.png" loading="lazy" alt="Pathology"></i>
+                                    </div>
+                                    <h5 class="features-title">PATHOLOGY</h5>
+                                    <p>Click here to login <br> Pathology Barcode App </p>
+                                </div>
+                            </a>
+                        </div>
+                        <!-- ***** Features Small Item End ***** -->
+
+                        <!-- ***** Features Small Item Start ***** -->
+                        <div class="col-lg-2 col-md-4 col-sm-6 col-6 px-1 px-sm-2"
+                            data-scroll-reveal="enter bottom move 50px over 0.6s after 0.2s">
+                            <a href="http://192.168.103.158:8082" target="_blank" style="text-decoration: none;">
+                                <div class="features-small-item">
+                                    <div class="icon">
+                                        <i><img src="assets/images/Eyecamp.png" loading="lazy" alt="Eye Camp"></i>
+                                    </div>
+                                    <h5 class="features-title">EYE CAMP-25</h5>
+                                    <p>Click here to login <br> Eye Camp His </p>
+                                </div>
+                            </a>
+                        </div>
+                        <!-- ***** Features Small Item End ***** -->
+
+                        <!-- ***** Features Small Item Start ***** -->
+                        <div class="col-lg-2 col-md-4 col-sm-6 col-6 px-1 px-sm-2"
+                            data-scroll-reveal="enter bottom move 50px over 0.6s after 0.2s">
+                            <a href="https://192.168.103.158:8083" target="_blank" style="text-decoration: none;">
+                                <div class="features-small-item">
+                                    <div class="icon">
+                                        <i><img src="assets/images/Consultation.png" loading="lazy" alt="Counselling"></i>
+                                    </div>
+                                    <h5 class="features-title">COUNSELLING APP</h5>
+                                    <p>Click here to login <br> ICU CONSULTATION app </p>
+                                </div>
+                            </a>
+                        </div>
+                        <!-- ***** Features Small Item End ***** -->
+
+                        <!-- ***** Features Small Item Start ***** -->
+                        <div class="col-lg-2 col-md-4 col-sm-6 col-6 px-1 px-sm-2"
+                            data-scroll-reveal="enter bottom move 50px over 0.6s after 0.2s">
+                            <a href="http://192.168.103.158:8086" target="_blank" style="text-decoration: none;">
+                                <div class="features-small-item">
+                                    <div class="icon">
+                                        <i><img src="assets/images/LineLoom.png" loading="lazy" alt="LineLoom"></i>
+                                    </div>
+                                    <h5 class="features-title">LINELOOM</h5>
+                                    <p>Click here to login <br> LineLoom Token</p>
+                                </div>
+                            </a>
+                        </div>
+                        <!-- ***** Features Small Item End ***** -->
+
+                        <!-- ***** Features Small Item Start ***** -->
+                        <div class="col-lg-2 col-md-4 col-sm-6 col-6 px-1 px-sm-2"
+                            data-scroll-reveal="enter bottom move 50px over 0.6s after 0.2s">
+                            <a href="https://mh.mapims.edu.in/" target="_blank" style="text-decoration: none;">
+                                <div class="features-small-item">
+                                    <div class="icon">
+                                        <i><img class="contain-img"
+                                                src="https://mh.mapims.edu.in/static/images/logo.png" loading="lazy"
+                                                alt="MAPIMS AI"></i>
+                                    </div>
+                                    <h5 class="features-title">MAPIMS AI Health Assessment</h5>
+                                    <p>Click here to Open <br> MAPIMS AI Health Assessment</p>
+                                </div>
+                            </a>
+                        </div>
+                        <!-- ***** Features Small Item End ***** -->
+
+                        <div class="col-lg-2 col-md-4 col-sm-6 col-6 px-1 px-sm-2"
+                            data-scroll-reveal="enter bottom move 50px over 0.6s after 0.2s">
+                            <a href="#" role="button" data-toggle="modal" data-target="#checklistModal"
+                                style="text-decoration: none;">
+                                <div class="features-small-item">
+                                    <div class="icon">
+                                        <i><img class="contain-img"
+                                                src="https://checklist.mapims.edu.in/Logo-Checklist.png" loading="lazy"
+                                                alt="Checklist"></i>
+                                    </div>
+                                    <h5 class="features-title">CHECKLIST</h5>
+                                    <p>Click here to choose <br> Checklist App</p>
+                                </div>
+                            </a>
+                        </div>
+                        <!-- ***** Features Small Item End ***** -->
+                
+                        <!-- ***** Features Small Item Start ***** -->
+                        <!-- <a href="http://www.mapimsmrd.com/mapimsmrd/" target="_blank" style="text-decoration: none;"> -->
+                        <!-- <div class="col-lg-2 col-md-6 col-sm-6 col-12" data-scroll-reveal="enter bottom move 50px over 0.6s after 0.2s">
+                            <div class="features-small-item">
+                                <div class="icon">
+                                    <i><img src="assets/images/FIT-LOGO.png" loading="lazy" alt=""></i>
+                                </div>
+                                <h5 class="features-title">MRD</h5>
+                                <p>Click here to login <br> MRD Login</p>
+                            </div></a>
+                        </div> -->
+                        <!-- ***** Features Small Item End ***** -->
+
+                        <!-- ***** Features Small Item Start ***** -->
+                        <!-- <a href="http://www.mapimshis.com/mapims/" target="_blank" style="text-decoration: none;"> -->
+                        <!-- <div class="col-lg-2 col-md-6 col-sm-6 col-12" data-scroll-reveal="enter bottom move 50px over 0.6s after 0.2s">
+                            <div class="features-small-item">
+                                <div class="icon">
+                                    <i><img src="assets/images/FIT-LOGO.png" loading="lazy" alt=""></i>
+                                </div>
+                                <h5 class="features-title">TICKETING </h5>
+                                <p>Click here to login ticketing and job order his</p>
+                            </div></a>
+                        </div> -->
+                        <!-- ***** Features Small Item End ***** -->
+
+                    </div>
+                    <!-- ***** Second Row End ***** -->
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ***** Features Small End ***** -->
+
+    <!-- ***** Features Big Item Start ***** -->
+    <section class="section padding-top-70 padding-bottom-0" id="features">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 col-md-12 col-sm-12 align-self-center"
+                    data-scroll-reveal="enter left move 30px over 0.6s after 0.4s">
+                    <img src="assets/images/left-image.png" class="rounded img-fluid d-block mx-auto" loading="lazy"
+                        alt="App">
+                </div>
+                <div class="col-lg-1"></div>
+                <div class="col-lg-6 col-md-12 col-sm-12 align-self-center mobile-top-fix">
+                    <div class="left-heading">
+                        <h2 class="section-title">Let's discuss upcoming quality committee meeting dates</h2>
+                    </div>
+                    <div class="left-text">
+                        <p>Let's drive meaningful conversations and critical decision-making in our Core Quality
+                            Committee meeting.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="hr"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ***** Features Big Item End ***** -->
+
+    <!-- ***** Features Big Item Start ***** -->
+    <section class="section padding-bottom-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-12 col-sm-12 align-self-center mobile-bottom-fix">
+                    <div class="left-heading">
+                        <h2 class="section-title">Last discussed quality committee meeting list</h2>
+                    </div>
+                    <div class="left-text">
+                        <p>Please find the minutes of our previous Core Quality Committee meeting, highlighting critical
+                            discussions and next steps.</p>
+                        <!--  <a href="http://192.168.101.75:3000/files/CPR_MOM-23.10.2024.pdf" class="">CPR MOM</a> |
+                        <a href="http://192.168.101.75:3000/files/FMS_MOM-24.10.2024.pdf" class="">FMS MOM</a> |
+                        <a href="http://192.168.101.75:3000/files/HIC_MOM_24-10-24_FINAL.pdf" class="">HIC MOM</a> |
+                        <a href="http://192.168.101.75:3000/files/DTC_MINUTES_17.10.2024.pdf" class="">DTC MOM</a> |
+                        <a href="http://192.168.101.75:3000/files/MOM-23.10.24.pdf" class="">MMCM</a> |
+                        <a href="http://192.168.101.75:3000/files/QC MOM-07.01.2025.pdf" class="">QC MOM</a> |
+						<a href="http://192.168.101.75:3000/files/MOM Nov - 2024.pdf" class="">MOM NOV</a> |
+						<a href="http://192.168.101.75:3000/files/MOM Dec - 2024.pdf" class="">MOM DEC</a> |
+						<a href="http://192.168.101.75:3000/files/MOM Jan - 2025.pdf" class="">MOM JAN</a> |
+						<a href="http://192.168.101.75:3000/files/MOM Feb - 2025.pdf" class="">MOM FEB</a> |
+						<a href="http://192.168.101.75:3000/files/QC MOM Mar - 2025.pdf" class="">QC MOM MAR</a> |
+						<a href="http://192.168.101.75:3000/files/FMS MOM Mar - 2025.pdf" class="">FMS MOM MAR</a> |
+						<a href="http://192.168.101.75:3000/files/MRD MOM Apr - 2025.pdf" class="">MRD MOM APR</a>  -->
+
+                        <a href="./assets/sub files/Manuals.html" class="">&#8680; Manuals
+                            <!-- GIF next to QC MOM -->
+                            <img src="./assets/images/newmain.gif" alt="Git Icon" class="git-gif"
+                                style="height: 16px; width: 30px; vertical-align: middle;">
+                        </a><br>
+                        <a href="./assets/sub files/Comittees.html" class="">&#8680; List Of Committees
+                            <!-- GIF next to QC MOM -->
+                            <img src="./assets/images/newmain.gif" alt="Git Icon" class="git-gif"
+                                style="height: 16px; width: 30px; vertical-align: middle;">
+                        </a><br>
+                    </div>
+                </div>
+                <div class="col-lg-1"></div>
+                <div class="col-lg-5 col-md-12 col-sm-12 align-self-center mobile-bottom-fix-big"
+                    data-scroll-reveal="enter right move 30px over 0.6s after 0.4s">
+                    <img src="assets/images/right-image.png" class="rounded img-fluid d-block mx-auto" loading="lazy"
+                        alt="App">
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ***** Features Big Item End ***** -->
+
+    <!-- ***** Home Parallax Start ***** -->
+    <section class="mini" id="work-process">
+        <div class="mini-content">
+            <div class="container">
+                <div class="row">
+                    <div class="offset-lg-3 col-lg-6">
+                        <div class="info">
+                            <h1>E - CIRCULAR</h1>
+                            <p>A quick-access digital board for announcements, policies, and updates — organized,
+                                eco-friendly, and always available at your fingertips.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ***** Mini Box Start ***** -->
+
+                <div class="row">
+                    <div class="col-lg-2 col-md-3 col-sm-6 col-6">
+                        <a href="http://192.168.101.75:3000/files/24hr's Duty Details.pdf" class="mini-box"
+                            style="text-decoration: none;">
+                            <i><img src="assets/images/work-process-item-01.png" loading="lazy" alt="Duty Icon"></i>
+                            <strong>24hr's Duty</strong>
+                            <span>Click here to see today 24hr's duty.</span>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-2 col-md-3 col-sm-6 col-6">
+                        <a href="http://192.168.101.75:3000/files/Blood Bank Stock Details.pdf" class="mini-box">
+                            <i><img src="assets/images/work-process-item-01.png" loading="lazy" alt=""></i>
+                            <strong>Blood Bank</strong>
+                            <span>Click here to see today BB stock.</span>
+                        </a>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-sm-6 col-6">
+                        <a href="http://192.168.101.75:3000/files/police.pdf" class="mini-box">
+                            <i><img src="assets/images/work-process-item-01.png" loading="lazy" alt=""></i>
+                            <strong>Police Station Number</strong>
+                            <span>Near station contact No.</span>
+                        </a>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-sm-6 col-6">
+                        <a href="http://192.168.101.75:3000/files/clinical.pdf" class="mini-box">
+                            <i><img src="assets/images/work-process-item-01.png" loading="lazy" alt=""></i>
+                            <strong>Clinical Case Patients</strong>
+                            <span>Click here to download.</span>
+                        </a>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-sm-6 col-6">
+                        <a href="http://192.168.101.75:3000/files/PMS Policy.pdf" class="mini-box">
+                            <i><img src="assets/images/work-process-item-01.png" loading="lazy" alt=""></i>
+                            <strong>PMS Policy</strong>
+                            <span>Perfomance Manangement System Policy.</span>
+                        </a>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-sm-6 col-6">
+                        <a href="./assets/sub files/recent_circular.html" class="mini-box">
+                            <i><img src="assets/images/work-process-item-01.png" loading="lazy" alt=""></i>
+                            <strong>Recent Circular's</strong>
+                            <span>Click here to recent Circulars.</span>
+                        </a>
+                    </div>
+                </div>
+                <!-- ***** Mini Box End ***** -->
+            </div>
+        </div>
+    </section>
+    <!-- ***** Home Parallax End ***** -->
+
+    <!-- ***** Testimonials Start ***** -->
+    <!-- <section class="section" id="testimonials">
+        <div class="container"> -->
+    <!-- ***** Section Title Start ***** -->
+    <!-- <div class="row">
+                <div class="col-lg-12">
+                    <div class="center-heading">
+                        <h2 class="section-title">Upcoming Events</h2>
+                    </div>
+                </div>
+                <div class="offset-lg-3 col-lg-6">
+                    <div class="center-text"> -->
+    <!-- <p>recent event photos</p> -->
+    <!-- </div>
+                </div>
+            </div> -->
+    <!-- ***** Section Title End ***** -->
+
+    <!-- <div class="row"> -->
+    <!-- ***** Testimonials Item Start ***** -->
+    <!-- <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="team-item">
+                        <div class="team-content">
+                            <i><img src="assets/images/testimonial-icon.png" loading="lazy" alt=""></i> -->
+    <!-- <p>Proin a neque nisi. Nam ipsum nisi, venenatis ut nulla quis, egestas scelerisque orci. Maecenas a finibus odio.</p> -->
+    <!-- <div class="user-image">
+                                <img src="http://placehold.it/60x60" loading="lazy" alt="">
+                            </div>
+                            <div class="team-info">
+                                <h3 class="user-name">Catherine Soft</h3>
+                                <span>Managing Director</span>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+    <!-- ***** Testimonials Item End ***** -->
+
+    <!-- ***** Testimonials Item Start ***** -->
+    <!-- <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="team-item">
+                        <div class="team-content">
+                            <i><img src="assets/images/testimonial-icon.png" loading="lazy" alt=""></i>
+                            <p>Integer molestie aliquam gravida. Nullam nec arcu finibus, imperdiet nulla vitae, placerat nibh. Cras maximus venenatis molestie.</p>
+                            <div class="user-image">
+                                <img src="http://placehold.it/60x60" loading="lazy" alt="">
+                            </div>
+                            <div class="team-info">
+                                <h3 class="user-name">Kelvin Wood</h3>
+                                <span>Digital Marketer</span>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+    <!-- ***** Testimonials Item End ***** -->
+
+    <!-- ***** Testimonials Item Start ***** -->
+    <!-- <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="team-item">
+                        <div class="team-content">
+                            <i><img src="assets/images/testimonial-icon.png" loading="lazy" alt=""></i>
+                            <p>Quisque diam odio, maximus ac consectetur eu, auctor non lorem. Cras quis est non ante ultrices molestie. Ut vehicula et diam at aliquam.</p>
+                            <div class="user-image">
+                                <img src="http://placehold.it/60x60" loading="lazy" alt="">
+                            </div>
+                            <div class="team-info">
+                                <h3 class="user-name">David Martin</h3>
+                                <span>Website Manager</span>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+    <!-- ***** Testimonials Item End *****
+            </div>
+        </div>
+    </section> -->
+    <!-- ***** Testimonials End ***** -->
+
+    <!-- ***** Pricing Plans Start ***** -->
+    <section class="section colored" id="pricing-plans">
+        <div class="container">
+            <!-- ***** Section Title Start ***** -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="center-heading">
+                        <h2 class="section-title">Tariff Plans</h2>
+                    </div>
+                </div>
+                <div class="offset-lg-3 col-lg-6">
+                    <div class="center-text">
+                        <p>Transparent pricing for all medical services, procedures, and treatments, ensuring clarity
+                            for patients. Real-time updates on pharmacy stock and medical supplies for efficient care
+                            delivery.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- ***** Section Title End ***** -->
+
+            <div class="row">
+                <!-- ***** Pricing Item Start ***** -->
+                <div class="col-lg-4 col-md-6 col-sm-12"
+                    data-scroll-reveal="enter bottom move 50px over 0.6s after 0.2s">
+                    <div class="pricing-item">
+                        <div class="pricing-body">
+                            <div class="price-wrapper">
+                                <span class="price">Hospital <br>Billing Tariff</span>
+                            </div>
+
+
+                            <ul class="list" style="margin-bottom: -80px;">
+                                <li class="active">
+                                    <a href="backend\files\Adhiparasakthi Hospitals Special Packages (04.05.2026).pdf"
+                                        style="text-decoration: none; color: inherit;"> Adhiparasakthi Hospitals' Special Packages
+                                    </a>
+                                </li>
+                                <li class="active">
+                                    <a href="http://192.168.101.75:3000/files/Lab Tariff.pdf"
+                                        style="text-decoration: none; color: inherit;"> Lab Tariff
+                                    </a>
+                                </li>
+                                <li class="active">
+                                    <a href="http://192.168.101.75:3000/files/Radiology Tariff.pdf"
+                                        style="text-decoration: none; color: inherit;">Radiology Tariff</a>
+                                </li>
+                                <li class="active">
+                                    <a href="http://192.168.101.75:3000/files/Physiotherapy Tariff.pdf"
+                                        style="text-decoration: none; color: inherit;"> Physiotherapy Tariff
+                                    </a>
+                                </li>
+                                <li class="active">
+                                    <a href="http://192.168.101.75:3000/files/General Ward Surgery OT Tariff.pdf"
+                                        style="text-decoration: none; color: inherit;"> General Ward Surgery OT Tariff
+                                    </a>
+                                </li>
+                                <li class="active">
+                                    <a href="http://192.168.101.75:3000/files/ICU and Special Ward Room Tariff.pdf"
+                                        style="text-decoration: none; color: inherit;"> ICU and Special Ward Room Tariff
+                                    </a>
+                                </li>
+                                <li class="active">
+                                    <a href="http://192.168.101.75:3000/files/Other Department Tariff.pdf"
+                                        style="text-decoration: none; color: inherit;">
+                                        Other Department Tariff</a>
+                                </li>
+                                <br>
+
+                            </ul>
+
+
+
+                        </div>
+
+                    </div>
+                </div>
+                <!-- ***** Pricing Item End ***** -->
+
+                <!-- ***** Pricing Item Start ***** -->
+                <div class="col-lg-4 col-md-6 col-sm-12"
+                    data-scroll-reveal="enter bottom move 50px over 0.6s after 0.4s">
+                    <div class="pricing-item active">
+
+                        <div class="pricing-body">
+                            <div class="price-wrapper">
+                                <!-- <span class="currency">$</span> -->
+                                <span class="price">Phamacy Stock Details</span>
+                                <!-- <span class="period">monthly</span> -->
+                            </div>
+                            <ul class="list" style="margin-bottom: -10px;">
+                                <li class="active">
+                                    <a href="http://192.168.101.75:3000/files/Drug Stores Stock Details.pdf"
+                                        style="text-decoration: none; color: inherit;"> Drug Stores
+                                    </a>
+                                </li>
+                                <li class="active">
+                                    <a href="http://192.168.101.75:3000/files/IP Pharmacy Stock Details.pdf"
+                                        style="text-decoration: none; color: inherit;">IP Pharmacy</a>
+                                </li>
+                                <li class="active">
+                                    <a href="http://192.168.101.75:3000/files/Insurance Pharmacy Stock Details.pdf"
+                                        style="text-decoration: none; color: inherit;">
+                                        Insurance Pharmacy</a>
+                                </li>
+                                <li class="active">
+                                    <a href="http://192.168.101.75:3000/files/Op Pharmacy Stock  Details.pdf"
+                                        style="text-decoration: none; color: inherit;">
+                                        OP Pharmacy</a>
+                                </li>
+                                <li class="active">
+                                    <a href="http://192.168.101.75:3000/files/Hospital Formulary - 2025.pdf"
+                                        style="text-decoration: none; color: inherit;">
+                                        Hospital Formulary</a>
+                                </li>
+
+                                
+                                <li class="active">
+                                    <a href="http://192.168.101.75:3000/files/Pharmacy_Updated_11.05.26.pdf"
+                                        style="text-decoration: none; color: inherit;">
+                                        Free Drug List - NMC</a>
+                                </li>
+
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- ***** Pricing Item End ***** -->
+
+                <!-- ***** Pricing Item Start ***** -->
+                <div class="col-lg-4 col-md-6 col-sm-12"
+                    data-scroll-reveal="enter bottom move 50px over 0.6s after 0.6s">
+                    <div class="pricing-item">
+
+                        <div class="pricing-body">
+                            <div class="price-wrapper">
+                                <!-- <span class="currency">$</span> -->
+                                <span class="price">General Store <br>Stock Details</span>
+                                <!-- <span class="period">monthly</span> -->
+                            </div>
+                            <li class="active"
+                                style="list-style: none; display: flex; justify-content: center; align-items: center; height: 115px; margin-bottom: 60px;">
+                                <a href="http://192.168.101.75:3000/files/Inventory Stock Details 2024.pdf"
+                                    style="text-decoration: none; color: inherit; padding: 10px; transition: all 0.3s ease;">
+                                    Click here for Inventory Stock Details list
+                                </a>
+                            </li>
+
+                        </div>
+                    </div>
+                    <!-- ***** Pricing Item End ***** -->
+                </div>
+            </div>
+    </section>
+    <!-- ***** Pricing Plans End ***** -->
+
+    <!-- ***** Blog Start ***** -->
+    <section class="section" id="blog">
+        <div class="container">
+            <!-- ***** Section Title Start ***** -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="center-heading">
+                        <h2 class="section-title">Forms</h2>
+                    </div>
+                </div>
+                <div class="offset-lg-3 col-lg-6">
+                    <div class="center-text">
+                        <p>Quickly access essential forms for IT, common processes, and department-specific needs in one
+                            place.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- ***** Section Title End ***** -->
+
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-12">
+                    <div class="blog-post-thumb">
+                        <div class="img">
+                            <img src="assets/images/blog-item-01.png" loading="lazy" alt="">
+                        </div>
+                        <div class="blog-content">
+                            <h3>
+                                <a href="#">Consent Forms</a>
+                            </h3>
+                            <div class="text">
+                                Access and download essential <br> forms for all your needs in <br> one place.
+                            </div>
+                            <a href="./assets/sub files/Consent Forms.html" class="main-button">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12">
+                    <div class="blog-post-thumb">
+                        <div class="img">
+                            <img src="assets/images/blog-item-02.png" loading="lazy" alt="">
+                        </div>
+                        <div class="blog-content">
+                            <h3>
+                                <a href="#">Common Forms</a>
+                            </h3>
+                            <div class="text">
+                                Find frequently used forms for everyday processes, all in one convenient location.
+                            </div>
+                            <a href="./assets/sub files/common form.html" class="main-button">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12">
+                    <div class="blog-post-thumb">
+                        <div class="img">
+                            <img src="assets/images/HR Img.jpeg" loading="lazy" alt="">
+                        </div>
+                        <div class="blog-content">
+                            <h3>
+                                <a href="#">HR Forms</a>
+                            </h3>
+                            <div class="text">
+                                Find frequently used forms for everyday processes, all in one convenient location.
+                            </div>
+                            <a href="./assets/sub files/HR Forms.html" class="main-button">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12">
+                    <div class="blog-post-thumb">
+                        <div class="img">
+                            <img src="assets/images/blog-item-03.png" loading="lazy" alt="">
+                        </div>
+                        <div class="blog-content">
+                            <h3>
+                                <a href="#">IT Forms</a>
+                            </h3>
+                            <div class="text">
+                                Streamline your IT requests with <br> quick access to essential <br> forms.
+                            </div>
+                            <a href="./assets/sub files/IT forms.html" class="main-button">Read More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ***** Blog End ***** -->
+
+    <!-- ***** Contact Us Start ***** -->
+    <section class="section colored" id="contact-us">
+        <div class="container">
+            <!-- ***** Section Title Start ***** -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="center-heading">
+                        <h2 class="section-title">Talk To Us</h2>
+                    </div>
+                </div>
+                <div class="offset-lg-3 col-lg-6">
+                    <div class="center-text">
+                        <p>Get in touch with us for any queries, support, or feedback. We're here to assist you!</p>
+                    </div>
+                </div>
+            </div>
+            <!-- ***** Section Title End ***** -->
+
+            <div class="row">
+                <!-- ***** Contact Text Start ***** -->
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <h5 class="margin-bottom-30">Keep in touch</h5>
+                    <div class="contact-text">
+                        <p><b>Adhiparaskathi Hospitals</b></p>
+                        <p>Melmaruvathur,<br>
+                            Kancheepuram District,<br>Tamil Nadu - 603319</p>
+                    </div>
+                </div>
+                <!-- ***** Contact Text End ***** -->
+
+                <!-- ***** Contact Form Start ***** -->
+                <div class="col-lg-8 col-md-6 col-sm-12">
+                    <div class="contact-form">
+                        <form id="contact" action="https://api.web3forms.com/submit" method="POST">
+                            <input type="hidden" name="access_key" value="a0ebd0ed-a8ea-464b-a54e-0432b1537e04">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-12 col-sm-12">
+                                    <fieldset>
+                                        <input name="name" type="text" class="form-control" id="name"
+                                            placeholder="Full Name" required="">
+                                    </fieldset>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12">
+                                    <fieldset>
+                                        <input name="email" type="email" class="form-control" id="email"
+                                            placeholder="E-Mail Address" required="">
+                                    </fieldset>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12">
+                                    <fieldset>
+                                        <input name="employee id" type="text" class="form-control" id="number"
+                                            placeholder="Employee Number" required="">
+                                    </fieldset>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12">
+                                    <fieldset>
+                                        <input name="mobile" type="phone" class="form-control" id="phone"
+                                            placeholder="Mobile Number" required="">
+                                    </fieldset>
+                                </div>
+                                <div class="col-lg-12">
+                                    <fieldset>
+                                        <textarea name="message" rows="6" class="form-control" id="message"
+                                            placeholder="Your Message" required=""></textarea>
+                                    </fieldset>
+                                </div>
+                                <div class="col-lg-12">
+                                    <fieldset>
+                                        <button type="submit" id="form-submit" class="main-button">Send Message</button>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- ***** Contact Form End ***** -->
+
+
+            </div>
+        </div>
+    </section>
+    <!-- ***** Contact Us End ***** -->
+
+    <!-- Quick Links right start -->
+    <div class="quick-links-right">
+        <a href="http://192.168.101.75:3000/files/24hr's%20Duty%20Details.pdf" target="_blank" class="24hr" title="24hr's Duty Details">
+            <img src="./assets/images/24hr%27s%20logo.png" alt="24hr's">
+        </a>
+        <a href="http://192.168.101.75:3000/files/Blood%20Bank%20Stock%20Details.pdf" target="_blank" class="blood" title="Blood Bank Stock Details">
+            <img src="assets/images/blood.jpg" alt="Blood Bank">
+        </a>
+        <a href="./intercom.html" target="_blank" rel="noopener noreferrer" class="intercom" title="Campus Intercom Directory">
+            <img src="assets/images/intercom%20logo.png" alt="Intercom Directory">
+        </a>
+        <a href="http://192.168.101.75:3000/files/email.pdf" target="_blank" class="mails" title="Staff Email Directory">
+            <img src="assets/images/gmail%20logo.png" alt="Email Directory">
+        </a>
+        <a href="http://192.168.101.75:3000/files/Abrrevation.pdf" target="_blank" class="24hr" title="Abbreviations">
+            <img src="./assets/images/letter.jpg" alt="Abbreviations">
+        </a>
+    </div>
+    <!-- Quick Links right end -->
+
+    <!-- Quick Links left start -->
+    <div class="quick-links-left">
+        <a href="http://192.168.101.75:3000/files/billingmanual.pdf" target="_blank" title="Billing Manual">
+            <img src="./assets/images/billing.png" alt="Billing Manual">
+        </a>
+        <a href="http://192.168.101.75:3000/files/nursingmanual.pdf" target="_blank" title="Nursing User Manual">
+            <img src="assets/images/user%20manual.jpg" alt="Nursing Manual">
+        </a>
+    </div>
+    <!-- Quick Links left end -->
+
+
+
+
+    <!-- ***** Footer Start ***** -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <ul class="social">
+                        <li><a href="https://www.facebook.com/AdhiparasakthiHospitals" target="_blank"><i
+                                    class="fa fa-facebook"></i></a></li>
+                        <li><a href="https://twitter.com/AdhiHospitals" target="_blank"><i
+                                    class="fa fa-twitter"></i></a></li>
+                        <li><a href="https://in.linkedin.com/company/melmaruvathur-adhiparasakthi-hospital"
+                                target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                        <!-- <li><a href="#"><i class="fa fa-rss"></i></a></li>
+                        <li><a href="#"><i class="fa fa-dribbble"></i></a></li> -->
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p class="copyright">Copyright &copy; 2024 APH - IT
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Last Updated On 13-Sep-2025 </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- files API -->
+
+    <script src="./assets/js/script.js"></script>
+
+    <!-- Page Auto Refesh Script -->
+    <script src="./assets/js/pageRefresh.js"></script>
+
+    <!-- search bar -->
+    <script src="./assets/js/search.js"></script>
+
+
+    <!-- jQuery -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+    <script>
+        // Ensure preloader hides even if an animation script fails
+        window.addEventListener('load', function() {
+            var pre = document.getElementById('preloader');
+            if (pre) {
+                pre.style.transition = 'opacity 0.4s ease';
+                pre.style.opacity = '0';
+                setTimeout(function() { pre.style.display = 'none'; }, 400);
+            }
+        });
+    </script>
+
+    <!-- Plugins -->
+
+    <script src="assets/js/scrollreveal.min.js"></script>
+    <script src="assets/js/waypoints.min.js"></script>
+    <script src="assets/js/jquery.counterup.min.js"></script>
+    <script src="assets/js/imgfix.min.js"></script>
+
+    <!-- Global Init -->
+    <script src="assets/js/custom.js"></script>
+
+    <style>
+        #checklistModal {
+            z-index: 1060 !important;
+        }
+        body.modal-open .modal-backdrop {
+            z-index: 1050 !important;
+        }
+        #checklistModal .checklist-modal-dialog {
+            max-width: 560px;
+        }
+        #checklistModal .checklist-modal-content {
+            border: none;
+            border-radius: 23px;
+            overflow: hidden;
+            box-shadow: 0 15px 60px rgba(0, 0, 0, 0.18);
+            font-family: 'Raleway', sans-serif;
+        }
+        #checklistModal .checklist-modal-header {
+            border-bottom: none;
+            padding: 28px 28px 10px;
+            background: linear-gradient(135deg, #f8f9fb 0%, #ffffff 100%);
+            position: relative;
+        }
+        #checklistModal .checklist-modal-brand {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding-right: 36px;
+        }
+        #checklistModal .checklist-modal-brand img {
+            width: 56px;
+            height: 56px;
+            object-fit: contain;
+            border-radius: 14px;
+            background: #fff;
+            padding: 6px;
+            box-shadow: 0 4px 14px rgba(198, 40, 40, 0.12);
+        }
+        #checklistModal .checklist-modal-brand h5 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+            color: #2a2a2a;
+        }
+        #checklistModal .checklist-modal-brand p {
+            margin: 4px 0 0;
+            font-size: 13px;
+            color: #7a7a7a;
+            font-weight: 400;
+        }
+        #checklistModal .checklist-modal-close {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            width: 34px;
+            height: 34px;
+            border: none;
+            border-radius: 50%;
+            background: #f0f2f5;
+            color: #666;
+            font-size: 22px;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s ease;
+            opacity: 1;
+            padding: 0;
+        }
+        #checklistModal .checklist-modal-close:hover {
+            background: rgb(198, 40, 40);
+            color: #fff;
+            transform: rotate(90deg);
+        }
+        #checklistModal .checklist-modal-body {
+            padding: 10px 24px 28px;
+            background: #fff;
+        }
+        #checklistModal .checklist-options {
+            display: flex;
+            gap: 16px;
+        }
+        #checklistModal .checklist-option-card {
+            flex: 1;
+            display: block;
+            text-decoration: none !important;
+            text-align: center;
+            padding: 24px 16px 20px;
+            border-radius: 20px;
+            background: #fff;
+            border: 2px solid #eef1f4;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+            color: inherit;
+        }
+        #checklistModal .checklist-option-card:hover {
+            border-color: rgb(198, 40, 40);
+            box-shadow: 0 8px 28px rgba(198, 40, 40, 0.18);
+            transform: translateY(-4px);
+            color: inherit;
+        }
+        #checklistModal .checklist-option-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 14px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(198, 40, 40, 0.1), rgba(198, 40, 40, 0.04));
+            color: rgb(198, 40, 40);
+            font-size: 26px;
+        }
+        #checklistModal .checklist-option-card:hover .checklist-option-icon {
+            background: linear-gradient(135deg, rgb(198, 40, 40), #8e0000);
+            color: #fff;
+        }
+        #checklistModal .checklist-option-card h6 {
+            margin: 0 0 6px;
+            font-size: 15px;
+            font-weight: 700;
+            color: #2a2a2a;
+            letter-spacing: 0.3px;
+        }
+        #checklistModal .checklist-option-card span {
+            font-size: 12px;
+            color: #888;
+            line-height: 1.4;
+        }
+        #checklistModal .checklist-option-card:hover h6 {
+            color: rgb(198, 40, 40);
+        }
+        @media (max-width: 576px) {
+            #checklistModal .checklist-options {
+                flex-direction: column;
+            }
+            #checklistModal .checklist-modal-header {
+                padding: 22px 20px 8px;
+            }
+            #checklistModal .checklist-modal-body {
+                padding: 8px 20px 22px;
+            }
+        }
+    </style>
+    <div class="modal fade" id="checklistModal" tabindex="-1" role="dialog"
+        aria-labelledby="checklistModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered checklist-modal-dialog" role="document">
+            <div class="modal-content checklist-modal-content">
+                <div class="modal-header checklist-modal-header">
+                    <div class="checklist-modal-brand">
+                        <img src="https://checklist.mapims.edu.in/Logo-Checklist.png" loading="lazy" alt="Checklist">
+                        <div>
+                            <h5 class="modal-title" id="checklistModalLabel">Select Checklist</h5>
+                            <p>Choose checklist type to continue</p>
+                        </div>
+                    </div>
+                    <button type="button" class="checklist-modal-close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body checklist-modal-body">
+                    <div class="checklist-options">
+                        <a href="https://checklist.mapims.edu.in/" target="_blank" class="checklist-option-card">
+                            <div class="checklist-option-icon">
+                                <i class="fa fa-heartbeat" aria-hidden="true"></i>
+                            </div>
+                            <h6>Clinical Checklist</h6>
+                            
+                        </a>
+                        <a href="https://gencl.mapims.edu.in/" target="_blank" class="checklist-option-card">
+                            <div class="checklist-option-icon">
+                                <i class="fa fa-building-o" aria-hidden="true"></i>
+                            </div>
+                            <h6>Non-Clinical Checklist</h6>
+                            
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="popup-overlay" id="popup">
+
+        <div class="popup">
+        
+        <div class="header">
+        
+        <div class="close" onclick="closePopup()">&times;</div>
+        
+        <h1>?? PaperZero is LIVE!</h1>
+        
+        <p>Welcome to our New Digital Request & Approval Platform</p>
+        
+        </div>
+        
+        <div class="content">
+        
+        <h2>Go Paperless Today</h2>
+        
+        <p>
+        
+        We are excited to announce the launch of
+        <strong>PaperZero</strong>.
+        
+        You can now submit requests online, track approval status in real time,
+        receive notifications, and manage digital forms from one place.
+        
+        Together, let's reduce paperwork and build a smarter workplace.
+        
+        </p>
+        
+        <div class="features">
+        
+        <div class="feature">?? Digital Forms</div>
+        
+        <div class="feature">? Faster Approvals</div>
+        
+        <div class="feature">?? Real-time Status Tracking</div>
+        
+        <div class="feature">?? Instant Notifications</div>
+        
+        </div>
+
+        <p style="text-align: center;">
+        
+           User name <strong>Staff ID</strong> and Password <strong>mapims</strong><br> is your login credentials for PaperZero.
+
+        </p>
+        
+        </div>
+        
+        <div class="footer">
+        
+        <button class="primary" onclick="startNow()">
+        
+        ?? Get Started
+        
+        </button>
+        
+        <button class="secondary" onclick="closePopup()">
+        
+        Maybe Later
+        
+        </button>
+        
+        </div>
+        
+        </div>
+        
+        </div>
+        
+        <script>
+        
+        const popup=document.getElementById("popup");
+        
+        /* ===========================
+           Show Popup After 3 Seconds
+        =========================== */
+        
+        window.addEventListener("load",()=>{
+        
+        // if(localStorage.getItem("paperzero-launch")!=="seen"){
+        
+        // setTimeout(()=>{
+        
+        // popup.classList.add("show");
+        
+        // launchConfetti();
+        
+        // },3000);
+        
+        // }
+        
+        });
+        
+        /* ===========================
+           Confetti Animation
+        =========================== */
+        
+        function launchConfetti(){
+        
+        const duration=3000;
+        
+        const end=Date.now()+duration;
+        
+        (function frame(){
+        
+        confetti({
+        
+        particleCount:5,
+        
+        angle:60,
+        
+        spread:70,
+        
+        origin:{x:0},
+        
+        startVelocity:45
+        
+        });
+        
+        confetti({
+        
+        particleCount:5,
+        
+        angle:120,
+        
+        spread:70,
+        
+        origin:{x:1},
+        
+        startVelocity:45
+        
+        });
+        
+        if(Date.now()<end){
+        
+        requestAnimationFrame(frame);
+        
+        }
+        
+        })();
+        
+        }
+        
+        /* ===========================
+           Close
+        =========================== */
+        
+        function closePopup(){
+        
+        popup.classList.remove("show");
+        
+        // localStorage.setItem("paperzero-launch","seen");
+        
+        }
+        
+        /* ===========================
+           Start Button
+        =========================== */
+        
+        function startNow(){
+        
+        // localStorage.setItem("paperzero-launch","seen");
+        
+        /* Change this URL */
+        popup.classList.remove("show");
+        window.open("https://paper.mapims.edu.in/", "_blank");
+        
+        }
+        
+        </script>
+
+
+</body>
+
+</html>

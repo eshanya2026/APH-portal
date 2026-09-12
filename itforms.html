@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IT &amp; Systems Request Forms - Adhiparasakthi Hospitals</title>
+  <link rel="shortcut icon" href="assets/images/favicon_io/favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-900 font-['Plus_Jakarta_Sans',sans-serif] min-h-screen flex flex-col">
+
+  <!-- Sticky Header -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <a href="./index.html#forms" class="flex items-center gap-2 text-slate-600 hover:text-teal-600 transition-colors text-sm font-semibold">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+        <span>Back to Main Portal</span>
+      </a>
+      <div class="flex items-center gap-2">
+        <span class="text-xs text-slate-500 font-medium hidden sm:inline">IT Services</span>
+        <span class="px-2.5 py-1 rounded-full bg-teal-100 text-teal-800 text-[11px] font-bold">8 Approved Documents</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Header -->
+  <div class="bg-[#0b1021] text-white py-10 sm:py-12 px-4 sm:px-6">
+    <div class="max-w-4xl mx-auto text-center">
+      <span class="inline-block px-3 py-1 rounded-full bg-teal-500/20 text-teal-300 text-xs font-extrabold uppercase tracking-wider mb-3">
+        INFORMATION TECHNOLOGY &amp; SYSTEMS
+      </span>
+      <h1 class="text-2xl sm:text-4xl font-extrabold mb-3 tracking-tight">IT &amp; Systems Request Forms</h1>
+      <p class="text-xs sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
+        Official requisitions for hospital information systems (HIS) user creation, doctor clinician IDs, computer hardware, network printers, campus Wi-Fi access, and CUG mobile connections.
+      </p>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8 flex-1 w-full">
+
+    <!-- Search & Filter Controls -->
+    <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-sm mb-8 space-y-4">
+      <div class="flex flex-col sm:flex-row gap-3 items-center justify-between">
+        <div class="relative w-full sm:w-80">
+          <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+          <input 
+            type="text" 
+            id="searchInput" 
+            placeholder="Search IT forms, HIS, printers, Wi-Fi..." 
+            class="w-full pl-10 pr-4 py-2 text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 transition-all"
+          />
+        </div>
+        <div class="text-xs text-slate-500 font-medium">
+          Showing <span id="visibleCount" class="font-bold text-slate-800">8</span> of 8 documents
+        </div>
+      </div>
+
+      <!-- Category Filter Pills -->
+      <div class="flex flex-wrap gap-1.5 sm:gap-2 pt-2 border-t border-slate-100" id="filterTabs">
+        <button data-filter="all" class="filter-btn active px-3 py-1.5 rounded-lg text-xs font-semibold bg-teal-600 text-white transition-all">All (8)</button>
+        <button data-filter="his" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all">HIS &amp; Database (3)</button>
+        <button data-filter="hardware" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all">Hardware &amp; Peripherals (2)</button>
+        <button data-filter="network" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all">Network &amp; Telecom (3)</button>
+      </div>
+    </div>
+
+    <!-- Forms Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5" id="formsGrid">
+
+      <!-- ================= 1. HIS & DATABASE ================= -->
+
+      <!-- 1. New HIS User Request Form -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-teal-300 hover:shadow-md transition-all" data-category="his" data-search="new his user request form hospital information system account creation login password">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-teal-600 bg-teal-50 px-2.5 py-1 rounded-lg">HIS CREDENTIALS</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">New HIS User Request Form</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Formal application for new Hospital Information System (HIS) user credentials, departmental access levels, and role permissions.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/His User Creation.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 2. New Doctor Name and ID Creation in HIS -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-teal-300 hover:shadow-md transition-all" data-category="his" data-search="new doctor name and id creation in his consultant clinician registration opd schedule">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-teal-600 bg-teal-50 px-2.5 py-1 rounded-lg">DOCTOR CREDENTIALING</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">New Doctor Name &amp; ID Creation in HIS</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Official request for enrolling visiting or permanent consultants, generating clinician IDs, and configuring outpatient consulting rosters.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/Doctor Name and ID Creation.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 3. Item Creation in HIS -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-amber-300 hover:shadow-md transition-all" data-category="his" data-search="item creation in his master item drug surgical consumable service tariff">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-amber-600 bg-amber-50 px-2.5 py-1 rounded-lg">MASTER DATABASE</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Item Creation in HIS</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Master catalogue addition request for new pharmacy formulations, lab investigations, radiology procedures, or hospital consumables.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/Item Creation.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- ================= 2. HARDWARE & PERIPHERALS ================= -->
+
+      <!-- 4. System Request Form -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-blue-300 hover:shadow-md transition-all" data-category="hardware" data-search="system request form computer workstation desktop pc cpu monitor installation">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2.5 py-1 rounded-lg">WORKSTATIONS</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">System Request Form</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Requisition indent for new desktop computers, processing units, dual monitors, OS formatting, and peripheral hardware setup.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/System Request Form.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 5. Printer Request Form -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-blue-300 hover:shadow-md transition-all" data-category="hardware" data-search="printer request form laser printer toner cartridge replacement barcode label">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2.5 py-1 rounded-lg">PERIPHERALS</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Printer Request Form</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Requisition for new network laser printers, wristband printers, thermal barcode printers, or replacement toner cartridges.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/Printer Request Form.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- ================= 3. NETWORK & TELECOM ================= -->
+
+      <!-- 6. Employee WIFI Request Form -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-emerald-300 hover:shadow-md transition-all" data-category="network" data-search="employee wifi request form campus wireless mac address mobile laptop authentication">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg">CAMPUS WI-FI</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Employee WIFI Request Form</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Authorization form for staff personal or departmental laptops/mobiles to connect to the hospital's secure wireless network via MAC binding.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/Wifi Request Form.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 7. Official Email Request -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-indigo-300 hover:shadow-md transition-all" data-category="network" data-search="official email request staff mail id google workspace institutional domain">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg">EMAIL &amp; DOMAIN</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Official Email Request</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Application for provision of new institutional email address on the hospital domain for doctors, administrators, and department heads.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/Mail Request.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 8. CUG Request Form -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-purple-300 hover:shadow-md transition-all" data-category="network" data-search="cug request form closed user group sim card mobile telecom connection">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-purple-600 bg-purple-50 px-2.5 py-1 rounded-lg">TELECOM &amp; CUG</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">CUG Request Form</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Requisition voucher for Closed User Group (CUG) official mobile SIM cards and extension line allocation for hospital duty personnel.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/Cug Request Form.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+    </div>
+
+    <!-- Empty State Message -->
+    <div id="noResults" class="hidden text-center py-16 bg-white rounded-2xl border border-slate-200 mt-4">
+      <svg class="w-12 h-12 text-slate-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+      <h4 class="font-bold text-slate-700 text-base mb-1">No matching IT forms found</h4>
+      <p class="text-xs text-slate-500 max-w-sm mx-auto">Try typing a different keyword or selecting 'All' to browse all 8 request forms.</p>
+    </div>
+
+    <!-- Back to Portal bottom button -->
+    <div class="mt-12 text-center">
+      <a href="./index.html#forms" class="inline-flex items-center gap-2 px-6 py-3 bg-white hover:bg-slate-50 text-slate-700 font-bold rounded-xl border border-slate-300 shadow-sm text-xs sm:text-sm transition-all hover:border-teal-400">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+        <span>Return to Main Portal Forms Directory</span>
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500">
+    &copy; 2026 Adhiparasakthi Hospitals &amp; Research Institute. Information Technology Cell.
+  </footer>
+
+  <!-- Search & Filter Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const searchInput = document.getElementById('searchInput');
+      const filterTabs = document.getElementById('filterTabs');
+      const formCards = document.querySelectorAll('.form-card');
+      const visibleCount = document.getElementById('visibleCount');
+      const noResults = document.getElementById('noResults');
+
+      let currentFilter = 'all';
+
+      function applyFilter() {
+        const query = searchInput.value.toLowerCase().trim();
+        let count = 0;
+
+        formCards.forEach(card => {
+          const category = card.getAttribute('data-category');
+          const searchData = (card.getAttribute('data-search') + ' ' + card.innerText).toLowerCase();
+
+          const matchesCategory = (currentFilter === 'all' || category === currentFilter);
+          const matchesQuery = (!query || searchData.includes(query));
+
+          if (matchesCategory && matchesQuery) {
+            card.classList.remove('hidden');
+            count++;
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+
+        visibleCount.textContent = count;
+        if (count === 0) {
+          noResults.classList.remove('hidden');
+        } else {
+          noResults.classList.add('hidden');
+        }
+      }
+
+      searchInput.addEventListener('input', applyFilter);
+
+      filterTabs.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterTabs.querySelectorAll('.filter-btn').forEach(b => {
+            b.classList.remove('active', 'bg-teal-600', 'text-white');
+            b.classList.add('bg-slate-100', 'text-slate-600');
+          });
+
+          btn.classList.add('active', 'bg-teal-600', 'text-white');
+          btn.classList.remove('bg-slate-100', 'text-slate-600');
+
+          currentFilter = btn.getAttribute('data-filter');
+          applyFilter();
+        });
+      });
+    });
+  </script>
+
+  <!-- Page Auto Refresh Script -->
+  <script src="assets/js/pageRefresh.js"></script>
+
+</body>
+</html>

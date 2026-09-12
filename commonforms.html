@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Common Forms &amp; Clinical Policies - Adhiparasakthi Hospitals</title>
+  <link rel="shortcut icon" href="assets/images/favicon_io/favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-900 font-['Plus_Jakarta_Sans',sans-serif] min-h-screen flex flex-col">
+
+  <!-- Sticky Header -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <a href="./index.html#forms" class="flex items-center gap-2 text-slate-600 hover:text-amber-600 transition-colors text-sm font-semibold">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+        <span>Back to Main Portal</span>
+      </a>
+      <div class="flex items-center gap-2">
+        <span class="text-xs text-slate-500 font-medium hidden sm:inline">Clinical &amp; Facility Indents</span>
+        <span class="px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 text-[11px] font-bold">44 Approved Documents</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Header -->
+  <div class="bg-[#0b1021] text-white py-10 sm:py-12 px-4 sm:px-6">
+    <div class="max-w-4xl mx-auto text-center">
+      <span class="inline-block px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-extrabold uppercase tracking-wider mb-3">
+        STANDARDIZED CLINICAL TEMPLATES &amp; POLICIES
+      </span>
+      <h1 class="text-2xl sm:text-4xl font-extrabold mb-3 tracking-tight">Common Hospital Forms &amp; Protocols</h1>
+      <p class="text-xs sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
+        Centralized repository for ICU checklists, emergency room documentation, high-alert medications, staff clinical privileges, FMS schedules, and NABH/HIC infection control guidelines.
+      </p>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8 flex-1 w-full">
+
+    <!-- Search & Filter Controls -->
+    <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-sm mb-8 space-y-4">
+      <div class="flex flex-col sm:flex-row gap-3 items-center justify-between">
+        <div class="relative w-full sm:w-80">
+          <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+          <input 
+            type="text" 
+            id="searchInput" 
+            placeholder="Search forms, drugs, policies..." 
+            class="w-full pl-10 pr-4 py-2 text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all"
+          />
+        </div>
+        <div class="text-xs text-slate-500 font-medium">
+          Showing <span id="visibleCount" class="font-bold text-slate-800">44</span> of 44 documents
+        </div>
+      </div>
+
+      <!-- Category Filter Pills -->
+      <div class="flex flex-wrap gap-1.5 sm:gap-2 pt-2 border-t border-slate-100" id="filterTabs">
+        <button data-filter="all" class="filter-btn active px-3 py-1.5 rounded-lg text-xs font-semibold bg-amber-600 text-white transition-all">All (44)</button>
+        <button data-filter="icu" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all">ICU &amp; Critical Care (6)</button>
+        <button data-filter="pharmacy" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all">Pharmacy &amp; Safety (12)</button>
+        <button data-filter="emergency" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all">Emergency &amp; Day Care (8)</button>
+        <button data-filter="hr" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all">HR Privileges &amp; Policy (6)</button>
+        <button data-filter="fms" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all">FMS &amp; Purchase (3)</button>
+        <button data-filter="nabh" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all">NABH &amp; HIC (9)</button>
+      </div>
+    </div>
+
+    <!-- Forms Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5" id="formsGrid">
+
+      <!-- ================= 1. ICU & CRITICAL CARE ================= -->
+      
+      <!-- 1. ICU Casesheet Checklist -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-blue-300 hover:shadow-md transition-all" data-category="icu" data-search="icu casesheet checklist intensive care patient monitoring audit">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2.5 py-1 rounded-lg">INTENSIVE CARE</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">ICU Casesheet Checklist</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Comprehensive clinical casesheet audit checklist for intensive care patient monitoring and quality adherence.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/ICU Casesheet Checklist.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 2. ICU to Ward Shifting Criteria Checklist -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-blue-300 hover:shadow-md transition-all" data-category="icu" data-search="icu to ward shifting criteria checklist patient transfer step down">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2.5 py-1 rounded-lg">PATIENT TRANSFER</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">ICU to Ward Shifting Criteria Checklist</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Standard clinical step-down stability criteria and vital sign checklist prior to transferring patients to inpatient wards.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/ICU to Ward Shifting Criteria Checklist.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 3. HANDING OVER SBAR -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-indigo-300 hover:shadow-md transition-all" data-category="icu" data-search="handing over sbar clinical handover nursing doctors situation background assessment recommendation">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg">CLINICAL HANDOVER</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">HANDING OVER SBAR</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Standard Situation, Background, Assessment, and Recommendation structured clinical shift handover documentation.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/HANDING OVER SBAR.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 4. Modified Early Warning Score (MEWS) -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-sky-300 hover:shadow-md transition-all" data-category="icu" data-search="modified early warning score mews triage clinical scoring vitals deterioration">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-sky-600 bg-sky-50 px-2.5 py-1 rounded-lg">TRIAGE &amp; SCORING</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Modified Early Warning Score (MEWS)</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Bedside physiological scoring chart for early detection of clinical deterioration and prompt critical care escalation.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/MODIFIED EARLY WARNING SCORE (1).pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-sky-600 hover:bg-sky-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 5. Code Blue Protocol -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-blue-300 hover:shadow-md transition-all" data-category="icu" data-search="code blue resuscitation emergency protocol team roles crash cart">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-blue-700 bg-blue-50 px-2.5 py-1 rounded-lg">RESUSCITATION</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Code Blue Resuscitation Protocol</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Hospital-wide cardiac arrest rapid response protocol, duty team responsibilities, and emergency algorithm.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/Code.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-blue-700 hover:bg-blue-800 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 6. Code Blue Post Event Analysis Form -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-blue-300 hover:shadow-md transition-all" data-category="icu" data-search="code blue post event analysis form resuscitation audit cpr debrief">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2.5 py-1 rounded-lg">RESUSCITATION AUDIT</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Code Blue Post Event Analysis Form</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Post-event team debrief, CPR timeline verification, defibrillation records, and clinical audit documentation.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/Code Blue Post Event Analysis Form.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- ================= 2. PHARMACY & MEDICATION SAFETY ================= -->
+
+      <!-- 7. NARCOTIC DRUGS FORM -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-purple-300 hover:shadow-md transition-all" data-category="pharmacy" data-search="narcotic drugs form controlled substances indent dispensing dual signature">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-purple-600 bg-purple-50 px-2.5 py-1 rounded-lg">CONTROLLED SUBSTANCES</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">NARCOTIC DRUGS FORM</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Strict dual-signature requisition, dispensing register, and patient administration audit log for controlled drugs.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/NARCOTIC DRUGS FORM.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 8. DRUG - FOOD INTERACTION LIST -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-emerald-300 hover:shadow-md transition-all" data-category="pharmacy" data-search="drug food interaction list clinical pharmacology dietary diet timing">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg">CLINICAL PHARMACOLOGY</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">DRUG - FOOD INTERACTION LIST</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Comprehensive hospital clinical formulary reference on food-drug incompatibilities and meal timing instructions.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/DRUG - FOOD INTERACTION LIST.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 9. DRUG - DRUG INTERACTION LIST -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-emerald-300 hover:shadow-md transition-all" data-category="pharmacy" data-search="drug drug interaction list adverse reaction contraindications pharmacology">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg">CLINICAL PHARMACOLOGY</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">DRUG - DRUG INTERACTION LIST</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Evidence-based clinical chart on dangerous multi-drug contraindications and combination safety cautions.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/DRUG - DRUG INTERACTION LIST.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 10. Approved abbreviation July 2025 - 2026 -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-teal-300 hover:shadow-md transition-all" data-category="pharmacy" data-search="approved abbreviation july 2025 2026 medical acronyms do not use list">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-teal-600 bg-teal-50 px-2.5 py-1 rounded-lg">CLINICAL DOCUMENTATION</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Approved abbreviation July 2025 -2026</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Official NABH-compliant hospital approved medical abbreviation guide and forbidden 'Do Not Use' list.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/Approved abbreviation July 2025 -2026.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 11. EMERGENCY MEDICATION LIST - JAN 2026 -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-rose-300 hover:shadow-md transition-all" data-category="pharmacy" data-search="emergency medication list jan 2026 crash cart tray critical drugs">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-rose-600 bg-rose-50 px-2.5 py-1 rounded-lg">CRITICAL CARE DRUGS</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">EMERGENCY MEDICATION LIST - JAN 2026</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Updated inventory formulary and mandatory par levels for all hospital emergency trays and crash carts.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/EMERGENCY MEDICATION LIST - JAN 2026.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 12. HIGH ALERT MEDICATIONS -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-red-300 hover:shadow-md transition-all" data-category="pharmacy" data-search="high alert medications lasa look alike sound alike safety double check">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-red-600 bg-red-50 px-2.5 py-1 rounded-lg">MEDICATION SAFETY</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">HIGH ALERT MEDICATIONS</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Double-check verification protocol and strict dispensing regulations for high-risk medications and LASA drugs.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/HIGH ALERT MEDICATIONS.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 13. 48 Hour Antibiotics Review Form -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-amber-300 hover:shadow-md transition-all" data-category="pharmacy" data-search="48 hour antibiotics review form antimicrobial stewardship de-escalation">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-amber-600 bg-amber-50 px-2.5 py-1 rounded-lg">ANTIMICROBIAL STEWARDSHIP</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">48 Hour Antibiotics Review From</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Mandatory clinical re-assessment and culture-directed de-escalation review sheet for broad-spectrum antibiotics.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/48 Hour Antibiotics Review From.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 14. ADR-Form -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-rose-300 hover:shadow-md transition-all" data-category="pharmacy" data-search="adr form adverse drug reaction reporting pharmacovigilance side effect allergy">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-rose-600 bg-rose-50 px-2.5 py-1 rounded-lg">PHARMACOVIGILANCE</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">ADR-Form (Adverse Drug Reaction)</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">National Pharmacovigilance Programme adverse drug reaction incident logging and clinical documentation.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/ADR-Form.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 15. Transfusion Technique Protocol -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-red-300 hover:shadow-md transition-all" data-category="pharmacy" data-search="transfusion technique protocol blood transfusion prbc vitals monitoring blood bank">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-red-600 bg-red-50 px-2.5 py-1 rounded-lg">BLOOD TRANSFUSION</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Transfusion Technique Protocol</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Standard nursing pre-transfusion identity verification, vital sign checks, and safe infusion rate guideline.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/transfusionprotocol.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 16. Antibiogram -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-indigo-300 hover:shadow-md transition-all" data-category="pharmacy" data-search="antibiogram microbiology microbial resistance antibiotic sensitivity pattern">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg">MICROBIOLOGY SURVEILLANCE</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Antibiogram</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Cumulative institutional hospital antimicrobial sensitivity pattern and microbial resistance surveillance data.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/ANTIBIOGRAM.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 17. Restricted Anti-biotic Form -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-amber-300 hover:shadow-md transition-all" data-category="pharmacy" data-search="restricted anti-biotic form hic reserve antibiotics justification approval">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-amber-600 bg-amber-50 px-2.5 py-1 rounded-lg">ANTIBIOTIC JUSTIFICATION</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Restricted Anti-biotic Form</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Hospital Infection Control Committee (HICC) pre-authorization and clinical justification requisition slip.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/HIC.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 18. Restricted Anti-biotic Drug List -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-amber-300 hover:shadow-md transition-all" data-category="pharmacy" data-search="restricted anti-biotic drug list reserve formulary hicc">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-amber-600 bg-amber-50 px-2.5 py-1 rounded-lg">ANTIBIOTIC FORMULARY</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Restricted Anti-biotic Drug List</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Classified listing of Group-2 and Group-3 reserve antimicrobials requiring mandatory infectious disease sign-off.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/antibiotic.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- ================= 3. EMERGENCY ROOM & DAY CARE ================= -->
+
+      <!-- 19. ER - Doctors Initial Assessment Form -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-emerald-300 hover:shadow-md transition-all" data-category="emergency" data-search="er doctors initial assessment form emergency room triage medical evaluation casualty">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg">EMERGENCY ROOM</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">ER - Doctors Initial Assessment Form</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Emergency room physician primary assessment, triage categorization, clinical examination, and treatment orders.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/DOCTORS INITIAL ASSESSMENT FOR EMERGENCY ROOM.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 20. ER - Nurses Initial Assessment Form -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-emerald-300 hover:shadow-md transition-all" data-category="emergency" data-search="er nurses initial assessment form emergency nursing vitals pain triage casualty">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg">NURSING ASSESSMENT</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">ER - Nurses Initial Assessment Form</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Triage vital signs, pain assessment, allergy verification, and immediate nursing intervention flow record.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/Nurses Initial Assessment for Emergency Room.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 21. ER - Discharge Summary Form -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-emerald-300 hover:shadow-md transition-all" data-category="emergency" data-search="er discharge summary form emergency casualty discharge instructions medication">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg">CASUALTY DISCHARGE</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">ER - Discharge Summary Form</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Standard casualty discharge certificate, prescription details, emergency precautions, and follow-up directives.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/ER - DISCHARGE SUMMARY FORM.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 22. Emergency Transfer Record -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-amber-300 hover:shadow-md transition-all" data-category="emergency" data-search="emergency transfer record patient transport inter facility ambulance transfer">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-amber-600 bg-amber-50 px-2.5 py-1 rounded-lg">PATIENT TRANSFER</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Emergency Transfer Record</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Formal documentation for transferring unstable or specialized patients to tertiary higher medical centres.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/EMERGENCY TRANSFER RECORD (3).pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 23. Day Care Assessment Form -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-sky-300 hover:shadow-md transition-all" data-category="emergency" data-search="day care assessment form ambulatory surgery short stay pre procedure">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-sky-600 bg-sky-50 px-2.5 py-1 rounded-lg">AMBULATORY CARE</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Day Care Assessment Form</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Standard clinical admission record and fitness assessment for short-stay and ambulatory day-case procedures.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/Day Care Assessment Form.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-sky-600 hover:bg-sky-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 24. Day Care Discharge Summary -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-sky-300 hover:shadow-md transition-all" data-category="emergency" data-search="day care discharge summary ambulatory procedure post operative recovery">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-sky-600 bg-sky-50 px-2.5 py-1 rounded-lg">AMBULATORY DISCHARGE</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Day Care Discharge Summary</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Same-day discharge summary, post-operative recovery verification, and patient take-home advice sheet.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/Day Care - Discharge Summary.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-sky-600 hover:bg-sky-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 25. Incident Report -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-rose-300 hover:shadow-md transition-all" data-category="emergency" data-search="incident report clinical risk sentinel event near miss error reporting">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-rose-600 bg-rose-50 px-2.5 py-1 rounded-lg">CLINICAL RISK</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Incident Report</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Non-punitive institutional reporting form for clinical incidents, equipment malfunctions, and near-misses.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/Incident.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 26. Food Token -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-amber-300 hover:shadow-md transition-all" data-category="emergency" data-search="food token dietary kitchen requisition bystander patient diet">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-amber-600 bg-amber-50 px-2.5 py-1 rounded-lg">PATIENT DIETARY</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Food Token</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Official requisition indent voucher for patient special diets, attendant meals, and kitchen distribution.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/food.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- ================= 4. HR PRIVILEGES & GOVERNANCE ================= -->
+
+      <!-- 27. General Medicine Privileges -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-violet-300 hover:shadow-md transition-all" data-category="hr" data-search="hr privileges general medicine doctor credentialing scope of practice">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-violet-600 bg-violet-50 px-2.5 py-1 rounded-lg">DOCTOR PRIVILEGING</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">HR Privileges - General Medicine</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Authorized procedural scope of clinical practice, diagnostic delineations, and credentialing for physicians.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/hrmedicine.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-violet-600 hover:bg-violet-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 28. ENT Privileges -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-violet-300 hover:shadow-md transition-all" data-category="hr" data-search="hr privileges ent otorhinolaryngology surgical privileges doctors">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-violet-600 bg-violet-50 px-2.5 py-1 rounded-lg">DOCTOR PRIVILEGING</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">HR Privileges - ENT</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Surgical privileges and clinical procedural authorizations for ENT / Otorhinolaryngology specialists.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/hrent.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-violet-600 hover:bg-violet-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 29. Anaesthesia Privileges -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-violet-300 hover:shadow-md transition-all" data-category="hr" data-search="hr privileges anaesthesia anesthesiology sedation intensive care doctors">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-violet-600 bg-violet-50 px-2.5 py-1 rounded-lg">DOCTOR PRIVILEGING</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">HR Privileges - Anaesthesia</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Credentialing matrix for general, regional anaesthesia, central line insertion, and airway management.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/hranaesthesia.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-violet-600 hover:bg-violet-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 30. CMO Policy -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-indigo-300 hover:shadow-md transition-all" data-category="hr" data-search="cmo policy chief medical officer emergency administration duty duties">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg">MEDICAL ADMINISTRATION</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">CMO Policy</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Duty protocols, emergency clinical governance, and handover responsibilities for Chief Medical Officers.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/CMO Policy.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 31. Junior Resident Policy -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-indigo-300 hover:shadow-md transition-all" data-category="hr" data-search="junior resident policy jr clinical training duty hours supervision">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg">CLINICAL RESIDENCY</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Junior Resident Policy</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Academic regulations, patient care duties, night shift supervision lines, and clinical conduct for Junior Residents.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/Junior resident Policy.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 32. Performance Management System Policy (PMS) -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-purple-300 hover:shadow-md transition-all" data-category="hr" data-search="performance management system policy pms appraisal kpi staff review">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-purple-600 bg-purple-50 px-2.5 py-1 rounded-lg">HR GOVERNANCE</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Performance Management System Policy</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Institutional staff appraisal system, competency evaluation metrics, and performance review standard.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/PMS.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- ================= 5. FMS & PROCUREMENT ================= -->
+
+      <!-- 33. Purchase Process (Instruments and Equipment APR 2025) -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-amber-300 hover:shadow-md transition-all" data-category="fms" data-search="purchase process instruments and equipment apr 2025 procurement indent quotation purchase order">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-2">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-amber-600 bg-amber-50 px-2.5 py-1 rounded-lg">PROCUREMENT &amp; ASSETS</span>
+              <img src="assets/images/newmain.gif" alt="New" class="h-3.5 w-auto" />
+            </div>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Purchase Process - Instruments &amp; Equipment (APR 2025)</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Updated standard workflow for hospital medical equipment indenting, technical quotes, and procurement approval.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/Instruments and Equipment APR 2025.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 34. Transport Policy -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-slate-400 hover:shadow-md transition-all" data-category="fms" data-search="transport policy hospital vehicles ambulance dispatch fuel fleet requisition">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-700 bg-slate-100 px-2.5 py-1 rounded-lg">FLEET &amp; LOGISTICS</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Transport Policy</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Official rules for hospital vehicle usage, emergency ambulance booking, fleet maintenance, and medical camps.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/Transport.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-slate-700 hover:bg-slate-800 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 35. HVAC PM schedule (Excel) -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-emerald-300 hover:shadow-md transition-all" data-category="fms" data-search="hvac pm schedule air handling hepa filters preventive maintenance ot air conditioning excel">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg">BIOMEDICAL &amp; ENGINEERING</span>
+            <span class="text-[11px] font-bold text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded">EXCEL</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">HVAC PM Schedule</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Preventive maintenance timetable, HEPA filter integrity testing, and air handling unit inspection schedule for OTs.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/PMSheduleHVACsystem2021.xlsx" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+          <span>Download Excel Schedule</span> &rarr;
+        </a>
+      </div>
+
+      <!-- ================= 6. NABH POLICIES & INFECTION CONTROL (HIC) ================= -->
+
+      <!-- 36. Antimicrobial Policy 2026-2027 -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-teal-300 hover:shadow-md transition-all" data-category="nabh" data-search="antimicrobial policy 2026 2027 nabh antibiotic stewardship infection control empirical therapy">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-2">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-teal-600 bg-teal-50 px-2.5 py-1 rounded-lg">NABH ACCREDITATION</span>
+              <img src="assets/images/newmain.gif" alt="New" class="h-3.5 w-auto" />
+            </div>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Antimicrobial Policy 2026-2027</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Current institutional clinical guideline on empiric antimicrobial regimens, surgical prophylaxis, and reserve drug governance.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/Antimicrobial Policy 2026-2027.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 37. Antimicrobial policy 2024-2025 -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-teal-300 hover:shadow-md transition-all" data-category="nabh" data-search="antimicrobial policy 2024 2025 antibiotic stewardship previous edition">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-teal-600 bg-teal-50 px-2.5 py-1 rounded-lg">NABH ARCHIVE</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Antimicrobial Policy 2024-2025</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Previous baseline antimicrobial guidelines retained for audit comparison, longitudinal study, and historical reference.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/Antimicrobial policy 2024-25.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-slate-600 hover:bg-slate-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 38. Aph Disinfection Policy -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-cyan-300 hover:shadow-md transition-all" data-category="nabh" data-search="aph disinfection policy hospital hygiene cleaning fumigation sterilization cssd">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-cyan-600 bg-cyan-50 px-2.5 py-1 rounded-lg">HOSPITAL HYGIENE</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">APH Disinfection Policy</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Standard protocols for surface disinfection chemical dilutions, OT fumigation standards, and equipment decontamination.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/APHDISINFECTIONPOLICY.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-cyan-600 hover:bg-cyan-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 39. Hospital Linen Policy -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-cyan-300 hover:shadow-md transition-all" data-category="nabh" data-search="hospital linen policy laundry infectious linen sorting wash cycles bedsheets">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-cyan-600 bg-cyan-50 px-2.5 py-1 rounded-lg">HOSPITAL HYGIENE</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Hospital Linen Policy</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Standard operating procedure for infected linen bag coding, laundry thermal cycles, clean linen storage, and replacement.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/HOSPITALLINENPOLICY.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-cyan-600 hover:bg-cyan-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 40. Counselling Documentation -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-amber-300 hover:shadow-md transition-all" data-category="nabh" data-search="counselling documentation form doctor patient counselling prognosis communication consent">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-amber-600 bg-amber-50 px-2.5 py-1 rounded-lg">PATIENT COUNSELLING</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Counselling Documentation</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Formal clinical format for doctor-patient counselling sessions, diagnosis discussions, high-risk prognosis, and relatives acknowledgement.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/Counselling Documentation Form.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 41. Catheter Associated Urinary Tract Infection (CAUTI) -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-rose-300 hover:shadow-md transition-all" data-category="nabh" data-search="cauti catheter associated urinary tract infection hic surveillance audit bundle">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-rose-600 bg-rose-50 px-2.5 py-1 rounded-lg">HIC SURVEILLANCE</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Catheter Associated Urinary Tract Infection (CAUTI)</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">HIC surveillance checklist, foley catheter insertion bundle compliance, and infection rate tracking audit form.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/Catheter Associtated Urinary Tract Infection.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 42. Central Line Associated Bloodstream Infection (CLABSI) -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-rose-300 hover:shadow-md transition-all" data-category="nabh" data-search="clabsi central line associated bloodstream infection cvc bundle hic surveillance">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-rose-600 bg-rose-50 px-2.5 py-1 rounded-lg">HIC SURVEILLANCE</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Central Line Associated Bloodstream Infection (CLABSI)</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Central venous catheter insertion bundle check, dressing change frequency audit, and bacteremia monitoring record.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/Central Line Associated Bloodstream Infection.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 43. Surgical Site Infection (SSI) -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-rose-300 hover:shadow-md transition-all" data-category="nabh" data-search="ssi surgical site infection post operative wound infection audit hic surveillance">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-rose-600 bg-rose-50 px-2.5 py-1 rounded-lg">HIC SURVEILLANCE</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Surgical Site Infection (SSI)</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Post-operative surgical wound monitoring form, sterile dressing adherence, and 30-day post-discharge infection audit.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/Surgical Site Infection.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 44. Ventilator-associated Event (VAE) -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-rose-300 hover:shadow-md transition-all" data-category="nabh" data-search="vae ventilator associated event vap mechanical ventilation bundle icu hic surveillance">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-rose-600 bg-rose-50 px-2.5 py-1 rounded-lg">HIC SURVEILLANCE</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Ventilator-associated Event (VAE)</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Mechanical ventilation bundle compliance, oral suctioning logs, and ventilator-associated condition audit documentation.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/Ventilator-associated Event (Vae).pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+    </div>
+
+    <!-- Empty State Message -->
+    <div id="noResults" class="hidden text-center py-16 bg-white rounded-2xl border border-slate-200 mt-4">
+      <svg class="w-12 h-12 text-slate-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+      <h4 class="font-bold text-slate-700 text-base mb-1">No matching forms found</h4>
+      <p class="text-xs text-slate-500 max-w-sm mx-auto">Try typing a different keyword or selecting 'All' to browse all 44 clinical records.</p>
+    </div>
+
+    <!-- Back to Portal bottom button -->
+    <div class="mt-12 text-center">
+      <a href="./index.html#forms" class="inline-flex items-center gap-2 px-6 py-3 bg-white hover:bg-slate-50 text-slate-700 font-bold rounded-xl border border-slate-300 shadow-sm text-xs sm:text-sm transition-all hover:border-amber-400">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+        <span>Return to Main Portal Forms Directory</span>
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500">
+    &copy; 2026 Adhiparasakthi Hospitals &amp; Research Institute. Clinical Quality &amp; Hospital Governance Cell.
+  </footer>
+
+  <!-- Search & Filter Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const searchInput = document.getElementById('searchInput');
+      const filterTabs = document.getElementById('filterTabs');
+      const formCards = document.querySelectorAll('.form-card');
+      const visibleCount = document.getElementById('visibleCount');
+      const noResults = document.getElementById('noResults');
+
+      let currentFilter = 'all';
+
+      function applyFilter() {
+        const query = searchInput.value.toLowerCase().trim();
+        let count = 0;
+
+        formCards.forEach(card => {
+          const category = card.getAttribute('data-category');
+          const searchData = (card.getAttribute('data-search') + ' ' + card.innerText).toLowerCase();
+
+          const matchesCategory = (currentFilter === 'all' || category === currentFilter);
+          const matchesQuery = (!query || searchData.includes(query));
+
+          if (matchesCategory && matchesQuery) {
+            card.classList.remove('hidden');
+            count++;
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+
+        visibleCount.textContent = count;
+        if (count === 0) {
+          noResults.classList.remove('hidden');
+        } else {
+          noResults.classList.add('hidden');
+        }
+      }
+
+      searchInput.addEventListener('input', applyFilter);
+
+      filterTabs.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterTabs.querySelectorAll('.filter-btn').forEach(b => {
+            b.classList.remove('active', 'bg-amber-600', 'text-white');
+            b.classList.add('bg-slate-100', 'text-slate-600');
+          });
+
+          btn.classList.add('active', 'bg-amber-600', 'text-white');
+          btn.classList.remove('bg-slate-100', 'text-slate-600');
+
+          currentFilter = btn.getAttribute('data-filter');
+          applyFilter();
+        });
+      });
+    });
+  </script>
+
+  <!-- Page Auto Refresh Script -->
+  <script src="assets/js/pageRefresh.js"></script>
+
+</body>
+</html>
