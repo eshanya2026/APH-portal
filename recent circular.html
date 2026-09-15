@@ -1,289 +1,143 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>APH - RECENT CIRCULARS</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Plus Jakarta Sans', Arial, sans-serif;
-            background-color: #f4f7fa;
-            margin: 0;
-            padding: 0;
-            color: #333;
-        }
-
-        h2 {
-            text-align: center;
-            color: #4e4e4e;
-            font-size: 32px;
-            margin-top: 36px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-        }
-
-        h3 {
-            text-align: right;
-            padding-right: 15%;
-            color: #4e4e4e;
-            font-size: 16px;
-            margin-top: 40px;
-            margin-bottom: 50px;
-        }
-
-        table {
-            width: 70%;
-            margin: 25px auto;
-            border-collapse: collapse;
-            background-color: #fff;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-        }
-
-        th, td {
-            padding: 16px 20px;
-            text-align: center;
-            font-size: 15px;
-        }
-
-        td:first-child {
-            text-align: left;
-            font-weight: 500;
-        }
-
-        th {
-            background-color: #8261ee;
-            color: white;
-            font-size: 16px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-
-        tr:nth-child(even) {
-            background-color: #fcfcfd;
-        }
-
-        tr:hover {
-            background-color: #f3f0ff;
-        }
-
-        td a {
-            display: inline-block;
-            background-color: #45a049;
-            color: white;
-            padding: 7px 22px;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 14px;
-            transition: background-color 0.2s ease, transform 0.15s ease;
-        }
-
-        td a:hover {
-            background-color: #8261ee;
-            transform: translateY(-2px);
-        }
-
-        td a:active {
-            transform: translateY(0);
-        }
-
-        /* Responsive Styling */
-        @media screen and (max-width: 768px) {
-            table {
-                width: 95%;
-            }
-            h2 {
-                font-size: 24px;
-            }
-            th, td {
-                padding: 12px 10px;
-                font-size: 13px;
-            }
-            h3 {
-                padding-right: 5%;
-                text-align: center;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>APH - Recent Circulars</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #F8FAFC;
+      color: #0F172A;
+      -webkit-font-smoothing: antialiased;
+    }
+  </style>
 </head>
 <body>
-    <header style="background: #ffffff; border-bottom: 1px solid #d4cfc4; padding: 0.85rem 1.5rem; position: sticky; top: 0; z-index: 40; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-        <div style="max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between;">
-            <a href="./index.html#e-circulars" style="display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; color: #8261ee; font-weight: 700; font-size: 0.9rem;">
-                <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                <span>Back to Main Portal</span>
-            </a>
-            <span style="font-size: 0.85rem; color: #5c574f; font-weight: 600;">Adhiparasakthi Hospitals &bull; Recent Circulars Hub</span>
-        </div>
-    </header>
+  <!-- Top Nav -->
+  <header class="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-[#E2E8F0] shadow-sm">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between gap-3">
+      <span class="text-sm font-extrabold text-[#0F172A]">APH Recent Circulars</span>
+      <span class="text-xs sm:text-sm font-semibold text-[#64748B] truncate">Adhiparasakthi Hospitals</span>
+    </div>
+  </header>
 
-    <h2>APH - RECENT CIRCULARS</h2>
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 py-10 sm:py-12">
+    <div class="mb-8">
+      <span class="inline-block text-[11px] font-extrabold tracking-wider uppercase text-[#2563EB] mb-2">Digital E-Circulars</span>
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-[#0F172A] tracking-tight">APH Recent Circulars</h1>
+      <p class="mt-2 text-sm text-[#64748B] max-w-2xl">
+        Management memorandums, safety notices, and executive circulars.
+      </p>
+    </div>
 
-<table>
-  <tr>
-    <th>Form Title</th>
-    <th>Document</th>
-    <th>Date</th>
-      </tr>
+    <div class="bg-white border border-[#E2E8F0] rounded-2xl overflow-hidden shadow-sm">
+      <!-- Table header -->
+      <div class="hidden sm:grid grid-cols-12 gap-3 px-5 py-3.5 bg-[#EFF6FF] border-b border-[#BFDBFE]">
+        <div class="col-span-7 text-[11px] font-extrabold uppercase tracking-wider text-[#1D4ED8]">Circular Title</div>
+        <div class="col-span-2 text-[11px] font-extrabold uppercase tracking-wider text-[#1D4ED8]">Date</div>
+        <div class="col-span-3 text-[11px] font-extrabold uppercase tracking-wider text-[#1D4ED8] text-right">Document</div>
+      </div>
 
-      <tr>
-        <td>Safety Meeting Circular- 2026
-            <img src="assets/images/newmain.gif" alt="New" class="git-gif" style="height: 16px; width: 30px; vertical-align: middle; margin-left: 6px;"> 
-        </td>
-        <td><a href="http://192.168.101.75:3000/files/Safety meeting Circular- 2026.pdf" target="_blank" rel="noopener noreferrer">view</a></td>
-        <td>18.02.2026</td>
-    </tr>
+      <div class="divide-y divide-[#E2E8F0]">
+        <a href="http://192.168.101.75:3000/files/Safety meeting Circular- 2026.pdf" target="_blank" rel="noopener noreferrer" class="group grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-3 px-5 py-4 hover:bg-[#EFF6FF] transition-colors items-center">
+          <div class="sm:col-span-7 flex items-center gap-2 min-w-0">
+            <span class="text-sm font-semibold text-[#0F172A]">Safety Meeting Circular- 2026</span>
+            <span class="inline-flex items-center text-[10px] font-extrabold uppercase tracking-wider text-[#B45309] bg-[#FFFBEB] border border-[#FDE68A] px-1.5 py-0.5 rounded shrink-0">New</span>
+          </div>
+          <div class="sm:col-span-2 text-xs font-medium text-[#64748B] font-mono">18.02.2026</div>
+          <div class="sm:col-span-3 sm:text-right">
+            <span class="inline-flex text-[11px] font-bold text-[#2563EB] bg-[#EFF6FF] group-hover:bg-[#2563EB] group-hover:text-white px-2.5 py-1 rounded-lg transition-colors">View PDF</span>
+          </div>
+        </a>
 
-      <tr>
-        <td>AMSOUR DEVELOPED INHOUSE APPLICATIONS - 2026</td>
-        <td><a href="http://192.168.101.75:3000/files/AMS.pdf" target="_blank" rel="noopener noreferrer">view</a></td>
-        <td>04.02.2026</td>
-      </tr>
-      <tr>
-        <td>Refugee - 2026</td>
-        <td><a href="http://192.168.101.75:3000/files/Refugee.pdf" target="_blank" rel="noopener noreferrer">view</a></td>
-        <td>04.02.2026</td>
-      </tr>
+        <a href="http://192.168.101.75:3000/files/AMS.pdf" target="_blank" rel="noopener noreferrer" class="group grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-3 px-5 py-4 hover:bg-[#EFF6FF] transition-colors items-center">
+          <div class="sm:col-span-7 text-sm font-semibold text-[#0F172A]">AMSOUR DEVELOPED INHOUSE APPLICATIONS - 2026</div>
+          <div class="sm:col-span-2 text-xs font-medium text-[#64748B] font-mono">04.02.2026</div>
+          <div class="sm:col-span-3 sm:text-right">
+            <span class="inline-flex text-[11px] font-bold text-[#2563EB] bg-[#EFF6FF] group-hover:bg-[#2563EB] group-hover:text-white px-2.5 py-1 rounded-lg transition-colors">View PDF</span>
+          </div>
+        </a>
 
-      <tr>
-        <td>Circular - 2026</td>
-        <td><a href="http://192.168.101.75:3000/files/CIRCULAR - 2026.pdf" target="_blank" rel="noopener noreferrer">view</a></td>
-        <td>02.02.2026</td>
-      </tr>
+        <a href="http://192.168.101.75:3000/files/Refugee.pdf" target="_blank" rel="noopener noreferrer" class="group grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-3 px-5 py-4 hover:bg-[#EFF6FF] transition-colors items-center">
+          <div class="sm:col-span-7 text-sm font-semibold text-[#0F172A]">Refugee - 2026</div>
+          <div class="sm:col-span-2 text-xs font-medium text-[#64748B] font-mono">04.02.2026</div>
+          <div class="sm:col-span-3 sm:text-right">
+            <span class="inline-flex text-[11px] font-bold text-[#2563EB] bg-[#EFF6FF] group-hover:bg-[#2563EB] group-hover:text-white px-2.5 py-1 rounded-lg transition-colors">View PDF</span>
+          </div>
+        </a>
 
-      <tr>
-        <td>SWOT Analysis Circular Jan 2026</td>
-        <td><a href="http://192.168.101.75:3000/files/SWOT ANALYSIS CIRCULAR jan 2026.pdf" target="_blank" rel="noopener noreferrer">view</a></td>
-        <td>02.02.2026</td>
-      </tr>
+        <a href="http://192.168.101.75:3000/files/CIRCULAR - 2026.pdf" target="_blank" rel="noopener noreferrer" class="group grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-3 px-5 py-4 hover:bg-[#EFF6FF] transition-colors items-center">
+          <div class="sm:col-span-7 text-sm font-semibold text-[#0F172A]">Circular - 2026</div>
+          <div class="sm:col-span-2 text-xs font-medium text-[#64748B] font-mono">02.02.2026</div>
+          <div class="sm:col-span-3 sm:text-right">
+            <span class="inline-flex text-[11px] font-bold text-[#2563EB] bg-[#EFF6FF] group-hover:bg-[#2563EB] group-hover:text-white px-2.5 py-1 rounded-lg transition-colors">View PDF</span>
+          </div>
+        </a>
 
-      <tr>
-        <td>Circular QC Meeting-2025</td>
-        <td><a href="http://192.168.101.75:3000/files/CIRCULAR QC MEETING-2025.pdf" target="_blank" rel="noopener noreferrer">view</a></td>
-        <td>16.06.2025</td>
-      </tr>
-    
-<tr>
-    <td>Patient Valuable Policy</td>
-    <td><a href="http://192.168.101.75:3000/files/Patient Valuable Policy.pdf" target="_blank" rel="noopener noreferrer">view</a></td>
-    <td>26.11.2024</td>
-  </tr>
+        <a href="http://192.168.101.75:3000/files/SWOT ANALYSIS CIRCULAR jan 2026.pdf" target="_blank" rel="noopener noreferrer" class="group grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-3 px-5 py-4 hover:bg-[#EFF6FF] transition-colors items-center">
+          <div class="sm:col-span-7 text-sm font-semibold text-[#0F172A]">SWOT Analysis Circular Jan 2026</div>
+          <div class="sm:col-span-2 text-xs font-medium text-[#64748B] font-mono">02.02.2026</div>
+          <div class="sm:col-span-3 sm:text-right">
+            <span class="inline-flex text-[11px] font-bold text-[#2563EB] bg-[#EFF6FF] group-hover:bg-[#2563EB] group-hover:text-white px-2.5 py-1 rounded-lg transition-colors">View PDF</span>
+          </div>
+        </a>
 
-  <tr>
-    <td>Code Violet</td>
-    <td><a href="http://192.168.101.75:3000/files/Code Violet.pdf" target="_blank" rel="noopener noreferrer">view</a></td>
-    <td>27.11.2024</td>
-  </tr>
+        <a href="http://192.168.101.75:3000/files/CIRCULAR QC MEETING-2025.pdf" target="_blank" rel="noopener noreferrer" class="group grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-3 px-5 py-4 hover:bg-[#EFF6FF] transition-colors items-center">
+          <div class="sm:col-span-7 text-sm font-semibold text-[#0F172A]">Circular QC Meeting-2025</div>
+          <div class="sm:col-span-2 text-xs font-medium text-[#64748B] font-mono">16.06.2025</div>
+          <div class="sm:col-span-3 sm:text-right">
+            <span class="inline-flex text-[11px] font-bold text-[#2563EB] bg-[#EFF6FF] group-hover:bg-[#2563EB] group-hover:text-white px-2.5 py-1 rounded-lg transition-colors">View PDF</span>
+          </div>
+        </a>
 
-<tr>
-    <td>Emergency Rescue Team</td>
-    <td><a href="http://192.168.101.75:3000/files/Emergency Rescue Team.pdf" target="_blank" rel="noopener noreferrer">view</a></td>
-    <td>27.11.2024</td>
-  </tr>
+        <a href="http://192.168.101.75:3000/files/Patient Valuable Policy.pdf" target="_blank" rel="noopener noreferrer" class="group grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-3 px-5 py-4 hover:bg-[#EFF6FF] transition-colors items-center">
+          <div class="sm:col-span-7 text-sm font-semibold text-[#0F172A]">Patient Valuable Policy</div>
+          <div class="sm:col-span-2 text-xs font-medium text-[#64748B] font-mono">26.11.2024</div>
+          <div class="sm:col-span-3 sm:text-right">
+            <span class="inline-flex text-[11px] font-bold text-[#2563EB] bg-[#EFF6FF] group-hover:bg-[#2563EB] group-hover:text-white px-2.5 py-1 rounded-lg transition-colors">View PDF</span>
+          </div>
+        </a>
 
-<!--  <tr>
-    <td>Transfusion Technique Protocol</td>
-    <td><a href=transfusionprotocol.pdf> view </a></td>
-  </tr>
-<tr>
-    <td>INSURANCE PREAUTH FORMS</td>
-    <td><a href="preauth.html" target="displaybox"> view </a></td>
-  </tr>
-<tr>
-    <td>ANTIBIOGRAM</td>
-    <td><a href=ANTIBIOGRAM.pdf> view </a></td>
-  </tr>
-<tr>
-    <td>ANTIMICROBIAL POLICY FOR 2022-2023</td>
-    <td><a href=ANTIMICROBIAL.pdf> view </a></td>
-  </tr>
-<tr>
-    <td>RESTRICTED ANTI-BIOTIC FORM</td>
-    <td><a href=HIC.pdf> view </a></td>
-  </tr>
-<tr>
-    <td>RESTRICTED ANTI-BIOTIC DRUG LIST</td>
-    <td><a href=antibiotic.pdf> view </a></td>
-  </tr>
-<tr>
-    <td>PERFORMANCE MANAGEMENT SYSTEM POLICY</td>
-    <td><a href=PMS.pdf> view </a></td>
-  </tr>
-<tr>
-    <td colspan="2"><b><centre>HR PRIVILEGES</centre></b></td>
-      </tr>
-<tr>
-    <td>GENERAL MEDICINE</td>
-    <td><a href=hrmedicine.pdf> view </a></td>
-  </tr>
-<tr>
-    <td>ENT</td>
-    <td><a href=hrent.pdf> view </a></td>
-  </tr>
-<tr>
-    <td>ANAESTHESIA</td>
-    <td><a href=hranaesthesia.pdf> view </a></td>
-  </tr>
-<tr>
-    <td colspan="2"><b><centre>FMS FORMS AND SCHEDULE</centre></b></td>
-      </tr>
-<tr>
-    <td>TRANSPORT POLICY</td>
-    <td><a href=Transport.pdf> view </a></td>
-  </tr>
-<tr>
-    <td>HVAC PM schedule</td>
-    <td><a href=PMSheduleHVACsystem2021.xlsx> view </a></td>
-  </tr>
-<tr>
-    <td colspan="2"><b><centre>NABH POLICY</centre></b></td>
-      </tr>
-<tr>
-    <td>Antimicrobial policy</td>
-    <td><a href=Antimicrobialpolicy.pdf> view </a></td>
-  </tr>
-<tr>
-    <td>APH DISINFECTION POLICY</td>
-    <td><a href=APHDISINFECTIONPOLICY.pdf> view </a></td>
-  </tr>
-<tr>
-    <td>HOSPITAL LINEN POLICY</td>
-    <td><a href=HOSPITALLINENPOLICY.pdf> view </a></td>
-  </tr>
-<tr>
-    <td colspan="2"><b><centre>COMMITEE MOM</centre></b></td>
-      </tr>
- <tr>
-    <td>MOM</td>
-    <td><a href=MOM-23.10.24.pdf> view </a></td>
-  </tr>
-<tr>
-    <td>CPR MOM</td>
-    <td><a href=CPR_MOM-23.10.2024.pdf> view </a></td>
-  </tr>
-  <tr>
-    <td>FMS MOM</td>
-    <td><a href=FMS_MOM-24.10.2024.pdf> view </a></td>
-  </tr>
-  <tr>
-    <td>HIC MOM</td>
-    <td><a href=HIC_MOM_24-10-24_FINAL.pdf> view </a></td>
-  </tr>
- <tr>
-    <td>DTC MINUTES</td>
-    <td><a href=DTC_MINUTES_17.10.2024.pdf> view </a></td>
-  </tr>
-<tr> -->
- </table>
-  <h3><a href="./index.html#e-circulars" style="color: #8261ee; text-decoration: none; font-weight: 700;">&larr; BACK TO MAIN PORTAL</a></h3>
-  
-       <!-- Page Auto Refresh Script -->
-    <script src="assets/js/pageRefresh.js"></script> 
-	
+        <a href="http://192.168.101.75:3000/files/Code Violet.pdf" target="_blank" rel="noopener noreferrer" class="group grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-3 px-5 py-4 hover:bg-[#EFF6FF] transition-colors items-center">
+          <div class="sm:col-span-7 text-sm font-semibold text-[#0F172A]">Code Violet</div>
+          <div class="sm:col-span-2 text-xs font-medium text-[#64748B] font-mono">27.11.2024</div>
+          <div class="sm:col-span-3 sm:text-right">
+            <span class="inline-flex text-[11px] font-bold text-[#2563EB] bg-[#EFF6FF] group-hover:bg-[#2563EB] group-hover:text-white px-2.5 py-1 rounded-lg transition-colors">View PDF</span>
+          </div>
+        </a>
+
+        <a href="http://192.168.101.75:3000/files/Emergency Rescue Team.pdf" target="_blank" rel="noopener noreferrer" class="group grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-3 px-5 py-4 hover:bg-[#EFF6FF] transition-colors items-center">
+          <div class="sm:col-span-7 text-sm font-semibold text-[#0F172A]">Emergency Rescue Team</div>
+          <div class="sm:col-span-2 text-xs font-medium text-[#64748B] font-mono">27.11.2024</div>
+          <div class="sm:col-span-3 sm:text-right">
+            <span class="inline-flex text-[11px] font-bold text-[#2563EB] bg-[#EFF6FF] group-hover:bg-[#2563EB] group-hover:text-white px-2.5 py-1 rounded-lg transition-colors">View PDF</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="mt-8">
+      <a href="./index.html#e-circulars" class="inline-flex items-center gap-2 text-sm font-bold text-[#2563EB] hover:underline">
+        <span>&larr;</span>
+        Back to Digital E-Circulars
+      </a>
+    </div>
+  </main>
 </body>
 </html>

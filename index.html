@@ -45,6 +45,40 @@
       color: #0f172a;
     }
 
+    /* Forms left category cards — selected = form colour fill + white text */
+    .forms-card-item.is-selected {
+      border-color: transparent !important;
+      box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.15);
+    }
+    .forms-card-item.is-selected.forms-fill-blue { background-color: #2563EB !important; }
+    .forms-card-item.is-selected.forms-fill-amber { background-color: #F59E0B !important; }
+    .forms-card-item.is-selected.forms-fill-purple { background-color: #A855F7 !important; }
+    .forms-card-item.is-selected.forms-fill-teal { background-color: #14B8A6 !important; }
+    .forms-card-item.is-selected .forms-card-title,
+    .forms-card-item.is-selected .forms-card-count,
+    .forms-card-item.is-selected .forms-card-desc,
+    .forms-card-item.is-selected .forms-card-link,
+    .forms-card-item.is-selected .forms-card-meta {
+      color: #ffffff !important;
+    }
+    .forms-card-item.is-selected .forms-card-icon {
+      background-color: rgba(255, 255, 255, 0.2) !important;
+      color: #ffffff !important;
+    }
+    .forms-card-item.is-selected .forms-card-tag {
+      background-color: rgba(255, 255, 255, 0.18) !important;
+      color: #ffffff !important;
+      border-color: rgba(255, 255, 255, 0.28) !important;
+    }
+    .forms-card-item.is-selected .forms-card-footer {
+      border-color: rgba(255, 255, 255, 0.28) !important;
+    }
+    .forms-card-item.is-selected .active-badge {
+      background-color: rgba(255, 255, 255, 0.2) !important;
+      color: #ffffff !important;
+      border-color: rgba(255, 255, 255, 0.35) !important;
+    }
+
     /* Forms active list scrollbar */
     .custom-forms-scrollbar {
       scrollbar-width: thin;
@@ -291,103 +325,55 @@
   <section id="core-systems" class="relative z-20 -mt-20 sm:-mt-24 md:-mt-28 lg:-mt-32 px-4 sm:px-6 lg:px-12 max-w-7xl mx-auto pb-12 sm:pb-16">
     
     <!-- 6 Enterprise Systems Cards Grid -->
-    <div class="grid grid-cols-1 min-[420px]:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4 sm:gap-5 mb-10 sm:mb-12">
+    <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-4 sm:gap-5 mb-10 sm:mb-12">
       
       <!-- Card 1: HIS System -->
-      <div class="system-card bg-white rounded-2xl px-5 pt-6 pb-6 border border-slate-100 shadow-xl hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-200 flex flex-col justify-between group min-h-[235px]">
-        <div>
-          <div class="flex justify-center items-center h-18 mb-4">
-            <img src="assets/images/aosta-proper.png" alt="AOSTA HIS Logo" class="max-h-14 max-w-[110px] object-contain" />
-          </div>
-          <h3 class="text-base font-bold text-center text-slate-900 leading-snug">HIS System</h3>
+      <a href="http://192.168.103.37/BB15SE/Backbone/admin/login.aspx" target="_blank" rel="noopener noreferrer" class="system-card aspect-square bg-white rounded-2xl px-3 py-4 border border-slate-100 shadow-xl hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-200 flex flex-col items-center justify-center gap-3 group">
+        <div class="flex justify-center items-center h-14 w-full">
+          <img src="assets/images/aosta-proper.png" alt="AOSTA HIS Logo" class="max-h-14 max-w-[90%] object-contain" />
         </div>
-        <div class="text-center pt-4 pb-1 border-t border-slate-100 mt-6">
-          <a href="http://192.168.103.37/BB15SE/Backbone/admin/login.aspx" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 hover:text-blue-700 group-hover:gap-2 transition-all">
-            <span>Launch HIS</span>
-            <span>&rarr;</span>
-          </a>
-        </div>
-      </div>
+        <h3 class="text-sm font-bold text-center text-slate-900 leading-snug">HIS System</h3>
+      </a>
 
       <!-- Card 2: PruWorks HRMS -->
-      <div class="system-card bg-white rounded-2xl px-5 pt-6 pb-6 border border-slate-100 shadow-xl hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-200 flex flex-col justify-between group min-h-[235px]">
-        <div>
-          <div class="flex justify-center items-center h-18 mb-4">
-            <img src="assets/images/pruworks-proper.png" alt="PruWorks HRMS Logo" class="max-h-11 max-w-[130px] object-contain" />
-          </div>
-          <h3 class="text-base font-bold text-center text-slate-900 leading-snug">PruWorks HRMS</h3>
+      <a href="https://mapims-hrms.tecvinesolutions.com" target="_blank" rel="noopener noreferrer" class="system-card aspect-square bg-white rounded-2xl px-3 py-4 border border-slate-100 shadow-xl hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-200 flex flex-col items-center justify-center gap-3 group">
+        <div class="flex justify-center items-center h-14 w-full">
+          <img src="assets/images/pruworks-proper.png" alt="PruWorks HRMS Logo" class="max-h-11 max-w-[90%] object-contain" />
         </div>
-        <div class="text-center pt-4 pb-1 border-t border-slate-100 mt-6">
-          <a href="https://mapims-hrms.tecvinesolutions.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 hover:text-blue-700 group-hover:gap-2 transition-all">
-            <span>Open Portal</span>
-            <span>&rarr;</span>
-          </a>
-        </div>
-      </div>
+        <h3 class="text-sm font-bold text-center text-slate-900 leading-snug">PruWorks HRMS</h3>
+      </a>
 
       <!-- Card 3: M - PACS -->
-      <div class="system-card bg-white rounded-2xl px-5 pt-6 pb-6 border border-slate-100 shadow-xl hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-200 flex flex-col justify-between group min-h-[235px]">
-        <div>
-          <div class="flex justify-center items-center h-18 mb-4">
-            <img src="assets/images/medsynapse-proper.png" alt="Medsynapse PACS Logo" class="max-h-9 max-w-[135px] object-contain" />
-          </div>
-          <h3 class="text-base font-bold text-center text-slate-900 leading-snug">M - PACS</h3>
+      <a href="http://192.168.101.224/User_Login.asp" target="_blank" rel="noopener noreferrer" class="system-card aspect-square bg-white rounded-2xl px-3 py-4 border border-slate-100 shadow-xl hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-200 flex flex-col items-center justify-center gap-3 group">
+        <div class="flex justify-center items-center h-14 w-full">
+          <img src="assets/images/medsynapse-proper.png" alt="Medsynapse PACS Logo" class="max-h-12 max-w-[90%] object-contain rounded-md" />
         </div>
-        <div class="text-center pt-4 pb-1 border-t border-slate-100 mt-6">
-          <a href="http://192.168.101.224/User_Login.asp" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 hover:text-blue-700 group-hover:gap-2 transition-all">
-            <span>Access PACS</span>
-            <span>&rarr;</span>
-          </a>
-        </div>
-      </div>
+        <h3 class="text-sm font-bold text-center text-slate-900 leading-snug">M - PACS</h3>
+      </a>
 
       <!-- Card 4: HRMS - Admin -->
-      <div class="system-card bg-white rounded-2xl px-5 pt-6 pb-6 border border-slate-100 shadow-xl hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-200 flex flex-col justify-between group min-h-[235px]">
-        <div>
-          <div class="flex justify-center items-center h-18 mb-4">
-            <img src="assets/images/hrms-admin-proper.png" alt="Adhiparasakthi HRMS Admin Logo" class="max-h-14 max-w-[110px] object-contain" />
-          </div>
-          <h3 class="text-base font-bold text-center text-slate-900 leading-snug">HRMS - Admin</h3>
+      <a href="http://www.mapims.online/" target="_blank" rel="noopener noreferrer" class="system-card aspect-square bg-white rounded-2xl px-3 py-4 border border-slate-100 shadow-xl hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-200 flex flex-col items-center justify-center gap-3 group">
+        <div class="flex justify-center items-center h-14 w-full">
+          <img src="assets/images/hrms-admin-proper.png" alt="Adhiparasakthi HRMS Admin Logo" class="max-h-14 max-w-[90%] object-contain" />
         </div>
-        <div class="text-center pt-4 pb-1 border-t border-slate-100 mt-6">
-          <a href="http://www.mapims.online/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 hover:text-blue-700 group-hover:gap-2 transition-all">
-            <span>Admin Sign In</span>
-            <span>&rarr;</span>
-          </a>
-        </div>
-      </div>
+        <h3 class="text-sm font-bold text-center text-slate-900 leading-snug">HRMS - Admin</h3>
+      </a>
 
       <!-- Card 5: HRMS - Staff -->
-      <div class="system-card bg-white rounded-2xl px-5 pt-6 pb-6 border border-slate-100 shadow-xl hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-200 flex flex-col justify-between group min-h-[235px]">
-        <div>
-          <div class="flex justify-center items-center h-18 mb-4">
-            <img src="assets/images/hrms-staff-proper.png" alt="Adhiparasakthi HRMS Staff Portal Logo" class="max-h-14 max-w-[110px] object-contain" />
-          </div>
-          <h3 class="text-base font-bold text-center text-slate-900 leading-snug">HRMS - Staff</h3>
+      <a href="http://www.mapims.online/staff" target="_blank" rel="noopener noreferrer" class="system-card aspect-square bg-white rounded-2xl px-3 py-4 border border-slate-100 shadow-xl hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-200 flex flex-col items-center justify-center gap-3 group">
+        <div class="flex justify-center items-center h-14 w-full">
+          <img src="assets/images/hrms-staff-proper.png" alt="Adhiparasakthi HRMS Staff Portal Logo" class="max-h-14 max-w-[90%] object-contain" />
         </div>
-        <div class="text-center pt-4 pb-1 border-t border-slate-100 mt-6">
-          <a href="http://www.mapims.online/staff" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 hover:text-blue-700 group-hover:gap-2 transition-all">
-            <span>Staff Portal</span>
-            <span>&rarr;</span>
-          </a>
-        </div>
-      </div>
+        <h3 class="text-sm font-bold text-center text-slate-900 leading-snug">HRMS - Staff</h3>
+      </a>
 
       <!-- Card 6: MRD Portal -->
-      <div class="system-card bg-white rounded-2xl px-5 pt-6 pb-6 border border-slate-100 shadow-xl hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-200 flex flex-col justify-between group min-h-[235px]">
-        <div>
-          <div class="flex justify-center items-center h-18 mb-4">
-            <img src="assets/images/fit-mrd-proper.png" alt="FIT MRD Logo" class="max-h-12 max-w-[110px] object-contain" />
-          </div>
-          <h3 class="text-base font-bold text-center text-slate-900 leading-snug">MRD Portal</h3>
+      <a href="http://www.mapimsmrd.com/mapimsmrd/" target="_blank" rel="noopener noreferrer" class="system-card aspect-square bg-white rounded-2xl px-3 py-4 border border-slate-100 shadow-xl hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-200 flex flex-col items-center justify-center gap-3 group">
+        <div class="flex justify-center items-center h-14 w-full">
+          <img src="assets/images/fit-mrd-proper.png" alt="FIT MRD Logo" class="max-h-12 max-w-[90%] object-contain" />
         </div>
-        <div class="text-center pt-4 pb-1 border-t border-slate-100 mt-6">
-          <a href="http://www.mapimsmrd.com/mapimsmrd/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 hover:text-blue-700 group-hover:gap-2 transition-all">
-            <span>MRD Archive</span>
-            <span>&rarr;</span>
-          </a>
-        </div>
-      </div>
+        <h3 class="text-sm font-bold text-center text-slate-900 leading-snug">MRD Portal</h3>
+      </a>
 
     </div>
 
@@ -428,171 +414,105 @@
   <section id="in-house-apps" class="py-16 px-4 sm:px-6 lg:px-12 max-w-7xl mx-auto border-t border-slate-200/70">
     
     <!-- Section Header -->
-    <div class="text-center max-w-3xl mx-auto mb-12">
-      <span class="inline-block text-[11px] font-extrabold tracking-wider uppercase px-3 py-1 rounded-full bg-purple-100 text-purple-700 border border-purple-200/60 mb-3">
-        ENGINEERING INNOVATION
+    <div class="mb-8">
+      <span class="inline-block text-[11px] font-extrabold tracking-wider uppercase text-[#2563EB] mb-2">
+        Engineering Innovation
       </span>
-      <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
+      <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#0F172A] tracking-tight mb-2">
         Our In–House Developed Applications
       </h2>
-      <p class="text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
-        Tailored internal clinical systems engineered to accelerate departmental workflows and patient satisfaction.
+      <p class="text-sm text-[#64748B] max-w-2xl">
+        Internal clinical systems built for departmental workflows.
       </p>
     </div>
 
-    <!-- 6 In-House Application Cards Grid (2 rows x 3 columns) -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- App cards: Category → Title → metadata → Action (no divider line) -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
 
-      <!-- App Card 1: Pathology Barcode App -->
-      <div class="inhouse-card bg-white rounded-2xl p-6 border border-slate-200/90 shadow-sm hover:shadow-md transition-all duration-200 flex flex-col justify-between group">
-        <div>
-          <div class="flex items-center gap-3.5 mb-4">
-            <div class="w-12 h-12 rounded-xl bg-white border border-slate-200 p-1 flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform">
-              <img src="assets/images/Pathology.png" alt="Pathology App Logo" class="w-full h-full object-contain" />
-            </div>
-            <div>
-              <span class="text-[11px] font-bold tracking-wider text-emerald-600 uppercase">LABORATORY</span>
-              <h3 class="text-base sm:text-lg font-bold text-slate-900 leading-tight">Pathology Barcode App</h3>
-            </div>
+      <a href="http://192.168.103.158:8081" target="_blank" rel="noopener noreferrer" class="group flex flex-col bg-white border border-[#E2E8F0] rounded-2xl overflow-hidden hover:border-[#2563EB] hover:shadow-sm transition-all">
+        <div class="h-36 bg-white flex items-center justify-center p-5">
+          <img src="assets/images/Pathology.png" alt="" class="max-h-full max-w-full object-contain" />
+        </div>
+        <div class="flex flex-col flex-1 p-5">
+          <div class="text-[10px] font-extrabold tracking-wider uppercase text-[#059669]">Laboratory</div>
+          <h3 class="text-base font-bold text-[#0F172A] leading-snug mt-1">Pathology Barcode App</h3>
+          <div class="flex items-center justify-between gap-3 mt-3">
+            <span class="text-xs font-medium text-[#64748B]">v2.4.4</span>
+            <span class="text-xs font-bold text-[#2563EB] group-hover:underline whitespace-nowrap">Open Module →</span>
           </div>
-          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-6">
-            Phlebotomy barcoding, real-time sample routing, analyzer interface, and critical value SMS alerts.
-          </p>
         </div>
-        <div class="flex items-center justify-between pt-4 border-t border-slate-100 text-xs">
-          <span class="text-slate-400 font-medium">v2.4 &bull; Active in Central Lab</span>
-          <a href="http://192.168.103.158:8081" target="_blank" rel="noopener noreferrer" class="font-bold text-emerald-600 hover:text-emerald-700 flex items-center gap-1">
-            <span>Open Module</span>
-            <span>&rarr;</span>
-          </a>
-        </div>
-      </div>
+      </a>
 
-      <!-- App Card 2: Eye Camp-25 -->
-      <div class="inhouse-card bg-white rounded-2xl p-6 border border-slate-200/90 shadow-sm hover:shadow-md transition-all duration-200 flex flex-col justify-between group">
-        <div>
-          <div class="flex items-center gap-3.5 mb-4">
-            <div class="w-12 h-12 rounded-xl bg-white border border-slate-200 p-1 flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform">
-              <img src="assets/images/Eyecamp.png" alt="Eye Camp-25 Logo" class="w-full h-full object-contain" />
-            </div>
-            <div>
-              <span class="text-[11px] font-bold tracking-wider text-sky-600 uppercase">COMMUNITY HEALTH</span>
-              <h3 class="text-base sm:text-lg font-bold text-slate-900 leading-tight">Eye Camp-25</h3>
-            </div>
+      <a href="http://192.168.103.158:8082" target="_blank" rel="noopener noreferrer" class="group flex flex-col bg-white border border-[#E2E8F0] rounded-2xl overflow-hidden hover:border-[#2563EB] hover:shadow-sm transition-all">
+        <div class="h-36 bg-white flex items-center justify-center p-5">
+          <img src="assets/images/eyecamp.png" alt="" class="max-h-full max-w-full object-contain" />
+        </div>
+        <div class="flex flex-col flex-1 p-5">
+          <div class="text-[10px] font-extrabold tracking-wider uppercase text-[#0284C7]">Community Health</div>
+          <h3 class="text-base font-bold text-[#0F172A] leading-snug mt-1">Eye Camp-25</h3>
+          <div class="flex items-center justify-between gap-3 mt-3">
+            <span class="text-xs font-medium text-[#64748B]">Outreach &amp; screening</span>
+            <span class="text-xs font-bold text-[#2563EB] group-hover:underline whitespace-nowrap">Open Module →</span>
           </div>
-          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-6">
-            Rural outreach screening tool, cataract triage database, spectacle allotment, and surgery scheduling.
-          </p>
         </div>
-        <div class="flex items-center justify-between pt-4 border-t border-slate-100 text-xs">
-          <span class="text-slate-400 font-medium">Outreach Sync Ready</span>
-          <a href="http://192.168.103.158:8082" target="_blank" rel="noopener noreferrer" class="font-bold text-sky-600 hover:text-sky-700 flex items-center gap-1">
-            <span>Open Module</span>
-            <span>&rarr;</span>
-          </a>
-        </div>
-      </div>
+      </a>
 
-      <!-- App Card 3: Counselling & ICU App -->
-      <div class="inhouse-card bg-white rounded-2xl p-6 border border-slate-200/90 shadow-sm hover:shadow-md transition-all duration-200 flex flex-col justify-between group">
-        <div>
-          <div class="flex items-center gap-3.5 mb-4">
-            <div class="w-12 h-12 rounded-xl bg-white border border-slate-200 p-1 flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform">
-              <img src="assets/images/Consultation.png" alt="Counselling & ICU App Logo" class="w-full h-full object-contain" />
-            </div>
-            <div>
-              <span class="text-[11px] font-bold tracking-wider text-purple-600 uppercase">CRITICAL CARE</span>
-              <h3 class="text-base sm:text-lg font-bold text-slate-900 leading-tight">Counselling &amp; ICU App</h3>
-            </div>
+      <a href="https://192.168.103.158:8083" target="_blank" rel="noopener noreferrer" class="group flex flex-col bg-white border border-[#E2E8F0] rounded-2xl overflow-hidden hover:border-[#2563EB] hover:shadow-sm transition-all">
+        <div class="h-36 bg-white flex items-center justify-center p-5">
+          <img src="assets/images/counselling.png" alt="" class="max-h-full max-w-full object-contain" />
+        </div>
+        <div class="flex flex-col flex-1 p-5">
+          <div class="text-[10px] font-extrabold tracking-wider uppercase text-[#4F46E5]">Clinical Care</div>
+          <h3 class="text-base font-bold text-[#0F172A] leading-snug mt-1">Counselling &amp; ICU App</h3>
+          <div class="flex items-center justify-between gap-3 mt-3">
+            <span class="text-xs font-medium text-[#64748B]">Encrypted Log Storage</span>
+            <span class="text-xs font-bold text-[#2563EB] group-hover:underline whitespace-nowrap">Open Module →</span>
           </div>
-          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-6">
-            Direct patient kin briefing records, prognosis consent audio notes, and multi-specialty ICU consult notes.
-          </p>
         </div>
-        <div class="flex items-center justify-between pt-4 border-t border-slate-100 text-xs">
-          <span class="text-slate-400 font-medium">Encrypted Log Storage</span>
-          <a href="https://192.168.103.158:8083" target="_blank" rel="noopener noreferrer" class="font-bold text-purple-600 hover:text-purple-700 flex items-center gap-1">
-            <span>Open Module</span>
-            <span>&rarr;</span>
-          </a>
-        </div>
-      </div>
+      </a>
 
-      <!-- App Card 4: LineLoom Token Engine -->
-      <div class="inhouse-card bg-white rounded-2xl p-6 border border-slate-200/90 shadow-sm hover:shadow-md transition-all duration-200 flex flex-col justify-between group">
-        <div>
-          <div class="flex items-center gap-3.5 mb-4">
-            <div class="w-12 h-12 rounded-xl bg-white border border-slate-200 p-1 flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform">
-              <img src="assets/images/LineLoom.png" alt="LineLoom Token Engine Logo" class="w-full h-full object-contain" />
-            </div>
-            <div>
-              <span class="text-[11px] font-bold tracking-wider text-amber-600 uppercase">OP FLOW</span>
-              <h3 class="text-base sm:text-lg font-bold text-slate-900 leading-tight">LineLoom Token Engine</h3>
-            </div>
+      <a href="http://192.168.103.158:8086" target="_blank" rel="noopener noreferrer" class="group flex flex-col bg-white border border-[#E2E8F0] rounded-2xl overflow-hidden hover:border-[#2563EB] hover:shadow-sm transition-all">
+        <div class="h-36 bg-white flex items-center justify-center p-5">
+          <img src="assets/images/LineLoom.png" alt="" class="max-h-full max-w-full object-contain" />
+        </div>
+        <div class="flex flex-col flex-1 p-5">
+          <div class="text-[10px] font-extrabold tracking-wider uppercase text-[#D97706]">OP Flow</div>
+          <h3 class="text-base font-bold text-[#0F172A] leading-snug mt-1">LineLoom Token Engine</h3>
+          <div class="flex items-center justify-between gap-3 mt-3">
+            <span class="text-xs font-medium text-[#64748B]">OPD Live Stream</span>
+            <span class="text-xs font-bold text-[#2563EB] group-hover:underline whitespace-nowrap">Open Module →</span>
           </div>
-          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-6">
-            Smart patient queue numbering, dynamic outpatient display board controller, and doctor room bell.
-          </p>
         </div>
-        <div class="flex items-center justify-between pt-4 border-t border-slate-100 text-xs">
-          <span class="text-slate-400 font-medium">OPD Live Stream</span>
-          <a href="http://192.168.103.158:8086" target="_blank" rel="noopener noreferrer" class="font-bold text-amber-600 hover:text-amber-700 flex items-center gap-1">
-            <span>Open Module</span>
-            <span>&rarr;</span>
-          </a>
-        </div>
-      </div>
+      </a>
 
-      <!-- App Card 5: MAPIMS AI Health Assessment (FEATURED with Blue Border & AI POWERED Ribbon) -->
-      <div class="inhouse-card ribbon-container bg-white rounded-2xl p-6 border-2 border-blue-500 shadow-lg shadow-blue-500/10 hover:shadow-xl hover:shadow-blue-500/15 transition-all duration-200 flex flex-col justify-between relative overflow-hidden group">
-        <div class="ribbon-badge">AI POWERED</div>
-        <div>
-          <div class="flex items-center gap-3.5 mb-4">
-            <div class="w-12 h-12 rounded-xl bg-blue-50 border border-blue-200 p-1.5 flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform">
-              <img src="assets/images/mapims-ai-hq.png" alt="MAPIMS AI Logo" class="w-full h-full object-contain" />
-            </div>
-            <div>
-              <span class="text-[11px] font-bold tracking-wider text-blue-600 uppercase">DIAGNOSTIC SUPPORT</span>
-              <h3 class="text-base sm:text-lg font-bold text-slate-900 leading-tight">MAPIMS AI Health Assessment</h3>
-            </div>
+      <a href="https://mh.mapims.edu.in/" target="_blank" rel="noopener noreferrer" class="group flex flex-col bg-white border border-[#BFDBFE] rounded-2xl overflow-hidden hover:border-[#2563EB] hover:shadow-sm transition-all relative">
+        <span class="absolute top-3 right-3 z-10 text-[9px] font-extrabold uppercase tracking-wider text-[#1D4ED8] bg-[#EFF6FF] border border-[#BFDBFE] px-1.5 py-0.5 rounded">AI</span>
+        <div class="h-36 bg-white flex items-center justify-center p-5">
+          <img src="assets/images/mapims%20ai.png" alt="" class="max-h-full max-w-full object-contain" />
+        </div>
+        <div class="flex flex-col flex-1 p-5">
+          <div class="text-[10px] font-extrabold tracking-wider uppercase text-[#2563EB]">Diagnostic Support</div>
+          <h3 class="text-base font-bold text-[#0F172A] leading-snug mt-1">MAPIMS AI Health Assessment</h3>
+          <div class="flex items-center justify-between gap-3 mt-3">
+            <span class="text-xs font-medium text-[#64748B]">Model v4.1</span>
+            <span class="text-xs font-bold text-[#2563EB] group-hover:underline whitespace-nowrap">Open Module →</span>
           </div>
-          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-6">
-            Machine-learning assisted preliminary screening, radiology chest triage flags, and early sepsis scores.
-          </p>
         </div>
-        <div class="flex items-center justify-between pt-4 border-t border-slate-100 text-xs">
-          <span class="text-blue-600 font-semibold">Model v4.1 (Clinical Validation)</span>
-          <a href="https://mh.mapims.edu.in/" target="_blank" rel="noopener noreferrer" class="font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1">
-            <span>Launch Model</span>
-            <span>&rarr;</span>
-          </a>
-        </div>
-      </div>
+      </a>
 
-      <!-- App Card 6: Checklist & Audit App -->
-      <div class="inhouse-card bg-white rounded-2xl p-6 border border-slate-200/90 shadow-sm hover:shadow-md transition-all duration-200 flex flex-col justify-between group">
-        <div>
-          <div class="flex items-center gap-3.5 mb-4">
-            <div class="w-12 h-12 rounded-xl bg-rose-50 border border-rose-200 p-1 flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform">
-              <img src="assets/images/checklist-hq.png" alt="Checklist & Audit App Logo" class="w-full h-full object-contain" />
-            </div>
-            <div>
-              <span class="text-[11px] font-bold tracking-wider text-rose-600 uppercase">QUALITY &amp; NABH</span>
-              <h3 class="text-base sm:text-lg font-bold text-slate-900 leading-tight">Checklist &amp; Audit App</h3>
-            </div>
+      <button type="button" onclick="openChecklistModal()" class="group flex flex-col text-left w-full bg-white border border-[#E2E8F0] rounded-2xl overflow-hidden hover:border-[#2563EB] hover:shadow-sm transition-all cursor-pointer">
+        <div class="h-36 bg-white flex items-center justify-center p-5">
+          <img src="assets/images/Logo-Checklist.png" alt="" class="max-h-full max-w-full object-contain" />
+        </div>
+        <div class="flex flex-col flex-1 p-5">
+          <div class="text-[10px] font-extrabold tracking-wider uppercase text-[#E11D48]">Quality &amp; NABH</div>
+          <h3 class="text-base font-bold text-[#0F172A] leading-snug mt-1">Checklist &amp; Audit App</h3>
+          <div class="flex items-center justify-between gap-3 mt-3">
+            <span class="text-xs font-medium text-[#64748B]">Daily Compliance Audit</span>
+            <span class="text-xs font-bold text-[#2563EB] group-hover:underline whitespace-nowrap">Open Module →</span>
           </div>
-          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-6">
-            WHO surgical safety checklist, crash cart daily verification, nursing handover, and infection control rounds.
-          </p>
         </div>
-        <div class="flex items-center justify-between pt-4 border-t border-slate-100 text-xs">
-          <span class="text-slate-400 font-medium">Daily Compliance Audit</span>
-          <button type="button" onclick="openChecklistModal()" class="font-bold text-rose-600 hover:text-rose-700 flex items-center gap-1 cursor-pointer">
-            <span>Open Checklist</span>
-            <span>&rarr;</span>
-          </button>
-        </div>
-      </div>
+      </button>
 
     </div>
 
@@ -825,7 +745,7 @@
             </p>
           </div>
           <div class="pt-3 border-t border-white/10">
-            <a href="./recent circular.html" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-pink-300 hover:text-pink-200 flex items-center gap-1">
+            <a href="./recent circular.html" class="text-xs font-bold text-pink-300 hover:text-pink-200 flex items-center gap-1">
               <span>View Recent Circulars</span>
               <span>&rarr;</span>
             </a>
@@ -838,223 +758,193 @@
   </section>
 
   <!-- ========================================================================= -->
-  <!-- 8. TARIFF PLANS & LIVE STOCK STATUS                                       -->
+  <!-- 8. TARIFF & LIVE STOCK (OPERATIONAL DASHBOARD)                            -->
   <!-- ========================================================================= -->
   <section id="tariff-stock" class="py-16 px-4 sm:px-6 lg:px-12 max-w-7xl mx-auto">
-    
+
     <!-- Section Header -->
-    <div class="text-center max-w-3xl mx-auto mb-12">
-      <span class="inline-block text-[11px] font-extrabold tracking-wider uppercase px-3 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200/60 mb-3">
-        FINANCIAL &amp; SUPPLY TRANSPARENCY
-      </span>
-      <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
-        Tariff Plans &amp; Live Stock Status
-      </h2>
-      <p class="text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
-        Transparent billing schedules for all medical services, surgical packages, diagnostic procedures, and up-to-the-minute pharmacy supply stocks.
-      </p>
+    <div class="mb-8 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+      <div>
+        <span class="inline-block text-[11px] font-extrabold tracking-wider uppercase text-[#2563EB] mb-2">Financial &amp; Supply</span>
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#0F172A] tracking-tight">
+          Tariff &amp; Live Stock
+        </h2>
+        <p class="mt-2 text-sm text-[#64748B] max-w-xl">
+          Billing schedules and live supply counters for pharmacy and general stores.
+        </p>
+      </div>
+      <div class="inline-flex items-center gap-2 rounded-full bg-[#ECFDF5] border border-[#BBF7D0] px-3 py-1.5 self-start sm:self-auto">
+        <span class="h-2 w-2 rounded-full bg-[#22C55E]" aria-hidden="true"></span>
+        <span class="text-[11px] font-bold text-[#15803D] uppercase tracking-wider">Live</span>
+      </div>
     </div>
 
-    <!-- 3 Large Cards Grid -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-      
-      <!-- Card 1: Hospital Billing Tariff (Blue Header) -->
-      <div class="bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm flex flex-col justify-between">
-        <div>
-          <!-- Card Header (Blue) -->
-          <div class="bg-blue-600 text-white p-6">
-            <span class="inline-block text-[10px] font-extrabold tracking-wider uppercase px-2.5 py-0.5 rounded-full bg-white/20 text-white mb-2">
-              SCHEDULE OF CHARGES
-            </span>
-            <h3 class="text-xl font-bold text-white mb-1">Hospital Billing Tariff</h3>
-            <p class="text-xs text-blue-100">Updated as per MAPIMS 2024–25 Gazette</p>
-          </div>
+    <div class="grid grid-cols-1 xl:grid-cols-12 gap-5">
 
-          <!-- Items list -->
-          <div class="divide-y divide-slate-100 p-2 sm:p-4 text-xs sm:text-sm">
-            <div class="p-3 flex items-center justify-between hover:bg-slate-50 transition-colors rounded-xl">
-              <span class="font-medium text-slate-800">Adhiparasakthi Hospitals' Special Packages</span>
-              <a href="backend/files/Adhiparasakthi Hospitals Special Packages (04.05.2026).pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1">
-                <span>View PDF</span> <span>&rarr;</span>
-              </a>
+      <!-- Hospital Tariffs -->
+      <div class="xl:col-span-5 bg-white border border-[#E2E8F0] rounded-2xl overflow-hidden shadow-sm">
+        <div class="px-5 py-4 border-b border-[#BFDBFE] bg-gradient-to-r from-[#EFF6FF] to-white flex items-center justify-between gap-3">
+          <div class="flex items-center gap-3 min-w-0">
+            <div class="w-10 h-10 rounded-xl bg-[#2563EB] text-white flex items-center justify-center shrink-0 shadow-sm shadow-blue-500/25">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 7h6m-6 4h6m-6 4h4M7 3h10a2 2 0 012 2v14a2 2 0 01-2 2H7a2 2 0 01-2-2V5a2 2 0 012-2z"/></svg>
             </div>
-            <div class="p-3 flex items-center justify-between hover:bg-slate-50 transition-colors rounded-xl">
-              <span class="font-medium text-slate-800">Lab Tariff</span>
-              <a href="http://192.168.101.75:3000/files/Lab Tariff.pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1">
-                <span>View PDF</span> <span>&rarr;</span>
-              </a>
-            </div>
-            <div class="p-3 flex items-center justify-between hover:bg-slate-50 transition-colors rounded-xl">
-              <span class="font-medium text-slate-800">Radiology Tariff</span>
-              <a href="http://192.168.101.75:3000/files/Radiology Tariff.pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1">
-                <span>View PDF</span> <span>&rarr;</span>
-              </a>
-            </div>
-            <div class="p-3 flex items-center justify-between hover:bg-slate-50 transition-colors rounded-xl">
-              <span class="font-medium text-slate-800">Physiotherapy Tariff</span>
-              <a href="http://192.168.101.75:3000/files/Physiotherapy Tariff.pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1">
-                <span>View PDF</span> <span>&rarr;</span>
-              </a>
-            </div>
-            <div class="p-3 flex items-center justify-between hover:bg-slate-50 transition-colors rounded-xl">
-              <span class="font-medium text-slate-800">General Ward Surgery OT Tariff</span>
-              <a href="http://192.168.101.75:3000/files/General Ward Surgery OT Tariff.pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1">
-                <span>View PDF</span> <span>&rarr;</span>
-              </a>
-            </div>
-            <div class="p-3 flex items-center justify-between hover:bg-slate-50 transition-colors rounded-xl">
-              <span class="font-medium text-slate-800">ICU and Special Ward Room Tariff</span>
-              <a href="http://192.168.101.75:3000/files/ICU and Special Ward Room Tariff.pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1">
-                <span>View PDF</span> <span>&rarr;</span>
-              </a>
-            </div>
-            <div class="p-3 flex items-center justify-between hover:bg-slate-50 transition-colors rounded-xl">
-              <span class="font-medium text-slate-800">Other Department Tariff</span>
-              <a href="http://192.168.101.75:3000/files/Other Department Tariff.pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1">
-                <span>View PDF</span> <span>&rarr;</span>
-              </a>
+            <div class="min-w-0">
+              <h3 class="text-base font-bold text-[#0F172A]">Hospital Tariffs</h3>
+              <p class="text-[11px] text-[#64748B] mt-0.5">MAPIMS schedule of charges</p>
             </div>
           </div>
+          <span class="text-[11px] font-bold text-[#2563EB] bg-[#DBEAFE] border border-[#BFDBFE] px-2.5 py-1 rounded-lg shrink-0">7 PDFs</span>
         </div>
 
-        <!-- Footer Button -->
-        <div class="p-5 pt-0">
-          <a href="backend/files/Adhiparasakthi Hospitals Special Packages (04.05.2026).pdf" target="_blank" rel="noopener noreferrer" class="w-full py-3 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-colors">
-            <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-            </svg>
-            <span>Download Special Packages Master PDF</span>
+        <div class="p-3 sm:p-4 space-y-1">
+          <a href="http://192.168.101.75:3000/files/Adhiparasakthi Hospitals Special Packages (04.05.2026).pdf" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 hover:bg-[#EFF6FF] transition-colors border border-transparent hover:border-[#BFDBFE]">
+            <span class="flex items-center gap-2.5 min-w-0">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#2563EB] shrink-0"></span>
+              <span class="text-sm font-medium text-[#0F172A]">Admission / Packages</span>
+            </span>
+            <span class="text-[11px] font-bold text-[#2563EB] bg-[#EFF6FF] group-hover:bg-[#2563EB] group-hover:text-white px-2.5 py-1 rounded-lg whitespace-nowrap transition-colors">View PDF</span>
+          </a>
+          <a href="http://192.168.101.75:3000/files/Lab Tariff.pdf" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 hover:bg-[#EFF6FF] transition-colors border border-transparent hover:border-[#BFDBFE]">
+            <span class="flex items-center gap-2.5 min-w-0">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#2563EB] shrink-0"></span>
+              <span class="text-sm font-medium text-[#0F172A]">Lab</span>
+            </span>
+            <span class="text-[11px] font-bold text-[#2563EB] bg-[#EFF6FF] group-hover:bg-[#2563EB] group-hover:text-white px-2.5 py-1 rounded-lg whitespace-nowrap transition-colors">View PDF</span>
+          </a>
+          <a href="http://192.168.101.75:3000/files/Radiology Tariff.pdf" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 hover:bg-[#EFF6FF] transition-colors border border-transparent hover:border-[#BFDBFE]">
+            <span class="flex items-center gap-2.5 min-w-0">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#2563EB] shrink-0"></span>
+              <span class="text-sm font-medium text-[#0F172A]">Radiology</span>
+            </span>
+            <span class="text-[11px] font-bold text-[#2563EB] bg-[#EFF6FF] group-hover:bg-[#2563EB] group-hover:text-white px-2.5 py-1 rounded-lg whitespace-nowrap transition-colors">View PDF</span>
+          </a>
+          <a href="http://192.168.101.75:3000/files/Physiotherapy Tariff.pdf" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 hover:bg-[#EFF6FF] transition-colors border border-transparent hover:border-[#BFDBFE]">
+            <span class="flex items-center gap-2.5 min-w-0">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#2563EB] shrink-0"></span>
+              <span class="text-sm font-medium text-[#0F172A]">Physiotherapy</span>
+            </span>
+            <span class="text-[11px] font-bold text-[#2563EB] bg-[#EFF6FF] group-hover:bg-[#2563EB] group-hover:text-white px-2.5 py-1 rounded-lg whitespace-nowrap transition-colors">View PDF</span>
+          </a>
+          <a href="http://192.168.101.75:3000/files/General Ward Surgery OT Tariff.pdf" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 hover:bg-[#EFF6FF] transition-colors border border-transparent hover:border-[#BFDBFE]">
+            <span class="flex items-center gap-2.5 min-w-0">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#2563EB] shrink-0"></span>
+              <span class="text-sm font-medium text-[#0F172A]">OT / Surgery</span>
+            </span>
+            <span class="text-[11px] font-bold text-[#2563EB] bg-[#EFF6FF] group-hover:bg-[#2563EB] group-hover:text-white px-2.5 py-1 rounded-lg whitespace-nowrap transition-colors">View PDF</span>
+          </a>
+          <a href="http://192.168.101.75:3000/files/ICU and Special Ward Room Tariff.pdf" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 hover:bg-[#EFF6FF] transition-colors border border-transparent hover:border-[#BFDBFE]">
+            <span class="flex items-center gap-2.5 min-w-0">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#2563EB] shrink-0"></span>
+              <span class="text-sm font-medium text-[#0F172A]">ICU &amp; Special Ward</span>
+            </span>
+            <span class="text-[11px] font-bold text-[#2563EB] bg-[#EFF6FF] group-hover:bg-[#2563EB] group-hover:text-white px-2.5 py-1 rounded-lg whitespace-nowrap transition-colors">View PDF</span>
+          </a>
+          <a href="http://192.168.101.75:3000/files/Other Department Tariff.pdf" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 hover:bg-[#EFF6FF] transition-colors border border-transparent hover:border-[#BFDBFE]">
+            <span class="flex items-center gap-2.5 min-w-0">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#2563EB] shrink-0"></span>
+              <span class="text-sm font-medium text-[#0F172A]">Other Departments</span>
+            </span>
+            <span class="text-[11px] font-bold text-[#2563EB] bg-[#EFF6FF] group-hover:bg-[#2563EB] group-hover:text-white px-2.5 py-1 rounded-lg whitespace-nowrap transition-colors">View PDF</span>
           </a>
         </div>
       </div>
 
-      <!-- Card 2: Pharmacy Stock Details (Rose/Pink Header) -->
-      <div class="bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm flex flex-col justify-between">
-        <div>
-          <!-- Card Header (Pink) -->
-          <div class="bg-[#e11d48] text-white p-6">
-            <span class="inline-block text-[10px] font-extrabold tracking-wider uppercase px-2.5 py-0.5 rounded-full bg-white/20 text-white mb-2">
-              REAL-TIME INVENTORY
+      <!-- Right Column -->
+      <div class="xl:col-span-7 flex flex-col gap-5">
+
+        <!-- Pharmacy -->
+        <div class="bg-white border border-[#E2E8F0] rounded-2xl overflow-hidden flex-1 shadow-sm">
+          <div class="px-5 py-4 border-b border-[#FECACA] bg-gradient-to-r from-[#FFF1F2] to-white flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3 min-w-0">
+              <div class="w-10 h-10 rounded-xl bg-[#E11D48] text-white flex items-center justify-center shrink-0 shadow-sm shadow-rose-500/25">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+              </div>
+              <div class="min-w-0">
+                <h3 class="text-base font-bold text-[#0F172A]">Pharmacy</h3>
+                <p class="text-[11px] text-[#64748B] mt-0.5">Live dispensing &amp; reserve counters</p>
+              </div>
+            </div>
+            <span class="inline-flex items-center gap-1.5 text-[11px] font-bold text-[#15803D] bg-[#ECFDF5] border border-[#BBF7D0] px-2.5 py-1 rounded-full shrink-0">
+              <span class="h-1.5 w-1.5 rounded-full bg-[#22C55E]"></span>
+              Active
             </span>
-            <h3 class="text-xl font-bold text-white mb-1">Pharmacy Stock Details</h3>
-            <p class="text-xs text-rose-100">Live dispensing and bulk reserve lists</p>
           </div>
 
-          <!-- Items list -->
-          <div class="divide-y divide-slate-100 p-2 sm:p-4 text-xs sm:text-sm">
-            <div class="p-3 flex items-center justify-between hover:bg-slate-50 transition-colors rounded-xl">
-              <div>
-                <div class="font-bold text-slate-900">Drug Stores</div>
-                <div class="text-[11px] text-slate-500">Bulk reserve supply details</div>
-              </div>
-              <a href="http://192.168.101.75:3000/files/Drug Stores Stock Details.pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-rose-600 hover:text-rose-700 flex items-center gap-1">
-                <span>View PDF</span> <span>&rarr;</span>
+          <div class="p-4 sm:p-5">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
+              <a href="http://192.168.101.75:3000/files/Drug Stores Stock Details.pdf" target="_blank" rel="noopener noreferrer" title="Open Drugs stock PDF" class="group rounded-xl border border-[#FECDD3] bg-[#FFF1F2] p-3.5 hover:border-[#E11D48] hover:shadow-sm transition-all cursor-pointer">
+                <div class="text-[10px] font-bold uppercase tracking-wider text-[#BE123C] mb-1">Drugs</div>
+                <div class="font-mono text-2xl font-extrabold tabular-nums text-[#0F172A]">124</div>
+                <div class="mt-1.5 text-[11px] font-bold text-[#E11D48] group-hover:underline">View PDF →</div>
+              </a>
+              <a href="http://192.168.101.75:3000/files/IP Pharmacy Stock Details.pdf" target="_blank" rel="noopener noreferrer" title="Open In-Patient pharmacy stock PDF" class="group rounded-xl border border-[#FDE68A] bg-[#FFFBEB] p-3.5 hover:border-[#F59E0B] hover:shadow-sm transition-all cursor-pointer">
+                <div class="text-[10px] font-bold uppercase tracking-wider text-[#B45309] mb-1">In-Patient</div>
+                <div class="font-mono text-2xl font-extrabold tabular-nums text-[#0F172A]">82</div>
+                <div class="mt-1.5 text-[11px] font-bold text-[#B45309] group-hover:underline">View PDF →</div>
+              </a>
+              <a href="http://192.168.101.75:3000/files/Insurance Pharmacy Stock Details.pdf" target="_blank" rel="noopener noreferrer" title="Open Insurance pharmacy stock PDF" class="group rounded-xl border border-[#C7D2FE] bg-[#EEF2FF] p-3.5 hover:border-[#6366F1] hover:shadow-sm transition-all cursor-pointer">
+                <div class="text-[10px] font-bold uppercase tracking-wider text-[#4338CA] mb-1">Insurance</div>
+                <div class="font-mono text-2xl font-extrabold tabular-nums text-[#0F172A]">43</div>
+                <div class="mt-1.5 text-[11px] font-bold text-[#4338CA] group-hover:underline">View PDF →</div>
+              </a>
+              <a href="http://192.168.101.75:3000/files/Op Pharmacy Stock  Details.pdf" target="_blank" rel="noopener noreferrer" title="Open OP pharmacy stock PDF" class="group rounded-xl border border-[#A5F3FC] bg-[#ECFEFF] p-3.5 hover:border-[#06B6D4] hover:shadow-sm transition-all cursor-pointer">
+                <div class="text-[10px] font-bold uppercase tracking-wider text-[#0E7490] mb-1">OP</div>
+                <div class="font-mono text-2xl font-extrabold tabular-nums text-[#0F172A]">67</div>
+                <div class="mt-1.5 text-[11px] font-bold text-[#0E7490] group-hover:underline">View PDF →</div>
               </a>
             </div>
-            <div class="p-3 flex items-center justify-between hover:bg-slate-50 transition-colors rounded-xl">
-              <div>
-                <div class="font-bold text-slate-900">IP Pharmacy</div>
-                <div class="text-[11px] text-slate-500">24/7 Floor dispensing stock</div>
-              </div>
-              <a href="http://192.168.101.75:3000/files/IP Pharmacy Stock Details.pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-rose-600 hover:text-rose-700 flex items-center gap-1">
-                <span>View PDF</span> <span>&rarr;</span>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <a href="http://192.168.101.75:3000/files/Hospital Formulary - 2025.pdf" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between gap-3 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] px-4 py-3 hover:border-[#E11D48] hover:bg-[#FFF1F2] transition-colors group">
+                <span class="text-sm font-medium text-[#0F172A]">Formulary 2025</span>
+                <span class="text-[11px] font-bold text-[#E11D48]">View PDF</span>
               </a>
-            </div>
-            <div class="p-3 flex items-center justify-between hover:bg-slate-50 transition-colors rounded-xl">
-              <div>
-                <div class="font-bold text-slate-900">Insurance Pharmacy</div>
-                <div class="text-[11px] text-slate-500">Ayushman / PMJAY counter stock</div>
-              </div>
-              <a href="http://192.168.101.75:3000/files/Insurance Pharmacy Stock Details.pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-rose-600 hover:text-rose-700 flex items-center gap-1">
-                <span>View PDF</span> <span>&rarr;</span>
-              </a>
-            </div>
-            <div class="p-3 flex items-center justify-between hover:bg-slate-50 transition-colors rounded-xl">
-              <div>
-                <div class="font-bold text-slate-900">OP Pharmacy</div>
-                <div class="text-[11px] text-slate-500">OPD Block Counter stock</div>
-              </div>
-              <a href="http://192.168.101.75:3000/files/Op Pharmacy Stock  Details.pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-rose-600 hover:text-rose-700 flex items-center gap-1">
-                <span>View PDF</span> <span>&rarr;</span>
-              </a>
-            </div>
-            <div class="p-3 flex items-center justify-between hover:bg-slate-50 transition-colors rounded-xl">
-              <div>
-                <div class="font-bold text-slate-900">Hospital Formulary - 2025</div>
-                <div class="text-[11px] text-slate-500">Approved clinical formulary</div>
-              </div>
-              <a href="http://192.168.101.75:3000/files/Hospital Formulary - 2025.pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-rose-600 hover:text-rose-700 flex items-center gap-1">
-                <span>View PDF</span> <span>&rarr;</span>
-              </a>
-            </div>
-            <div class="p-3 flex items-center justify-between hover:bg-slate-50 transition-colors rounded-xl">
-              <div>
-                <div class="font-bold text-slate-900">Free Drug List - NMC</div>
-                <div class="text-[11px] text-slate-500">Zero-billing essential drugs</div>
-              </div>
-              <a href="http://192.168.101.75:3000/files/Pharmacy_Updated_11.05.26.pdf" target="_blank" rel="noopener noreferrer" class="font-bold text-rose-600 hover:text-rose-700 flex items-center gap-1">
-                <span>View PDF</span> <span>&rarr;</span>
+              <a href="http://192.168.101.75:3000/files/Pharmacy_Updated_11.05.26.pdf" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between gap-3 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] px-4 py-3 hover:border-[#E11D48] hover:bg-[#FFF1F2] transition-colors group">
+                <span class="text-sm font-medium text-[#0F172A]">Free Drug List (NMC)</span>
+                <span class="text-[11px] font-bold text-[#E11D48]">View PDF</span>
               </a>
             </div>
           </div>
         </div>
 
-        <!-- Footer Button -->
-        <div class="p-5 pt-0">
-          <a href="http://192.168.101.75:3000/files/Hospital Formulary - 2025.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-3 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-colors">
-            <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-            </svg>
-            <span>Download Hospital Formulary PDF</span>
-          </a>
+        <!-- General Store -->
+        <div class="bg-white border border-[#E2E8F0] rounded-2xl overflow-hidden shadow-sm">
+          <div class="px-5 py-4 border-b border-[#A7F3D0] bg-gradient-to-r from-[#ECFDF5] to-white flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div class="flex items-center gap-3 min-w-0">
+              <div class="w-10 h-10 rounded-xl bg-[#059669] text-white flex items-center justify-center shrink-0 shadow-sm shadow-emerald-500/25">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+              </div>
+              <div class="min-w-0">
+                <h3 class="text-base font-bold text-[#0F172A]">General Store</h3>
+                <p class="text-[11px] text-[#64748B] mt-0.5">Stationery, CSSD &amp; surgical kits</p>
+              </div>
+            </div>
+            <a href="http://192.168.101.75:3000/files/Inventory Stock Details 2024.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 self-start text-[11px] font-bold text-white bg-[#059669] hover:bg-[#047857] px-3 py-1.5 rounded-lg transition-colors">
+              Open Inventory PDF
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+
+          <div class="p-4 sm:p-5 grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div class="rounded-xl border border-[#BBF7D0] bg-[#ECFDF5] p-4">
+              <div class="text-[10px] font-bold uppercase tracking-wider text-[#047857] mb-2">Inventory</div>
+              <div class="inline-flex items-center gap-2 text-sm font-bold text-[#15803D]">
+                <span class="h-2 w-2 rounded-full bg-[#22C55E]" aria-hidden="true"></span>
+                Active
+              </div>
+            </div>
+            <div class="rounded-xl border border-[#BFDBFE] bg-[#EFF6FF] p-4">
+              <div class="text-[10px] font-bold uppercase tracking-wider text-[#1D4ED8] mb-2">Stationery</div>
+              <div class="font-mono text-2xl font-extrabold tabular-nums text-[#0F172A]">204</div>
+            </div>
+            <div class="rounded-xl border border-[#FDE68A] bg-[#FFFBEB] p-4">
+              <div class="text-[10px] font-bold uppercase tracking-wider text-[#B45309] mb-2">Surgical</div>
+              <div class="font-mono text-2xl font-extrabold tabular-nums text-[#0F172A]">89</div>
+            </div>
+          </div>
         </div>
+
       </div>
-
-      <!-- Card 3: General Store Stocks (Purple Header) -->
-      <div class="bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm flex flex-col justify-between">
-        <div>
-          <!-- Card Header (Purple) -->
-          <div class="bg-[#7c3aed] text-white p-6">
-            <span class="inline-block text-[10px] font-extrabold tracking-wider uppercase px-2.5 py-0.5 rounded-full bg-white/20 text-white mb-2">
-              CONSUMABLES &amp; LINENS
-            </span>
-            <h3 class="text-xl font-bold text-white mb-1">General Store Stocks</h3>
-            <p class="text-xs text-purple-100">Stationery, CSSD items &amp; surgical kits</p>
-          </div>
-
-          <!-- Description & Status Box -->
-          <div class="p-6 text-xs sm:text-sm">
-            <p class="text-slate-600 leading-relaxed mb-6">
-              Real-time audit log of surgical disposables, suture inventory, nursing station stationary, sterilizer indicators, and departmental indent requests.
-            </p>
-
-            <!-- Purple-tinted info box -->
-            <div class="bg-purple-50/70 border border-purple-200/70 rounded-2xl p-4 space-y-3 mb-6">
-              <div class="flex items-center justify-between">
-                <span class="text-slate-600 font-medium">Inventory Stock Details:</span>
-                <span class="font-bold text-purple-700">Audit Active</span>
-              </div>
-              <div class="flex items-center justify-between border-t border-purple-200/50 pt-2">
-                <span class="text-slate-600 font-medium">General Store Register:</span>
-                <span class="font-extrabold text-slate-900">2024 Gazette</span>
-              </div>
-              <div class="flex items-center justify-between border-t border-purple-200/50 pt-2">
-                <span class="text-slate-600 font-medium">Supply Status:</span>
-                <span class="font-extrabold text-emerald-600">Available</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Footer Buttons -->
-        <div class="p-6 pt-0 space-y-2.5">
-          <a href="http://192.168.101.75:3000/files/Inventory Stock Details 2024.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs sm:text-sm font-bold shadow-sm transition-colors text-center flex items-center justify-center gap-1.5">
-            <span>Open Inventory Stock Details PDF</span>
-            <span>&rarr;</span>
-          </a>
-        </div>
-      </div>
-
     </div>
 
   </section>
@@ -1108,27 +998,149 @@
       </div>
     </div>
 
-    <!-- Category Filter Tabs -->
-    <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 mb-10" id="forms-filter-tabs">
-      <button type="button" onclick="selectFormsCategory('consent', true)" data-tab="consent" class="forms-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-[#0F172A] text-white shadow-sm">
-        Consent
-      </button>
-      <button type="button" onclick="selectFormsCategory('clinical', true)" data-tab="clinical" class="forms-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-white text-[#64748B] border border-[#E6EAF0] hover:text-[#0F172A] hover:bg-slate-50">
-        Common Forms
-      </button>
-      <button type="button" onclick="selectFormsCategory('hr', true)" data-tab="hr" class="forms-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-white text-[#64748B] border border-[#E6EAF0] hover:text-[#0F172A] hover:bg-slate-50">
-        HR
-      </button>
-      <button type="button" onclick="selectFormsCategory('it', true)" data-tab="it" class="forms-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-white text-[#64748B] border border-[#E6EAF0] hover:text-[#0F172A] hover:bg-slate-50">
-        IT
-      </button>
-    </div>
-
-    <!-- Zigzag Showcase Grid (Left: Active Form PDF List; Right: Zigzag Staggered Cards) -->
+    <!-- Zigzag Showcase Grid (Left: Zigzag Staggered Cards; Right: Active Form PDF List) -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
       
-      <!-- LEFT SIDE: Active Category Forms List & Direct PDF Downloads -->
-      <div class="lg:col-span-5 order-2 lg:order-1">
+      <!-- LEFT SIDE: Zigzag Staggered Category Cards -->
+      <div class="lg:col-span-7 order-1 lg:order-1">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 items-start">
+          
+          <!-- Sub-column 1: Consent (top) & HR (bottom) -->
+          <div class="space-y-5">
+            
+            <!-- Card 1: Consent -->
+            <div id="cat-card-consent" onclick="selectFormsCategory('consent', true)" class="forms-card-item forms-fill-blue is-selected cursor-pointer bg-white rounded-2xl sm:rounded-3xl border border-[#E6EAF0] border-t-4 border-t-blue-600 p-5 sm:p-6 shadow-sm hover:shadow-md hover:border-blue-300 transition-all group">
+              <div class="flex items-center justify-between mb-3">
+                <div class="forms-card-icon w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center transition-transform group-hover:scale-105">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                </div>
+                <span class="active-badge text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200">
+                  Selected
+                </span>
+              </div>
+              <h4 class="forms-card-title text-lg font-bold text-[#0F172A] group-hover:text-blue-600 transition-colors">
+                Consent
+              </h4>
+              <div class="forms-card-count text-xs font-semibold text-blue-600 mt-0.5 mb-2">6 Forms Available</div>
+              <p class="forms-card-desc text-xs text-[#64748B] leading-relaxed mb-3">
+                Operative, procedural, anaesthesia, blood transfusion &amp; refusal protocols.
+              </p>
+              <div class="flex flex-wrap gap-1 mb-3">
+                <span class="forms-card-tag px-2 py-0.5 rounded bg-slate-50 text-slate-600 text-[11px] border border-[#E6EAF0]">Surgical Consent</span>
+                <span class="forms-card-tag px-2 py-0.5 rounded bg-slate-50 text-slate-600 text-[11px] border border-[#E6EAF0]">Blood Transfusion</span>
+                <span class="forms-card-tag px-2 py-0.5 rounded bg-slate-50 text-slate-600 text-[11px] border border-[#E6EAF0]">DAMA</span>
+              </div>
+              <div class="forms-card-footer pt-3 border-t border-[#E6EAF0] flex items-center justify-between text-xs">
+                <span class="forms-card-link font-bold text-blue-600 flex items-center gap-1 group-hover:underline">
+                  <span>View Forms List</span> <span>&rarr;</span>
+                </span>
+                <span class="forms-card-meta text-slate-400 text-[11px] font-medium">Approved PDF</span>
+              </div>
+            </div>
+
+            <!-- Card 3: HR -->
+            <div id="cat-card-hr" onclick="selectFormsCategory('hr', true)" class="forms-card-item forms-fill-purple cursor-pointer bg-white rounded-2xl sm:rounded-3xl border border-[#E6EAF0] border-t-4 border-t-purple-500 p-5 sm:p-6 shadow-sm hover:shadow-md hover:border-purple-300 transition-all group">
+              <div class="flex items-center justify-between mb-3">
+                <div class="forms-card-icon w-10 h-10 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center transition-transform group-hover:scale-105">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                </div>
+                <span class="active-badge hidden text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-purple-50 text-purple-700 border border-purple-200">
+                  Selected
+                </span>
+              </div>
+              <h4 class="forms-card-title text-lg font-bold text-[#0F172A] group-hover:text-purple-600 transition-colors">
+                HR
+              </h4>
+              <div class="forms-card-count text-xs font-semibold text-purple-600 mt-0.5 mb-2">13 Forms Available</div>
+              <p class="forms-card-desc text-xs text-[#64748B] leading-relaxed mb-3">
+                Faculty applications, non-teaching jobs, promotion &amp; HR manual.
+              </p>
+              <div class="flex flex-wrap gap-1 mb-3">
+                <span class="forms-card-tag px-2 py-0.5 rounded bg-slate-50 text-slate-600 text-[11px] border border-[#E6EAF0]">Faculty</span>
+                <span class="forms-card-tag px-2 py-0.5 rounded bg-slate-50 text-slate-600 text-[11px] border border-[#E6EAF0]">Staff Jobs</span>
+                <span class="forms-card-tag px-2 py-0.5 rounded bg-slate-50 text-slate-600 text-[11px] border border-[#E6EAF0]">Appraisals</span>
+              </div>
+              <div class="forms-card-footer pt-3 border-t border-[#E6EAF0] flex items-center justify-between text-xs">
+                <span class="forms-card-link font-bold text-purple-600 flex items-center gap-1 group-hover:underline">
+                  <span>View Forms List</span> <span>&rarr;</span>
+                </span>
+                <span class="forms-card-meta text-slate-400 text-[11px] font-medium">Approved PDF</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Sub-column 2: Common Forms (top, STAGGERED FOR ZIGZAG) & IT (bottom, STAGGERED) -->
+          <div class="space-y-5 sm:mt-10">
+
+            <!-- Card 2: Common Forms -->
+            <div id="cat-card-clinical" onclick="selectFormsCategory('clinical', true)" class="forms-card-item forms-fill-amber cursor-pointer bg-white rounded-2xl sm:rounded-3xl border border-[#E6EAF0] border-t-4 border-t-amber-500 p-5 sm:p-6 shadow-sm hover:shadow-md hover:border-amber-300 transition-all group">
+              <div class="flex items-center justify-between mb-3">
+                <div class="forms-card-icon w-10 h-10 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center transition-transform group-hover:scale-105">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+                </div>
+                <span class="active-badge hidden text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200">
+                  Selected
+                </span>
+              </div>
+              <h4 class="forms-card-title text-lg font-bold text-[#0F172A] group-hover:text-amber-600 transition-colors">
+                Common Forms
+              </h4>
+              <div class="forms-card-count text-xs font-semibold text-amber-600 mt-0.5 mb-2">44 Forms Available</div>
+              <p class="forms-card-desc text-xs text-[#64748B] leading-relaxed mb-3">
+                ICU checklists, SBAR handover, narcotic indents &amp; emergency protocols.
+              </p>
+              <div class="flex flex-wrap gap-1 mb-3">
+                <span class="forms-card-tag px-2 py-0.5 rounded bg-slate-50 text-slate-600 text-[11px] border border-[#E6EAF0]">ICU Case</span>
+                <span class="forms-card-tag px-2 py-0.5 rounded bg-slate-50 text-slate-600 text-[11px] border border-[#E6EAF0]">SBAR Handover</span>
+                <span class="forms-card-tag px-2 py-0.5 rounded bg-slate-50 text-slate-600 text-[11px] border border-[#E6EAF0]">Narcotics</span>
+                <span class="forms-card-tag px-2 py-0.5 rounded bg-slate-50 text-slate-600 text-[11px] border border-[#E6EAF0]">Code Blue</span>
+              </div>
+              <div class="forms-card-footer pt-3 border-t border-[#E6EAF0] flex items-center justify-between text-xs">
+                <span class="forms-card-link font-bold text-amber-600 flex items-center gap-1 group-hover:underline">
+                  <span>View Forms List</span> <span>&rarr;</span>
+                </span>
+                <span class="forms-card-meta text-slate-400 text-[11px] font-medium">Approved PDF</span>
+              </div>
+            </div>
+
+            <!-- Card 4: IT -->
+            <div id="cat-card-it" onclick="selectFormsCategory('it', true)" class="forms-card-item forms-fill-teal cursor-pointer bg-white rounded-2xl sm:rounded-3xl border border-[#E6EAF0] border-t-4 border-t-teal-500 p-5 sm:p-6 shadow-sm hover:shadow-md hover:border-teal-300 transition-all group">
+              <div class="flex items-center justify-between mb-3">
+                <div class="forms-card-icon w-10 h-10 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center transition-transform group-hover:scale-105">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 002 2z"/></svg>
+                </div>
+                <span class="active-badge hidden text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-teal-50 text-teal-700 border border-teal-200">
+                  Selected
+                </span>
+              </div>
+              <h4 class="forms-card-title text-lg font-bold text-[#0F172A] group-hover:text-teal-600 transition-colors">
+                IT
+              </h4>
+              <div class="forms-card-count text-xs font-semibold text-teal-600 mt-0.5 mb-2">8 Forms Available</div>
+              <p class="forms-card-desc text-xs text-[#64748B] leading-relaxed mb-3">
+                HIS user access, Wi-Fi authorization, toner, PC &amp; hardware tickets.
+              </p>
+              <div class="flex flex-wrap gap-1 mb-3">
+                <span class="forms-card-tag px-2 py-0.5 rounded bg-slate-50 text-slate-600 text-[11px] border border-[#E6EAF0]">HIS Access</span>
+                <span class="forms-card-tag px-2 py-0.5 rounded bg-slate-50 text-slate-600 text-[11px] border border-[#E6EAF0]">Wi-Fi Requisition</span>
+                <span class="forms-card-tag px-2 py-0.5 rounded bg-slate-50 text-slate-600 text-[11px] border border-[#E6EAF0]">Breakdown</span>
+              </div>
+              <div class="forms-card-footer pt-3 border-t border-[#E6EAF0] flex items-center justify-between text-xs">
+                <span class="forms-card-link font-bold text-teal-600 flex items-center gap-1 group-hover:underline">
+                  <span>View Forms List</span> <span>&rarr;</span>
+                </span>
+                <span class="forms-card-meta text-slate-400 text-[11px] font-medium">Approved PDF</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <!-- RIGHT SIDE: Active Category Forms List & Direct PDF Downloads -->
+      <div class="lg:col-span-5 order-2 lg:order-2">
         <div id="forms-active-panel" class="bg-white rounded-3xl border border-[#E6EAF0] border-t-4 border-t-blue-600 p-5 sm:p-7 shadow-sm lg:sticky lg:top-24 transition-all">
           
           <!-- Active Header Row -->
@@ -1144,7 +1156,7 @@
                   Medicolegal Protocols
                 </span>
                 <h3 id="active-cat-title" class="text-lg sm:text-xl font-bold text-[#0F172A] mt-0.5">
-                  Consent Forms List
+                  APH Consent Forms
                 </h3>
               </div>
             </div>
@@ -1177,144 +1189,6 @@
           <!-- Scrollable List of PDFs (Generous height for scrolling all forms smoothly without Explore All button) -->
           <div id="forms-active-items-list" class="divide-y divide-[#E6EAF0] max-h-[300px] sm:max-h-[310px] overflow-y-auto pr-1.5 custom-forms-scrollbar" style="scrollbar-width: thin; scrollbar-color: #94a3b8 #f1f5f9;">
             <!-- Populated dynamically via JS -->
-          </div>
-
-        </div>
-      </div>
-
-      <!-- RIGHT SIDE: Zigzag Staggered Category Cards -->
-      <div class="lg:col-span-7 order-1 lg:order-2">
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 items-start">
-          
-          <!-- Sub-column 1: Consent (top) & HR (bottom) -->
-          <div class="space-y-5">
-            
-            <!-- Card 1: Consent -->
-            <div id="cat-card-consent" onclick="selectFormsCategory('consent', true)" class="forms-card-item cursor-pointer bg-white rounded-2xl sm:rounded-3xl border border-[#E6EAF0] border-t-4 border-t-blue-600 p-5 sm:p-6 shadow-sm hover:shadow-md hover:border-blue-300 transition-all group ring-2 ring-blue-600">
-              <div class="flex items-center justify-between mb-3">
-                <div class="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center transition-transform group-hover:scale-105">
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                </div>
-                <span class="active-badge text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200">
-                  Viewing on Left
-                </span>
-              </div>
-              <h4 class="text-lg font-bold text-[#0F172A] group-hover:text-blue-600 transition-colors">
-                Consent
-              </h4>
-              <div class="text-xs font-semibold text-blue-600 mt-0.5 mb-2">6 Forms Available</div>
-              <p class="text-xs text-[#64748B] leading-relaxed mb-3">
-                Operative, procedural, anaesthesia, blood transfusion &amp; refusal protocols.
-              </p>
-              <div class="flex flex-wrap gap-1 mb-3">
-                <span class="px-2 py-0.5 rounded bg-slate-50 text-slate-600 text-[11px] border border-[#E6EAF0]">Surgical Consent</span>
-                <span class="px-2 py-0.5 rounded bg-slate-50 text-slate-600 text-[11px] border border-[#E6EAF0]">Blood Transfusion</span>
-                <span class="px-2 py-0.5 rounded bg-slate-50 text-slate-600 text-[11px] border border-[#E6EAF0]">DAMA</span>
-              </div>
-              <div class="pt-3 border-t border-[#E6EAF0] flex items-center justify-between text-xs">
-                <span class="font-bold text-blue-600 flex items-center gap-1 group-hover:underline">
-                  <span>View Forms List</span> <span>&larr;</span>
-                </span>
-                <span class="text-slate-400 text-[11px] font-medium">Approved PDF</span>
-              </div>
-            </div>
-
-            <!-- Card 3: HR -->
-            <div id="cat-card-hr" onclick="selectFormsCategory('hr', true)" class="forms-card-item cursor-pointer bg-white rounded-2xl sm:rounded-3xl border border-[#E6EAF0] border-t-4 border-t-purple-500 p-5 sm:p-6 shadow-sm hover:shadow-md hover:border-purple-300 transition-all group">
-              <div class="flex items-center justify-between mb-3">
-                <div class="w-10 h-10 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center transition-transform group-hover:scale-105">
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-                </div>
-                <span class="active-badge hidden text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-purple-50 text-purple-700 border border-purple-200">
-                  Viewing on Left
-                </span>
-              </div>
-              <h4 class="text-lg font-bold text-[#0F172A] group-hover:text-purple-600 transition-colors">
-                HR
-              </h4>
-              <div class="text-xs font-semibold text-purple-600 mt-0.5 mb-2">13 Forms Available</div>
-              <p class="text-xs text-[#64748B] leading-relaxed mb-3">
-                Faculty applications, non-teaching jobs, promotion &amp; HR manual.
-              </p>
-              <div class="flex flex-wrap gap-1 mb-3">
-                <span class="px-2 py-0.5 rounded bg-slate-50 text-slate-600 text-[11px] border border-[#E6EAF0]">Faculty</span>
-                <span class="px-2 py-0.5 rounded bg-slate-50 text-slate-600 text-[11px] border border-[#E6EAF0]">Staff Jobs</span>
-                <span class="px-2 py-0.5 rounded bg-slate-50 text-slate-600 text-[11px] border border-[#E6EAF0]">Appraisals</span>
-              </div>
-              <div class="pt-3 border-t border-[#E6EAF0] flex items-center justify-between text-xs">
-                <span class="font-bold text-purple-600 flex items-center gap-1 group-hover:underline">
-                  <span>View Forms List</span> <span>&larr;</span>
-                </span>
-                <span class="text-slate-400 text-[11px] font-medium">Approved PDF</span>
-              </div>
-            </div>
-
-          </div>
-
-          <!-- Sub-column 2: Common Forms (top, STAGGERED FOR ZIGZAG) & IT (bottom, STAGGERED) -->
-          <div class="space-y-5 sm:mt-10">
-
-            <!-- Card 2: Common Forms -->
-            <div id="cat-card-clinical" onclick="selectFormsCategory('clinical', true)" class="forms-card-item cursor-pointer bg-white rounded-2xl sm:rounded-3xl border border-[#E6EAF0] border-t-4 border-t-amber-500 p-5 sm:p-6 shadow-sm hover:shadow-md hover:border-amber-300 transition-all group">
-              <div class="flex items-center justify-between mb-3">
-                <div class="w-10 h-10 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center transition-transform group-hover:scale-105">
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
-                </div>
-                <span class="active-badge hidden text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200">
-                  Viewing on Left
-                </span>
-              </div>
-              <h4 class="text-lg font-bold text-[#0F172A] group-hover:text-amber-600 transition-colors">
-                Common Forms
-              </h4>
-              <div class="text-xs font-semibold text-amber-600 mt-0.5 mb-2">44 Forms Available</div>
-              <p class="text-xs text-[#64748B] leading-relaxed mb-3">
-                ICU checklists, SBAR handover, narcotic indents &amp; emergency protocols.
-              </p>
-              <div class="flex flex-wrap gap-1 mb-3">
-                <span class="px-2 py-0.5 rounded bg-slate-50 text-slate-600 text-[11px] border border-[#E6EAF0]">ICU Case</span>
-                <span class="px-2 py-0.5 rounded bg-slate-50 text-slate-600 text-[11px] border border-[#E6EAF0]">SBAR Handover</span>
-                <span class="px-2 py-0.5 rounded bg-slate-50 text-slate-600 text-[11px] border border-[#E6EAF0]">Narcotics</span>
-                <span class="px-2 py-0.5 rounded bg-slate-50 text-slate-600 text-[11px] border border-[#E6EAF0]">Code Blue</span>
-              </div>
-              <div class="pt-3 border-t border-[#E6EAF0] flex items-center justify-between text-xs">
-                <span class="font-bold text-amber-600 flex items-center gap-1 group-hover:underline">
-                  <span>View Forms List</span> <span>&larr;</span>
-                </span>
-                <span class="text-slate-400 text-[11px] font-medium">Approved PDF</span>
-              </div>
-            </div>
-
-            <!-- Card 4: IT -->
-            <div id="cat-card-it" onclick="selectFormsCategory('it', true)" class="forms-card-item cursor-pointer bg-white rounded-2xl sm:rounded-3xl border border-[#E6EAF0] border-t-4 border-t-teal-500 p-5 sm:p-6 shadow-sm hover:shadow-md hover:border-teal-300 transition-all group">
-              <div class="flex items-center justify-between mb-3">
-                <div class="w-10 h-10 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center transition-transform group-hover:scale-105">
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                </div>
-                <span class="active-badge hidden text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-teal-50 text-teal-700 border border-teal-200">
-                  Viewing on Left
-                </span>
-              </div>
-              <h4 class="text-lg font-bold text-[#0F172A] group-hover:text-teal-600 transition-colors">
-                IT
-              </h4>
-              <div class="text-xs font-semibold text-teal-600 mt-0.5 mb-2">8 Forms Available</div>
-              <p class="text-xs text-[#64748B] leading-relaxed mb-3">
-                HIS user access, Wi-Fi authorization, toner, PC &amp; hardware tickets.
-              </p>
-              <div class="flex flex-wrap gap-1 mb-3">
-                <span class="px-2 py-0.5 rounded bg-slate-50 text-slate-600 text-[11px] border border-[#E6EAF0]">HIS Access</span>
-                <span class="px-2 py-0.5 rounded bg-slate-50 text-slate-600 text-[11px] border border-[#E6EAF0]">Wi-Fi Requisition</span>
-                <span class="px-2 py-0.5 rounded bg-slate-50 text-slate-600 text-[11px] border border-[#E6EAF0]">Breakdown</span>
-              </div>
-              <div class="pt-3 border-t border-[#E6EAF0] flex items-center justify-between text-xs">
-                <span class="font-bold text-teal-600 flex items-center gap-1 group-hover:underline">
-                  <span>View Forms List</span> <span>&larr;</span>
-                </span>
-                <span class="text-slate-400 text-[11px] font-medium">Approved PDF</span>
-              </div>
-            </div>
-
           </div>
 
         </div>
@@ -1810,7 +1684,7 @@
       consent: {
         id: 'consent',
         title: 'Consent Forms',
-        fullName: 'Medicolegal Consent Forms',
+        fullName: 'APH Consent Forms',
         count: '6 Forms Available',
         badge: 'Medicolegal Protocols',
         color: 'blue',
@@ -1835,7 +1709,7 @@
       clinical: {
         id: 'clinical',
         title: 'Common Forms',
-        fullName: 'Common Clinical & Departmental Forms',
+        fullName: 'APH Common Forms',
         count: '44 Forms Available',
         badge: 'Clinical Indent & Ops',
         color: 'amber',
@@ -1898,7 +1772,7 @@
       hr: {
         id: 'hr',
         title: 'HR Forms',
-        fullName: 'HR & Staff Privileging Downloads',
+        fullName: 'APH HR Forms',
         count: '13 Forms Available',
         badge: 'People & Culture',
         color: 'purple',
@@ -1930,7 +1804,7 @@
       it: {
         id: 'it',
         title: 'IT Forms',
-        fullName: 'IT & Systems Requisition Hub',
+        fullName: 'APH IT Forms',
         count: '8 Forms Available',
         badge: 'Hardware & Access',
         color: 'teal',
@@ -1969,28 +1843,17 @@
       currentFormsCategory = catId;
       const vault = formsCategoryVaults[catId];
 
-      // 1. Update active tab buttons
-      document.querySelectorAll('.forms-tab-btn').forEach(btn => {
-        const tab = btn.getAttribute('data-tab');
-        if (tab === catId) {
-          btn.className = 'forms-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-[#0F172A] text-white shadow-sm';
-        } else {
-          btn.className = 'forms-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-white text-[#64748B] border border-[#E6EAF0] hover:text-[#0F172A] hover:bg-slate-50';
-        }
-      });
-
-      // 2. Update category cards active ring & badge
+      // 1. Update left category cards: selected = form colour bg + white text
       ['consent', 'clinical', 'hr', 'it'].forEach(id => {
         const card = document.getElementById(`cat-card-${id}`);
         if (!card) return;
         const badge = card.querySelector('.active-badge');
-        const v = formsCategoryVaults[id];
 
         if (id === catId) {
-          card.classList.add('ring-2', v.accentRing);
+          card.classList.add('is-selected');
           if (badge) badge.classList.remove('hidden');
         } else {
-          card.classList.remove('ring-2', 'ring-blue-600', 'ring-amber-500', 'ring-purple-500', 'ring-teal-500');
+          card.classList.remove('is-selected');
           if (badge) badge.classList.add('hidden');
         }
       });
@@ -2279,7 +2142,7 @@
       { title: "Recent Circular's Directory", category: 'Circular', url: './recent circular.html', external: true },
 
       // Tariffs
-      { title: "Adhiparasakthi Hospitals' Special Packages PDF", category: 'Tariff', url: 'backend/files/Adhiparasakthi Hospitals Special Packages (04.05.2026).pdf', external: true },
+      { title: "Adhiparasakthi Hospitals' Special Packages PDF", category: 'Tariff', url: 'http://192.168.101.75:3000/files/Adhiparasakthi Hospitals Special Packages (04.05.2026).pdf', external: true },
       { title: 'Laboratory & Pathology Tariff PDF', category: 'Tariff', url: 'http://192.168.101.75:3000/files/Lab Tariff.pdf', external: true },
       { title: 'Radiology, CT & MRI Tariff PDF', category: 'Tariff', url: 'http://192.168.101.75:3000/files/Radiology Tariff.pdf', external: true },
       { title: 'Physiotherapy & Rehabilitation Tariff PDF', category: 'Tariff', url: 'http://192.168.101.75:3000/files/Physiotherapy Tariff.pdf', external: true },
@@ -2305,7 +2168,7 @@
       { title: 'Visiting Consultant Requisition Letter PDF', category: 'Consent Form', url: 'http://192.168.101.75:3000/files/Visiting%20Consultant%20Requisition%20letter.pdf', external: true },
       { title: 'Paediatric Informed Consent PDF', category: 'Consent Form', url: 'http://192.168.101.75:3000/files/paedconsent.pdf', external: true },
       { title: 'General Patient Admission Consent PDF', category: 'Consent Form', url: 'http://192.168.101.75:3000/files/consent.pdf', external: true },
-      { title: 'Medicolegal Consent Forms Vault Hub', category: 'Forms', url: './consent.html', external: true },
+      { title: 'APH Consent Forms Vault Hub', category: 'Forms', url: './consent.html', external: true },
 
       { title: 'ICU Casesheet Checklist PDF', category: 'Common Form', url: 'http://192.168.101.75:3000/files/ICU Casesheet Checklist.pdf', external: true },
       { title: 'HANDING OVER SBAR Clinical Handover PDF', category: 'Common Form', url: 'http://192.168.101.75:3000/files/HANDING OVER SBAR.pdf', external: true },
@@ -2321,7 +2184,7 @@
       { title: 'Hospital Transport Requisition Form PDF', category: 'Common Form', url: 'http://192.168.101.75:3000/files/Transport.pdf', external: true },
       { title: 'Catheter Associated Urinary Tract Infection (CAUTI) PDF', category: 'Common Form', url: 'http://192.168.101.75:3000/files/Catheter Associtated Urinary Tract Infection.pdf', external: true },
       { title: 'Central Line Associated Bloodstream Infection (CLABSI) PDF', category: 'Common Form', url: 'http://192.168.101.75:3000/files/Central Line Associated Bloodstream Infection.pdf', external: true },
-      { title: 'Common Clinical & Departmental Forms Hub', category: 'Forms', url: './commonforms.html', external: true },
+      { title: 'APH Common Forms Hub', category: 'Forms', url: './commonforms.html', external: true },
 
       { title: 'List of Holidays 2026 Calendar PDF', category: 'HR Form', url: 'http://192.168.101.75:3000/files/Holiday 2025.pdf', external: true },
       { title: 'Teaching Faculty Application & Appraisal Form PDF', category: 'HR Form', url: 'http://192.168.101.75:3000/files/Teaching.pdf', external: true },
@@ -2331,7 +2194,7 @@
       { title: 'Non-Performer Review Form PDF', category: 'HR Form', url: 'http://192.168.101.75:3000/files/Non%20performer-%20Non%20Teaching.pdf', external: true },
       { title: 'Performance Management System (PMS) Policy PDF', category: 'HR Form', url: 'http://192.168.101.75:3000/files/PMS%20Policy.pdf', external: true },
       { title: 'Human Resources Manual (HRM - 2025) PDF', category: 'HR Form', url: 'http://192.168.101.75:3000/files/HRM%202025.pdf', external: true },
-      { title: 'HR Administration Forms & Staff Privileges Hub', category: 'Forms', url: './hrforms.html', external: true },
+      { title: 'APH HR Forms Hub', category: 'Forms', url: './hrforms.html', external: true },
 
       { title: 'New HIS User Request Form PDF', category: 'IT Form', url: 'http://192.168.101.75:3000/files/His User Creation.pdf', external: true },
       { title: 'New Doctor Name & ID Creation in HIS PDF', category: 'IT Form', url: 'http://192.168.101.75:3000/files/Doctor Name and ID Creation.pdf', external: true },
@@ -2341,7 +2204,7 @@
       { title: 'Official Staff Mail ID Requisition Form PDF', category: 'IT Form', url: 'http://192.168.101.75:3000/files/Mail Request.pdf', external: true },
       { title: 'HIS Master Item Creation Form PDF', category: 'IT Form', url: 'http://192.168.101.75:3000/files/Item Creation.pdf', external: true },
       { title: 'CUG Mobile SIM Request Form PDF', category: 'IT Form', url: 'http://192.168.101.75:3000/files/Cug Request Form.pdf', external: true },
-      { title: 'IT & Systems Requisition Forms Hub', category: 'Forms', url: './itforms.html', external: true },
+      { title: 'APH IT Forms Hub', category: 'Forms', url: './itforms.html', external: true },
 
       // Quality Hub & Manuals
       { title: 'Hospital Accreditation Manuals Hub', category: 'Governance', url: './manuals.html', external: true },
