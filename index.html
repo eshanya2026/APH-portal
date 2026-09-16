@@ -45,38 +45,33 @@
       color: #0f172a;
     }
 
-    /* Forms left category cards — selected = form colour fill + white text */
-    .forms-card-item.is-selected {
-      border-color: transparent !important;
-      box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.15);
-    }
-    .forms-card-item.is-selected.forms-fill-blue { background-color: #2563EB !important; }
-    .forms-card-item.is-selected.forms-fill-amber { background-color: #F59E0B !important; }
-    .forms-card-item.is-selected.forms-fill-purple { background-color: #A855F7 !important; }
-    .forms-card-item.is-selected.forms-fill-teal { background-color: #14B8A6 !important; }
-    .forms-card-item.is-selected .forms-card-title,
-    .forms-card-item.is-selected .forms-card-count,
-    .forms-card-item.is-selected .forms-card-desc,
-    .forms-card-item.is-selected .forms-card-link,
-    .forms-card-item.is-selected .forms-card-meta {
-      color: #ffffff !important;
+    /* Forms Category Selected State: Background matches card color (blue, yellow/amber, purple, teal) + White Icon */
+    .forms-card-item .forms-card-icon {
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .forms-card-item.is-selected .forms-card-icon {
-      background-color: rgba(255, 255, 255, 0.2) !important;
-      color: #ffffff !important;
+      color: #FFFFFF !important;
+      border: 1px solid transparent !important;
     }
-    .forms-card-item.is-selected .forms-card-tag {
-      background-color: rgba(255, 255, 255, 0.18) !important;
-      color: #ffffff !important;
-      border-color: rgba(255, 255, 255, 0.28) !important;
+    .forms-card-item.is-selected#cat-card-consent .forms-card-icon {
+      background-color: #2563EB !important;
+      color: #FFFFFF !important;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35) !important;
     }
-    .forms-card-item.is-selected .forms-card-footer {
-      border-color: rgba(255, 255, 255, 0.28) !important;
+    .forms-card-item.is-selected#cat-card-clinical .forms-card-icon {
+      background-color: #D97706 !important;
+      color: #FFFFFF !important;
+      box-shadow: 0 4px 14px rgba(217, 119, 6, 0.35) !important;
     }
-    .forms-card-item.is-selected .active-badge {
-      background-color: rgba(255, 255, 255, 0.2) !important;
-      color: #ffffff !important;
-      border-color: rgba(255, 255, 255, 0.35) !important;
+    .forms-card-item.is-selected#cat-card-hr .forms-card-icon {
+      background-color: #9333EA !important;
+      color: #FFFFFF !important;
+      box-shadow: 0 4px 14px rgba(147, 51, 234, 0.35) !important;
+    }
+    .forms-card-item.is-selected#cat-card-it .forms-card-icon {
+      background-color: #0D9488 !important;
+      color: #FFFFFF !important;
+      box-shadow: 0 4px 14px rgba(13, 148, 136, 0.35) !important;
     }
 
     /* Forms active list scrollbar */
@@ -182,20 +177,15 @@
       <div class="flex items-center justify-between h-16 sm:h-20 gap-2 sm:gap-4">
         
         <!-- Logo & Brand Info -->
-        <div class="flex items-center gap-2 sm:gap-2.5 shrink-0 min-w-0 max-w-[170px] min-[360px]:max-w-[220px] sm:max-w-none">
-          <a href="#" class="flex items-center gap-2 sm:gap-2.5 group min-w-0">
-            <img src="assets/hospital-logo.png" alt="Adhiparasakthi Hospitals Emblem" class="w-8 h-8 sm:w-10 sm:h-10 object-contain drop-shadow-sm transition-transform duration-200 group-hover:scale-105 shrink-0" />
-            <div class="flex flex-col min-w-0">
-              <span class="text-[13px] min-[360px]:text-[13.5px] sm:text-[16px] font-extrabold tracking-tight text-[#0f172a] leading-tight truncate">ADHIPARASAKTHI</span>
-              <span class="text-[7px] min-[360px]:text-[7.5px] sm:text-[9.5px] font-bold tracking-[0.08em] sm:tracking-[0.14em] text-[#dc2626] leading-tight truncate">HOSPITALS &amp; RESEARCH INSTITUTE</span>
-            </div>
+        <div class="flex items-center shrink-0">
+          <a href="#" class="flex items-center group" aria-label="Adhiparasakthi Hospitals Home">
+            <img src="assets/images/logo2%20(1).png" alt="Adhiparasakthi Hospitals Logo" class="h-10 sm:h-14 w-auto object-contain drop-shadow-xs transition-transform duration-200 group-hover:scale-105 shrink-0" />
           </a>
         </div>
 
         <!-- Navigation Links (Desktop: xl and above) -->
         <div class="hidden xl:flex items-center gap-1 text-[13px] font-medium text-slate-600">
           <a href="#" class="px-2.5 py-1.5 rounded-lg bg-blue-50 text-blue-600 font-bold border border-blue-100/80 shadow-sm transition-all duration-150 whitespace-nowrap">Home</a>
-          <a href="#core-systems" class="px-2.5 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100 transition-all duration-150 whitespace-nowrap">Core Systems</a>
           <a href="#in-house-apps" class="px-2.5 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100 transition-all duration-150 whitespace-nowrap">In-House Apps</a>
           <a href="#quality" class="px-2.5 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100 transition-all duration-150 whitespace-nowrap">Quality</a>
           <a href="#e-circulars" class="px-2.5 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100 transition-all duration-150 whitespace-nowrap">E-Circulars</a>
@@ -239,7 +229,6 @@
         </div>
 
         <a href="#" onclick="toggleMobileNav()" class="block px-4 py-2.5 rounded-lg bg-blue-50 text-blue-600 font-bold text-sm">Home</a>
-        <a href="#core-systems" onclick="toggleMobileNav()" class="block px-4 py-2.5 rounded-lg text-slate-700 hover:bg-slate-100 text-sm font-medium">Core Systems</a>
         <a href="#in-house-apps" onclick="toggleMobileNav()" class="block px-4 py-2.5 rounded-lg text-slate-700 hover:bg-slate-100 text-sm font-medium">In-House Apps</a>
         <a href="#quality" onclick="toggleMobileNav()" class="block px-4 py-2.5 rounded-lg text-slate-700 hover:bg-slate-100 text-sm font-medium">Quality</a>
         <a href="#e-circulars" onclick="toggleMobileNav()" class="block px-4 py-2.5 rounded-lg text-slate-700 hover:bg-slate-100 text-sm font-medium">E-Circulars</a>
@@ -254,11 +243,17 @@
   <!-- ========================================================================= -->
   <!-- 3. HERO SECTION & INTEGRATED SEARCH                                       -->
   <!-- ========================================================================= -->
-  <section class="relative w-full text-white pt-20 sm:pt-28 md:pt-32 pb-36 sm:pb-44 md:pb-52 lg:pb-60 px-4 sm:px-6 lg:px-12 overflow-hidden flex flex-col justify-center bg-cover bg-no-repeat"
+  <section class="relative w-full text-white pt-20 sm:pt-28 md:pt-32 pb-36 sm:pb-44 md:pb-52 lg:pb-60 px-4 sm:px-6 lg:px-12 overflow-visible flex flex-col justify-center bg-cover bg-no-repeat"
            style="background: linear-gradient(180deg, rgba(7, 20, 45, 0.82), rgba(7, 20, 45, 0.68)), url('assets/images/hospital-campus-full.jpg') center 24% / cover no-repeat, #07142d;">
     
-    <div class="relative max-w-3xl mx-auto text-center z-10">
+    <div class="relative max-w-3xl mx-auto text-center z-30">
       
+      <!-- Greeting Pill -->
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-blue-100 text-xs sm:text-sm font-medium mb-4 shadow-sm">
+        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+        <span id="portal-greeting">Good afternoon, Hospital Team</span>
+      </div>
+
       <!-- Main Portal Heading -->
       <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.15] mb-4">
         Integrated Hospital<br class="hidden sm:inline" /> Operations Portal
@@ -266,11 +261,11 @@
 
       <!-- Subtitle -->
       <p class="text-sm sm:text-base md:text-lg text-slate-300 max-w-2xl mx-auto font-normal leading-relaxed mb-8 sm:mb-10 px-2 sm:px-0">
-        One place for hospital systems, clinical documents, policies, forms and operational resources.
+        Access hospital systems, applications, forms and operational resources.
       </p>
 
       <!-- Search Bar with Outer Transparent Line & Search Button -->
-      <div class="relative max-w-2xl mx-auto mb-6">
+      <div class="relative max-w-2xl mx-auto mb-6 z-30">
         <!-- Outer Transparent Line Container -->
         <div class="p-1.5 sm:p-2 bg-white/10 border border-white/25 rounded-2xl sm:rounded-3xl backdrop-blur-md shadow-2xl">
           <form onsubmit="handleSearch(event)" class="relative flex items-center bg-white rounded-xl sm:rounded-2xl overflow-hidden group">
@@ -284,7 +279,7 @@
               type="text" 
               autocomplete="off"
               oninput="handleSearchInput(event)"
-              placeholder="Search forms, systems, policies &amp; documents"
+              placeholder="Search applications, forms, policies..."
               class="w-full pl-11 sm:pl-13 pr-24 sm:pr-28 py-3.5 sm:py-4 bg-transparent text-slate-900 placeholder-slate-400 text-sm sm:text-base font-normal focus:outline-none transition-all"
             />
             <div class="absolute inset-y-0 right-0 pr-1.5 sm:pr-2 flex items-center">
@@ -299,7 +294,7 @@
         </div>
 
         <!-- Live Instant Search Dropdown -->
-        <div id="search-dropdown" class="hidden absolute top-full left-0 right-0 mt-3 bg-white text-slate-900 rounded-2xl shadow-2xl border border-slate-200 overflow-hidden z-50 text-left divide-y divide-slate-100 max-h-80 overflow-y-auto">
+        <div id="search-dropdown" class="hidden absolute top-full left-0 right-0 mt-3 bg-white text-slate-900 rounded-2xl shadow-2xl border border-slate-200 overflow-hidden z-50 text-left divide-y divide-slate-100 max-h-80 overflow-y-auto ring-1 ring-slate-900/10">
           <!-- Results injected by JS -->
         </div>
       </div>
@@ -527,8 +522,18 @@
     <div class="mb-8">
       <span class="text-xs font-bold tracking-wider text-blue-600 uppercase">NABH / JCI ACCREDITATION GOVERNANCE</span>
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 mt-1">
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Core Quality Committee Hub</h2>
-        <div class="flex items-center gap-2">
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Core Quality Committee Hub</h2>
+          <p class="text-xs text-slate-500 mt-1 flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>Last updated: <strong class="font-medium text-slate-700">September 2026</strong></span>
+            <span class="text-slate-300">•</span>
+            <span class="text-slate-500">Cycle 2026–2027</span>
+          </p>
+        </div>
+        <div class="flex items-center gap-2 self-start md:self-auto">
           <span class="text-xs sm:text-sm font-medium text-slate-600">Quality Indicator Score:</span>
           <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs sm:text-sm font-extrabold border border-emerald-300">
             98.4% Compliant
@@ -562,7 +567,7 @@
           </p>
         </div>
         <div class="flex items-center justify-between pt-5 border-t border-slate-100 text-sm">
-          <span class="text-slate-500 font-medium">50+ Standards &amp; Guidelines</span>
+          <span id="manuals-total-count" class="text-slate-500 font-medium">267 Standards &amp; Guidelines</span>
           <span class="font-bold text-blue-600 group-hover:text-blue-700 flex items-center gap-1.5">
             <span>Open Manuals Directory</span>
             <span class="group-hover:translate-x-1 transition-transform">&rarr;</span>
@@ -591,7 +596,7 @@
           </p>
         </div>
         <div class="flex items-center justify-between pt-5 border-t border-slate-100 text-sm">
-          <span class="text-slate-500 font-medium">All Statutory Committees</span>
+          <span id="committees-total-count" class="text-slate-500 font-medium">56 Committee MOMs &amp; Charters</span>
           <span class="font-bold text-emerald-600 group-hover:text-emerald-700 flex items-center gap-1.5">
             <span>Open Committees Directory</span>
             <span class="group-hover:translate-x-1 transition-transform">&rarr;</span>
@@ -1009,7 +1014,7 @@
           <div class="space-y-5">
             
             <!-- Card 1: Consent -->
-            <div id="cat-card-consent" onclick="selectFormsCategory('consent', true)" class="forms-card-item forms-fill-blue is-selected cursor-pointer bg-white rounded-2xl sm:rounded-3xl border border-[#E6EAF0] border-t-4 border-t-blue-600 p-5 sm:p-6 shadow-sm hover:shadow-md hover:border-blue-300 transition-all group">
+            <div id="cat-card-consent" onclick="selectFormsCategory('consent', true)" class="forms-card-item is-selected cursor-pointer bg-white rounded-2xl sm:rounded-3xl border border-[#E6EAF0] border-t-4 border-t-blue-600 p-5 sm:p-6 shadow-sm hover:shadow-md hover:border-blue-300 transition-all group ring-2 ring-blue-600">
               <div class="flex items-center justify-between mb-3">
                 <div class="forms-card-icon w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center transition-transform group-hover:scale-105">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
@@ -1039,7 +1044,7 @@
             </div>
 
             <!-- Card 3: HR -->
-            <div id="cat-card-hr" onclick="selectFormsCategory('hr', true)" class="forms-card-item forms-fill-purple cursor-pointer bg-white rounded-2xl sm:rounded-3xl border border-[#E6EAF0] border-t-4 border-t-purple-500 p-5 sm:p-6 shadow-sm hover:shadow-md hover:border-purple-300 transition-all group">
+            <div id="cat-card-hr" onclick="selectFormsCategory('hr', true)" class="forms-card-item cursor-pointer bg-white rounded-2xl sm:rounded-3xl border border-[#E6EAF0] border-t-4 border-t-purple-500 p-5 sm:p-6 shadow-sm hover:shadow-md hover:border-purple-300 transition-all group">
               <div class="flex items-center justify-between mb-3">
                 <div class="forms-card-icon w-10 h-10 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center transition-transform group-hover:scale-105">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
@@ -1074,7 +1079,7 @@
           <div class="space-y-5 sm:mt-10">
 
             <!-- Card 2: Common Forms -->
-            <div id="cat-card-clinical" onclick="selectFormsCategory('clinical', true)" class="forms-card-item forms-fill-amber cursor-pointer bg-white rounded-2xl sm:rounded-3xl border border-[#E6EAF0] border-t-4 border-t-amber-500 p-5 sm:p-6 shadow-sm hover:shadow-md hover:border-amber-300 transition-all group">
+            <div id="cat-card-clinical" onclick="selectFormsCategory('clinical', true)" class="forms-card-item cursor-pointer bg-white rounded-2xl sm:rounded-3xl border border-[#E6EAF0] border-t-4 border-t-amber-500 p-5 sm:p-6 shadow-sm hover:shadow-md hover:border-amber-300 transition-all group">
               <div class="flex items-center justify-between mb-3">
                 <div class="forms-card-icon w-10 h-10 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center transition-transform group-hover:scale-105">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
@@ -1105,7 +1110,7 @@
             </div>
 
             <!-- Card 4: IT -->
-            <div id="cat-card-it" onclick="selectFormsCategory('it', true)" class="forms-card-item forms-fill-teal cursor-pointer bg-white rounded-2xl sm:rounded-3xl border border-[#E6EAF0] border-t-4 border-t-teal-500 p-5 sm:p-6 shadow-sm hover:shadow-md hover:border-teal-300 transition-all group">
+            <div id="cat-card-it" onclick="selectFormsCategory('it', true)" class="forms-card-item cursor-pointer bg-white rounded-2xl sm:rounded-3xl border border-[#E6EAF0] border-t-4 border-t-teal-500 p-5 sm:p-6 shadow-sm hover:shadow-md hover:border-teal-300 transition-all group">
               <div class="flex items-center justify-between mb-3">
                 <div class="forms-card-icon w-10 h-10 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center transition-transform group-hover:scale-105">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 002 2z"/></svg>
@@ -1146,7 +1151,7 @@
           <!-- Active Header Row -->
           <div class="flex items-center justify-between gap-3 mb-4">
             <div class="flex items-center gap-3">
-              <div id="active-cat-icon-container" class="w-11 h-11 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold shrink-0 transition-colors">
+              <div id="active-cat-icon-container" class="w-11 h-11 rounded-2xl bg-blue-600 text-white flex items-center justify-center font-bold shrink-0 transition-all shadow-md shadow-blue-500/25">
                 <svg id="active-cat-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                 </svg>
@@ -1609,23 +1614,81 @@
     </div>
   </div>
 
-  <!-- Floating Red Intercom Hotline Button (Matching image copy 3.png) -->
-  <a href="./intercom.html" target="_blank" rel="noopener noreferrer" class="fixed right-4 sm:right-6 bottom-[84px] sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2 z-40 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-rose-600 hover:bg-rose-700 text-white shadow-xl shadow-rose-600/40 flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 group focus:outline-none focus:ring-4 focus:ring-rose-500/30" title="Campus Intercom Directory" aria-label="Open Campus Intercom Directory">
-    <!-- Active Status Pulse -->
-    <span class="absolute -top-1 -right-1 flex h-3.5 w-3.5">
-      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
-      <span class="relative inline-flex rounded-full h-3.5 w-3.5 bg-rose-500 border-2 border-white"></span>
-    </span>
-    <!-- Phone Handset Icon -->
-    <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white transition-transform group-hover:rotate-12" fill="currentColor" viewBox="0 0 24 24">
-      <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-2.2 2.2a15.053 15.053 0 01-6.59-6.59l2.2-2.21a.96.96 0 00.25-1.01A11.36 11.36 0 018.57 3.9c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.52c0-.55-.45-1-.99-1z"/>
-    </svg>
-    <!-- Hover Tooltip -->
-    <span class="absolute right-14 sm:right-16 bg-slate-900/95 backdrop-blur text-white text-xs font-semibold px-3 py-1.5 rounded-xl shadow-xl opacity-0 pointer-events-none group-hover:opacity-100 transition-all duration-200 whitespace-nowrap flex items-center gap-1.5 border border-slate-700">
-      <span>Campus Intercoms</span>
-      <span class="text-rose-400 font-mono text-[11px] font-bold">(Live Search)</span>
-    </span>
-  </a>
+  <!-- Floating Quick-Action Shortcuts on Right Side (Intercom, Blood Bank, Email, Billing Manual, Nursing Manual) -->
+  <aside aria-label="Quick Access Shortcuts" class="fixed right-3 sm:right-5 top-1/2 -translate-y-1/2 z-40 flex flex-col items-center gap-2.5 sm:gap-3">
+    
+    <!-- 1. Intercom Hotline Button -->
+    <a href="./intercom.html" target="_blank" rel="noopener noreferrer" class="relative w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-rose-600 hover:bg-rose-700 text-white shadow-lg shadow-rose-600/30 flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 group focus:outline-none focus:ring-4 focus:ring-rose-500/30" title="Campus Intercom Directory" aria-label="Open Campus Intercom Directory">
+      <!-- Active Status Pulse -->
+      <span class="absolute -top-0.5 -right-0.5 flex h-3 w-3">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-3 w-3 bg-rose-500 border-2 border-white"></span>
+      </span>
+      <!-- Phone Handset Icon -->
+      <svg class="w-5 h-5 text-white transition-transform group-hover:rotate-12" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-2.2 2.2a15.053 15.053 0 01-6.59-6.59l2.2-2.21a.96.96 0 00.25-1.01A11.36 11.36 0 018.57 3.9c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.52c0-.55-.45-1-.99-1z"/>
+      </svg>
+      <!-- Hover Tooltip -->
+      <span class="hidden sm:flex absolute right-14 sm:right-15 bg-slate-900/95 backdrop-blur text-white text-xs font-semibold px-3 py-1.5 rounded-xl shadow-xl opacity-0 pointer-events-none group-hover:opacity-100 transition-all duration-200 whitespace-nowrap items-center gap-1.5 border border-slate-700/80">
+        <span>Campus Intercoms</span>
+        <span class="text-rose-400 font-mono text-[11px] font-bold">(Live)</span>
+      </span>
+    </a>
+
+    <!-- 2. Blood Bank Stock Details -->
+    <a href="http://192.168.101.75:3000/files/Blood%20Bank%20Stock%20Details.pdf" target="_blank" rel="noopener noreferrer" class="relative w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-red-600 hover:bg-red-700 text-white shadow-lg shadow-red-600/30 flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 group focus:outline-none focus:ring-4 focus:ring-red-500/30" title="Blood Bank Stock Details" aria-label="Open Blood Bank Stock Details PDF">
+      <!-- Blood Droplet / Cross Icon -->
+      <svg class="w-5 h-5 text-white transition-transform group-hover:scale-110" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c-4.5 5.5-7 8.5-7 12a7 7 0 0014 0c0-3.5-2.5-6.5-7-12z"/>
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 11v6m-3-3h6"/>
+      </svg>
+      <!-- Hover Tooltip -->
+      <span class="hidden sm:flex absolute right-14 sm:right-15 bg-slate-900/95 backdrop-blur text-white text-xs font-semibold px-3 py-1.5 rounded-xl shadow-xl opacity-0 pointer-events-none group-hover:opacity-100 transition-all duration-200 whitespace-nowrap items-center gap-1.5 border border-slate-700/80">
+        <span>Blood Bank Stock</span>
+        <span class="text-red-400 font-mono text-[11px] font-bold">PDF</span>
+      </span>
+    </a>
+
+    <!-- 3. Official Email Directory (email.pdf) -->
+    <a href="http://192.168.101.75:3000/files/email.pdf" target="_blank" rel="noopener noreferrer" class="relative w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-600/30 flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 group focus:outline-none focus:ring-4 focus:ring-blue-500/30" title="Staff Email Directory" aria-label="Open Email Directory PDF">
+      <!-- Mail Envelope Icon -->
+      <svg class="w-5 h-5 text-white transition-transform group-hover:-rotate-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+      </svg>
+      <!-- Hover Tooltip -->
+      <span class="hidden sm:flex absolute right-14 sm:right-15 bg-slate-900/95 backdrop-blur text-white text-xs font-semibold px-3 py-1.5 rounded-xl shadow-xl opacity-0 pointer-events-none group-hover:opacity-100 transition-all duration-200 whitespace-nowrap items-center gap-1.5 border border-slate-700/80">
+        <span>Email Directory</span>
+        <span class="text-blue-400 font-mono text-[11px] font-bold">PDF</span>
+      </span>
+    </a>
+
+    <!-- 4. Billing Manual (billingmanual.pdf) -->
+    <a href="http://192.168.101.75:3000/files/billingmanual.pdf" target="_blank" rel="noopener noreferrer" class="relative w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-600/30 flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 group focus:outline-none focus:ring-4 focus:ring-emerald-500/30" title="Billing User Manual" aria-label="Open Billing User Manual PDF">
+      <!-- Receipt / Invoice Icon -->
+      <svg class="w-5 h-5 text-white transition-transform group-hover:scale-110" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z"/>
+      </svg>
+      <!-- Hover Tooltip -->
+      <span class="hidden sm:flex absolute right-14 sm:right-15 bg-slate-900/95 backdrop-blur text-white text-xs font-semibold px-3 py-1.5 rounded-xl shadow-xl opacity-0 pointer-events-none group-hover:opacity-100 transition-all duration-200 whitespace-nowrap items-center gap-1.5 border border-slate-700/80">
+        <span>Billing Manual</span>
+        <span class="text-emerald-400 font-mono text-[11px] font-bold">PDF</span>
+      </span>
+    </a>
+
+    <!-- 5. Nursing User Manual (nursingmanual.pdf) -->
+    <a href="http://192.168.101.75:3000/files/nursingmanual.pdf" target="_blank" rel="noopener noreferrer" class="relative w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-violet-600 hover:bg-violet-700 text-white shadow-lg shadow-violet-600/30 flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 group focus:outline-none focus:ring-4 focus:ring-violet-500/30" title="Nursing User Manual" aria-label="Open Nursing User Manual PDF">
+      <!-- Nursing / Open Book Icon -->
+      <svg class="w-5 h-5 text-white transition-transform group-hover:scale-110" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+      </svg>
+      <!-- Hover Tooltip -->
+      <span class="hidden sm:flex absolute right-14 sm:right-15 bg-slate-900/95 backdrop-blur text-white text-xs font-semibold px-3 py-1.5 rounded-xl shadow-xl opacity-0 pointer-events-none group-hover:opacity-100 transition-all duration-200 whitespace-nowrap items-center gap-1.5 border border-slate-700/80">
+        <span>Nursing Manual</span>
+        <span class="text-violet-400 font-mono text-[11px] font-bold">PDF</span>
+      </span>
+    </a>
+
+  </aside>
 
   <!-- Floating Upload FAB Button (Replace PDF portal) -->
   <a href="http://192.168.101.75:8000/server" target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 z-40 w-12 h-12 rounded-full bg-emerald-700 hover:bg-emerald-800 text-white shadow-xl shadow-emerald-900/30 flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 group focus:outline-none focus:ring-4 focus:ring-emerald-500/30" title="Replace / Upload PDF" aria-label="Open Replace PDF page">
@@ -1830,35 +1893,40 @@
       }
     };
 
-    // Global catalog for search bar autocomplete
-    const hospitalFormsCatalog = [
-      ...formsCategoryVaults.consent.forms.map(f => ({ ...f, title: f.name, category: 'consent', categoryLabel: 'Consent', color: 'blue' })),
-      ...formsCategoryVaults.clinical.forms.map(f => ({ ...f, title: f.name, category: 'clinical', categoryLabel: 'Common Forms', color: 'amber' })),
-      ...formsCategoryVaults.hr.forms.map(f => ({ ...f, title: f.name, category: 'hr', categoryLabel: 'HR', color: 'purple' })),
-      ...formsCategoryVaults.it.forms.map(f => ({ ...f, title: f.name, category: 'it', categoryLabel: 'IT', color: 'teal' }))
-    ];
+    // Global catalog for search bar autocomplete (dynamically rebuilt from JSON)
+    let hospitalFormsCatalog = [];
+    function rebuildHospitalFormsCatalog() {
+      hospitalFormsCatalog = [
+        ...formsCategoryVaults.consent.forms.map(f => ({ ...f, title: f.name, category: 'consent', categoryLabel: 'Consent', color: 'blue' })),
+        ...formsCategoryVaults.clinical.forms.map(f => ({ ...f, title: f.name, category: 'clinical', categoryLabel: 'Common Forms', color: 'amber' })),
+        ...formsCategoryVaults.hr.forms.map(f => ({ ...f, title: f.name, category: 'hr', categoryLabel: 'HR', color: 'purple' })),
+        ...formsCategoryVaults.it.forms.map(f => ({ ...f, title: f.name, category: 'it', categoryLabel: 'IT', color: 'teal' }))
+      ];
+    }
+    rebuildHospitalFormsCatalog();
 
     function selectFormsCategory(catId, shouldScroll = false) {
       if (!formsCategoryVaults[catId]) return;
       currentFormsCategory = catId;
       const vault = formsCategoryVaults[catId];
 
-      // 1. Update left category cards: selected = form colour bg + white text
+      // 1. Update category cards active ring, badge & selection styling
       ['consent', 'clinical', 'hr', 'it'].forEach(id => {
         const card = document.getElementById(`cat-card-${id}`);
         if (!card) return;
         const badge = card.querySelector('.active-badge');
+        const v = formsCategoryVaults[id];
 
         if (id === catId) {
-          card.classList.add('is-selected');
+          card.classList.add('is-selected', 'ring-2', v.accentRing);
           if (badge) badge.classList.remove('hidden');
         } else {
-          card.classList.remove('is-selected');
+          card.classList.remove('is-selected', 'ring-2', 'ring-blue-600', 'ring-amber-500', 'ring-purple-500', 'ring-teal-500');
           if (badge) badge.classList.add('hidden');
         }
       });
 
-      // 3. Update Left Panel View
+      // 2. Update Left Panel View
       const panel = document.getElementById('forms-active-panel');
       if (panel) {
         // Clear previous border-t accent
@@ -1866,10 +1934,17 @@
         panel.classList.add(vault.accentBorder);
       }
 
-      // Icon container & SVG
+      // Icon container & SVG: background matches card color (blue, yellow/amber, purple, teal) with white icon
       const iconContainer = document.getElementById('active-cat-icon-container');
       if (iconContainer) {
-        iconContainer.className = `w-11 h-11 rounded-2xl ${vault.accentIconBg} ${vault.accentIconText} flex items-center justify-center font-bold shrink-0 transition-colors`;
+        const activeCatIconStyles = {
+          consent: 'bg-blue-600 text-white shadow-blue-500/25',
+          clinical: 'bg-amber-600 text-white shadow-amber-500/25',
+          hr: 'bg-purple-600 text-white shadow-purple-500/25',
+          it: 'bg-teal-600 text-white shadow-teal-500/25'
+        };
+        const styleClass = activeCatIconStyles[catId] || 'bg-blue-600 text-white';
+        iconContainer.className = `w-11 h-11 rounded-2xl ${styleClass} flex items-center justify-center font-bold shrink-0 transition-all shadow-md`;
         iconContainer.innerHTML = categoryIcons[catId];
       }
 
@@ -2036,6 +2111,205 @@
 
     // Initialize forms category viewer on page load
     selectFormsCategory('consent');
+
+    // =========================================================================
+    // DYNAMIC FORMS LOADER (Loads from JSON files so no HTML edits are needed)
+    // =========================================================================
+    async function loadFormsFromJSON() {
+      const categorySources = [
+        { id: 'consent', file: 'data/consent-forms.json' },
+        { id: 'clinical', file: 'data/common-forms.json' },
+        { id: 'hr', file: 'data/hr-forms.json' },
+        { id: 'it', file: 'data/it-forms.json' }
+      ];
+
+      let anyLoaded = false;
+
+      // 1. Attempt fetching individual category JSON files
+      try {
+        const responses = await Promise.allSettled(
+          categorySources.map(async item => {
+            const res = await fetch(item.file);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const data = await res.json();
+            return { id: item.id, data };
+          })
+        );
+
+        responses.forEach(r => {
+          if (r.status === 'fulfilled') {
+            const { id, data } = r.value;
+            if (data && formsCategoryVaults[id]) {
+              const formsList = Array.isArray(data) ? data : (data.forms || []);
+              if (formsList.length > 0) {
+                formsCategoryVaults[id].forms = formsList;
+                if (data.title) formsCategoryVaults[id].title = data.title;
+                if (data.fullName) formsCategoryVaults[id].fullName = data.fullName;
+                if (data.badge) formsCategoryVaults[id].badge = data.badge;
+                if (data.description) formsCategoryVaults[id].description = data.description;
+                anyLoaded = true;
+              }
+            }
+          }
+        });
+      } catch (err) {
+        console.warn('Could not load individual category JSON files:', err);
+      }
+
+      // 2. Fallback to master data/forms.json if individual files were not found
+      if (!anyLoaded) {
+        try {
+          const masterRes = await fetch('data/forms.json');
+          if (masterRes.ok) {
+            const masterData = await masterRes.json();
+            Object.keys(masterData).forEach(id => {
+              if (formsCategoryVaults[id] && masterData[id]) {
+                const formsList = masterData[id].forms || masterData[id];
+                if (Array.isArray(formsList) && formsList.length > 0) {
+                  formsCategoryVaults[id].forms = formsList;
+                  anyLoaded = true;
+                }
+              }
+            });
+          }
+        } catch (err) {
+          console.warn('Could not load master forms.json:', err);
+        }
+      }
+
+      // 3. Dynamically update form counts across cards and metadata
+      ['consent', 'clinical', 'hr', 'it'].forEach(id => {
+        const vault = formsCategoryVaults[id];
+        if (!vault) return;
+        const totalForms = vault.forms.length;
+        vault.count = `${totalForms} Forms Available`;
+        vault.hubText = `Explore All ${totalForms} ${vault.title} in Full Vault`;
+        
+        // Update count badge on category card
+        const card = document.getElementById(`cat-card-${id}`);
+        if (card) {
+          const countEl = card.querySelector('.forms-card-count');
+          if (countEl) countEl.textContent = vault.count;
+        }
+      });
+
+      // 4. Rebuild the search catalog
+      rebuildHospitalFormsCatalog();
+
+      // 5. Sync forms into the hero search index
+      if (typeof searchIndex !== 'undefined') {
+        hospitalFormsCatalog.forEach(item => {
+          const alreadyIndexed = searchIndex.some(s => s.url === item.url || s.title === item.title);
+          if (!alreadyIndexed) {
+            searchIndex.push({
+              title: `${item.title} PDF`,
+              category: `${item.categoryLabel} Form`,
+              url: item.url,
+              external: true
+            });
+          }
+        });
+      }
+
+      // 6. Refresh the currently active category view & right-hand list
+      selectFormsCategory(currentFormsCategory);
+    }
+
+    // =========================================================================
+    // DYNAMIC QUALITY & GOVERNANCE LOADER (Manuals, Committees, Circulars)
+    // =========================================================================
+    async function loadQualityAndGovernanceJSON() {
+      // 1. Manuals
+      try {
+        const res = await fetch('data/manuals.json');
+        if (res.ok) {
+          const manuals = await res.json();
+          let count = 0;
+          Object.entries(manuals).forEach(([category, items]) => {
+            if (Array.isArray(items)) {
+              count += items.length;
+              if (typeof searchIndex !== 'undefined') {
+                items.forEach(m => {
+                  if (m.title && m.url && m.url !== '#') {
+                    const alreadyIndexed = searchIndex.some(s => s.url === m.url);
+                    if (!alreadyIndexed) {
+                      searchIndex.push({
+                        title: `${m.title} (Manual)`,
+                        category: 'Manual',
+                        url: m.url,
+                        external: true
+                      });
+                    }
+                  }
+                });
+              }
+            }
+          });
+          const countEl = document.getElementById('manuals-total-count');
+          if (countEl) countEl.textContent = `${count} Standards & Guidelines`;
+        }
+      } catch (e) {
+        console.warn('Could not load manuals.json for index count/search:', e);
+      }
+
+      // 2. Committees
+      try {
+        const res = await fetch('data/committees.json');
+        if (res.ok) {
+          const committees = await res.json();
+          if (Array.isArray(committees)) {
+            const countEl = document.getElementById('committees-total-count');
+            if (countEl) countEl.textContent = `${committees.length} Committee MOMs & Charters`;
+            if (typeof searchIndex !== 'undefined') {
+              committees.forEach(c => {
+                if (c.title && c.url) {
+                  const alreadyIndexed = searchIndex.some(s => s.url === c.url);
+                  if (!alreadyIndexed) {
+                    searchIndex.push({
+                      title: `${c.title} PDF`,
+                      category: 'Committee',
+                      url: c.url,
+                      external: true
+                    });
+                  }
+                }
+              });
+            }
+          }
+        }
+      } catch (e) {
+        console.warn('Could not load committees.json for index count/search:', e);
+      }
+
+      // 3. Circulars
+      try {
+        const res = await fetch('data/circulars.json');
+        if (res.ok) {
+          const circulars = await res.json();
+          if (Array.isArray(circulars) && typeof searchIndex !== 'undefined') {
+            circulars.forEach(circ => {
+              if (circ.title && circ.url) {
+                const alreadyIndexed = searchIndex.some(s => s.url === circ.url);
+                if (!alreadyIndexed) {
+                  searchIndex.push({
+                    title: `${circ.title} PDF`,
+                    category: 'Circular',
+                    url: circ.url,
+                    external: true
+                  });
+                }
+              }
+            });
+          }
+        }
+      } catch (e) {
+        console.warn('Could not load circulars.json for index search:', e);
+      }
+    }
+
+    // Auto-fetch forms and quality governance data from JSON on load
+    loadFormsFromJSON();
+    loadQualityAndGovernanceJSON();
 
     // Modal helpers
     function openTicketModal() {
@@ -2210,6 +2484,7 @@
       { title: 'Hospital Accreditation Manuals Hub', category: 'Governance', url: './manuals.html', external: true },
       { title: 'List of Quality & Safety Committees', category: 'Governance', url: './comitee.html', external: true },
       { title: 'Quality Committee MOM (07.01.2025) PDF', category: 'Governance', url: 'http://192.168.101.75:3000/files/QC MOM-07.01.2025.pdf', external: true },
+      { title: 'Blood Bank Stock Details PDF', category: 'Clinical', url: 'http://192.168.101.75:3000/files/Blood%20Bank%20Stock%20Details.pdf', external: true },
       { title: 'Billing Manual PDF', category: 'Manual', url: 'http://192.168.101.75:3000/files/billingmanual.pdf', external: true },
       { title: 'Nursing Manual PDF', category: 'Manual', url: 'http://192.168.101.75:3000/files/nursingmanual.pdf', external: true },
       { title: 'Official Email Directory PDF', category: 'Directory', url: 'http://192.168.101.75:3000/files/email.pdf', external: true },
@@ -2385,6 +2660,23 @@
       .catch(err => {
         console.warn('Could not fetch dynamic IP in index.html, retaining default:', err);
       });
+
+    // Dynamic time-based greeting for staff
+    function updatePortalGreeting() {
+      const greetingEl = document.getElementById('portal-greeting');
+      if (!greetingEl) return;
+      const hour = new Date().getHours();
+      let greeting = 'Good afternoon';
+      if (hour >= 4 && hour < 12) {
+        greeting = 'Good morning';
+      } else if (hour >= 12 && hour < 17) {
+        greeting = 'Good afternoon';
+      } else {
+        greeting = 'Good evening';
+      }
+      greetingEl.textContent = `${greeting}, Hospital Team`;
+    }
+    updatePortalGreeting();
   </script>
 
 </body>

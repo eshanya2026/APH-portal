@@ -1,0 +1,1353 @@
+{
+  "5-nabh": [
+    {
+      "title": "Anaesthesiology",
+      "url": "http://192.168.101.75:3000/files/nabh/ANAESTHESIOLOGY.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Dermatology",
+      "url": "http://192.168.101.75:3000/files/nabh/DERMATOLOGY.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Dietician",
+      "url": "http://192.168.101.75:3000/files/nabh/Dietician.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Emergency Department",
+      "url": "http://192.168.101.75:3000/files/nabh/EMERGENCY DEPARTMENT.pdf",
+      "isNew": false
+    },
+    {
+      "title": "General Medicine",
+      "url": "http://192.168.101.75:3000/files/nabh/GENERAL MEDICINE.pdf",
+      "isNew": false
+    },
+    {
+      "title": "General Surgery",
+      "url": "http://192.168.101.75:3000/files/nabh/GENERAL SURGERY.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Intensive Care Unit",
+      "url": "http://192.168.101.75:3000/files/nabh/INTENSIVE CARE UNIT.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Nursing",
+      "url": "http://192.168.101.75:3000/files/nabh/NURSING.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Opthalmology",
+      "url": "http://192.168.101.75:3000/files/nabh/OPTHALMOLOGY.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Orthopaedics",
+      "url": "http://192.168.101.75:3000/files/nabh/ORTHOPAEDICS.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Oto-Rhino-Laryngology",
+      "url": "http://192.168.101.75:3000/files/nabh/OTO-RHINO-LARYNGOLOGY.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Paediatrics",
+      "url": "http://192.168.101.75:3000/files/nabh/PAEDIATRICS.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Psychiatry",
+      "url": "http://192.168.101.75:3000/files/nabh/PSYCHIATRY.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Radiology",
+      "url": "http://192.168.101.75:3000/files/nabh/RADIOLOGY.pdf",
+      "isNew": false
+    }
+  ],
+  "5-clinical": [
+    {
+      "title": "ANNEXURES TO NABH 6th EDITION",
+      "url": "http://192.168.101.75:3000/files/Annexures to NABH  6th Edition.pdf",
+      "isNew": true
+    },
+    {
+      "title": "GUIDE BOOK TO NABH 6th EDITION",
+      "url": "http://192.168.101.75:3000/files/Guide Book to NABH 6th Edition.pdf",
+      "isNew": true
+    },
+    {
+      "title": "NABH CHECKLIST",
+      "url": "http://192.168.101.75:3000/files/APH NABH Checklist-2025.pdf",
+      "isNew": true
+    },
+    {
+      "title": "NABH GUIDE BOOK",
+      "url": "http://192.168.101.75:3000/files/Nabh Guide Book-2025.pdf",
+      "isNew": true
+    },
+    {
+      "title": "AAC",
+      "url": "http://192.168.101.75:3000/files/AAC 2025.pdf",
+      "isNew": false
+    },
+    {
+      "title": "COP - PART I",
+      "url": "http://192.168.101.75:3000/files/COP - PART I 2025.pdf",
+      "isNew": false
+    },
+    {
+      "title": "COP - PART II",
+      "url": "http://192.168.101.75:3000/files/COP - PART II 2025.pdf",
+      "isNew": false
+    },
+    {
+      "title": "MOM",
+      "url": "http://192.168.101.75:3000/files/MOM MANUAL-2025.pdf",
+      "isNew": false
+    },
+    {
+      "title": "PRE",
+      "url": "http://192.168.101.75:3000/files/PRE 2025.pdf",
+      "isNew": false
+    },
+    {
+      "title": "PSQ",
+      "url": "http://192.168.101.75:3000/files/PSQ Manual 2025.pdf",
+      "isNew": false
+    },
+    {
+      "title": "ROM",
+      "url": "http://192.168.101.75:3000/files/ROM 2025.pdf",
+      "isNew": false
+    },
+    {
+      "title": "FMS",
+      "url": "http://192.168.101.75:3000/files/FMS 2025 Manual.pdf",
+      "isNew": false
+    },
+    {
+      "title": "HRM",
+      "url": "http://192.168.101.75:3000/files/HRM 2025.pdf",
+      "isNew": false
+    },
+    {
+      "title": "IMS",
+      "url": "http://192.168.101.75:3000/files/IMS 2025.pdf",
+      "isNew": false
+    }
+  ],
+  "5-nonclinical": [
+    {
+      "title": "MRD Manual-2025",
+      "url": "http://192.168.101.75:3000/files/MRD Manual-2025.pdf",
+      "isNew": true
+    },
+    {
+      "title": "FMS - Security Manual",
+      "url": "http://192.168.101.75:3000/files/FMS -  Security Manual-2025.pdf",
+      "isNew": true
+    },
+    {
+      "title": "CSSD",
+      "url": "http://192.168.101.75:3000/files/CSSD 2025.pdf",
+      "isNew": true
+    },
+    {
+      "title": "FMS - Bio Medical Manual",
+      "url": "http://192.168.101.75:3000/files/FMS - Bio Medical Manual-2025.pdf",
+      "isNew": true
+    },
+    {
+      "title": "FMS - HK Manual",
+      "url": "http://192.168.101.75:3000/files/FMS - HK Manual-2025.pdf",
+      "isNew": true
+    },
+    {
+      "title": "FMS - Maintenance Manual",
+      "url": "http://192.168.101.75:3000/files/FMS - Maintenance  Manual-2025.pdf",
+      "isNew": true
+    },
+    {
+      "title": "FMS - Safety manual",
+      "url": "http://192.168.101.75:3000/files/FMS - Safety manual-2025.pdf",
+      "isNew": true
+    },
+    {
+      "title": "FMS - Transport Manual",
+      "url": "http://192.168.101.75:3000/files/FMS - Transport Manual-2025.pdf",
+      "isNew": true
+    }
+  ],
+  "5-policy": [
+    {
+      "title": "Billing and Insurance Policies",
+      "url": "http://192.168.101.75:3000/files/Qc/Billing and Insurance Policies.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Patient Transfer To And From Imaging Services",
+      "url": "http://192.168.101.75:3000/files/Qc/Patient Transfer To And FROM Imaging Services.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Pharmacy Standard Operative Procedures",
+      "url": "http://192.168.101.75:3000/files/Qc/PHARMACY STANDARD OPERATIVE PROCEDURES.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Policy And Procedure on Sedation",
+      "url": "http://192.168.101.75:3000/files/Qc/-POLICY AND PROCEDURE ON SEDATION.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Acquisition of medical supplies and consumables",
+      "url": "http://192.168.101.75:3000/files/Qc/Acquisition of medical supplies and consumables.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Adheres Transmission Based Precautions",
+      "url": "http://192.168.101.75:3000/files/Qc/ADHERES TRANSMISSION BASED.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Antenatel Services",
+      "url": "http://192.168.101.75:3000/files/Qc/ANTENATEL SERVICES.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Brought Dead Protocol",
+      "url": "http://192.168.101.75:3000/files/Qc/BROUGHT DEAD PROTOCOL.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Criteria for Vendor Selection Evaluation",
+      "url": "http://192.168.101.75:3000/files/Qc/criteria for vendor selection evaluation.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Disaster Management",
+      "url": "http://192.168.101.75:3000/files/Qc/DISASTER MANAGEMENT.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Discharge Against Medical Advice",
+      "url": "http://192.168.101.75:3000/files/Qc/DISCHARGE AGAINST MEDICAL ADVICE.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Discharge Summary",
+      "url": "http://192.168.101.75:3000/files/Qc/discharge summary.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Effective and Enhanced",
+      "url": "http://192.168.101.75:3000/files/Qc/EFFECTIVE AND ENHANCED.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Effective Communication With Paitent & Family",
+      "url": "http://192.168.101.75:3000/files/Qc/EFFECTIVE COMMUNICATION WITH PATIENT & FAMILY.pdf",
+      "isNew": false
+    },
+    {
+      "title": "End of Life Care",
+      "url": "http://192.168.101.75:3000/files/Qc/END OF LIFE CARE.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Guidance on Medications Return",
+      "url": "http://192.168.101.75:3000/files/Qc/Guidance on medication return.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Guideline for Infection Control Practices ICU",
+      "url": "http://192.168.101.75:3000/files/Qc/Guideline for infection control practices ICU.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Guideline for Medical Clinical Services",
+      "url": "http://192.168.101.75:3000/files/Qc/Guideline for medical clinical services.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Guideline for CPR",
+      "url": "http://192.168.101.75:3000/files/Qc/GUIDELINES for CPR.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Guidelines for Registration, Admission, Nonavailability of beds",
+      "url": "http://192.168.101.75:3000/files/Qc/Guidelines for registration, admission, nonavailability of beds.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Guidelines for the Rational Prescriptions of Medication",
+      "url": "http://192.168.101.75:3000/files/Qc/Guidelines for the rational prescriptions of medication.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Guidelines Minimum Requirement",
+      "url": "http://192.168.101.75:3000/files/Qc/GUIDELINES MINIMUM REQUIREMENT.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Hand Hygine",
+      "url": "http://192.168.101.75:3000/files/Qc/HAND HYGIENE.pdf",
+      "isNew": false
+    },
+    {
+      "title": "High Risk Activities",
+      "url": "http://192.168.101.75:3000/files/Qc/HIGH RISK ACTIVITIES.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Hospital Infection Control Committee",
+      "url": "http://192.168.101.75:3000/files/Qc/HOSPITAL INFECTION CONTROL COMMITTEE.pdf",
+      "isNew": false
+    },
+    {
+      "title": "ICU Bed Shortage",
+      "url": "http://192.168.101.75:3000/files/Qc/ICU BED SHORTAGE.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Imaging Results are Available Within a Defined Time Frame",
+      "url": "http://192.168.101.75:3000/files/Qc/Imaging results are available within a defined time frame.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Implantable Prosthesis",
+      "url": "http://192.168.101.75:3000/files/Qc/IMPLANTABLE PROSTHESIS.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Infection Control Programme",
+      "url": "http://192.168.101.75:3000/files/Qc/INFECTION CONTROL PROGRAMME.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Informed Consent Taking Process",
+      "url": "http://192.168.101.75:3000/files/Qc/INFORMED CONSENT TAKING PROCESS.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Interdept Referral",
+      "url": "http://192.168.101.75:3000/files/Qc/interdept referral.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Labelling Requirements of Medicine",
+      "url": "http://192.168.101.75:3000/files/Qc/LABELLING REQUIREMENTS OF MEDICINE.pdf",
+      "isNew": false
+    },
+    {
+      "title": "List of Emergency Medicine and its Storage",
+      "url": "http://192.168.101.75:3000/files/Qc/list of emergency medicine and its storage.pdf",
+      "isNew": false
+    },
+    {
+      "title": "List of High Risk Medicine",
+      "url": "http://192.168.101.75:3000/files/Qc/LIST OF HIGH RISK MEDICINE..pdf",
+      "isNew": false
+    },
+    {
+      "title": "Medication Recall",
+      "url": "http://192.168.101.75:3000/files/Qc/Medication recall.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Monitoring of Patients After Medication Administration",
+      "url": "http://192.168.101.75:3000/files/Qc/Monitoring of patients after medication administration.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Pain Assesment",
+      "url": "http://192.168.101.75:3000/files/Qc/PAIN ASSESMENT.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Paitent And Visitors Complaints",
+      "url": "http://192.168.101.75:3000/files/Qc/PATIENT AND VISITORS COMPLAINTS.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Paitent Rights and Responsibilities",
+      "url": "http://192.168.101.75:3000/files/Qc/PATIENT RIGHTS AND RESPONSIBILITIES ,.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Paitent Transfer from Recovery",
+      "url": "http://192.168.101.75:3000/files/Qc/PATIENTS TRANSFER FROM RECOVERY.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Paitent's Self Administration",
+      "url": "http://192.168.101.75:3000/files/Qc/PATIENT\\UffffffffS SELF \\UffffffffADMINISTRATION.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Physiotherapy",
+      "url": "http://192.168.101.75:3000/files/Qc/PHYSIOTHERAPY.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Policy and Process on Verbal Orders of Medications",
+      "url": "http://192.168.101.75:3000/files/Qc/Policy and process on verbal orders of medications.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Prescription of Medicine",
+      "url": "http://192.168.101.75:3000/files/Qc/PRESCRIPTION OF MEDICINE.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Procedure for Near Expiry Medication",
+      "url": "http://192.168.101.75:3000/files/Qc/procedure for near expiry medication.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Procedure for Usage of Narcotic Drugs and Psychotropic Medications",
+      "url": "http://192.168.101.75:3000/files/Qc/PROCEDURE FOR USAGE OF NARCOTIC DRUGS AND PSYCHOTROPIC MEDICATIONS.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Process Addresses Registering and Admitting Outpatients",
+      "url": "http://192.168.101.75:3000/files/Qc/Process addresses registering and admitting outpatients.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Process of Acquisition of Medicine Not Listed in the Formulary",
+      "url": "http://192.168.101.75:3000/files/Qc/Process of acquisition of medicine not listed in the formulary.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Process on Communication for Medication Usage and Shortage",
+      "url": "http://192.168.101.75:3000/files/Qc/process on communication for medication usage and shortage.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Protocal For Five Common Emergencies",
+      "url": "http://192.168.101.75:3000/files/Qc/PROTOCOL FOR FIVE COMMON EMERGENCIES..pdf",
+      "isNew": false
+    },
+    {
+      "title": "Protocals Pretaining To Medications",
+      "url": "http://192.168.101.75:3000/files/Qc/PROTOCOLS PERTAINING TO MEDICATION.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Quality Assurance Program",
+      "url": "http://192.168.101.75:3000/files/Qc/QUALITY ASSURANCE PROGRAM.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Recording and Reporting of Medication Errors, Adverse Events And Near Misses",
+      "url": "http://192.168.101.75:3000/files/Qc/Recording and reporting of medication errors, adverse events and near misses..pdf",
+      "isNew": false
+    },
+    {
+      "title": "Safe Administration Of Medications",
+      "url": "http://192.168.101.75:3000/files/Qc/SAFE ADMINISTRATION OF MEDICATION.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Safe Dispensing of Medications",
+      "url": "http://192.168.101.75:3000/files/Qc/Safe dispensing of medications.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Safe Injection And Infusion Practices",
+      "url": "http://192.168.101.75:3000/files/Qc/SAFE INJECTION AND INFUSION PRACTICES.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Safe Storage And Handling Of Look Alike And Sound Alike Medications",
+      "url": "http://192.168.101.75:3000/files/Qc/SAFE STORAGE AND HANDLING OF LOOK ALIKE AND SOUND AlLIKE MEDICATION..pdf",
+      "isNew": false
+    },
+    {
+      "title": "Safe Transport In And Out Of Radiology",
+      "url": "http://192.168.101.75:3000/files/Qc/safe transport in and out of radiology.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Sample Collection CL",
+      "url": "http://192.168.101.75:3000/files/Qc/SAMPLE COLLECTION CL.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Scope Of Services",
+      "url": "http://192.168.101.75:3000/files/Qc/SCOPE OF SERVICES.pdf",
+      "isNew": false
+    },
+    {
+      "title": "SOP On Procedure For Acquisition Of Formulary Medications",
+      "url": "http://192.168.101.75:3000/files/Qc/SOP on procedure for cquisition of formulary medications.pdf",
+      "isNew": false
+    },
+    {
+      "title": "SOP On Transplant",
+      "url": "http://192.168.101.75:3000/files/Qc/SOP ON TRANSPLANT.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Sound Clinical Anaesthesia",
+      "url": "http://192.168.101.75:3000/files/Qc/SOUND CLINICAL ANAESTHESIA.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Standard Precautions",
+      "url": "http://192.168.101.75:3000/files/Qc/STANDARD PRECAUTIONS.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Surgical Service I",
+      "url": "http://192.168.101.75:3000/files/Qc/SURGICAL SERVICES.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Surgical Service II",
+      "url": "http://192.168.101.75:3000/files/Qc/SURGICAL SERVICES.2.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Surrogate Consent",
+      "url": "http://192.168.101.75:3000/files/Qc/SURROGATE CONSENT.pdf",
+      "isNew": false
+    },
+    {
+      "title": "TAT For Crossmatch MAPIMS",
+      "url": "http://192.168.101.75:3000/files/Qc/TAT for crossmatch MAPIMS.pdf",
+      "isNew": false
+    },
+    {
+      "title": "TAT Lab",
+      "url": "http://192.168.101.75:3000/files/Qc/TAT LAB.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Telemedicine",
+      "url": "http://192.168.101.75:3000/files/Qc/TELEMEDICINE.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Traige Policy",
+      "url": "http://192.168.101.75:3000/files/Qc/Traige Policy..pdf",
+      "isNew": false
+    },
+    {
+      "title": "Transfer In Of The Paitent To The Hospital",
+      "url": "http://192.168.101.75:3000/files/Qc/TRANSFER IN OF THE PATIENT TO THE HOSPITAL.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Transfer Out Or Refferal Of Patients",
+      "url": "http://192.168.101.75:3000/files/Qc/TRANSFER OUT OR REFERRAL OF PATIENTS.1.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Uniform Paient Care",
+      "url": "http://192.168.101.75:3000/files/Qc/uniform paient care.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Vulnerable Paitents",
+      "url": "http://192.168.101.75:3000/files/Qc/VULNERABLE PATIENTS.pdf",
+      "isNew": false
+    }
+  ],
+  "6-nabh": [
+    {
+      "title": "ACCESS, ASSESSMENT & CONTINUITY OF CARE (AAC)",
+      "url": "http://192.168.101.75:3000/files/nabh/AAC.pdf",
+      "isNew": false
+    },
+    {
+      "title": "CARE OF PATIENT - VOL 1",
+      "url": "http://192.168.101.75:3000/files/nabh/COPV1.pdf",
+      "isNew": false
+    },
+    {
+      "title": "CARE OF PATIENT - VOL 2",
+      "url": "http://192.168.101.75:3000/files/nabh/COPV2.pdf",
+      "isNew": false
+    },
+    {
+      "title": "MEDICATION MANAGEMENT (MOM)",
+      "url": "http://192.168.101.75:3000/files/nabh/MOM.pdf",
+      "isNew": false
+    },
+    {
+      "title": "PATIENT RIGHTS & EDUCATION (PRE)",
+      "url": "http://192.168.101.75:3000/files/nabh/PRE.pdf",
+      "isNew": false
+    },
+    {
+      "title": "INFECTION PREVENTION AND CONTROL (IPC)",
+      "url": "http://192.168.101.75:3000/files/nabh/IPC.pdf",
+      "isNew": false
+    },
+    {
+      "title": "PATIENT SAFETY AND QUALITY (PSQ)",
+      "url": "http://192.168.101.75:3000/files/nabh/PSQ.pdf",
+      "isNew": false
+    },
+    {
+      "title": "RESPONSIBILITIES OF MANAGEMENT (ROM)",
+      "url": "http://192.168.101.75:3000/files/nabh/ROM.pdf",
+      "isNew": false
+    },
+    {
+      "title": "FACILITY MANAGEMENT & SAFETY (FMS)",
+      "url": "http://192.168.101.75:3000/files/nabh/FMS.pdf",
+      "isNew": false
+    },
+    {
+      "title": "HUMAN RESOURCE MANAGEMENT (HRM)",
+      "url": "http://192.168.101.75:3000/files/nabh/HRM.pdf",
+      "isNew": false
+    },
+    {
+      "title": "INFORMATION MANAGEMENT SYSTEM (IMS)",
+      "url": "http://192.168.101.75:3000/files/nabh/IMS.pdf",
+      "isNew": false
+    }
+  ],
+  "6-clinical": [
+    {
+      "title": "ER MANUAL NABH - 2026",
+      "url": "http://192.168.101.75:3000/files/nabh/ER mannual NABH -2026.pdf",
+      "isNew": false
+    },
+    {
+      "title": "CARDIO THORASIC SURGERY",
+      "url": "http://192.168.101.75:3000/files/nabh/Cardio thorasic surgery.pdf",
+      "isNew": false
+    },
+    {
+      "title": "CARDIOLOGY",
+      "url": "http://192.168.101.75:3000/files/nabh/Cardiology.pdf",
+      "isNew": false
+    },
+    {
+      "title": "GEN SURGERY",
+      "url": "http://192.168.101.75:3000/files/nabh/General surgery.pdf",
+      "isNew": false
+    },
+    {
+      "title": "GENERAL MEDICINE",
+      "url": "http://192.168.101.75:3000/files/nabh/General Medicine.pdf",
+      "isNew": false
+    },
+    {
+      "title": "HEPATOLOGY",
+      "url": "http://192.168.101.75:3000/files/nabh/Hepatology.pdf",
+      "isNew": false
+    },
+    {
+      "title": "MEDICAL GASTROENTEROLOGY",
+      "url": "http://192.168.101.75:3000/files/nabh/Medical Gastroenterology.pdf",
+      "isNew": false
+    },
+    {
+      "title": "MEDICAL ONCOLOGY",
+      "url": "http://192.168.101.75:3000/files/nabh/Medical Oncology.pdf",
+      "isNew": false
+    },
+    {
+      "title": "NEPHROLOGY",
+      "url": "http://192.168.101.75:3000/files/nabh/Nephrology.pdf",
+      "isNew": false
+    },
+    {
+      "title": "NEURO SURGERY",
+      "url": "http://192.168.101.75:3000/files/nabh/Neuro Surgery.pdf",
+      "isNew": false
+    },
+    {
+      "title": "NEUROLOGY",
+      "url": "http://192.168.101.75:3000/files/nabh/Neurology.pdf",
+      "isNew": false
+    },
+    {
+      "title": "ONCOLOGY SURGERY",
+      "url": "http://192.168.101.75:3000/files/nabh/Oncology surgery.pdf",
+      "isNew": false
+    },
+    {
+      "title": "PAEDIATRIC DEPT",
+      "url": "http://192.168.101.75:3000/files/nabh/Paediatric Dept.pdf",
+      "isNew": false
+    },
+    {
+      "title": "PLASTIC SURGERY",
+      "url": "http://192.168.101.75:3000/files/nabh/Plastic Surgery.pdf",
+      "isNew": false
+    },
+    {
+      "title": "PULMONARY MEDICINE",
+      "url": "http://192.168.101.75:3000/files/nabh/Pulmonary Medicine Manual.pdf",
+      "isNew": false
+    },
+    {
+      "title": "SGE",
+      "url": "http://192.168.101.75:3000/files/nabh/SGE MANUAL.pdf",
+      "isNew": false
+    },
+    {
+      "title": "UROLOGY",
+      "url": "http://192.168.101.75:3000/files/nabh/Urology.pdf",
+      "isNew": false
+    },
+    {
+      "title": "VASCULAR SURGERY",
+      "url": "http://192.168.101.75:3000/files/nabh/vascular surgery.pdf",
+      "isNew": false
+    },
+    {
+      "title": "ANAESTHESIA",
+      "url": "http://192.168.101.75:3000/files/nabh/ANAESTHESIA.pdf",
+      "isNew": false
+    },
+    {
+      "title": "ENT",
+      "url": "http://192.168.101.75:3000/files/nabh/ENT.pdf",
+      "isNew": false
+    },
+    {
+      "title": "KRIYASAKTHI FERTILITY CENTRE",
+      "url": "http://192.168.101.75:3000/files/nabh/KRIYASAKTHI FERTILITY CENTRE.pdf",
+      "isNew": false
+    },
+    {
+      "title": "OG",
+      "url": "http://192.168.101.75:3000/files/nabh/OG.pdf",
+      "isNew": false
+    },
+    {
+      "title": "OPTHAL",
+      "url": "http://192.168.101.75:3000/files/nabh/OPTHAL Manual.pdf",
+      "isNew": false
+    },
+    {
+      "title": "ORTHOPAEDICS",
+      "url": "http://192.168.101.75:3000/files/nabh/ORTHOPAEDICS NABH MANUAL 2026 (1) (1).pdf",
+      "isNew": false
+    },
+    {
+      "title": "PAEDIATRICS",
+      "url": "http://192.168.101.75:3000/files/nabh/Paediatrics Manual Version 4 FINAL.pdf",
+      "isNew": false
+    },
+    {
+      "title": "RADIOLOGY",
+      "url": "http://192.168.101.75:3000/files/nabh/RADIOLOGY MANUAL.pdf",
+      "isNew": false
+    },
+    {
+      "title": "OPTHAL DEPT",
+      "url": "http://192.168.101.75:3000/files/nabh/DEP-OPTHAL Manual.pdf",
+      "isNew": false
+    },
+    {
+      "title": "PSYCHIATRY",
+      "url": "http://192.168.101.75:3000/files/nabh/PSYCHIATRY.pdf",
+      "isNew": false
+    },
+    {
+      "title": "CENTRAL LAB BIOCHEMISTRY",
+      "url": "http://192.168.101.75:3000/files/nabh/CENTRAL LAB BIOCHEMISTRY MANUAL.pdf",
+      "isNew": false
+    },
+    {
+      "title": "PSQ1 SAFETY MANUAL",
+      "url": "http://192.168.101.75:3000/files/PSQ1 SAFETY MANUAL.pdf",
+      "isNew": false
+    },
+    {
+      "title": "AAC 7 E LAB SAFETY MANUAL",
+      "url": "http://192.168.101.75:3000/files/AAC 7 E LAB SAFETY MANUAL.pdf",
+      "isNew": false
+    },
+    {
+      "title": "HAZARD IDENTIFICATION AND RISK ASSESSMENT (HIRA)",
+      "url": "http://192.168.101.75:3000/files/HAZARD IDENTIFICATION AND RISK ASSESSMENT (HIRA).pdf",
+      "isNew": false
+    }
+  ],
+  "6-nonclinical": [
+    {
+      "title": "FMS Safety Manual",
+      "url": "#",
+      "isNew": false
+    },
+    {
+      "title": "NURSING MANUAL",
+      "url": "http://192.168.101.75:3000/files/Nursing Manual New.pdf",
+      "isNew": false
+    },
+    {
+      "title": "FMS - Bio Medical Manual",
+      "url": "http://192.168.101.75:3000/files/nabh/FMS - Bio Medical Manual New.pdf ",
+      "isNew": false
+    },
+    {
+      "title": "FMS - Engineering Manual",
+      "url": "http://192.168.101.75:3000/files/nabh/FMS - Engineering Manual New.pdf ",
+      "isNew": false
+    },
+    {
+      "title": "FMS - HK Manual",
+      "url": "http://192.168.101.75:3000/files/nabh/FMS - HK Manual New.pdf",
+      "isNew": false
+    },
+    {
+      "title": "FMS - Laundry Manual",
+      "url": "http://192.168.101.75:3000/files/nabh/FMS - Laundry Manual New.pdf ",
+      "isNew": false
+    },
+    {
+      "title": "FMS - Safety manual",
+      "url": "http://192.168.101.75:3000/files/nabh/FMS - Safety Manual New.pdf ",
+      "isNew": false
+    },
+    {
+      "title": "FMS - Security manual",
+      "url": "http://192.168.101.75:3000/files/nabh/FMS - Security Manual New.pdf",
+      "isNew": false
+    },
+    {
+      "title": "FMS - Transport Manual",
+      "url": "http://192.168.101.75:3000/files/nabh/FMS - Transport Manual New.pdf",
+      "isNew": false
+    }
+  ],
+  "6-policy": [
+    {
+      "title": "CODE YELLOW POLICY",
+      "url": "http://192.168.101.75:3000/files/nabh/code yellow policy.pdf",
+      "isNew": false
+    },
+    {
+      "title": "BROUGHT DEATH POLICY REVISED",
+      "url": "http://192.168.101.75:3000/files/nabh/Brought death policy revised (1).pdf",
+      "isNew": false
+    },
+    {
+      "title": "AMBULANCE POLICY REVISED",
+      "url": "http://192.168.101.75:3000/files/nabh/AMBULANCE POLICY REVISED (2).pdf",
+      "isNew": false
+    },
+    {
+      "title": "FMS - CGSS SOP FINAL",
+      "url": "http://192.168.101.75:3000/files/nabh/FMS - CGSS SOP FINAL  05.03.2026.pdf ",
+      "isNew": false
+    },
+    {
+      "title": "FMS - ELECTRICAL SOP FINAL",
+      "url": "http://192.168.101.75:3000/files/nabh/FMS - ELECTRICAL SOP FINAL 05-03-2026.pdf ",
+      "isNew": false
+    },
+    {
+      "title": "FMS - Eng. SOP FINAL",
+      "url": "http://192.168.101.75:3000/files/nabh/FMS - Eng. SOP FINAL 05-03-2026.pdf ",
+      "isNew": false
+    },
+    {
+      "title": "FMS - HK SOP FINAL",
+      "url": "http://192.168.101.75:3000/files/nabh/FMS - HK SOP FINAL 05-03-2026.pdf ",
+      "isNew": false
+    },
+    {
+      "title": "FMS - HVAC SOP FINAL",
+      "url": "http://192.168.101.75:3000/files/nabh/FMS - HVAC SOP FINAL 05-03-2026.pdf ",
+      "isNew": false
+    },
+    {
+      "title": "FMS - Laundry SOP",
+      "url": "http://192.168.101.75:3000/files/nabh/FMS - Laundry SOP 05-03-2026.pdf ",
+      "isNew": false
+    },
+    {
+      "title": "FMS - PLUMBING SOP FINAL",
+      "url": "http://192.168.101.75:3000/files/nabh/FMS - PLUMBING SOP FINAL 05-03-2026.pdf ",
+      "isNew": false
+    },
+    {
+      "title": "FMS - Safety SOP FINAL",
+      "url": "http://192.168.101.75:3000/files/nabh/FMS - Safety SOP FINAL 05-03-2026.pdf ",
+      "isNew": false
+    },
+    {
+      "title": "FMS - Transport SOP FINAL -",
+      "url": "http://192.168.101.75:3000/files/nabh/FMS - Transport  SOP FINAL - 05-3-2026.pdf ",
+      "isNew": false
+    },
+    {
+      "title": "FMS - BME SOP FINAL",
+      "url": "http://192.168.101.75:3000/files/nabh/FMS  - BME SOP FINAL 05.03.2026.docx.pdf ",
+      "isNew": false
+    },
+    {
+      "title": "FMS - Security SOP FINAL",
+      "url": "http://192.168.101.75:3000/files/nabh/FMS -  Security SOP FINAL 07.03.2026.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Approved abbreviation July 2025 -2026",
+      "url": "http://192.168.101.75:3000/files/nabh/Approved abbreviation July 2025 -2026.pdf",
+      "isNew": false
+    },
+    {
+      "title": "MOM 1 D,E STOCK OUT MEDICINE PURCHASE POLICY",
+      "url": "http://192.168.101.75:3000/files/nabh/MOM 1 D,E STOCK OUT MEDICINE PURCHASE POLICY.pdf",
+      "isNew": false
+    },
+    {
+      "title": "MOM 10 MEDICAL DEVICES & IMPLANT USAGE AND RECALL POLICY",
+      "url": "http://192.168.101.75:3000/files/nabh/MOM 10 MEDICAL DEVICES & IMPLANT USAGE AND RECALL POLICY.pdf",
+      "isNew": false
+    },
+    {
+      "title": "MOM 11 MEDICAL SUPPLIES AND CONSUMABLES STORAGE POLICY",
+      "url": "http://192.168.101.75:3000/files/nabh/MOM 11 MEDICAL SUPPLIES AND CONSUMABLES STORAGE POLICY.pdf",
+      "isNew": false
+    },
+    {
+      "title": "MOM 2 E PROCEDURE FOR THE ACQUISITION OF FORMULARY MEDICATIONS",
+      "url": "http://192.168.101.75:3000/files/nabh/MOM 2 E PROCEDURE FOR THE ACQUISITION OF FORMULARY MEDICATIONS.pdf",
+      "isNew": false
+    },
+    {
+      "title": "MOM 2 F PROCEDURE FOR THE ACQUISITION OF NON FORMULARY MEDICATIONS",
+      "url": "http://192.168.101.75:3000/files/nabh/MOM 2 F PROCEDURE FOR THE ACQUISITION OF NON FORMULARY MEDICATIONS.pdf",
+      "isNew": false
+    },
+    {
+      "title": "MOM 3 C HIGH RISK MEDICATION LIST",
+      "url": "http://192.168.101.75:3000/files/nabh/MOM 3 C HIGH RISK MEDICATION LIST.pdf",
+      "isNew": false
+    },
+    {
+      "title": "MOM 3 E LASA DRUGS LIST",
+      "url": "http://192.168.101.75:3000/files/nabh/MOM 3 E LASA DRUGS LIST.pdf",
+      "isNew": false
+    },
+    {
+      "title": "MOM 3 F LIST OF EMERGENCY MEDICINES",
+      "url": "http://192.168.101.75:3000/files/nabh/MOM 3 F LIST OF EMERGENCY MEDICINES.pdf",
+      "isNew": false
+    },
+    {
+      "title": "MOM 4 A,B MEDICATION PRESCRIPTION GUIDELINES",
+      "url": "http://192.168.101.75:3000/files/nabh/MOM 4 A,B MEDICATION PRESCRIPTION GUIDELINES.pdf",
+      "isNew": false
+    },
+    {
+      "title": "MOM 4 F VERBAL ORDER POLICY",
+      "url": "http://192.168.101.75:3000/files/nabh/MOM 4 F VERBAL ORDER POLICY.pdf",
+      "isNew": false
+    },
+    {
+      "title": "MOM 5 A MEDICATION PRESCRIPTION PREVILEGES",
+      "url": "http://192.168.101.75:3000/files/nabh/MOM 5 A MEDICATION PRESCRIPTION PREVILEGES.pdf",
+      "isNew": false
+    },
+    {
+      "title": "MOM 6 MEDICATION DISPENSING, RECALL, RETURN POLICY",
+      "url": "http://192.168.101.75:3000/files/nabh/MOM 6 MEDICATION DISPENSING, RECALL, RETURN POLICY.pdf",
+      "isNew": false
+    },
+    {
+      "title": "MOM 7 H CATHETER TUBING MISCONNECTION",
+      "url": "http://192.168.101.75:3000/files/nabh/MOM 7 H CATHETER TUBING MISCONNECTION.pdf",
+      "isNew": false
+    },
+    {
+      "title": "MOM 7 J K SELF ADMINISTRATION AND OWN MEDICATION POLICY",
+      "url": "http://192.168.101.75:3000/files/nabh/MOM 7 J K SELF ADMINISTRATION AND OWN MEDICATION POLICY.pdf",
+      "isNew": false
+    },
+    {
+      "title": "MOM 8 A MEDICATION ADMINISTRATION POLICY",
+      "url": "http://192.168.101.75:3000/files/nabh/MOM 8 A MEDICATION ADMINISTRATION POLICY.pdf",
+      "isNew": false
+    },
+    {
+      "title": "MOM 8 C,D,E MEDICATION ERROR MANAGEMENT",
+      "url": "http://192.168.101.75:3000/files/nabh/MOM 8 C,D,E MEDICATION ERROR MANAGEMENT.pdf",
+      "isNew": false
+    },
+    {
+      "title": "MOM 9 NARCOTICS AND CHEMOTHERAPY POLICY",
+      "url": "http://192.168.101.75:3000/files/nabh/MOM 9 NARCOTICS AND CHEMOTHERAPY POLICY.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Pharmacy SOP Updated June 2025-2026",
+      "url": "http://192.168.101.75:3000/files/nabh/Pharmacy SOP Updated June 2025-2026.pdf",
+      "isNew": false
+    },
+    {
+      "title": "UPDATED DRUG FORMULARY 2026",
+      "url": "http://192.168.101.75:3000/files/nabh/UPDATED DRUG FORMULARY 2026.pdf",
+      "isNew": false
+    },
+    {
+      "title": "AAC 10 E SAFE TRANSPORT OF PATIENT WITHIN THE HOSPITAL",
+      "url": "http://192.168.101.75:3000/files/nabh/AAC 10 E SAFE TRANSPORT OF PATIENT WITHIN THE HOSPITAL.pdf",
+      "isNew": false
+    },
+    {
+      "title": "AAC 10 F REFERRAL OF PATIENTS TO OTHER DEPARTMENTS",
+      "url": "http://192.168.101.75:3000/files/nabh/AAC 10 F REFERRAL OF PATIENTS TO OTHER DEPARTMENTS.pdf",
+      "isNew": false
+    },
+    {
+      "title": "AAC 11 PREVENTIVE AND PROMOTIVE HEALTH SERVICE POLICY",
+      "url": "http://192.168.101.75:3000/files/nabh/AAC 11 PREVENTIVE AND PROMOTIVE HEALTH SERVICE POLICY.pdf",
+      "isNew": false
+    },
+    {
+      "title": "AAC 12 DISCHARGE PROCESS",
+      "url": "http://192.168.101.75:3000/files/nabh/AAC 12 DISCHARGE PROCESS.pdf",
+      "isNew": false
+    },
+    {
+      "title": "AAC 13 POLICY ON DISCHARGE SUMMARY CONTENT",
+      "url": "http://192.168.101.75:3000/files/nabh/AAC 13 POLICY ON DISCHARGE SUMMARY CONTENT.pdf",
+      "isNew": false
+    },
+    {
+      "title": "AAC 2 A DEFINED REGISTRATION AND ADMISSION PROCESS",
+      "url": "http://192.168.101.75:3000/files/nabh/AAC 2 A DEFINED REGISTRATION AND ADMISSION PROCESS.pdf",
+      "isNew": false
+    },
+    {
+      "title": "AAC 2 D POLICY ON NON AVAILABILITY OF BEDS",
+      "url": "http://192.168.101.75:3000/files/nabh/AAC 2 D POLICY ON NON AVAILABILITY OF BEDS.pdf",
+      "isNew": false
+    },
+    {
+      "title": "AAC 3 TRANSFER IN OF PLANNED, UNPLANNED OR UNSTABLE PATIENT",
+      "url": "http://192.168.101.75:3000/files/nabh/AAC 3 TRANSFER IN OF  PLANNED, UNPLANNED OR UNSTABLE PATIENT.pdf",
+      "isNew": false
+    },
+    {
+      "title": "AAC 3B TRANSFER OUT REFERRAL",
+      "url": "http://192.168.101.75:3000/files/nabh/AAC 3B TRANSFER OUT REFERRAL.pdf",
+      "isNew": false
+    },
+    {
+      "title": "AAC 4 POLICY ON ESTABLISHED INITIAL ASSESSMENT",
+      "url": "http://192.168.101.75:3000/files/nabh/AAC 4 POLICY ON ESTABLISHED INITIAL ASSESSMENT.pdf",
+      "isNew": false
+    },
+    {
+      "title": "AAC 5 A POLICY ON PATIENT REASSESSMENT",
+      "url": "http://192.168.101.75:3000/files/nabh/AAC 5 A POLICY ON PATIENT REASSESSMENT.pdf",
+      "isNew": false
+    },
+    {
+      "title": "AAC 5 E MEWS PROTOCOL",
+      "url": "http://192.168.101.75:3000/files/nabh/AAC 5 E MEWS PROTOCOL.pdf",
+      "isNew": false
+    },
+    {
+      "title": "AAC 6 E REQUESITION, COLLECTION, TRANSPORT LAB",
+      "url": "http://192.168.101.75:3000/files/nabh/AAC 6 E REQUESITION, COLLECTION, TRANSPORT LAB.pdf",
+      "isNew": false
+    },
+    {
+      "title": "AAC 6 F TAT LAB",
+      "url": "http://192.168.101.75:3000/files/nabh/AAC 6 F TAT LAB.pdf",
+      "isNew": false
+    },
+    {
+      "title": "AAC 6 G CRITICAL RESULT INTIMATION LAB",
+      "url": "http://192.168.101.75:3000/files/nabh/AAC 6 G CRITICAL RESULT INTIMATION LAB.pdf",
+      "isNew": false
+    },
+    {
+      "title": "AAC 6 J LAB OUTSOURCE POLICY",
+      "url": "http://192.168.101.75:3000/files/nabh/AAC 6 J LAB OUTSOURCE POLICY.pdf",
+      "isNew": false
+    },
+    {
+      "title": "AAC 7 A LAB QUALITY ASSURANCE MANUAL",
+      "url": "http://192.168.101.75:3000/files/nabh/AAC 7 A LAB QUALITY ASSURANCE MANUAL.pdf",
+      "isNew": false
+    },
+    {
+      "title": "AAC 7 E LAB SAFETY MANUAL",
+      "url": "http://192.168.101.75:3000/files/nabh/AAC 7 E LAB SAFETY MANUAL.pdf",
+      "isNew": false
+    },
+    {
+      "title": "AAC 8 E RADIOLOGY TAT TIME",
+      "url": "http://192.168.101.75:3000/files/nabh/AAC 8 E RADIOLOGY TAT TIME.pdf",
+      "isNew": false
+    },
+    {
+      "title": "AAC 8 F RADIOLOGY CRITICAL ALERT POLICY",
+      "url": "http://192.168.101.75:3000/files/nabh/AAC 8 F RADIOLOGY CRITICAL ALERT POLICY.pdf",
+      "isNew": false
+    },
+    {
+      "title": "AAC 9 A RADIOLOGY QUALITY MANUAL",
+      "url": "http://192.168.101.75:3000/files/nabh/AAC 9 A RADIOLOGY QUALITY MANUAL.pdf",
+      "isNew": false
+    },
+    {
+      "title": "AAC 9 F RADIATION SAFETY MANUAL",
+      "url": "http://192.168.101.75:3000/files/nabh/AAC 9 F RADIATION SAFETY MANUAL.pdf",
+      "isNew": false
+    },
+    {
+      "title": "APH - SCOPE OF SERVICES",
+      "url": "http://192.168.101.75:3000/files/nabh/APH - Scope of Services.pdf",
+      "isNew": false
+    },
+    {
+      "title": "LAB SAMPLE COLLECTION MANUAL",
+      "url": "http://192.168.101.75:3000/files/nabh/LAB SAMPLE COLLECTION MANUAL.pdf",
+      "isNew": false
+    },
+    {
+      "title": "APH ANTIBIOGRAM 2025",
+      "url": "http://192.168.101.75:3000/files/nabh/APH ANTIBIOGRAM 2025.pdf",
+      "isNew": false
+    },
+    {
+      "title": "AWARE CLASSIFICATION 2025",
+      "url": "http://192.168.101.75:3000/files/nabh/AWaRe classification 2025.xlsx",
+      "isNew": false
+    },
+    {
+      "title": "ANTIMICROBIAL POLICY 2025-26",
+      "url": "http://192.168.101.75:3000/files/nabh/Antimicrobial policy 2025-26.pdf",
+      "isNew": false
+    },
+    {
+      "title": "AMSP TEACHING MATERIAL",
+      "url": "http://192.168.101.75:3000/files/nabh/AMSP teaching material.pdf",
+      "isNew": false
+    },
+    {
+      "title": "'25 ANTIMICROBIAL RESISTANCE PATTERN LAB DATA",
+      "url": "http://192.168.101.75:3000/files/nabh/",
+      "isNew": false
+    },
+    {
+      "title": "AMBULANCE SERVICES",
+      "url": "http://192.168.101.75:3000/files/nabh/AMBULANCE SERVICES.pdf",
+      "isNew": false
+    },
+    {
+      "title": "ANTE-NATAL SERVICES",
+      "url": "http://192.168.101.75:3000/files/nabh/ANTE-NATAL SERVICES.pdf",
+      "isNew": false
+    },
+    {
+      "title": "CHILD ABDUCTION AND ABUSE",
+      "url": "http://192.168.101.75:3000/files/nabh/CHILD ABDUCTION AND ABUSE.pdf",
+      "isNew": false
+    },
+    {
+      "title": "CODE YELLOW",
+      "url": "http://192.168.101.75:3000/files/nabh/CODE YELLOW.pdf",
+      "isNew": false
+    },
+    {
+      "title": "COP 1 f TELEMEDICINE",
+      "url": "http://192.168.101.75:3000/files/nabh/COP 1 f TELEMEDICINE.pdf",
+      "isNew": false
+    },
+    {
+      "title": "COP 1 UNIFORM CARE OF PATIENT",
+      "url": "http://192.168.101.75:3000/files/nabh/COP 1 UNIFORM CARE OF PATIENT.pdf",
+      "isNew": false
+    },
+    {
+      "title": "COP 2 d TRIAGE PROTOCOL FOLLOWED IN THE CASUALTY",
+      "url": "http://192.168.101.75:3000/files/nabh/COP 2 d TRIAGE PROTOCOL FOLLOWED IN THE CASUALTY.pdf",
+      "isNew": false
+    },
+    {
+      "title": "COP 2 I BROUGHT DEATH POLICY",
+      "url": "http://192.168.101.75:3000/files/nabh/COP 2 I BROUGHT DEATH POLICY.pdf",
+      "isNew": false
+    },
+    {
+      "title": "COP 2 i PATIENT FOUND DEAD ON ARRIVAL",
+      "url": "http://192.168.101.75:3000/files/nabh/COP 2 i PATIENT FOUND DEAD ON ARRIVAL.pdf",
+      "isNew": false
+    },
+    {
+      "title": "COP 3 AMBULANCE SERVICE",
+      "url": "http://192.168.101.75:3000/files/nabh/COP 3 AMBULANCE SERVICE.pdf",
+      "isNew": false
+    },
+    {
+      "title": "COP 4 DISASTER MANAGEMENT",
+      "url": "http://192.168.101.75:3000/files/nabh/COP 4 DISASTER MANAGEMENT.pdf",
+      "isNew": false
+    },
+    {
+      "title": "COP 5 GUIDELINE FOR CPR",
+      "url": "http://192.168.101.75:3000/files/nabh/COP 5 GUIDELINE FOR CPR.pdf",
+      "isNew": false
+    },
+    {
+      "title": "COP 6 f NURSING EMPOWERMENT",
+      "url": "http://192.168.101.75:3000/files/nabh/COP 6 f NURSING EMPOWERMENT.pdf",
+      "isNew": false
+    },
+    {
+      "title": "COP 6 NURSING CARE",
+      "url": "http://192.168.101.75:3000/files/nabh/COP 6 NURSING CARE.pdf",
+      "isNew": false
+    },
+    {
+      "title": "COP 7 CLINICAL PROCEDURES IN SAFE MANNER",
+      "url": "http://192.168.101.75:3000/files/nabh/COP 7 CLINICAL PROCEDURES IN SAFE MANNER.pdf",
+      "isNew": false
+    },
+    {
+      "title": "COP 7 D CARE IS TAKEN TO PREVENT ADVERSE EVENTS LIKE A WRONG PATIENT, WRONG PROCEDURE AND WRONG SITE",
+      "url": "http://192.168.101.75:3000/files/nabh/COP 7 D CARE IS TAKEN TO PREVENT ADVERSE EVENTS LIKE A WRONG PATIENT, WRONG PROCEDURE AND WRONG SITE.pdf",
+      "isNew": false
+    },
+    {
+      "title": "COP 8 GUIDELINE FOR PACKED RED BLOOD CELL TRANSFUSION",
+      "url": "http://192.168.101.75:3000/files/nabh/COP 8 GUIDELINE FOR PACKED RED BLOOD CELL TRANSFUSION.pdf",
+      "isNew": false
+    },
+    {
+      "title": "COP 9 B ADMISSION AND DISCHARGE CRITERIA FOR INTENSIVE CARE",
+      "url": "http://192.168.101.75:3000/files/nabh/COP 9 B ADMISSION AND DISCHARGE CRITERIA FOR INTENSIVE CARE.pdf",
+      "isNew": false
+    },
+    {
+      "title": "COP 9 d ICU BED SHORTAGE",
+      "url": "http://192.168.101.75:3000/files/nabh/COP 9 d ICU BED SHORTAGE.pdf",
+      "isNew": false
+    },
+    {
+      "title": "COP 9 e INFECTION CONTROL PRACTICES IN ICU",
+      "url": "http://192.168.101.75:3000/files/nabh/COP 9 e INFECTION CONTROL PRACTICES IN ICU.pdf",
+      "isNew": false
+    },
+    {
+      "title": "COP 17 PAIN MANAGEMENT",
+      "url": "http://192.168.101.75:3000/files/nabh/COP 17 PAIN MANAGEMENT.pdf",
+      "isNew": false
+    },
+    {
+      "title": "COP 18 PHYSIOTHERAPY MANUAL",
+      "url": "http://192.168.101.75:3000/files/nabh/COP 18 PHYSIOTHERAPY MANUAL.pdf",
+      "isNew": false
+    },
+    {
+      "title": "COP 19 DIETICIAN MANUAL",
+      "url": "http://192.168.101.75:3000/files/nabh/COP 19 DIETICIAN MANUAL.pdf",
+      "isNew": false
+    },
+    {
+      "title": "COP.15 ORGAN TRANSPLANT PROGRAMME",
+      "url": "http://192.168.101.75:3000/files/nabh/COP.15 ORGAN TRANSPLANT PROGRAMME.pdf",
+      "isNew": false
+    },
+    {
+      "title": "COP.16.a IDENTIFIES & MANAGES VULNERABLE PATIENTS",
+      "url": "http://192.168.101.75:3000/files/nabh/COP.16.a IDENTIFIES & MANAGES VULNERABLE PATIENTS.pdf",
+      "isNew": false
+    },
+    {
+      "title": "COP.16.e RESTRAINT MANAGEMENT",
+      "url": "http://192.168.101.75:3000/files/nabh/COP.16.e RESTRAINT MANAGEMENT.pdf",
+      "isNew": false
+    },
+    {
+      "title": "SEDATION & ANAESTHESIA SERVICE",
+      "url": "http://192.168.101.75:3000/files/nabh/SEDATION & ANAESTHESIA SERVICE.pdf",
+      "isNew": false
+    },
+    {
+      "title": "SURGICAL SERVICE",
+      "url": "http://192.168.101.75:3000/files/nabh/SURGICAL  SERVICE.pdf",
+      "isNew": false
+    },
+    {
+      "title": "UNIFORM CARE OF PATIENT",
+      "url": "http://192.168.101.75:3000/files/nabh/UNIFORM CARE OF PATIENT.pdf",
+      "isNew": false
+    },
+    {
+      "title": "PRE 8 c - Communication with Family members",
+      "url": "http://192.168.101.75:3000/files/nabh/PRE 8 c - Communication with Family members.pdf",
+      "isNew": false
+    },
+    {
+      "title": "PRE 1b - Patient and Family Rights and Responsibilities",
+      "url": "http://192.168.101.75:3000/files/nabh/PRE 1b - Patient and Family Rights and Responsibilities.pdf",
+      "isNew": false
+    },
+    {
+      "title": "PRE 4d - Incapable of independent decision-making",
+      "url": "http://192.168.101.75:3000/files/nabh/PRE 4d - Incapable of independent decision-making.pdf",
+      "isNew": false
+    },
+    {
+      "title": "PRE 1a - Patient Rights and Responsibility",
+      "url": "http://192.168.101.75:3000/files/nabh/PRE 1a - Patient Rights and Responsibility.pdf",
+      "isNew": false
+    },
+    {
+      "title": "PRE 8 a - Effective Communication with Patient and Families",
+      "url": "http://192.168.101.75:3000/files/nabh/PRE 8 a - Effective Communication with Patient and Families.pdf",
+      "isNew": false
+    },
+    {
+      "title": "PRE 8 b - ENHANCED COMMUNICATION",
+      "url": "http://192.168.101.75:3000/files/nabh/PRE 8 b - ENHANCED COMMUNICATION.pdf",
+      "isNew": false
+    },
+    {
+      "title": "PRE 4a - Patient and family rights include informed consent",
+      "url": "http://192.168.101.75:3000/files/nabh/PRE 4a - Patient and family rights include informed consent.pdf",
+      "isNew": false
+    },
+    {
+      "title": "The Enhanced Communication",
+      "url": "http://192.168.101.75:3000/files/nabh/The Enhanced Communication.pdf",
+      "isNew": false
+    },
+    {
+      "title": "The 7 C\\Uffffffffs of Effective Communication",
+      "url": "http://192.168.101.75:3000/files/nabh/The 7 C\\Uffffffffs of Effective Communication.pdf",
+      "isNew": false
+    },
+    {
+      "title": "PRE.1 D - Violation of Patient and Family Rights",
+      "url": "http://192.168.101.75:3000/files/nabh/PRE.1 D - Violation of Patient and Family Rights.pdf",
+      "isNew": false
+    },
+    {
+      "title": "IPC - SOP FOR REPROCESSING OF DIALYSIS TUBING",
+      "url": "http://192.168.101.75:3000/files/nabh/SOP FOR REPROCESSING OF SINGLE USE TUBINGS - DIALYSIS.pdf",
+      "isNew": false
+    },
+    {
+      "title": "Medication Policy",
+      "url": "#",
+      "isNew": false
+    }
+  ]
+}

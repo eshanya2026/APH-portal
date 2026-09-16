@@ -38,7 +38,7 @@
 
   <!-- Main Content: Forms Grid -->
   <main class="max-w-6xl mx-auto px-4 sm:px-6 py-10 flex-1 w-full">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+    <div id="consent-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
       
       <!-- 1. Surgery English -->
       <div class="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-blue-300 hover:shadow-md transition-all">
@@ -170,5 +170,37 @@
 
   <!-- Page Auto Refresh Script -->
   <script src="assets/js/pageRefresh.js"></script> 
+
+  <!-- Dynamic JSON Forms Loader -->
+  <script>
+    fetch('data/consent-forms.json')
+      .then(r => r.json())
+      .then(data => {
+        const forms = Array.isArray(data) ? data : (data.forms || []);
+        if (!forms || forms.length === 0) return;
+        const grid = document.getElementById('consent-grid');
+        if (!grid) return;
+        const colorPalette = ['blue', 'indigo', 'rose', 'amber', 'red', 'teal', 'purple', 'cyan', 'emerald'];
+        grid.innerHTML = forms.map((f, i) => {
+          const col = colorPalette[i % colorPalette.length];
+          return `
+            <div class="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-${col}-300 hover:shadow-md transition-all">
+              <div class="mb-4">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-[10px] font-bold uppercase tracking-wider text-${col}-600 bg-${col}-50 px-2.5 py-1 rounded-lg">MEDICOLEGAL</span>
+                  <span class="text-[11px] font-bold text-slate-400">PDF</span>
+                </div>
+                <h3 class="font-bold text-slate-900 text-base sm:text-lg mb-1">${f.name}</h3>
+                <p class="text-xs text-slate-500 leading-relaxed">${f.desc || 'Standard medicolegal consent protocol.'}</p>
+              </div>
+              <a href="${f.url}" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+                <span>Open PDF Document</span> &rarr;
+              </a>
+            </div>
+          `;
+        }).join('');
+      })
+      .catch(e => console.warn('Using embedded fallback for consent forms:', e));
+  </script>
 </body>
 </html>

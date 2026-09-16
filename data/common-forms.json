@@ -1,0 +1,230 @@
+{
+  "category": "clinical",
+  "title": "Common Forms",
+  "fullName": "APH Common Forms",
+  "badge": "Clinical Indent & Ops",
+  "description": "Approved ICU checklists, SBAR handover, narcotic indents, ADR reporting, emergency & infection control protocols.",
+  "hubUrl": "./commonforms.html",
+  "forms": [
+    {
+      "name": "ICU Casesheet Checklist",
+      "desc": "Comprehensive clinical casesheet audit checklist for intensive care",
+      "url": "http://192.168.101.75:3000/files/ICU%20Casesheet%20Checklist.pdf"
+    },
+    {
+      "name": "ICU to Ward Shifting Criteria Checklist",
+      "desc": "Step-down stability criteria and vital sign transfer checklist",
+      "url": "http://192.168.101.75:3000/files/ICU%20to%20Ward%20Shifting%20Criteria%20Checklist.pdf"
+    },
+    {
+      "name": "HANDING OVER SBAR",
+      "desc": "Situation, Background, Assessment, Recommendation handover protocol",
+      "url": "http://192.168.101.75:3000/files/HANDING%20OVER%20SBAR.pdf"
+    },
+    {
+      "name": "NARCOTIC DRUGS FORM",
+      "desc": "Controlled substances indent & dispensing register",
+      "url": "http://192.168.101.75:3000/files/NARCOTIC%20DRUGS%20FORM.pdf"
+    },
+    {
+      "name": "DRUG - FOOD INTERACTION LIST",
+      "desc": "Clinical formulary guide on drug and dietary interactions",
+      "url": "http://192.168.101.75:3000/files/DRUG%20-%20FOOD%20INTERACTION%20LIST.pdf"
+    },
+    {
+      "name": "DRUG - DRUG INTERACTION LIST",
+      "desc": "Reference chart for medication contraindications",
+      "url": "http://192.168.101.75:3000/files/DRUG%20-%20DRUG%20INTERACTION%20LIST.pdf"
+    },
+    {
+      "name": "Approved abbreviation July 2025 -2026",
+      "desc": "Official NABH accredited medical abbreviations list",
+      "url": "http://192.168.101.75:3000/files/Approved%20abbreviation%20July%202025%20-2026.pdf"
+    },
+    {
+      "name": "EMERGENCY MEDICATION LIST - JAN 2026",
+      "desc": "Official emergency drugs, crash cart & antidotes inventory",
+      "url": "http://192.168.101.75:3000/files/EMERGENCY%20MEDICATION%20LIST%20-%20JAN%202026.pdf"
+    },
+    {
+      "name": "HIGH ALERT MEDICATIONS",
+      "desc": "High-alert medication safety storage and double-check protocol",
+      "url": "http://192.168.101.75:3000/files/HIGH%20ALERT%20MEDICATIONS.pdf"
+    },
+    {
+      "name": "48 Hour Antibiotics Review From",
+      "desc": "Stewardship review form for broad-spectrum antimicrobials",
+      "url": "http://192.168.101.75:3000/files/48%20Hour%20Antibiotics%20Review%20From.pdf"
+    },
+    {
+      "name": "Day Care Assessment Form",
+      "desc": "Same-day surgical and medical assessment sheet",
+      "url": "http://192.168.101.75:3000/files/Day%20Care%20Assessment%20Form.pdf"
+    },
+    {
+      "name": "Day Care Discharge Summary",
+      "desc": "Day care procedure completion and discharge summary",
+      "url": "http://192.168.101.75:3000/files/Day%20Care%20-%20Discharge%20Summary.pdf"
+    },
+    {
+      "name": "Emergency Transfer Record",
+      "desc": "Critical patient inter-hospital transfer documentation",
+      "url": "http://192.168.101.75:3000/files/EMERGENCY%20TRANSFER%20RECORD%20(3).pdf"
+    },
+    {
+      "name": "ER - Discharge Summary Form",
+      "desc": "Emergency room treatment completion & discharge summary",
+      "url": "http://192.168.101.75:3000/files/ER%20-%20DISCHARGE%20SUMMARY%20FORM.pdf"
+    },
+    {
+      "name": "ER - Doctors Initial Assessment Form",
+      "desc": "Emergency medicine physician admission evaluation",
+      "url": "http://192.168.101.75:3000/files/DOCTORS%20INITIAL%20ASSESSMENT%20FOR%20EMERGENCY%20ROOM.pdf"
+    },
+    {
+      "name": "ER - Nurses Initial Assessment Form",
+      "desc": "Triage nursing vital signs and priority assessment",
+      "url": "http://192.168.101.75:3000/files/Nurses%20Initial%20Assessment%20for%20Emergency%20Room.pdf"
+    },
+    {
+      "name": "Modified Early Warning Score",
+      "desc": "Bedside physiological scoring chart (MEWS) for deterioration",
+      "url": "http://192.168.101.75:3000/files/MODIFIED%20EARLY%20WARNING%20SCORE%20(1).pdf"
+    },
+    {
+      "name": "Food Token",
+      "desc": "Patient & attender dietary meal token requisition",
+      "url": "http://192.168.101.75:3000/files/food.pdf"
+    },
+    {
+      "name": "Code Blue",
+      "desc": "Cardiac arrest emergency response algorithm & protocol",
+      "url": "http://192.168.101.75:3000/files/Code.pdf"
+    },
+    {
+      "name": "Code Blue Post Event Analysis Form",
+      "desc": "CPR event debrief, timeline audit & resuscitation analysis",
+      "url": "http://192.168.101.75:3000/files/Code%20Blue%20Post%20Event%20Analysis%20Form.pdf"
+    },
+    {
+      "name": "ADR-Form",
+      "desc": "Adverse drug reaction pharmacovigilance incident report",
+      "url": "http://192.168.101.75:3000/files/ADR-Form.pdf"
+    },
+    {
+      "name": "Incident Report",
+      "desc": "Clinical & operational sentinel event incident documentation",
+      "url": "http://192.168.101.75:3000/files/Incident.pdf"
+    },
+    {
+      "name": "Transfusion Technique Protocol",
+      "desc": "Clinical protocol for safe whole blood and component delivery",
+      "url": "http://192.168.101.75:3000/files/transfusionprotocol.pdf"
+    },
+    {
+      "name": "Antibiogram",
+      "desc": "Institutional pathogen surveillance and antibiotic sensitivity",
+      "url": "http://192.168.101.75:3000/files/ANTIBIOGRAM.pdf"
+    },
+    {
+      "name": "Restricted Anti-biotic Form",
+      "desc": "HIC committee authorization for restricted reserve antimicrobials",
+      "url": "http://192.168.101.75:3000/files/HIC.pdf"
+    },
+    {
+      "name": "Restricted Anti-biotic Drug List",
+      "desc": "Approved list of reserved high-tier antimicrobial agents",
+      "url": "http://192.168.101.75:3000/files/antibiotic.pdf"
+    },
+    {
+      "name": "Performance Management System Policy",
+      "desc": "Staff KPIs, annual appraisal guidelines and HR policy",
+      "url": "http://192.168.101.75:3000/files/PMS.pdf"
+    },
+    {
+      "name": "Purchase Process",
+      "desc": "Hospital instruments and biomedical equipment procurement (APR 2025)",
+      "url": "http://192.168.101.75:3000/files/Instruments%20and%20Equipment%20APR%202025.pdf"
+    },
+    {
+      "name": "General Medicine",
+      "desc": "Clinical Privileges - General Medicine core competency credentialing",
+      "url": "http://192.168.101.75:3000/files/hrmedicine.pdf"
+    },
+    {
+      "name": "Ent",
+      "desc": "Clinical Privileges - ENT diagnostic & surgical authorization",
+      "url": "http://192.168.101.75:3000/files/hrent.pdf"
+    },
+    {
+      "name": "Anaesthesia",
+      "desc": "Clinical Privileges - Anaesthesiology and critical care sedation",
+      "url": "http://192.168.101.75:3000/files/hranaesthesia.pdf"
+    },
+    {
+      "name": "CMO Policy",
+      "desc": "Chief Medical Officer administrative jurisdiction and duty roles",
+      "url": "http://192.168.101.75:3000/files/CMO%20Policy.pdf"
+    },
+    {
+      "name": "Junior Resident Policy",
+      "desc": "Resident medical officer shift rosters and clinical guidelines",
+      "url": "http://192.168.101.75:3000/files/Junior%20resident%20Policy.pdf"
+    },
+    {
+      "name": "Transport Policy",
+      "desc": "Hospital fleet, patient ambulance and transport requisition guidelines",
+      "url": "http://192.168.101.75:3000/files/Transport.pdf"
+    },
+    {
+      "name": "HVAC PM schedule",
+      "desc": "Facility management preventative maintenance plan for OT & ICU HVAC",
+      "url": "http://192.168.101.75:3000/files/PMSheduleHVACsystem2021.xlsx"
+    },
+    {
+      "name": "Antimicrobial Policy 2026-2027",
+      "desc": "Official hospital antibiotic stewardship and empiric therapy manual",
+      "url": "http://192.168.101.75:3000/files/Antimicrobial%20Policy%202026-2027.pdf"
+    },
+    {
+      "name": "Antimicrobial policy 2024-2025",
+      "desc": "Prior edition hospital antimicrobial policy reference",
+      "url": "http://192.168.101.75:3000/files/Antimicrobial%20policy%202024-25.pdf"
+    },
+    {
+      "name": "Aph Disinfection Policy",
+      "desc": "Infection control disinfection and sterilization procedures",
+      "url": "http://192.168.101.75:3000/files/APHDISINFECTIONPOLICY.pdf"
+    },
+    {
+      "name": "Hospital Linen Policy",
+      "desc": "Clean linen distribution, laundry sanitization and OT protocols",
+      "url": "http://192.168.101.75:3000/files/HOSPITALLINENPOLICY.pdf"
+    },
+    {
+      "name": "Counselling Documentation",
+      "desc": "Patient and family counselling interview notes",
+      "url": "http://192.168.101.75:3000/files/Counselling%20Documentation%20Form.pdf"
+    },
+    {
+      "name": "Catheter Associtated Urinary Tract Infection",
+      "desc": "HIC bundle: CAUTI insertion and maintenance surveillance",
+      "url": "http://192.168.101.75:3000/files/Catheter%20Associtated%20Urinary%20Tract%20Infection.pdf"
+    },
+    {
+      "name": "Central Line – Associated Bloodstream Infection",
+      "desc": "HIC bundle: CLABSI prevention checklist and surveillance",
+      "url": "http://192.168.101.75:3000/files/Central%20Line%20Associated%20Bloodstream%20Infection.pdf"
+    },
+    {
+      "name": "Surgical Site Infection",
+      "desc": "HIC bundle: SSI pre-op prep and post-op wound surveillance",
+      "url": "http://192.168.101.75:3000/files/Surgical%20Site%20Infection.pdf"
+    },
+    {
+      "name": "Ventilator-associated Event (Vae)",
+      "desc": "HIC bundle: VAE/VAP prevention bundle and daily checklist",
+      "url": "http://192.168.101.75:3000/files/Ventilator-associated%20Event%20(Vae).pdf"
+    }
+  ]
+}

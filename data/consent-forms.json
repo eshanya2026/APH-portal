@@ -1,0 +1,50 @@
+{
+  "category": "consent",
+  "title": "Consent Forms",
+  "fullName": "APH Consent Forms",
+  "badge": "Medicolegal Protocols",
+  "description": "Bilingual operative, procedural, blood transfusion & patient refusal consent protocols.",
+  "hubUrl": "./consent.html",
+  "forms": [
+    {
+      "name": "CONSENT FOR BLOOD COMPONENT TRANSFUSIONS",
+      "desc": "Blood and blood components transfusion consent",
+      "url": "http://192.168.101.75:3000/files/Blood%20Transfusion%20Reaction%20Form%20version%202.pdf"
+    },
+    {
+      "name": "Dama Consent Form",
+      "desc": "Discharge against medical advice declaration",
+      "url": "http://192.168.101.75:3000/files/Dama%20Consent%20Form.pdf"
+    },
+    {
+      "name": "Not Willing Consent",
+      "desc": "Clinical treatment or procedure refusal document",
+      "url": "http://192.168.101.75:3000/files/Not%20Willing%20Consent.pdf"
+    },
+    {
+      "name": "Visiting Consultant Requisition Form",
+      "desc": "Specialist consultation requisition protocol",
+      "url": "http://192.168.101.75:3000/files/Visiting%20Consultant%20Requisition%20letter.pdf"
+    },
+    {
+      "name": "Informed Consent Form For Surgery or Procedures -English",
+      "desc": "Standard operative & invasive surgical consent",
+      "url": "http://192.168.101.75:3000/files/INFORMED%20CONSENT%20FORM%20FOR%20SURGERY%20OR%20PROCEDURES%20-English.pdf"
+    },
+    {
+      "name": "Informed Consent Form For Surgery or Procedures-Tamil",
+      "desc": "அறுவை சிகிச்சைக்கான தகவலறிந்த ஒப்புதல் படிவம்",
+      "url": "http://192.168.101.75:3000/files/INFORMED%20CONSENT%20FORM%20FOR%20SURGERY%20OR%20PROCEDURES-Tamil.pdf"
+    },
+    {
+      "name": "Paediatric Consent Form",
+      "desc": "Guardian consent for neonatal, infant, and child medical and surgical interventions",
+      "url": "http://192.168.101.75:3000/files/paedconsent.pdf"
+    },
+    {
+      "name": "General Patient Admission Consent",
+      "desc": "General hospital in-patient care, nursing rounds, and routine diagnostic tests authorization",
+      "url": "http://192.168.101.75:3000/files/consent.pdf"
+    }
+  ]
+}

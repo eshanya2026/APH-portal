@@ -1,0 +1,75 @@
+{
+  "category": "hr",
+  "title": "HR Forms",
+  "fullName": "APH HR Forms",
+  "badge": "People & Culture",
+  "description": "Faculty applications, non-teaching jobs, promotion, training feedback, HR manual & clinical privileging.",
+  "hubUrl": "./hrforms.html",
+  "forms": [
+    {
+      "name": "List of Holidays - 2026",
+      "desc": "Official institutional gazetted holiday schedule, national festivals, and sanctioned institutional leave dates for 2026.",
+      "url": "http://192.168.101.75:3000/files/Holiday 2025.pdf"
+    },
+    {
+      "name": "Teaching Faculty Application & Appraisal Form",
+      "desc": "Standard recruitment biodata, teaching credentials, research publications, and annual self-appraisal form for medical faculty.",
+      "url": "http://192.168.101.75:3000/files/Teaching.pdf"
+    },
+    {
+      "name": "Non-Teaching Staff Application Form",
+      "desc": "Formal employment application for nursing staff, paramedical professionals, laboratory technicians, and administrative personnel.",
+      "url": "http://192.168.101.75:3000/files/Non Teaching.pdf"
+    },
+    {
+      "name": "For Promotion - Non Teaching",
+      "desc": "Department head appraisal, service seniority verification, and career elevation recommendation form for non-teaching employees.",
+      "url": "http://192.168.101.75:3000/files/For promotion - Non Teaching.pdf"
+    },
+    {
+      "name": "Non Performer - Non Teaching",
+      "desc": "Departmental evaluation log for identifying performance gaps, structuring retraining modules, and mentoring non-performing staff.",
+      "url": "http://192.168.101.75:3000/files/Non performer- Non Teaching.pdf"
+    },
+    {
+      "name": "Staff Training Feedback Form",
+      "desc": "Post-training assessment and participant feedback form for hospital induction, fire safety drills, and clinical CME courses.",
+      "url": "http://192.168.101.75:3000/files/Training Feedback Form.pdf"
+    },
+    {
+      "name": "Performance Management System (PMS) Policy",
+      "desc": "Institutional framework establishing key performance indicators (KPIs), 360-degree appraisal benchmarks, and merit increments.",
+      "url": "http://192.168.101.75:3000/files/PMS Policy.pdf"
+    },
+    {
+      "name": "Human Resources Manual (HRM - 2025)",
+      "desc": "Comprehensive institutional manual governing recruitment rules, attendance, leave entitlements, code of conduct, and disciplinary actions.",
+      "url": "http://192.168.101.75:3000/files/HRM 2025.pdf"
+    },
+    {
+      "name": "Clinical Privileges - General Medicine",
+      "desc": "Formal clinical credentialing, procedural scope of practice, and inpatient admission privileges for General Medicine consultants.",
+      "url": "http://192.168.101.75:3000/files/hrmedicine.pdf"
+    },
+    {
+      "name": "Clinical Privileges - ENT",
+      "desc": "Surgical scope of clinical practice, outpatient procedures, and operating theatre credentialing for ENT surgeons.",
+      "url": "http://192.168.101.75:3000/files/hrent.pdf"
+    },
+    {
+      "name": "Clinical Privileges - Anaesthesia",
+      "desc": "Privileging matrix for general, neuraxial, and regional blocks, difficult airway management, and critical care procedures.",
+      "url": "http://192.168.101.75:3000/files/hranaesthesia.pdf"
+    },
+    {
+      "name": "Chief Medical Officer (CMO) Policy",
+      "desc": "Institutional charter delineating casualty management protocols, emergency response leadership, and clinical shift handover duties.",
+      "url": "http://192.168.101.75:3000/files/CMO Policy.pdf"
+    },
+    {
+      "name": "Junior Resident Policy",
+      "desc": "Academic governance, patient care documentation standards, night duty schedules, and consultant supervisory guidelines for residents.",
+      "url": "http://192.168.101.75:3000/files/Junior resident Policy.pdf"
+    }
+  ]
+}

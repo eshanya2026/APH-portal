@@ -1,0 +1,50 @@
+{
+  "category": "it",
+  "title": "IT Forms",
+  "fullName": "APH IT Forms",
+  "badge": "Hardware & Access",
+  "description": "HIS user accounts, clinician IDs, workstation requests, campus Wi-Fi, toner & hardware requisitions.",
+  "hubUrl": "./itforms.html",
+  "forms": [
+    {
+      "name": "New HIS User Request Form",
+      "desc": "Hospital Information System user credentials & access permissions",
+      "url": "http://192.168.101.75:3000/files/His%20User%20Creation.pdf"
+    },
+    {
+      "name": "System Request Form",
+      "desc": "Desktop PC, CPU, dual monitor hardware indent & workstation setup",
+      "url": "http://192.168.101.75:3000/files/System%20Request%20Form.pdf"
+    },
+    {
+      "name": "Printer Request Form",
+      "desc": "Network laser printer, barcode label printer & toner requisitions",
+      "url": "http://192.168.101.75:3000/files/Printer%20Request%20Form.pdf"
+    },
+    {
+      "name": "New Doctor Name and ID Creation in HIS",
+      "desc": "Consultant clinician ID generation and OPD roster registration",
+      "url": "http://192.168.101.75:3000/files/Doctor%20Name%20and%20ID%20Creation.pdf"
+    },
+    {
+      "name": "Item Creation in HIS",
+      "desc": "Master catalogue addition for pharmacy drugs, lab tests & tariffs",
+      "url": "http://192.168.101.75:3000/files/Item%20Creation.pdf"
+    },
+    {
+      "name": "Employee WIFI Request Form",
+      "desc": "Secure campus wireless network authorization via MAC address binding",
+      "url": "http://192.168.101.75:3000/files/Wifi%20Request%20Form.pdf"
+    },
+    {
+      "name": "CUG Request Form",
+      "desc": "Closed User Group departmental mobile line & SIM allocation voucher",
+      "url": "http://192.168.101.75:3000/files/Cug%20Request%20Form.pdf"
+    },
+    {
+      "name": "Official Email Request",
+      "desc": "@mapims.edu.in institutional email domain credentials form",
+      "url": "http://192.168.101.75:3000/files/Mail%20Request.pdf"
+    }
+  ]
+}

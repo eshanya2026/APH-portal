@@ -831,6 +831,39 @@
           applyFilter();
         });
       });
+
+      // Dynamic JSON sync for new common forms
+      fetch('data/common-forms.json')
+        .then(r => r.json())
+        .then(data => {
+          const forms = Array.isArray(data) ? data : (data.forms || []);
+          if (!forms || forms.length === 0) return;
+          forms.forEach(f => {
+            const exists = formsGrid.querySelector(`a[href="${f.url}"]`);
+            if (!exists) {
+              const newCard = document.createElement('div');
+              newCard.className = 'form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-amber-300 hover:shadow-md transition-all';
+              newCard.setAttribute('data-category', f.category || 'icu');
+              newCard.setAttribute('data-search', `${f.name} ${f.desc || ''}`.toLowerCase());
+              newCard.innerHTML = `
+                <div class="mb-4">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-amber-600 bg-amber-50 px-2.5 py-1 rounded-lg">${f.badge || 'CLINICAL'}</span>
+                    <span class="text-[11px] font-bold text-slate-400">PDF</span>
+                  </div>
+                  <h3 class="font-bold text-slate-900 text-base mb-1">${f.name}</h3>
+                  <p class="text-xs text-slate-500 leading-relaxed">${f.desc || 'Standardized clinical template'}</p>
+                </div>
+                <a href="${f.url}" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+                  <span>Open PDF Document</span> &rarr;
+                </a>
+              `;
+              formsGrid.appendChild(newCard);
+            }
+          });
+          applyFilter();
+        })
+        .catch(e => console.warn('Using embedded fallback for common forms:', e));
     });
   </script>
 

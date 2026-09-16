@@ -1,0 +1,1500 @@
+[
+  {
+    "floor": "Campus",
+    "dept": "General",
+    "extensions": [
+      {
+        "ext": "2800",
+        "desc": "Main Gate"
+      },
+      {
+        "ext": "2799",
+        "desc": "Vehicle Shed"
+      },
+      {
+        "ext": "2779",
+        "desc": "Patient Waiting"
+      },
+      {
+        "ext": "2627",
+        "desc": "Sakthi Catering Serivces (Kitchen)"
+      }
+    ]
+  },
+  {
+    "floor": "Ground Floor",
+    "dept": "MS Office",
+    "extensions": [
+      {
+        "ext": "2880",
+        "desc": "Medical Superintendent"
+      },
+      {
+        "ext": "2881",
+        "desc": "MS Secretary"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "Emergency Medicine",
+    "extensions": [
+      {
+        "ext": "2001",
+        "desc": "Emergency Reception"
+      },
+      {
+        "ext": "2002",
+        "desc": "Emergency Priority"
+      },
+      {
+        "ext": "2004",
+        "desc": "Emergency OP Room"
+      },
+      {
+        "ext": "2005",
+        "desc": "Emergency Registration"
+      },
+      {
+        "ext": "2008",
+        "desc": "EMS OT"
+      },
+      {
+        "ext": "2807",
+        "desc": "Emergency HOD"
+      },
+      {
+        "ext": "2802",
+        "desc": "Duty Doctor Room Female (Medicine)"
+      },
+      {
+        "ext": "2803",
+        "desc": "Duty Doctor Room (Surgery)"
+      },
+      {
+        "ext": "2804",
+        "desc": "Emergency Major Ward"
+      },
+      {
+        "ext": "2805",
+        "desc": "Emergency Unscreen Ward"
+      },
+      {
+        "ext": "2806",
+        "desc": "EMS X Ray"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "Sash",
+    "extensions": [
+      {
+        "ext": "2091",
+        "desc": "Ayurveda OP (Sash)"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "Dietetics",
+    "extensions": [
+      {
+        "ext": "2018",
+        "desc": "Dietician"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "General Surgery",
+    "extensions": [
+      {
+        "ext": "2021",
+        "desc": "GS Reception"
+      },
+      {
+        "ext": "2026",
+        "desc": "Consultation Male"
+      },
+      {
+        "ext": "2028",
+        "desc": "Consultation Female"
+      },
+      {
+        "ext": "2087",
+        "desc": "GS Dressing OPD"
+      },
+      {
+        "ext": "2019",
+        "desc": "Review OPD"
+      },
+      {
+        "ext": "2089",
+        "desc": "Review OPD II"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "Paediatrics",
+    "extensions": [
+      {
+        "ext": "2030",
+        "desc": "Paediatrics HOD"
+      },
+      {
+        "ext": "2031",
+        "desc": "Paediatric OP"
+      },
+      {
+        "ext": "2032",
+        "desc": "Consultation Room 2"
+      },
+      {
+        "ext": "2033",
+        "desc": "Consultation Room 1"
+      },
+      {
+        "ext": "2038",
+        "desc": "Feeding Room"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "Ophthalmology",
+    "extensions": [
+      {
+        "ext": "2090",
+        "desc": "Ophthal HOD"
+      },
+      {
+        "ext": "2670",
+        "desc": "Ophthal Professor"
+      },
+      {
+        "ext": "2671",
+        "desc": "Ophthal Reception"
+      },
+      {
+        "ext": "2672",
+        "desc": "Ophthal Counseling"
+      },
+      {
+        "ext": "2095",
+        "desc": "GB Opticals"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "Ortho",
+    "extensions": [
+      {
+        "ext": "2040",
+        "desc": "Ortho HOD"
+      },
+      {
+        "ext": "2041",
+        "desc": "Ortho Reception"
+      },
+      {
+        "ext": "2044",
+        "desc": "Duty Doctor Room"
+      },
+      {
+        "ext": "2047",
+        "desc": "Consultation Room"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "Radiology",
+    "extensions": [
+      {
+        "ext": "2700",
+        "desc": "Radiology Reception"
+      },
+      {
+        "ext": "2699",
+        "desc": "Radiology HOD"
+      },
+      {
+        "ext": "2695",
+        "desc": "Radiology Steno Typist"
+      },
+      {
+        "ext": "2690",
+        "desc": "MRI Console"
+      },
+      {
+        "ext": "2691",
+        "desc": "Ultra Sound 1"
+      },
+      {
+        "ext": "2693",
+        "desc": "Ultra Sound 3"
+      },
+      {
+        "ext": "2696",
+        "desc": "Duty Doctor Room"
+      },
+      {
+        "ext": "2697",
+        "desc": "DR X-ray &amp; Mammography"
+      },
+      {
+        "ext": "2698",
+        "desc": "Reporting Room"
+      },
+      {
+        "ext": "2688",
+        "desc": "Radiology Technician"
+      },
+      {
+        "ext": "2689",
+        "desc": "CT Console"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "RJ Medical",
+    "extensions": [
+      {
+        "ext": "2781",
+        "desc": "RJ Medical 1"
+      },
+      {
+        "ext": "2782",
+        "desc": "RJ Medical 2"
+      },
+      {
+        "ext": "2783",
+        "desc": "RJ Medical 3"
+      },
+      {
+        "ext": "2303",
+        "desc": "RJ Medical 3rd Floor"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "Reception",
+    "extensions": [
+      {
+        "ext": "3003",
+        "desc": "Reception"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "Operation",
+    "extensions": [
+      {
+        "ext": "2771",
+        "desc": "Operations Manager"
+      },
+      {
+        "ext": "2615",
+        "desc": "Gre Help Desk"
+      },
+      {
+        "ext": "2618",
+        "desc": "OP Registration"
+      },
+      {
+        "ext": "2619",
+        "desc": "OP Registration"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "Gynaecology",
+    "extensions": [
+      {
+        "ext": "2050",
+        "desc": "Dr.Sri Lekha Mam"
+      },
+      {
+        "ext": "2051",
+        "desc": "GYNAEC Reception"
+      },
+      {
+        "ext": "2054",
+        "desc": "GYNAEC OP"
+      },
+      {
+        "ext": "2055",
+        "desc": "Ante-natal OP"
+      },
+      {
+        "ext": "2877",
+        "desc": "OG Duty Doctor Room (PG)"
+      },
+      {
+        "ext": "2876",
+        "desc": "OG Duty Doctor Room"
+      },
+      {
+        "ext": "2808",
+        "desc": "Unscreened Labour"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "ENT",
+    "extensions": [
+      {
+        "ext": "2060",
+        "desc": "ENT HOD/Stenotypist"
+      },
+      {
+        "ext": "2061",
+        "desc": "ENT Reception"
+      },
+      {
+        "ext": "2062",
+        "desc": "ENT Asso.p 1"
+      },
+      {
+        "ext": "2069",
+        "desc": "Audiometry"
+      },
+      {
+        "ext": "2067",
+        "desc": "Endoscopy"
+      },
+      {
+        "ext": "2066",
+        "desc": "BERA/OAE Room"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "Dermatology",
+    "extensions": [
+      {
+        "ext": "2070",
+        "desc": "Dermatology HOD"
+      },
+      {
+        "ext": "2071",
+        "desc": "Dermatology Reception"
+      },
+      {
+        "ext": "2027",
+        "desc": "Dermatology Consultation"
+      },
+      {
+        "ext": "2072",
+        "desc": "Dermatology Consultation"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "Psychiatry",
+    "extensions": [
+      {
+        "ext": "2080",
+        "desc": "Psychiatry HOD"
+      },
+      {
+        "ext": "2082",
+        "desc": "Psychiatry Consultation"
+      },
+      {
+        "ext": "2023",
+        "desc": "Psychiatry Consultation"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "Siddha",
+    "extensions": [
+      {
+        "ext": "2085",
+        "desc": "Siddha HOD"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "Labour",
+    "extensions": [
+      {
+        "ext": "2871",
+        "desc": "Labour Casualty"
+      },
+      {
+        "ext": "2875",
+        "desc": "Labour High Risk Room"
+      },
+      {
+        "ext": "2873",
+        "desc": "Clean Labour Room"
+      },
+      {
+        "ext": "2878",
+        "desc": "Labour OT"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "MRD",
+    "extensions": [
+      {
+        "ext": "2601",
+        "desc": "MRO"
+      },
+      {
+        "ext": "2602",
+        "desc": "MRD 1"
+      },
+      {
+        "ext": "2603",
+        "desc": "MRD 2"
+      },
+      {
+        "ext": "2604",
+        "desc": "MRD 3"
+      },
+      {
+        "ext": "2605",
+        "desc": "MRD 4"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "Billing",
+    "extensions": [
+      {
+        "ext": "2610",
+        "desc": "Billing Manager"
+      },
+      {
+        "ext": "2611",
+        "desc": "IP Billing 1"
+      },
+      {
+        "ext": "2612",
+        "desc": "IP Billing 2"
+      },
+      {
+        "ext": "2613",
+        "desc": "IP Billing 3"
+      },
+      {
+        "ext": "2609",
+        "desc": "Insurance"
+      },
+      {
+        "ext": "2614",
+        "desc": "Insurance"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "Physiotherapy",
+    "extensions": [
+      {
+        "ext": "2637",
+        "desc": "Physiotherapy HOD"
+      },
+      {
+        "ext": "2636",
+        "desc": "Physiotherapy"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "Pharmacy",
+    "extensions": [
+      {
+        "ext": "2656",
+        "desc": "Pharmacy"
+      },
+      {
+        "ext": "2635",
+        "desc": "OP Pharmacy"
+      },
+      {
+        "ext": "2135, 2136",
+        "desc": "IP Pharmacy"
+      },
+      {
+        "ext": "2801",
+        "desc": "Casualty Pharmacy"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "Lab Collection",
+    "extensions": [
+      {
+        "ext": "2007",
+        "desc": "EMS Collection"
+      },
+      {
+        "ext": "2809",
+        "desc": "GM Collection"
+      },
+      {
+        "ext": "2819",
+        "desc": "GS Collection"
+      },
+      {
+        "ext": "2849",
+        "desc": "OG Collection"
+      },
+      {
+        "ext": "2673",
+        "desc": "Ophthal Collection"
+      }
+    ]
+  },
+  {
+    "floor": "First Floor",
+    "dept": "ICU Billing",
+    "extensions": [
+      {
+        "ext": "2181",
+        "desc": "ICU Billing"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "CSSD",
+    "extensions": [
+      {
+        "ext": "2119",
+        "desc": "CSSD Incharge"
+      },
+      {
+        "ext": "2120",
+        "desc": "CSSD"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "Laboratory",
+    "extensions": [
+      {
+        "ext": "2123",
+        "desc": "LAB Director"
+      },
+      {
+        "ext": "2121",
+        "desc": "LAB Sample Reporting"
+      },
+      {
+        "ext": "2124",
+        "desc": "FNAC Room"
+      },
+      {
+        "ext": "2125",
+        "desc": "Cytology"
+      },
+      {
+        "ext": "2126",
+        "desc": "Clinical Microbiology"
+      },
+      {
+        "ext": "2127",
+        "desc": "Microbiology LAB"
+      },
+      {
+        "ext": "2128",
+        "desc": "PCR"
+      },
+      {
+        "ext": "2811",
+        "desc": "LAB Molecular Biology"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "Blood Bank",
+    "extensions": [
+      {
+        "ext": "2130",
+        "desc": "Blood Bank HOD"
+      },
+      {
+        "ext": "2131",
+        "desc": "Blood Bank"
+      },
+      {
+        "ext": "2132",
+        "desc": "Blood Bank Donor Collection"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "Anaesthesia &amp; Operation Theatre",
+    "extensions": [
+      {
+        "ext": "2111",
+        "desc": "Anaesthesia HOD"
+      },
+      {
+        "ext": "2114",
+        "desc": "Anaesthesia Secretary"
+      },
+      {
+        "ext": "2110",
+        "desc": "Pre OP"
+      },
+      {
+        "ext": "2112",
+        "desc": "Post OP"
+      },
+      {
+        "ext": "2113",
+        "desc": "OT Store"
+      },
+      {
+        "ext": "2114",
+        "desc": "Minor OT"
+      },
+      {
+        "ext": "2117",
+        "desc": "Anaesthetic Lounge"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "ICU",
+    "extensions": [
+      {
+        "ext": "2766",
+        "desc": "ICU Security"
+      },
+      {
+        "ext": "2156",
+        "desc": "ICU HOD"
+      },
+      {
+        "ext": "2163",
+        "desc": "TICU 1"
+      },
+      {
+        "ext": "2164",
+        "desc": "TICU II/ICU Ward Secretary"
+      },
+      {
+        "ext": "2160",
+        "desc": "PACU"
+      },
+      {
+        "ext": "2159",
+        "desc": "IMCU"
+      },
+      {
+        "ext": "2161",
+        "desc": "NICU"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "Admin Office",
+    "extensions": [
+      {
+        "ext": "2100",
+        "desc": "MD Room"
+      },
+      {
+        "ext": "2183",
+        "desc": "MD PA"
+      },
+      {
+        "ext": "2173",
+        "desc": "HR Senior Manager"
+      },
+      {
+        "ext": "2169",
+        "desc": "HR Jr Executive"
+      },
+      {
+        "ext": "2168",
+        "desc": "HR Assistant"
+      },
+      {
+        "ext": "2193",
+        "desc": "CFMS"
+      },
+      {
+        "ext": "2192",
+        "desc": "Maintenance Asst"
+      },
+      {
+        "ext": "2199",
+        "desc": "Maintenance &amp; Transport"
+      },
+      {
+        "ext": "2189",
+        "desc": "Accounts DGM"
+      },
+      {
+        "ext": "2175",
+        "desc": "Accountant"
+      },
+      {
+        "ext": "2174",
+        "desc": "Auditor"
+      },
+      {
+        "ext": "2170",
+        "desc": "Marketing"
+      },
+      {
+        "ext": "2225",
+        "desc": "DGM &amp; IT Head"
+      },
+      {
+        "ext": "2227",
+        "desc": "IT Manager"
+      },
+      {
+        "ext": "2226",
+        "desc": "IT Hardware Support"
+      },
+      {
+        "ext": "2228",
+        "desc": "IT Software Support"
+      },
+      {
+        "ext": "2770",
+        "desc": "PA Room"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "Specialty",
+    "extensions": [
+      {
+        "ext": "2150",
+        "desc": "Specialty Billing"
+      },
+      {
+        "ext": "2151",
+        "desc": "Neurology"
+      },
+      {
+        "ext": "2153",
+        "desc": "Plastic Surgery"
+      },
+      {
+        "ext": "2142",
+        "desc": "MHC 1"
+      },
+      {
+        "ext": "2143",
+        "desc": "MHC 2"
+      },
+      {
+        "ext": "2154",
+        "desc": "Urology OP"
+      },
+      {
+        "ext": "2149",
+        "desc": "Urology Consultation 1"
+      },
+      {
+        "ext": "2146",
+        "desc": "Urology Consultation 2"
+      },
+      {
+        "ext": "2148",
+        "desc": "Endoscopy"
+      },
+      {
+        "ext": "2147",
+        "desc": "Ophthal Investigations Room"
+      },
+      {
+        "ext": "2145",
+        "desc": "Ophthal HOD"
+      },
+      {
+        "ext": "2140",
+        "desc": "Ophthal Laser Room"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "Cardiology OP",
+    "extensions": [
+      {
+        "ext": "2813",
+        "desc": "Cardiology OP"
+      },
+      {
+        "ext": "2814",
+        "desc": "Cardiology Billing"
+      },
+      {
+        "ext": "2815",
+        "desc": "Cardiology Echo"
+      },
+      {
+        "ext": "2816",
+        "desc": "Cardiology Doctor"
+      },
+      {
+        "ext": "2817",
+        "desc": "Cardiology Collection"
+      }
+    ]
+  },
+  {
+    "floor": "Second Floor",
+    "dept": "Shree Surgicals",
+    "extensions": [
+      {
+        "ext": "2201",
+        "desc": "Shree Surgicals Billing"
+      },
+      {
+        "ext": "2202",
+        "desc": "Second Floor Billing"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "Paediatrics",
+    "extensions": [
+      {
+        "ext": "2230",
+        "desc": "Paediatric HOD"
+      },
+      {
+        "ext": "2231",
+        "desc": "Paediatric Stenotypist"
+      },
+      {
+        "ext": "2232",
+        "desc": "Paediatric Ward"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "Ophthal",
+    "extensions": [
+      {
+        "ext": "2270",
+        "desc": "Ophthal Steno"
+      },
+      {
+        "ext": "2271",
+        "desc": "Ophthal DBCS Room"
+      },
+      {
+        "ext": "2287",
+        "desc": "Ophthal Ward"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "ENT Ward",
+    "extensions": [
+      {
+        "ext": "2289",
+        "desc": "ENT Stenotypist"
+      },
+      {
+        "ext": "2234",
+        "desc": "ENT Ward"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "Gynaecology &amp; Obstetric",
+    "extensions": [
+      {
+        "ext": "2251",
+        "desc": "GYNAEC HOD"
+      },
+      {
+        "ext": "2252",
+        "desc": "GYNAEC Stenotypist"
+      },
+      {
+        "ext": "2284, 2285",
+        "desc": "Gynaecology &amp; Obstetric Ward"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "Surgery Ward",
+    "extensions": [
+      {
+        "ext": "2354, 2355",
+        "desc": "Male Surgery Ward"
+      },
+      {
+        "ext": "2353",
+        "desc": "Female Surgery Ward"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "PG/CRRI Duty Room",
+    "extensions": [
+      {
+        "ext": "2273",
+        "desc": "PG/CRRI Male Doctor Duty Room"
+      },
+      {
+        "ext": "2274",
+        "desc": "PG/CRRI Male Doctor Duty Room"
+      },
+      {
+        "ext": "2275",
+        "desc": "PG/CRRI Female Doctor Duty Room"
+      },
+      {
+        "ext": "2276",
+        "desc": "PG/CRRI Female Doctor Duty Room"
+      }
+    ]
+  },
+  {
+    "floor": "Third Floor",
+    "dept": "MD",
+    "extensions": [
+      {
+        "ext": "2300",
+        "desc": "Medical Director"
+      },
+      {
+        "ext": "2334",
+        "desc": "MD PA"
+      },
+      {
+        "ext": "2333",
+        "desc": "Dean Room"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "Quality",
+    "extensions": [
+      {
+        "ext": "2380",
+        "desc": "Quality Manager"
+      },
+      {
+        "ext": "2381",
+        "desc": "Quality Team"
+      },
+      {
+        "ext": "2382",
+        "desc": "Quality Team"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "NS Office",
+    "extensions": [
+      {
+        "ext": "2377",
+        "desc": "Nursing Superintendent"
+      },
+      {
+        "ext": "2378",
+        "desc": "NS Office"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "Surgery",
+    "extensions": [
+      {
+        "ext": "2320",
+        "desc": "GS HOD"
+      },
+      {
+        "ext": "2321",
+        "desc": "GS Stenotypist"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "Ortho Ward",
+    "extensions": [
+      {
+        "ext": "2340",
+        "desc": "Ortho HOD"
+      },
+      {
+        "ext": "2341",
+        "desc": "Ortho Stenotypist"
+      },
+      {
+        "ext": "2342",
+        "desc": "Ortho Male Ward"
+      },
+      {
+        "ext": "2343",
+        "desc": "Ortho Female Ward"
+      }
+    ]
+  },
+  {
+    "floor": "Fourth Floor",
+    "dept": "House Keeping",
+    "extensions": [
+      {
+        "ext": "2400",
+        "desc": "House Keeping HOD"
+      },
+      {
+        "ext": "2401",
+        "desc": "House Keeping 1"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "General Medicine Ward",
+    "extensions": [
+      {
+        "ext": "2010",
+        "desc": "General Medicine HOD"
+      },
+      {
+        "ext": "2011",
+        "desc": "GM Reception"
+      },
+      {
+        "ext": "2015",
+        "desc": "Consultation I"
+      },
+      {
+        "ext": "2016",
+        "desc": "Consultation II"
+      },
+      {
+        "ext": "2410",
+        "desc": "GM HOD"
+      },
+      {
+        "ext": "2411",
+        "desc": "GM Stenotypist"
+      },
+      {
+        "ext": "2412",
+        "desc": "Male Medicine Ward"
+      },
+      {
+        "ext": "2485",
+        "desc": "Female Medicine Ward"
+      }
+    ]
+  },
+  {
+    "floor": "Fifth Floor",
+    "dept": "Biomedical",
+    "extensions": [
+      {
+        "ext": "2535",
+        "desc": "Biomedical HOD"
+      },
+      {
+        "ext": "2536",
+        "desc": "Biomedical Engg"
+      },
+      {
+        "ext": "2537",
+        "desc": "Biomedical Engg"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "Cardiology",
+    "extensions": [
+      {
+        "ext": "2510",
+        "desc": "Cardiology HOD"
+      },
+      {
+        "ext": "2508",
+        "desc": "Cardiology LAB"
+      },
+      {
+        "ext": "2509",
+        "desc": "Cardiology LAB"
+      },
+      {
+        "ext": "2511",
+        "desc": "Cardiology Billing"
+      },
+      {
+        "ext": "2513",
+        "desc": "Echo"
+      },
+      {
+        "ext": "2514",
+        "desc": "CTVS"
+      },
+      {
+        "ext": "2515",
+        "desc": "Cath LAB"
+      },
+      {
+        "ext": "2516",
+        "desc": "Cath LAB"
+      },
+      {
+        "ext": "2517",
+        "desc": "Cath LAB"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "Dialysis",
+    "extensions": [
+      {
+        "ext": "2520",
+        "desc": "Nephro HOD"
+      },
+      {
+        "ext": "2521",
+        "desc": "Nephro OPD"
+      },
+      {
+        "ext": "2528",
+        "desc": "Dialysis Billing"
+      },
+      {
+        "ext": "2526",
+        "desc": "Dialysis Incharge"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "Organ Transplant",
+    "extensions": [
+      {
+        "ext": "2530",
+        "desc": "Organ Transplant"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "Special Ward",
+    "extensions": [
+      {
+        "ext": "2548",
+        "desc": "Special Ward Billing"
+      },
+      {
+        "ext": "2549",
+        "desc": "Special Ward Reception 1"
+      },
+      {
+        "ext": "2550",
+        "desc": "Special Ward Reception 2"
+      },
+      {
+        "ext": "2591",
+        "desc": "Suite Room 1"
+      },
+      {
+        "ext": "2592",
+        "desc": "Suite Room 2"
+      },
+      {
+        "ext": "2593",
+        "desc": "Suite Room 3"
+      },
+      {
+        "ext": "2551",
+        "desc": "Deluxe Room 1"
+      },
+      {
+        "ext": "2552",
+        "desc": "Deluxe Room 2"
+      },
+      {
+        "ext": "2553",
+        "desc": "Deluxe Room 3"
+      },
+      {
+        "ext": "2554",
+        "desc": "Deluxe Room 4"
+      },
+      {
+        "ext": "2555",
+        "desc": "Deluxe Room 5"
+      },
+      {
+        "ext": "2556",
+        "desc": "Deluxe Room 6"
+      },
+      {
+        "ext": "2557",
+        "desc": "Deluxe Room 7"
+      },
+      {
+        "ext": "2558",
+        "desc": "Deluxe Room 8"
+      },
+      {
+        "ext": "2559",
+        "desc": "Deluxe Room 9"
+      },
+      {
+        "ext": "2560",
+        "desc": "Deluxe Room 10"
+      },
+      {
+        "ext": "2561",
+        "desc": "Deluxe Room 11"
+      },
+      {
+        "ext": "2562",
+        "desc": "Deluxe Room 12"
+      },
+      {
+        "ext": "2563",
+        "desc": "Deluxe Room 13"
+      },
+      {
+        "ext": "2564",
+        "desc": "Deluxe Room 14"
+      },
+      {
+        "ext": "2565",
+        "desc": "Deluxe Room 15"
+      },
+      {
+        "ext": "2566",
+        "desc": "Deluxe Room 16"
+      },
+      {
+        "ext": "2567",
+        "desc": "Deluxe Room 17"
+      },
+      {
+        "ext": "2568",
+        "desc": "Deluxe Room 18"
+      },
+      {
+        "ext": "2569",
+        "desc": "Deluxe Room 19"
+      },
+      {
+        "ext": "2570",
+        "desc": "Deluxe Room 20"
+      },
+      {
+        "ext": "2571",
+        "desc": "Deluxe Room 21"
+      },
+      {
+        "ext": "2572",
+        "desc": "Deluxe Room 22"
+      },
+      {
+        "ext": "2574",
+        "desc": "Deluxe Room 24"
+      },
+      {
+        "ext": "2575",
+        "desc": "Deluxe Room 25"
+      }
+    ]
+  },
+  {
+    "floor": "Service Block",
+    "dept": "Purchase",
+    "extensions": [
+      {
+        "ext": "2702",
+        "desc": "Purchase Manager"
+      },
+      {
+        "ext": "2701",
+        "desc": "Purchase Stores I"
+      },
+      {
+        "ext": "2711",
+        "desc": "Purchase Stores II"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "Laundry",
+    "extensions": [
+      {
+        "ext": "2704",
+        "desc": "Laundry AGM"
+      },
+      {
+        "ext": "2703",
+        "desc": "Laundry Technician"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "Maintenance",
+    "extensions": [
+      {
+        "ext": "2705",
+        "desc": "Air Conditioning"
+      },
+      {
+        "ext": "2706",
+        "desc": "Gas Plant"
+      },
+      {
+        "ext": "2707",
+        "desc": "Carpentor/Plumber"
+      },
+      {
+        "ext": "2709",
+        "desc": "Maintenance 1"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "ART",
+    "extensions": [
+      {
+        "ext": "2712",
+        "desc": "ART Reception"
+      },
+      {
+        "ext": "2713",
+        "desc": "ART Senior Medical Officer"
+      },
+      {
+        "ext": "2714",
+        "desc": "ART Medical Officer"
+      },
+      {
+        "ext": "2715",
+        "desc": "ART Consulting"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "Security",
+    "extensions": [
+      {
+        "ext": "2767",
+        "desc": "A Zone Security"
+      },
+      {
+        "ext": "2768",
+        "desc": "B Zone Security"
+      },
+      {
+        "ext": "2769",
+        "desc": "C Zone Security"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "A Zone",
+    "extensions": [
+      {
+        "ext": "2751",
+        "desc": "Lift 4"
+      },
+      {
+        "ext": "2752",
+        "desc": "Lift 5"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "B Zone",
+    "extensions": [
+      {
+        "ext": "2753",
+        "desc": "Lift 1"
+      },
+      {
+        "ext": "2754",
+        "desc": "Lift 2"
+      },
+      {
+        "ext": "2755",
+        "desc": "Lift 3"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "C Zone",
+    "extensions": [
+      {
+        "ext": "2759",
+        "desc": "Lift 8"
+      },
+      {
+        "ext": "2758",
+        "desc": "Lift 9"
+      }
+    ]
+  },
+  {
+    "floor": "",
+    "dept": "Service Lift",
+    "extensions": [
+      {
+        "ext": "2756",
+        "desc": "Lift 6"
+      },
+      {
+        "ext": "2757",
+        "desc": "Lift 7"
+      }
+    ]
+  }
+]

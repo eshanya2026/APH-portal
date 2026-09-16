@@ -193,7 +193,8 @@
             border-radius: var(--radius);
             border: 1px solid var(--border);
             box-shadow: var(--shadow);
-            overflow: hidden;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         table {
@@ -341,10 +342,18 @@
         </div>
     </header>
     <div class="page-wrap">
-        <header class="page-header">
-            <span class="page-kicker">Quality Governance</span>
-            <h1 class="page-title">APH Manuals</h1>
-            <p class="page-subtitle">NABH documentation, clinical manuals &amp; policies</p>
+        <header class="page-header" style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
+            <div>
+                <span class="page-kicker">Quality Governance</span>
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <h1 class="page-title" style="margin: 0;">APH Manuals</h1>
+                    <span id="manuals-badge" class="new-badge" style="margin: 0; background: #EFF6FF; color: #1D4ED8; border-color: #BFDBFE;">267 Manuals</span>
+                </div>
+                <p class="page-subtitle" style="margin-top: 0.25rem;">NABH documentation, clinical manuals &amp; policies</p>
+            </div>
+            <div style="width: 100%; max-width: 320px;">
+                <input type="text" id="manual-search" placeholder="Search manuals, policies, SOPs..." style="width: 100%; padding: 0.6rem 1rem; border-radius: 12px; border: 1px solid var(--border); font-size: 0.85rem; font-family: inherit; outline: none; background: #fff; box-shadow: var(--shadow);">
+            </div>
         </header>
 
         <!-- LEVEL 1 -->
@@ -2152,19 +2161,22 @@
 
     </div><!-- /.page-wrap -->
 
+    <!-- Page Auto Refresh Script -->
+    <script src="assets/js/pageRefresh.js"></script>
+
     <!-- ================= JS ================= -->
     <script>
-
         const levelTabs = document.querySelectorAll('.level1-tabs .tab');
         const subTabs = document.querySelectorAll('.level2-tabs .sub-tab');
         const contents = document.querySelectorAll('.tab-content');
+        const searchInput = document.getElementById('manual-search');
 
         let currentLevel = "5";
+        let manualsData = null;
 
         // LEVEL 1
         levelTabs.forEach(tab => {
             tab.addEventListener('click', () => {
-
                 levelTabs.forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
 
@@ -2176,15 +2188,16 @@
                 });
 
                 const firstSub = document.querySelector(`.sub-tab[data-parent="${currentLevel}"]`);
-                firstSub.classList.add('active');
-                showContent(currentLevel, firstSub.dataset.tab);
+                if (firstSub) {
+                    firstSub.classList.add('active');
+                    showContent(currentLevel, firstSub.dataset.tab);
+                }
             });
         });
 
         // LEVEL 2
         subTabs.forEach(st => {
             st.addEventListener('click', () => {
-
                 if (st.dataset.parent !== currentLevel) return;
 
                 subTabs.forEach(t => t.classList.remove('active'));
@@ -2197,14 +2210,103 @@
         function showContent(level, tab) {
             contents.forEach(c => c.hidden = true);
             const active = document.querySelector(`[data-content="${level}-${tab}"]`);
-            if (active) active.hidden = false;
+            if (active) {
+                active.hidden = false;
+                if (searchInput && searchInput.value.trim() !== '') {
+                    filterActiveTable();
+                }
+            }
         }
+
+        // Search Filter
+        function filterActiveTable() {
+            if (!searchInput) return;
+            const q = searchInput.value.toLowerCase().trim();
+            const activeSection = document.querySelector('.tab-content:not([hidden])');
+            if (!activeSection) return;
+
+            const rows = activeSection.querySelectorAll('table tbody tr:not(.no-match-row), table tr:not(:first-child):not(.no-match-row)');
+            let matches = 0;
+            rows.forEach(r => {
+                const match = r.textContent.toLowerCase().includes(q);
+                r.style.display = match ? '' : 'none';
+                if (match) matches++;
+            });
+
+            let noMatch = activeSection.querySelector('.no-match-row');
+            if (matches === 0 && rows.length > 0) {
+                if (!noMatch) {
+                    noMatch = document.createElement('tr');
+                    noMatch.className = 'no-match-row';
+                    noMatch.innerHTML = `<td colspan="2" style="text-align:center; padding: 2.5rem 1rem; color: #64748B; font-weight: 500;">No manuals found in this category matching "${searchInput.value}"</td>`;
+                    const tbody = activeSection.querySelector('tbody') || activeSection.querySelector('table');
+                    if (tbody) tbody.appendChild(noMatch);
+                }
+            } else if (noMatch) {
+                noMatch.remove();
+            }
+        }
+
+        if (searchInput) {
+            searchInput.addEventListener('input', filterActiveTable);
+        }
+
+        // Dynamic JSON Loader
+        function renderManualsSection(key) {
+            if (!manualsData || !manualsData[key]) return;
+            const section = document.querySelector(`[data-content="${key}"]`);
+            if (!section) return;
+            const items = manualsData[key];
+            const table = section.querySelector('table');
+            if (!table) return;
+
+            table.innerHTML = `
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Document</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${items.map(item => `
+                        <tr>
+                            <td>
+                                ${item.title}
+                                ${item.isNew ? ' <span class="new-badge">New</span>' : ''}
+                            </td>
+                            <td>
+                                <a target="_blank" class="doc-link" href="${item.url}">View</a>
+                            </td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            `;
+        }
+
+        function renderAllManuals() {
+            if (!manualsData) return;
+            Object.keys(manualsData).forEach(key => renderManualsSection(key));
+            const total = Object.values(manualsData).reduce((sum, arr) => sum + arr.length, 0);
+            const badge = document.getElementById('manuals-badge');
+            if (badge) badge.textContent = `${total} Manuals`;
+            if (searchInput && searchInput.value.trim() !== '') {
+                filterActiveTable();
+            }
+        }
+
+        fetch('data/manuals.json')
+            .then(res => {
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                return res.json();
+            })
+            .then(data => {
+                manualsData = data;
+                renderAllManuals();
+            })
+            .catch(err => console.warn('Using embedded fallback for manuals:', err));
 
         // INIT
         document.querySelector('.tab.active').click();
-
     </script>
-
 </body>
-
 </html>
