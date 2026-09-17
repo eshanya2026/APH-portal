@@ -9,6 +9,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .form-card p {
+      display: none !important;
+    }
+  </style>
 </head>
 <body class="bg-slate-50 text-slate-900 font-['Plus_Jakarta_Sans',sans-serif] min-h-screen flex flex-col">
 
@@ -371,7 +376,6 @@
                     <span class="text-[11px] font-bold text-slate-400">PDF</span>
                   </div>
                   <h3 class="font-bold text-slate-900 text-base mb-1">${f.name}</h3>
-                  <p class="text-xs text-slate-500 leading-relaxed">${f.desc || 'Official HR document'}</p>
                 </div>
                 <a href="${f.url}" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
                   <span>Open PDF Document</span> &rarr;

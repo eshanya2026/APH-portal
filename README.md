@@ -23,7 +23,7 @@ A centralized, responsive enterprise intranet portal designed for **Adhiparasakt
   - [4. Standardized Forms & Requisitions Vault](#4-standardized-forms--requisitions-vault)
   - [5. Intercom & Telephony Directory](#5-intercom--telephony-directory)
   - [6. Digital Circulars & Transparency Data](#6-digital-circulars--transparency-data)
-  - [7. Employee Help Desk & Feedback](#7-employee-help-desk--feedback)
+  - [7. Quick Help & Contacts (Help Desk)](#7-quick-help--contacts-help-desk)
 - [Intranet Network Configuration](#-intranet-network-configuration)
 - [Maintenance & Development Guidelines](#-maintenance--development-guidelines)
 - [Institution Details](#-institution-details)
@@ -183,8 +183,8 @@ Categorized repository of official, uneditable hospital forms:
 - **Blood Bank Stocks**: Live inventory status of PRBC, FFP, Platelets, and rare group reserves.
 - **Hospital Billing Tariff & Formulary**: Detailed package rates and essential medicine drug lists.
 
-### 7. Employee Help Desk & Feedback
-- Centered digital form on the homepage connected to the Hospital Administration via Web3Forms API.
+### 7. Quick Help & Contacts (Help Desk)
+- Centered digital form on the homepage routed directly to IT Management (`itmgmt@mapims.edu.in`) via Web3Forms API.
 - Captures Employee Name, Official Email, Employee ID, Extension, and detailed feedback or facility issue notes.
 
 ---

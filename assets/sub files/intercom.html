@@ -10,24 +10,37 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-slate-50 text-slate-900 font-['Plus_Jakarta_Sans',sans-serif] min-h-screen flex flex-col">
-  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-      <a href="../../index.html" class="flex items-center gap-2 text-slate-600 hover:text-blue-600 transition-colors text-sm font-semibold">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-        <span>Back to Main Portal</span>
-      </a>
-      <a href="../../Intercom%20Directory.pdf" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-red-50 text-red-700 text-xs font-bold hover:bg-red-100 transition-colors">
-        Official PDF Directory &rarr;
-      </a>
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-xs">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <a href="../../index.html" class="flex items-center gap-2 group">
+          <img src="../../assets/images/logo2%20(1).png" alt="Adhiparasakthi Hospitals" class="h-8 sm:h-9 w-auto object-contain transition-transform group-hover:scale-105" />
+        </a>
+        <span class="hidden sm:inline-block h-4 w-px bg-slate-200"></span>
+        <a href="../../index.html" class="hidden sm:flex items-center gap-1.5 text-slate-600 hover:text-blue-600 transition-colors text-xs font-semibold">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+          <span>Back to Main Portal</span>
+        </a>
+      </div>
+      <div class="flex items-center gap-2">
+        <a href="../../intercom.html" class="px-3 py-1.5 rounded-lg bg-blue-50 text-blue-700 text-xs font-bold hover:bg-blue-100 transition-colors">
+          Searchable Directory &rarr;
+        </a>
+      </div>
     </div>
   </header>
 
-  <div class="bg-[#0b1021] text-white py-12 px-4 sm:px-6">
-    <div class="max-w-4xl mx-auto text-center">
-      <span class="inline-block px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 text-xs font-extrabold uppercase tracking-wider mb-3">INTERNAL TELEPHONY DIRECTORY</span>
-      <h1 class="text-2xl sm:text-4xl font-extrabold mb-3 tracking-tight">Campus Intercoms Directory</h1>
-      <p class="text-xs sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
-        Priority emergency lines, casualty extensions, intensive care units, and department intercom numbers.
+  <div class="bg-[#0b1021] text-white py-5 px-4 sm:px-6">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div>
+        <div class="flex items-center gap-2 mb-1">
+          <span class="inline-block px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 text-[10px] font-extrabold uppercase tracking-wider">INTERNAL TELEPHONY</span>
+          <span class="text-xs text-slate-400 font-medium">&bull; Intercom Directory.pdf</span>
+        </div>
+        <h1 class="text-lg sm:text-2xl font-extrabold tracking-tight">Campus Intercom Directory</h1>
+      </div>
+      <p class="text-xs text-slate-400 max-w-md leading-relaxed">
+        Priority emergency lines, casualty extensions, ICUs, and department intercom numbers.
       </p>
     </div>
   </div>

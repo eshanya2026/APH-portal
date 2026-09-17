@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,27 +9,53 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 5rem;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .form-card {
+        transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), 
+                    box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1), 
+                    border-color 0.2s ease !important;
+        will-change: transform, box-shadow;
+      }
+      .form-card:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 10px 25px -3px rgba(15, 23, 42, 0.09), 0 4px 12px -2px rgba(15, 23, 42, 0.04) !important;
+        border-color: #94a3b8 !important;
+      }
+    }
+    /* Hide individual form descriptions */
+    .form-card p {
+      display: none !important;
+    }
+  </style>
 </head>
 <body class="bg-slate-50 text-slate-900 font-['Plus_Jakarta_Sans',sans-serif] min-h-screen flex flex-col">
 
-  <!-- Sticky Header -->
-  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+  <!-- Static Fixed Header -->
+  <header class="fixed top-0 left-0 right-0 z-30 bg-white border-b border-slate-200 shadow-sm">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-      <a href="./index.html#forms" class="flex items-center gap-2 text-slate-600 hover:text-amber-600 transition-colors text-sm font-semibold">
+      <a href="./index.html#forms" class="flex items-center gap-2 text-slate-600 hover:text-[#921111] transition-colors text-sm font-semibold">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
         <span>Back to Main Portal</span>
       </a>
       <div class="flex items-center gap-2">
         <span class="text-xs text-slate-500 font-medium hidden sm:inline">Clinical &amp; Facility Indents</span>
-        <span class="px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 text-[11px] font-bold">44 Approved Documents</span>
+        <span class="px-2.5 py-1 rounded-full bg-[#921111]/10 text-[#921111] text-[11px] font-bold">44 Approved Documents</span>
       </div>
     </div>
   </header>
 
+  <!-- Reserved Height Spacer for Fixed Header -->
+  <div class="h-16 w-full shrink-0" aria-hidden="true"></div>
+
   <!-- Hero Header -->
   <div class="bg-[#0b1021] text-white py-10 sm:py-12 px-4 sm:px-6">
     <div class="max-w-4xl mx-auto text-center">
-      <span class="inline-block px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-extrabold uppercase tracking-wider mb-3">
+      <span class="inline-block px-3 py-1 rounded-full bg-[#921111]/25 text-rose-200 border border-[#921111]/40 text-xs font-extrabold uppercase tracking-wider mb-3">
         STANDARDIZED CLINICAL TEMPLATES &amp; POLICIES
       </span>
       <h1 class="text-2xl sm:text-4xl font-extrabold mb-3 tracking-tight">Common Hospital Forms &amp; Protocols</h1>
@@ -51,17 +77,17 @@
             type="text" 
             id="searchInput" 
             placeholder="Search forms, drugs, policies..." 
-            class="w-full pl-10 pr-4 py-2 text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all"
+            class="w-full pl-10 pr-4 py-2 text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#921111]/20 focus:border-[#921111] transition-all"
           />
         </div>
         <div class="text-xs text-slate-500 font-medium">
-          Showing <span id="visibleCount" class="font-bold text-slate-800">44</span> of 44 documents
+          Showing <span id="visibleCount" class="font-bold text-slate-800">44</span> of <span id="totalFormsCount">44</span> documents
         </div>
       </div>
 
       <!-- Category Filter Pills -->
       <div class="flex flex-wrap gap-1.5 sm:gap-2 pt-2 border-t border-slate-100" id="filterTabs">
-        <button data-filter="all" class="filter-btn active px-3 py-1.5 rounded-lg text-xs font-semibold bg-amber-600 text-white transition-all">All (44)</button>
+        <button data-filter="all" class="filter-btn active px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#921111] text-white transition-all">All (44)</button>
         <button data-filter="icu" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all">ICU &amp; Critical Care (6)</button>
         <button data-filter="pharmacy" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all">Pharmacy &amp; Safety (12)</button>
         <button data-filter="emergency" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all">Emergency &amp; Day Care (8)</button>
@@ -76,7 +102,37 @@
 
       <!-- ================= 1. ICU & CRITICAL CARE ================= -->
       
-      <!-- 1. ICU Casesheet Checklist -->
+      <!-- 1. Code Blue Protocol -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-blue-300 hover:shadow-md transition-all" data-category="icu" data-search="code blue resuscitation emergency protocol team roles crash cart">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-blue-700 bg-blue-50 px-2.5 py-1 rounded-lg">RESUSCITATION</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Code Blue</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Cardiac arrest emergency response algorithm &amp; protocol, duty team responsibilities, and emergency algorithm.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/Code.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-blue-700 hover:bg-blue-800 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 2. Code Blue Post Event Analysis Form -->
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-blue-300 hover:shadow-md transition-all" data-category="icu" data-search="code blue post event analysis form resuscitation audit cpr debrief">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2.5 py-1 rounded-lg">RESUSCITATION AUDIT</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Code Blue Post Event Analysis Form</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">CPR event debrief, timeline audit &amp; resuscitation analysis, defibrillation records, and clinical audit documentation.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/Code%20Blue%20Post%20Event%20Analysis%20Form.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 3. ICU Casesheet Checklist -->
       <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-blue-300 hover:shadow-md transition-all" data-category="icu" data-search="icu casesheet checklist intensive care patient monitoring audit">
         <div class="mb-4">
           <div class="flex items-center justify-between mb-2">
@@ -86,12 +142,12 @@
           <h3 class="font-bold text-slate-900 text-base mb-1">ICU Casesheet Checklist</h3>
           <p class="text-xs text-slate-500 leading-relaxed">Comprehensive clinical casesheet audit checklist for intensive care patient monitoring and quality adherence.</p>
         </div>
-        <a href="http://192.168.101.75:3000/files/ICU Casesheet Checklist.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+        <a href="http://192.168.101.75:3000/files/ICU%20Casesheet%20Checklist.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
           <span>Open PDF Document</span> &rarr;
         </a>
       </div>
 
-      <!-- 2. ICU to Ward Shifting Criteria Checklist -->
+      <!-- 4. ICU to Ward Shifting Criteria Checklist -->
       <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-blue-300 hover:shadow-md transition-all" data-category="icu" data-search="icu to ward shifting criteria checklist patient transfer step down">
         <div class="mb-4">
           <div class="flex items-center justify-between mb-2">
@@ -101,12 +157,12 @@
           <h3 class="font-bold text-slate-900 text-base mb-1">ICU to Ward Shifting Criteria Checklist</h3>
           <p class="text-xs text-slate-500 leading-relaxed">Standard clinical step-down stability criteria and vital sign checklist prior to transferring patients to inpatient wards.</p>
         </div>
-        <a href="http://192.168.101.75:3000/files/ICU to Ward Shifting Criteria Checklist.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+        <a href="http://192.168.101.75:3000/files/ICU%20to%20Ward%20Shifting%20Criteria%20Checklist.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
           <span>Open PDF Document</span> &rarr;
         </a>
       </div>
 
-      <!-- 3. HANDING OVER SBAR -->
+      <!-- 5. HANDING OVER SBAR -->
       <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-indigo-300 hover:shadow-md transition-all" data-category="icu" data-search="handing over sbar clinical handover nursing doctors situation background assessment recommendation">
         <div class="mb-4">
           <div class="flex items-center justify-between mb-2">
@@ -116,12 +172,12 @@
           <h3 class="font-bold text-slate-900 text-base mb-1">HANDING OVER SBAR</h3>
           <p class="text-xs text-slate-500 leading-relaxed">Standard Situation, Background, Assessment, and Recommendation structured clinical shift handover documentation.</p>
         </div>
-        <a href="http://192.168.101.75:3000/files/HANDING OVER SBAR.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+        <a href="http://192.168.101.75:3000/files/HANDING%20OVER%20SBAR.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
           <span>Open PDF Document</span> &rarr;
         </a>
       </div>
 
-      <!-- 4. Modified Early Warning Score (MEWS) -->
+      <!-- 6. Modified Early Warning Score (MEWS) -->
       <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-sky-300 hover:shadow-md transition-all" data-category="icu" data-search="modified early warning score mews triage clinical scoring vitals deterioration">
         <div class="mb-4">
           <div class="flex items-center justify-between mb-2">
@@ -131,37 +187,7 @@
           <h3 class="font-bold text-slate-900 text-base mb-1">Modified Early Warning Score (MEWS)</h3>
           <p class="text-xs text-slate-500 leading-relaxed">Bedside physiological scoring chart for early detection of clinical deterioration and prompt critical care escalation.</p>
         </div>
-        <a href="http://192.168.101.75:3000/files/MODIFIED EARLY WARNING SCORE (1).pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-sky-600 hover:bg-sky-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
-          <span>Open PDF Document</span> &rarr;
-        </a>
-      </div>
-
-      <!-- 5. Code Blue Protocol -->
-      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-blue-300 hover:shadow-md transition-all" data-category="icu" data-search="code blue resuscitation emergency protocol team roles crash cart">
-        <div class="mb-4">
-          <div class="flex items-center justify-between mb-2">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-blue-700 bg-blue-50 px-2.5 py-1 rounded-lg">RESUSCITATION</span>
-            <span class="text-[11px] font-bold text-slate-400">PDF</span>
-          </div>
-          <h3 class="font-bold text-slate-900 text-base mb-1">Code Blue Resuscitation Protocol</h3>
-          <p class="text-xs text-slate-500 leading-relaxed">Hospital-wide cardiac arrest rapid response protocol, duty team responsibilities, and emergency algorithm.</p>
-        </div>
-        <a href="http://192.168.101.75:3000/files/Code.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-blue-700 hover:bg-blue-800 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
-          <span>Open PDF Document</span> &rarr;
-        </a>
-      </div>
-
-      <!-- 6. Code Blue Post Event Analysis Form -->
-      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-blue-300 hover:shadow-md transition-all" data-category="icu" data-search="code blue post event analysis form resuscitation audit cpr debrief">
-        <div class="mb-4">
-          <div class="flex items-center justify-between mb-2">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2.5 py-1 rounded-lg">RESUSCITATION AUDIT</span>
-            <span class="text-[11px] font-bold text-slate-400">PDF</span>
-          </div>
-          <h3 class="font-bold text-slate-900 text-base mb-1">Code Blue Post Event Analysis Form</h3>
-          <p class="text-xs text-slate-500 leading-relaxed">Post-event team debrief, CPR timeline verification, defibrillation records, and clinical audit documentation.</p>
-        </div>
-        <a href="http://192.168.101.75:3000/files/Code Blue Post Event Analysis Form.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+        <a href="http://192.168.101.75:3000/files/MODIFIED%20EARLY%20WARNING%20SCORE%20(1).pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-sky-600 hover:bg-sky-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
           <span>Open PDF Document</span> &rarr;
         </a>
       </div>
@@ -259,16 +285,16 @@
       </div>
 
       <!-- 13. 48 Hour Antibiotics Review Form -->
-      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-amber-300 hover:shadow-md transition-all" data-category="pharmacy" data-search="48 hour antibiotics review form antimicrobial stewardship de-escalation">
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-[#921111]/40 hover:shadow-md transition-all" data-category="pharmacy" data-search="48 hour antibiotics review form antimicrobial stewardship de-escalation">
         <div class="mb-4">
           <div class="flex items-center justify-between mb-2">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-amber-600 bg-amber-50 px-2.5 py-1 rounded-lg">ANTIMICROBIAL STEWARDSHIP</span>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-[#921111] bg-[#921111]/10 px-2.5 py-1 rounded-lg">ANTIMICROBIAL STEWARDSHIP</span>
             <span class="text-[11px] font-bold text-slate-400">PDF</span>
           </div>
           <h3 class="font-bold text-slate-900 text-base mb-1">48 Hour Antibiotics Review From</h3>
           <p class="text-xs text-slate-500 leading-relaxed">Mandatory clinical re-assessment and culture-directed de-escalation review sheet for broad-spectrum antibiotics.</p>
         </div>
-        <a href="http://192.168.101.75:3000/files/48 Hour Antibiotics Review From.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+        <a href="http://192.168.101.75:3000/files/48 Hour Antibiotics Review From.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-[#921111] hover:bg-[#780e0e] text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
           <span>Open PDF Document</span> &rarr;
         </a>
       </div>
@@ -319,31 +345,31 @@
       </div>
 
       <!-- 17. Restricted Anti-biotic Form -->
-      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-amber-300 hover:shadow-md transition-all" data-category="pharmacy" data-search="restricted anti-biotic form hic reserve antibiotics justification approval">
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-[#921111]/40 hover:shadow-md transition-all" data-category="pharmacy" data-search="restricted anti-biotic form hic reserve antibiotics justification approval">
         <div class="mb-4">
           <div class="flex items-center justify-between mb-2">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-amber-600 bg-amber-50 px-2.5 py-1 rounded-lg">ANTIBIOTIC JUSTIFICATION</span>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-[#921111] bg-[#921111]/10 px-2.5 py-1 rounded-lg">ANTIBIOTIC JUSTIFICATION</span>
             <span class="text-[11px] font-bold text-slate-400">PDF</span>
           </div>
           <h3 class="font-bold text-slate-900 text-base mb-1">Restricted Anti-biotic Form</h3>
           <p class="text-xs text-slate-500 leading-relaxed">Hospital Infection Control Committee (HICC) pre-authorization and clinical justification requisition slip.</p>
         </div>
-        <a href="http://192.168.101.75:3000/files/HIC.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+        <a href="http://192.168.101.75:3000/files/HIC.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-[#921111] hover:bg-[#780e0e] text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
           <span>Open PDF Document</span> &rarr;
         </a>
       </div>
 
       <!-- 18. Restricted Anti-biotic Drug List -->
-      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-amber-300 hover:shadow-md transition-all" data-category="pharmacy" data-search="restricted anti-biotic drug list reserve formulary hicc">
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-[#921111]/40 hover:shadow-md transition-all" data-category="pharmacy" data-search="restricted anti-biotic drug list reserve formulary hicc">
         <div class="mb-4">
           <div class="flex items-center justify-between mb-2">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-amber-600 bg-amber-50 px-2.5 py-1 rounded-lg">ANTIBIOTIC FORMULARY</span>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-[#921111] bg-[#921111]/10 px-2.5 py-1 rounded-lg">ANTIBIOTIC FORMULARY</span>
             <span class="text-[11px] font-bold text-slate-400">PDF</span>
           </div>
           <h3 class="font-bold text-slate-900 text-base mb-1">Restricted Anti-biotic Drug List</h3>
           <p class="text-xs text-slate-500 leading-relaxed">Classified listing of Group-2 and Group-3 reserve antimicrobials requiring mandatory infectious disease sign-off.</p>
         </div>
-        <a href="http://192.168.101.75:3000/files/antibiotic.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+        <a href="http://192.168.101.75:3000/files/antibiotic.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-[#921111] hover:bg-[#780e0e] text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
           <span>Open PDF Document</span> &rarr;
         </a>
       </div>
@@ -396,16 +422,16 @@
       </div>
 
       <!-- 22. Emergency Transfer Record -->
-      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-amber-300 hover:shadow-md transition-all" data-category="emergency" data-search="emergency transfer record patient transport inter facility ambulance transfer">
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-[#921111]/40 hover:shadow-md transition-all" data-category="emergency" data-search="emergency transfer record patient transport inter facility ambulance transfer">
         <div class="mb-4">
           <div class="flex items-center justify-between mb-2">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-amber-600 bg-amber-50 px-2.5 py-1 rounded-lg">PATIENT TRANSFER</span>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-[#921111] bg-[#921111]/10 px-2.5 py-1 rounded-lg">PATIENT TRANSFER</span>
             <span class="text-[11px] font-bold text-slate-400">PDF</span>
           </div>
           <h3 class="font-bold text-slate-900 text-base mb-1">Emergency Transfer Record</h3>
           <p class="text-xs text-slate-500 leading-relaxed">Formal documentation for transferring unstable or specialized patients to tertiary higher medical centres.</p>
         </div>
-        <a href="http://192.168.101.75:3000/files/EMERGENCY TRANSFER RECORD (3).pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+        <a href="http://192.168.101.75:3000/files/EMERGENCY TRANSFER RECORD (3).pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-[#921111] hover:bg-[#780e0e] text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
           <span>Open PDF Document</span> &rarr;
         </a>
       </div>
@@ -456,16 +482,16 @@
       </div>
 
       <!-- 26. Food Token -->
-      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-amber-300 hover:shadow-md transition-all" data-category="emergency" data-search="food token dietary kitchen requisition bystander patient diet">
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-[#921111]/40 hover:shadow-md transition-all" data-category="emergency" data-search="food token dietary kitchen requisition bystander patient diet">
         <div class="mb-4">
           <div class="flex items-center justify-between mb-2">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-amber-600 bg-amber-50 px-2.5 py-1 rounded-lg">PATIENT DIETARY</span>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-[#921111] bg-[#921111]/10 px-2.5 py-1 rounded-lg">PATIENT DIETARY</span>
             <span class="text-[11px] font-bold text-slate-400">PDF</span>
           </div>
           <h3 class="font-bold text-slate-900 text-base mb-1">Food Token</h3>
           <p class="text-xs text-slate-500 leading-relaxed">Official requisition indent voucher for patient special diets, attendant meals, and kitchen distribution.</p>
         </div>
-        <a href="http://192.168.101.75:3000/files/food.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+        <a href="http://192.168.101.75:3000/files/food.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-[#921111] hover:bg-[#780e0e] text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
           <span>Open PDF Document</span> &rarr;
         </a>
       </div>
@@ -565,11 +591,11 @@
       <!-- ================= 5. FMS & PROCUREMENT ================= -->
 
       <!-- 33. Purchase Process (Instruments and Equipment APR 2025) -->
-      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-amber-300 hover:shadow-md transition-all" data-category="fms" data-search="purchase process instruments and equipment apr 2025 procurement indent quotation purchase order">
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-[#921111]/40 hover:shadow-md transition-all" data-category="fms" data-search="purchase process instruments and equipment apr 2025 procurement indent quotation purchase order">
         <div class="mb-4">
           <div class="flex items-center justify-between mb-2">
             <div class="flex items-center gap-2">
-              <span class="text-[10px] font-bold uppercase tracking-wider text-amber-600 bg-amber-50 px-2.5 py-1 rounded-lg">PROCUREMENT &amp; ASSETS</span>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-[#921111] bg-[#921111]/10 px-2.5 py-1 rounded-lg">PROCUREMENT &amp; ASSETS</span>
               <img src="assets/images/newmain.gif" alt="New" class="h-3.5 w-auto" />
             </div>
             <span class="text-[11px] font-bold text-slate-400">PDF</span>
@@ -577,7 +603,7 @@
           <h3 class="font-bold text-slate-900 text-base mb-1">Purchase Process - Instruments &amp; Equipment (APR 2025)</h3>
           <p class="text-xs text-slate-500 leading-relaxed">Updated standard workflow for hospital medical equipment indenting, technical quotes, and procurement approval.</p>
         </div>
-        <a href="http://192.168.101.75:3000/files/Instruments and Equipment APR 2025.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+        <a href="http://192.168.101.75:3000/files/Instruments and Equipment APR 2025.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-[#921111] hover:bg-[#780e0e] text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
           <span>Open PDF Document</span> &rarr;
         </a>
       </div>
@@ -679,16 +705,16 @@
       </div>
 
       <!-- 40. Counselling Documentation -->
-      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-amber-300 hover:shadow-md transition-all" data-category="nabh" data-search="counselling documentation form doctor patient counselling prognosis communication consent">
+      <div class="form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-[#921111]/40 hover:shadow-md transition-all" data-category="nabh" data-search="counselling documentation form doctor patient counselling prognosis communication consent">
         <div class="mb-4">
           <div class="flex items-center justify-between mb-2">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-amber-600 bg-amber-50 px-2.5 py-1 rounded-lg">PATIENT COUNSELLING</span>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-[#921111] bg-[#921111]/10 px-2.5 py-1 rounded-lg">PATIENT COUNSELLING</span>
             <span class="text-[11px] font-bold text-slate-400">PDF</span>
           </div>
           <h3 class="font-bold text-slate-900 text-base mb-1">Counselling Documentation</h3>
           <p class="text-xs text-slate-500 leading-relaxed">Formal clinical format for doctor-patient counselling sessions, diagnosis discussions, high-risk prognosis, and relatives acknowledgement.</p>
         </div>
-        <a href="http://192.168.101.75:3000/files/Counselling Documentation Form.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+        <a href="http://192.168.101.75:3000/files/Counselling Documentation Form.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-[#921111] hover:bg-[#780e0e] text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
           <span>Open PDF Document</span> &rarr;
         </a>
       </div>
@@ -764,7 +790,7 @@
 
     <!-- Back to Portal bottom button -->
     <div class="mt-12 text-center">
-      <a href="./index.html#forms" class="inline-flex items-center gap-2 px-6 py-3 bg-white hover:bg-slate-50 text-slate-700 font-bold rounded-xl border border-slate-300 shadow-sm text-xs sm:text-sm transition-all hover:border-amber-400">
+      <a href="./index.html#forms" class="inline-flex items-center gap-2 px-6 py-3 bg-white hover:bg-slate-50 text-slate-700 font-bold rounded-xl border border-slate-300 shadow-sm text-xs sm:text-sm transition-all hover:border-[#921111]">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
         <span>Return to Main Portal Forms Directory</span>
       </a>
@@ -782,17 +808,52 @@
     document.addEventListener('DOMContentLoaded', () => {
       const searchInput = document.getElementById('searchInput');
       const filterTabs = document.getElementById('filterTabs');
-      const formCards = document.querySelectorAll('.form-card');
+      const formsGrid = document.getElementById('formsGrid');
       const visibleCount = document.getElementById('visibleCount');
+      const totalFormsCount = document.getElementById('totalFormsCount');
       const noResults = document.getElementById('noResults');
 
       let currentFilter = 'all';
 
+      function updateCategoryCounts() {
+        const cards = formsGrid.querySelectorAll('.form-card');
+        const counts = { all: cards.length, icu: 0, pharmacy: 0, emergency: 0, hr: 0, fms: 0, nabh: 0 };
+
+        cards.forEach(card => {
+          const cat = card.getAttribute('data-category');
+          if (cat && counts[cat] !== undefined) {
+            counts[cat]++;
+          }
+        });
+
+        if (totalFormsCount) totalFormsCount.textContent = cards.length;
+
+        filterTabs.querySelectorAll('.filter-btn').forEach(btn => {
+          const filter = btn.getAttribute('data-filter');
+          if (filter === 'all') {
+            btn.textContent = `All (${counts.all})`;
+          } else if (filter === 'icu') {
+            btn.textContent = `ICU & Critical Care (${counts.icu})`;
+          } else if (filter === 'pharmacy') {
+            btn.textContent = `Pharmacy & Safety (${counts.pharmacy})`;
+          } else if (filter === 'emergency') {
+            btn.textContent = `Emergency & Day Care (${counts.emergency})`;
+          } else if (filter === 'hr') {
+            btn.textContent = `HR Privileges & Policy (${counts.hr})`;
+          } else if (filter === 'fms') {
+            btn.textContent = `FMS & Purchase (${counts.fms})`;
+          } else if (filter === 'nabh') {
+            btn.textContent = `NABH & HIC (${counts.nabh})`;
+          }
+        });
+      }
+
       function applyFilter() {
         const query = searchInput.value.toLowerCase().trim();
+        const cards = formsGrid.querySelectorAll('.form-card');
         let count = 0;
 
-        formCards.forEach(card => {
+        cards.forEach(card => {
           const category = card.getAttribute('data-category');
           const searchData = (card.getAttribute('data-search') + ' ' + card.innerText).toLowerCase();
 
@@ -807,11 +868,13 @@
           }
         });
 
-        visibleCount.textContent = count;
-        if (count === 0) {
-          noResults.classList.remove('hidden');
-        } else {
-          noResults.classList.add('hidden');
+        if (visibleCount) visibleCount.textContent = count;
+        if (noResults) {
+          if (count === 0) {
+            noResults.classList.remove('hidden');
+          } else {
+            noResults.classList.add('hidden');
+          }
         }
       }
 
@@ -820,11 +883,11 @@
       filterTabs.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           filterTabs.querySelectorAll('.filter-btn').forEach(b => {
-            b.classList.remove('active', 'bg-amber-600', 'text-white');
+            b.classList.remove('active', 'bg-[#921111]', 'text-white');
             b.classList.add('bg-slate-100', 'text-slate-600');
           });
 
-          btn.classList.add('active', 'bg-amber-600', 'text-white');
+          btn.classList.add('active', 'bg-[#921111]', 'text-white');
           btn.classList.remove('bg-slate-100', 'text-slate-600');
 
           currentFilter = btn.getAttribute('data-filter');
@@ -832,35 +895,79 @@
         });
       });
 
-      // Dynamic JSON sync for new common forms
-      fetch('data/common-forms.json')
+      // Dynamic JSON sync: respects the exact order of data/common-forms.json
+      fetch(`data/common-forms.json?v=${Date.now()}`, { cache: 'no-cache' })
         .then(r => r.json())
         .then(data => {
           const forms = Array.isArray(data) ? data : (data.forms || []);
           if (!forms || forms.length === 0) return;
+
+          const clean = str => (str || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+          const cleanUrl = u => {
+            if (!u) return '';
+            try { return decodeURIComponent(u).toLowerCase().replace(/\/+$/, ''); }
+            catch(e) { return u.toLowerCase().replace(/\/+$/, ''); }
+          };
+
+          // Collect current cards and detach them from DOM
+          const existingCards = Array.from(formsGrid.querySelectorAll('.form-card'));
+          formsGrid.innerHTML = '';
+
+          // For each form in JSON, match and append in the exact JSON order
           forms.forEach(f => {
-            const exists = formsGrid.querySelector(`a[href="${f.url}"]`);
-            if (!exists) {
+            const targetUrl = cleanUrl(f.url);
+            const targetName = clean(f.name);
+
+            const matchIndex = existingCards.findIndex(card => {
+              const link = card.querySelector('a[href]');
+              const h3 = card.querySelector('h3');
+              const cardUrl = link ? cleanUrl(link.getAttribute('href')) : '';
+              const cardTitle = h3 ? clean(h3.textContent) : '';
+              return (targetUrl && cardUrl && (targetUrl === cardUrl || targetUrl.endsWith(cardUrl) || cardUrl.endsWith(targetUrl))) ||
+                     (targetName && cardTitle && (targetName === cardTitle || cardTitle.includes(targetName) || targetName.includes(cardTitle)));
+            });
+
+            if (matchIndex !== -1) {
+              const matchedCard = existingCards.splice(matchIndex, 1)[0];
+              if (f.name) {
+                const titleEl = matchedCard.querySelector('h3');
+                if (titleEl) titleEl.textContent = f.name;
+              }
+              if (f.desc) {
+                const descEl = matchedCard.querySelector('p');
+                if (descEl) descEl.textContent = f.desc;
+              }
+              if (f.url) {
+                const linkEl = matchedCard.querySelector('a[href]');
+                if (linkEl) linkEl.setAttribute('href', f.url);
+              }
+              formsGrid.appendChild(matchedCard);
+            } else {
+              // Create new card if not already in HTML
               const newCard = document.createElement('div');
-              newCard.className = 'form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-amber-300 hover:shadow-md transition-all';
+              newCard.className = 'form-card bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-[#921111]/40 hover:shadow-md transition-all';
               newCard.setAttribute('data-category', f.category || 'icu');
               newCard.setAttribute('data-search', `${f.name} ${f.desc || ''}`.toLowerCase());
               newCard.innerHTML = `
                 <div class="mb-4">
                   <div class="flex items-center justify-between mb-2">
-                    <span class="text-[10px] font-bold uppercase tracking-wider text-amber-600 bg-amber-50 px-2.5 py-1 rounded-lg">${f.badge || 'CLINICAL'}</span>
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-[#921111] bg-[#921111]/10 px-2.5 py-1 rounded-lg">${f.badge || 'CLINICAL'}</span>
                     <span class="text-[11px] font-bold text-slate-400">PDF</span>
                   </div>
                   <h3 class="font-bold text-slate-900 text-base mb-1">${f.name}</h3>
-                  <p class="text-xs text-slate-500 leading-relaxed">${f.desc || 'Standardized clinical template'}</p>
                 </div>
-                <a href="${f.url}" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+                <a href="${f.url}" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-[#921111] hover:bg-[#780e0e] text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
                   <span>Open PDF Document</span> &rarr;
                 </a>
               `;
               formsGrid.appendChild(newCard);
             }
           });
+
+          // Any remaining cards that were not explicitly in JSON get appended at the end
+          existingCards.forEach(c => formsGrid.appendChild(c));
+
+          updateCategoryCounts();
           applyFilter();
         })
         .catch(e => console.warn('Using embedded fallback for common forms:', e));

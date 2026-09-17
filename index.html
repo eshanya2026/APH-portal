@@ -33,6 +33,15 @@
     }
   </script>
   <style>
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 5.5rem;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      html {
+        scroll-behavior: smooth;
+      }
+    }
     html, body {
       overflow-x: hidden;
       max-width: 100vw;
@@ -43,6 +52,63 @@
       -moz-osx-font-smoothing: grayscale;
       background-color: #f8fafc;
       color: #0f172a;
+    }
+
+    /* ========================================================================= */
+    /* ENTERPRISE CARD HOVER ELEVATION (Subtle, Dignified & Professional)        */
+    /* ========================================================================= */
+    @media (hover: hover) and (pointer: fine) {
+      .system-card,
+      .inhouse-card,
+      .governance-card,
+      .tariff-card,
+      .forms-card-item,
+      .enterprise-card {
+        transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), 
+                    box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1), 
+                    border-color 0.2s ease !important;
+        will-change: transform, box-shadow;
+      }
+
+      .system-card:hover,
+      .inhouse-card:hover,
+      .governance-card:hover,
+      .tariff-card:hover,
+      .forms-card-item:hover,
+      .enterprise-card:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 10px 25px -3px rgba(15, 23, 42, 0.09), 0 4px 12px -2px rgba(15, 23, 42, 0.04) !important;
+        border-color: #94a3b8 !important; /* Slightly strengthened border definition */
+      }
+
+      /* Tailored strengthened borders for category & governance cards */
+      .inhouse-card:hover {
+        border-color: #60a5fa !important;
+      }
+      .governance-card.gov-manuals:hover {
+        border-color: #60a5fa !important;
+      }
+      .governance-card.gov-committees:hover {
+        border-color: #34d399 !important;
+      }
+      .forms-card-item#cat-card-consent:hover {
+        border-color: #3b82f6 !important;
+      }
+      .forms-card-item#cat-card-clinical:hover {
+        border-color: rgb(146, 17, 17) !important;
+      }
+      .forms-card-item#cat-card-hr:hover {
+        border-color: #a855f7 !important;
+      }
+      .forms-card-item#cat-card-it:hover {
+        border-color: #14b8a6 !important;
+      }
+      .forms-card-item#cat-card-committees:hover {
+        border-color: #f59e0b !important;
+      }
+      .forms-card-item#cat-card-manuals:hover {
+        border-color: #6366f1 !important;
+      }
     }
 
     /* Forms Category Selected State: Background matches card color (blue, yellow/amber, purple, teal) + White Icon */
@@ -59,9 +125,9 @@
       box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35) !important;
     }
     .forms-card-item.is-selected#cat-card-clinical .forms-card-icon {
-      background-color: #D97706 !important;
+      background-color: rgb(146, 17, 17) !important;
       color: #FFFFFF !important;
-      box-shadow: 0 4px 14px rgba(217, 119, 6, 0.35) !important;
+      box-shadow: 0 4px 14px rgba(146, 17, 17, 0.4) !important;
     }
     .forms-card-item.is-selected#cat-card-hr .forms-card-icon {
       background-color: #9333EA !important;
@@ -110,16 +176,25 @@
       background: #94a3b8;
     }
 
-    /* Glassmorphism helpers */
+    /* Glassmorphism helpers with enterprise hover */
     .glass-card-dark {
       background: rgba(255, 255, 255, 0.06);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       border: 1px solid rgba(255, 255, 255, 0.12);
+      transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), 
+                  box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1), 
+                  border-color 0.2s ease, 
+                  background 0.2s ease !important;
+      will-change: transform, box-shadow;
     }
-    .glass-card-dark:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(255, 255, 255, 0.22);
+    @media (hover: hover) and (pointer: fine) {
+      .glass-card-dark:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.35), 0 4px 12px -2px rgba(0, 0, 0, 0.2) !important;
+        background: rgba(255, 255, 255, 0.1) !important;
+        border-color: rgba(255, 255, 255, 0.28) !important;
+      }
     }
 
     .hero-glow {
@@ -132,6 +207,48 @@
       background: radial-gradient(circle at 20% 30%, rgba(168, 85, 247, 0.25), rgba(28, 11, 56, 0) 60%),
                   radial-gradient(circle at 80% 40%, rgba(236, 72, 153, 0.2), rgba(28, 11, 56, 0) 50%),
                   linear-gradient(180deg, #2a0f55 0%, #1a0a33 100%);
+    }
+
+    /* Floating Quick Shortcuts Dock - Non-intrusive Responsive & Hover Reveal */
+    #quick-shortcuts-dock {
+      position: fixed;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%) translateX(100%);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+      z-index: 45;
+    }
+
+    #quick-shortcuts-dock .dock-handle {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateX(-100%) translateY(-50%);
+      transition: all 0.25s ease;
+      box-shadow: -4px 0 15px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Expand when hovering over the dock/handle, on focus-within, or when toggled */
+    #quick-shortcuts-dock:hover,
+    #quick-shortcuts-dock:focus-within,
+    #quick-shortcuts-dock.is-open {
+      transform: translateY(-50%) translateX(0);
+    }
+
+    /* Rotate chevron when dock is open */
+    #quick-shortcuts-dock:hover .dock-chevron,
+    #quick-shortcuts-dock:focus-within .dock-chevron,
+    #quick-shortcuts-dock.is-open .dock-chevron {
+      transform: rotate(180deg);
+    }
+
+    /* Subtle pulse animation for handle glow */
+    @keyframes dockHandlePulse {
+      0%, 100% { box-shadow: -4px 0 14px rgba(37, 99, 235, 0.15); }
+      50% { box-shadow: -6px 0 22px rgba(225, 29, 72, 0.3); }
+    }
+    #quick-shortcuts-dock .dock-handle {
+      animation: dockHandlePulse 3.2s infinite ease-in-out;
     }
 
     /* Ribbon badge styling for MAPIMS AI */
@@ -170,9 +287,9 @@
 <body class="bg-slate-50 text-slate-900 antialiased selection:bg-blue-600 selection:text-white overflow-x-hidden w-full">
 
   <!-- ========================================================================= -->
-  <!-- MAIN NAVIGATION HEADER                                                    -->
+  <!-- MAIN NAVIGATION HEADER (STATIC FIXED)                                     -->
   <!-- ========================================================================= -->
-  <nav class="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-slate-200/90 shadow-sm transition-all duration-200">
+  <nav class="fixed top-0 left-0 right-0 z-40 w-full bg-white border-b border-slate-200/90 shadow-sm">
     <div class="w-full max-w-[1600px] mx-auto px-3.5 sm:px-6">
       <div class="flex items-center justify-between h-16 sm:h-20 gap-2 sm:gap-4">
         
@@ -185,12 +302,12 @@
 
         <!-- Navigation Links (Desktop: xl and above) -->
         <div class="hidden xl:flex items-center gap-1 text-[13px] font-medium text-slate-600">
-          <a href="#" class="px-2.5 py-1.5 rounded-lg bg-blue-50 text-blue-600 font-bold border border-blue-100/80 shadow-sm transition-all duration-150 whitespace-nowrap">Home</a>
-          <a href="#in-house-apps" class="px-2.5 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100 transition-all duration-150 whitespace-nowrap">In-House Apps</a>
-          <a href="#quality" class="px-2.5 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100 transition-all duration-150 whitespace-nowrap">Quality</a>
-          <a href="#e-circulars" class="px-2.5 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100 transition-all duration-150 whitespace-nowrap">E-Circulars</a>
-          <a href="#tariff-stock" class="px-2.5 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100 transition-all duration-150 whitespace-nowrap">Tariff &amp; Stock</a>
-          <a href="#forms" class="px-2.5 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100 transition-all duration-150 whitespace-nowrap">Forms</a>
+          <a id="nav-link-home" href="#hero" class="px-2.5 py-1.5 rounded-lg bg-blue-50 text-blue-600 font-bold border border-blue-100/80 shadow-sm transition-all duration-150 whitespace-nowrap">Home</a>
+          <a id="nav-link-inhouse" href="#in-house-apps" class="px-2.5 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100 transition-all duration-150 whitespace-nowrap">In-House Apps</a>
+          <a id="nav-link-quality" href="#quality" class="px-2.5 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100 transition-all duration-150 whitespace-nowrap">Quality</a>
+          <a id="nav-link-circulars" href="#e-circulars" class="px-2.5 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100 transition-all duration-150 whitespace-nowrap">E-Circulars</a>
+          <a id="nav-link-tariff" href="#tariff-stock" class="px-2.5 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100 transition-all duration-150 whitespace-nowrap">Tariff &amp; Stock</a>
+          <a id="nav-link-forms" href="#forms" class="px-2.5 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100 transition-all duration-150 whitespace-nowrap">Forms</a>
           <a href="./intercom.html" class="px-2.5 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100 transition-all duration-150 whitespace-nowrap">Intercoms</a>
         </div>
 
@@ -228,22 +345,25 @@
           <span class="font-mono font-bold text-slate-800 bg-white px-2.5 py-0.5 rounded border border-slate-200 text-[13px] tracking-wide ip-display-value">192.168.101.45</span>
         </div>
 
-        <a href="#" onclick="toggleMobileNav()" class="block px-4 py-2.5 rounded-lg bg-blue-50 text-blue-600 font-bold text-sm">Home</a>
-        <a href="#in-house-apps" onclick="toggleMobileNav()" class="block px-4 py-2.5 rounded-lg text-slate-700 hover:bg-slate-100 text-sm font-medium">In-House Apps</a>
-        <a href="#quality" onclick="toggleMobileNav()" class="block px-4 py-2.5 rounded-lg text-slate-700 hover:bg-slate-100 text-sm font-medium">Quality</a>
-        <a href="#e-circulars" onclick="toggleMobileNav()" class="block px-4 py-2.5 rounded-lg text-slate-700 hover:bg-slate-100 text-sm font-medium">E-Circulars</a>
-        <a href="#tariff-stock" onclick="toggleMobileNav()" class="block px-4 py-2.5 rounded-lg text-slate-700 hover:bg-slate-100 text-sm font-medium">Tariff &amp; Stock</a>
-        <a href="#forms" onclick="toggleMobileNav()" class="block px-4 py-2.5 rounded-lg text-slate-700 hover:bg-slate-100 text-sm font-medium">Forms</a>
-        <a href="./intercom.html" onclick="toggleMobileNav()" class="block px-4 py-2.5 rounded-lg text-slate-700 hover:bg-slate-100 text-sm font-medium">Intercoms</a>
+        <a id="mob-link-home" href="#hero" class="block px-4 py-2.5 rounded-lg bg-blue-50 text-blue-600 font-bold text-sm">Home</a>
+        <a id="mob-link-inhouse" href="#in-house-apps" class="block px-4 py-2.5 rounded-lg text-slate-700 hover:bg-slate-100 text-sm font-medium">In-House Apps</a>
+        <a id="mob-link-quality" href="#quality" class="block px-4 py-2.5 rounded-lg text-slate-700 hover:bg-slate-100 text-sm font-medium">Quality</a>
+        <a id="mob-link-circulars" href="#e-circulars" class="block px-4 py-2.5 rounded-lg text-slate-700 hover:bg-slate-100 text-sm font-medium">E-Circulars</a>
+        <a id="mob-link-tariff" href="#tariff-stock" class="block px-4 py-2.5 rounded-lg text-slate-700 hover:bg-slate-100 text-sm font-medium">Tariff &amp; Stock</a>
+        <a id="mob-link-forms" href="#forms" class="block px-4 py-2.5 rounded-lg text-slate-700 hover:bg-slate-100 text-sm font-medium">Forms</a>
+        <a href="./intercom.html" class="block px-4 py-2.5 rounded-lg text-slate-700 hover:bg-slate-100 text-sm font-medium">Intercoms</a>
       </div>
     </div>
   </nav>
+
+  <!-- Reserved Height Spacer for Fixed Header -->
+  <div class="h-16 sm:h-20 w-full shrink-0" aria-hidden="true"></div>
 
   <!-- ========================================================================= -->
   <!-- ========================================================================= -->
   <!-- 3. HERO SECTION & INTEGRATED SEARCH                                       -->
   <!-- ========================================================================= -->
-  <section class="relative w-full text-white pt-20 sm:pt-28 md:pt-32 pb-36 sm:pb-44 md:pb-52 lg:pb-60 px-4 sm:px-6 lg:px-12 overflow-visible flex flex-col justify-center bg-cover bg-no-repeat"
+  <section id="hero" class="relative w-full text-white pt-20 sm:pt-28 md:pt-32 pb-36 sm:pb-44 md:pb-52 lg:pb-60 px-4 sm:px-6 lg:px-12 overflow-visible flex flex-col justify-center bg-cover bg-no-repeat scroll-mt-6"
            style="background: linear-gradient(180deg, rgba(7, 20, 45, 0.82), rgba(7, 20, 45, 0.68)), url('assets/images/hospital-campus-full.jpg') center 24% / cover no-repeat, #07142d;">
     
     <div class="relative max-w-3xl mx-auto text-center z-30">
@@ -317,13 +437,13 @@
   <!-- ========================================================================= -->
   <!-- 4. CORE ENTERPRISE SYSTEMS SECTION                                        -->
   <!-- ========================================================================= -->
-  <section id="core-systems" class="relative z-20 -mt-20 sm:-mt-24 md:-mt-28 lg:-mt-32 px-4 sm:px-6 lg:px-12 max-w-7xl mx-auto pb-12 sm:pb-16">
+  <section id="core-systems" class="relative z-20 scroll-mt-20 sm:scroll-mt-24 -mt-20 sm:-mt-24 md:-mt-28 lg:-mt-32 px-4 sm:px-6 lg:px-12 max-w-7xl mx-auto pb-12 sm:pb-16">
     
     <!-- 6 Enterprise Systems Cards Grid -->
     <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-4 sm:gap-5 mb-10 sm:mb-12">
       
       <!-- Card 1: HIS System -->
-      <a href="http://192.168.103.37/BB15SE/Backbone/admin/login.aspx" target="_blank" rel="noopener noreferrer" class="system-card aspect-square bg-white rounded-2xl px-3 py-4 border border-slate-100 shadow-xl hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-200 flex flex-col items-center justify-center gap-3 group">
+      <a href="http://192.168.103.37/BB15SE/Backbone/admin/login.aspx" target="_blank" rel="noopener noreferrer" class="system-card aspect-square bg-white rounded-2xl px-3 py-4 border border-slate-200/90 shadow-sm flex flex-col items-center justify-center gap-3 group">
         <div class="flex justify-center items-center h-14 w-full">
           <img src="assets/images/aosta-proper.png" alt="AOSTA HIS Logo" class="max-h-14 max-w-[90%] object-contain" />
         </div>
@@ -331,7 +451,7 @@
       </a>
 
       <!-- Card 2: PruWorks HRMS -->
-      <a href="https://mapims-hrms.tecvinesolutions.com" target="_blank" rel="noopener noreferrer" class="system-card aspect-square bg-white rounded-2xl px-3 py-4 border border-slate-100 shadow-xl hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-200 flex flex-col items-center justify-center gap-3 group">
+      <a href="https://mapims-hrms.tecvinesolutions.com" target="_blank" rel="noopener noreferrer" class="system-card aspect-square bg-white rounded-2xl px-3 py-4 border border-slate-200/90 shadow-sm flex flex-col items-center justify-center gap-3 group">
         <div class="flex justify-center items-center h-14 w-full">
           <img src="assets/images/pruworks-proper.png" alt="PruWorks HRMS Logo" class="max-h-11 max-w-[90%] object-contain" />
         </div>
@@ -339,7 +459,7 @@
       </a>
 
       <!-- Card 3: M - PACS -->
-      <a href="http://192.168.101.224/User_Login.asp" target="_blank" rel="noopener noreferrer" class="system-card aspect-square bg-white rounded-2xl px-3 py-4 border border-slate-100 shadow-xl hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-200 flex flex-col items-center justify-center gap-3 group">
+      <a href="http://192.168.101.224/User_Login.asp" target="_blank" rel="noopener noreferrer" class="system-card aspect-square bg-white rounded-2xl px-3 py-4 border border-slate-200/90 shadow-sm flex flex-col items-center justify-center gap-3 group">
         <div class="flex justify-center items-center h-14 w-full">
           <img src="assets/images/medsynapse-proper.png" alt="Medsynapse PACS Logo" class="max-h-12 max-w-[90%] object-contain rounded-md" />
         </div>
@@ -347,7 +467,7 @@
       </a>
 
       <!-- Card 4: HRMS - Admin -->
-      <a href="http://www.mapims.online/" target="_blank" rel="noopener noreferrer" class="system-card aspect-square bg-white rounded-2xl px-3 py-4 border border-slate-100 shadow-xl hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-200 flex flex-col items-center justify-center gap-3 group">
+      <a href="http://www.mapims.online/" target="_blank" rel="noopener noreferrer" class="system-card aspect-square bg-white rounded-2xl px-3 py-4 border border-slate-200/90 shadow-sm flex flex-col items-center justify-center gap-3 group">
         <div class="flex justify-center items-center h-14 w-full">
           <img src="assets/images/hrms-admin-proper.png" alt="Adhiparasakthi HRMS Admin Logo" class="max-h-14 max-w-[90%] object-contain" />
         </div>
@@ -355,7 +475,7 @@
       </a>
 
       <!-- Card 5: HRMS - Staff -->
-      <a href="http://www.mapims.online/staff" target="_blank" rel="noopener noreferrer" class="system-card aspect-square bg-white rounded-2xl px-3 py-4 border border-slate-100 shadow-xl hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-200 flex flex-col items-center justify-center gap-3 group">
+      <a href="http://www.mapims.online/staff" target="_blank" rel="noopener noreferrer" class="system-card aspect-square bg-white rounded-2xl px-3 py-4 border border-slate-200/90 shadow-sm flex flex-col items-center justify-center gap-3 group">
         <div class="flex justify-center items-center h-14 w-full">
           <img src="assets/images/hrms-staff-proper.png" alt="Adhiparasakthi HRMS Staff Portal Logo" class="max-h-14 max-w-[90%] object-contain" />
         </div>
@@ -363,7 +483,7 @@
       </a>
 
       <!-- Card 6: MRD Portal -->
-      <a href="http://www.mapimsmrd.com/mapimsmrd/" target="_blank" rel="noopener noreferrer" class="system-card aspect-square bg-white rounded-2xl px-3 py-4 border border-slate-100 shadow-xl hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-200 flex flex-col items-center justify-center gap-3 group">
+      <a href="http://www.mapimsmrd.com/mapimsmrd/" target="_blank" rel="noopener noreferrer" class="system-card aspect-square bg-white rounded-2xl px-3 py-4 border border-slate-200/90 shadow-sm flex flex-col items-center justify-center gap-3 group">
         <div class="flex justify-center items-center h-14 w-full">
           <img src="assets/images/fit-mrd-proper.png" alt="FIT MRD Logo" class="max-h-12 max-w-[90%] object-contain" />
         </div>
@@ -406,7 +526,7 @@
   <!-- ========================================================================= -->
   <!-- 5. OUR IN-HOUSE DEVELOPED APPLICATIONS                                    -->
   <!-- ========================================================================= -->
-  <section id="in-house-apps" class="py-16 px-4 sm:px-6 lg:px-12 max-w-7xl mx-auto border-t border-slate-200/70">
+  <section id="in-house-apps" class="py-16 px-4 sm:px-6 lg:px-12 max-w-7xl mx-auto border-t border-slate-200/70 scroll-mt-20 sm:scroll-mt-24">
     
     <!-- Section Header -->
     <div class="mb-8">
@@ -424,9 +544,9 @@
     <!-- App cards: Category → Title → metadata → Action (no divider line) -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
 
-      <a href="http://192.168.103.158:8081" target="_blank" rel="noopener noreferrer" class="group flex flex-col bg-white border border-[#E2E8F0] rounded-2xl overflow-hidden hover:border-[#2563EB] hover:shadow-sm transition-all">
-        <div class="h-36 bg-white flex items-center justify-center p-5">
-          <img src="assets/images/Pathology.png" alt="" class="max-h-full max-w-full object-contain" />
+      <a href="http://192.168.103.158:8081" target="_blank" rel="noopener noreferrer" class="inhouse-card group flex flex-col bg-white border border-slate-200/90 rounded-2xl overflow-hidden shadow-sm">
+        <div class="h-36 bg-white flex items-center justify-center p-4 border-b border-slate-100">
+          <img src="assets/images/inhouse_pathology.png" alt="Pathology Barcode App" class="h-28 w-auto max-w-full object-contain rounded-xl shadow-xs border border-slate-200/60" />
         </div>
         <div class="flex flex-col flex-1 p-5">
           <div class="text-[10px] font-extrabold tracking-wider uppercase text-[#059669]">Laboratory</div>
@@ -438,9 +558,9 @@
         </div>
       </a>
 
-      <a href="http://192.168.103.158:8082" target="_blank" rel="noopener noreferrer" class="group flex flex-col bg-white border border-[#E2E8F0] rounded-2xl overflow-hidden hover:border-[#2563EB] hover:shadow-sm transition-all">
-        <div class="h-36 bg-white flex items-center justify-center p-5">
-          <img src="assets/images/eyecamp.png" alt="" class="max-h-full max-w-full object-contain" />
+      <a href="http://192.168.103.158:8082" target="_blank" rel="noopener noreferrer" class="inhouse-card group flex flex-col bg-white border border-slate-200/90 rounded-2xl overflow-hidden shadow-sm">
+        <div class="h-36 bg-white flex items-center justify-center p-4 border-b border-slate-100">
+          <img src="assets/images/inhouse_eyecamp.png" alt="Eye Camp-25" class="h-28 w-auto max-w-full object-contain" />
         </div>
         <div class="flex flex-col flex-1 p-5">
           <div class="text-[10px] font-extrabold tracking-wider uppercase text-[#0284C7]">Community Health</div>
@@ -452,9 +572,9 @@
         </div>
       </a>
 
-      <a href="https://192.168.103.158:8083" target="_blank" rel="noopener noreferrer" class="group flex flex-col bg-white border border-[#E2E8F0] rounded-2xl overflow-hidden hover:border-[#2563EB] hover:shadow-sm transition-all">
-        <div class="h-36 bg-white flex items-center justify-center p-5">
-          <img src="assets/images/counselling.png" alt="" class="max-h-full max-w-full object-contain" />
+      <a href="https://192.168.103.158:8083" target="_blank" rel="noopener noreferrer" class="inhouse-card group flex flex-col bg-white border border-slate-200/90 rounded-2xl overflow-hidden shadow-sm">
+        <div class="h-36 bg-white flex items-center justify-center p-4 border-b border-slate-100">
+          <img src="assets/images/inhouse_counselling.png" alt="Counselling & ICU App" class="h-28 w-auto max-w-full object-contain rounded-xl shadow-xs border border-slate-200/60" />
         </div>
         <div class="flex flex-col flex-1 p-5">
           <div class="text-[10px] font-extrabold tracking-wider uppercase text-[#4F46E5]">Clinical Care</div>
@@ -466,9 +586,9 @@
         </div>
       </a>
 
-      <a href="http://192.168.103.158:8086" target="_blank" rel="noopener noreferrer" class="group flex flex-col bg-white border border-[#E2E8F0] rounded-2xl overflow-hidden hover:border-[#2563EB] hover:shadow-sm transition-all">
-        <div class="h-36 bg-white flex items-center justify-center p-5">
-          <img src="assets/images/LineLoom.png" alt="" class="max-h-full max-w-full object-contain" />
+      <a href="http://192.168.103.158:8086" target="_blank" rel="noopener noreferrer" class="inhouse-card group flex flex-col bg-white border border-slate-200/90 rounded-2xl overflow-hidden shadow-sm">
+        <div class="h-36 bg-white flex items-center justify-center p-4 border-b border-slate-100">
+          <img src="assets/images/inhouse_lineloom.png" alt="LineLoom Token Engine" class="h-28 w-auto max-w-full object-contain" />
         </div>
         <div class="flex flex-col flex-1 p-5">
           <div class="text-[10px] font-extrabold tracking-wider uppercase text-[#D97706]">OP Flow</div>
@@ -480,10 +600,10 @@
         </div>
       </a>
 
-      <a href="https://mh.mapims.edu.in/" target="_blank" rel="noopener noreferrer" class="group flex flex-col bg-white border border-[#BFDBFE] rounded-2xl overflow-hidden hover:border-[#2563EB] hover:shadow-sm transition-all relative">
+      <a href="https://mh.mapims.edu.in/" target="_blank" rel="noopener noreferrer" class="inhouse-card group flex flex-col bg-white border border-slate-200/90 rounded-2xl overflow-hidden shadow-sm relative">
         <span class="absolute top-3 right-3 z-10 text-[9px] font-extrabold uppercase tracking-wider text-[#1D4ED8] bg-[#EFF6FF] border border-[#BFDBFE] px-1.5 py-0.5 rounded">AI</span>
-        <div class="h-36 bg-white flex items-center justify-center p-5">
-          <img src="assets/images/mapims%20ai.png" alt="" class="max-h-full max-w-full object-contain" />
+        <div class="h-36 bg-white flex items-center justify-center p-4 border-b border-slate-100">
+          <img src="assets/images/inhouse_mapims_ai.png" alt="MAPIMS AI Health Assessment" class="h-28 w-auto max-w-full object-contain" />
         </div>
         <div class="flex flex-col flex-1 p-5">
           <div class="text-[10px] font-extrabold tracking-wider uppercase text-[#2563EB]">Diagnostic Support</div>
@@ -495,9 +615,9 @@
         </div>
       </a>
 
-      <button type="button" onclick="openChecklistModal()" class="group flex flex-col text-left w-full bg-white border border-[#E2E8F0] rounded-2xl overflow-hidden hover:border-[#2563EB] hover:shadow-sm transition-all cursor-pointer">
-        <div class="h-36 bg-white flex items-center justify-center p-5">
-          <img src="assets/images/Logo-Checklist.png" alt="" class="max-h-full max-w-full object-contain" />
+      <button type="button" onclick="openChecklistModal()" class="inhouse-card group flex flex-col text-left w-full bg-white border border-slate-200/90 rounded-2xl overflow-hidden shadow-sm cursor-pointer">
+        <div class="h-36 bg-white flex items-center justify-center p-4 border-b border-slate-100">
+          <img src="assets/images/inhouse_checklist.png" alt="Checklist & Audit App" class="h-28 w-auto max-w-full object-contain" />
         </div>
         <div class="flex flex-col flex-1 p-5">
           <div class="text-[10px] font-extrabold tracking-wider uppercase text-[#E11D48]">Quality &amp; NABH</div>
@@ -516,7 +636,7 @@
   <!-- ========================================================================= -->
   <!-- 6. CORE QUALITY COMMITTEE HUB                                             -->
   <!-- ========================================================================= -->
-  <section id="quality" class="py-16 px-4 sm:px-6 lg:px-12 max-w-7xl mx-auto border-t border-slate-200/70">
+  <section id="quality" class="py-16 px-4 sm:px-6 lg:px-12 max-w-7xl mx-auto border-t border-slate-200/70 scroll-mt-20 sm:scroll-mt-24">
     
     <!-- Section Kicker & Header -->
     <div class="mb-8">
@@ -547,7 +667,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
       
       <!-- Box 1: Manuals -->
-      <a href="./manuals.html" target="_blank" rel="noopener noreferrer" class="group bg-white rounded-3xl p-7 sm:p-8 border border-slate-200/90 shadow-sm hover:shadow-xl hover:border-blue-400 hover:-translate-y-1 transition-all duration-200 flex flex-col justify-between">
+      <a href="./manuals.html" target="_blank" rel="noopener noreferrer" class="governance-card gov-manuals group bg-white rounded-3xl p-7 sm:p-8 border border-slate-200/90 shadow-sm flex flex-col justify-between">
         <div>
           <div class="flex items-center justify-between mb-5">
             <div class="w-14 h-14 rounded-2xl bg-blue-50 border border-blue-200/70 p-3 flex items-center justify-center text-blue-600 shadow-sm group-hover:bg-blue-600 group-hover:text-white transition-all duration-200">
@@ -576,7 +696,7 @@
       </a>
 
       <!-- Box 2: List of Committees -->
-      <a href="./comitee.html" target="_blank" rel="noopener noreferrer" class="group bg-white rounded-3xl p-7 sm:p-8 border border-slate-200/90 shadow-sm hover:shadow-xl hover:border-emerald-400 hover:-translate-y-1 transition-all duration-200 flex flex-col justify-between">
+      <a href="./comitee.html" target="_blank" rel="noopener noreferrer" class="governance-card gov-committees group bg-white rounded-3xl p-7 sm:p-8 border border-slate-200/90 shadow-sm flex flex-col justify-between">
         <div>
           <div class="flex items-center justify-between mb-5">
             <div class="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-200/70 p-3 flex items-center justify-center text-emerald-600 shadow-sm group-hover:bg-emerald-600 group-hover:text-white transition-all duration-200">
@@ -611,7 +731,7 @@
   <!-- ========================================================================= -->
   <!-- 7. DIGITAL E – CIRCULARS & PROTOCOLS (PURPLE GRADIENT BANNER)             -->
   <!-- ========================================================================= -->
-  <section id="e-circulars" class="relative w-full purple-glow text-white py-20 px-4 sm:px-6 lg:px-12 overflow-hidden">
+  <section id="e-circulars" class="relative w-full purple-glow text-white py-20 px-4 sm:px-6 lg:px-12 overflow-hidden scroll-mt-20 sm:scroll-mt-24">
     <div class="max-w-7xl mx-auto relative z-10">
       
       <!-- Header -->
@@ -631,7 +751,7 @@
       <div class="grid grid-cols-1 min-[420px]:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4 sm:gap-5">
         
         <!-- Circular 1: 24hr's Duty Roster -->
-        <div class="glass-card-dark rounded-2xl p-5 flex flex-col justify-between transition-all duration-200 hover:-translate-y-1">
+        <div class="glass-card-dark rounded-2xl p-5 flex flex-col justify-between">
           <div>
             <div class="w-12 h-12 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center justify-center mb-4">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -653,7 +773,7 @@
         </div>
 
         <!-- Circular 2: Blood Bank Stock -->
-        <div class="glass-card-dark rounded-2xl p-5 flex flex-col justify-between transition-all duration-200 hover:-translate-y-1">
+        <div class="glass-card-dark rounded-2xl p-5 flex flex-col justify-between">
           <div>
             <div class="w-12 h-12 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30 flex items-center justify-center mb-4">
               <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
@@ -674,7 +794,7 @@
         </div>
 
         <!-- Circular 3: MLC & Police Directory -->
-        <div class="glass-card-dark rounded-2xl p-5 flex flex-col justify-between transition-all duration-200 hover:-translate-y-1">
+        <div class="glass-card-dark rounded-2xl p-5 flex flex-col justify-between">
           <div>
             <div class="w-12 h-12 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30 flex items-center justify-center mb-4">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -695,7 +815,7 @@
         </div>
 
         <!-- Circular 4: Clinical Case Patients -->
-        <div class="glass-card-dark rounded-2xl p-5 flex flex-col justify-between transition-all duration-200 hover:-translate-y-1">
+        <div class="glass-card-dark rounded-2xl p-5 flex flex-col justify-between">
           <div>
             <div class="w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center justify-center mb-4">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -716,7 +836,7 @@
         </div>
 
         <!-- Circular 5: PMS Policy -->
-        <div class="glass-card-dark rounded-2xl p-5 flex flex-col justify-between transition-all duration-200 hover:-translate-y-1">
+        <div class="glass-card-dark rounded-2xl p-5 flex flex-col justify-between">
           <div>
             <div class="w-12 h-12 rounded-full bg-violet-500/20 text-violet-300 border border-violet-500/30 flex items-center justify-center mb-4">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -737,7 +857,7 @@
         </div>
 
         <!-- Circular 6: Recent Circulars -->
-        <div class="glass-card-dark rounded-2xl p-5 flex flex-col justify-between transition-all duration-200 hover:-translate-y-1">
+        <div class="glass-card-dark rounded-2xl p-5 flex flex-col justify-between">
           <div>
             <div class="w-12 h-12 rounded-full bg-pink-500/20 text-pink-300 border border-pink-500/30 flex items-center justify-center mb-4">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -765,7 +885,7 @@
   <!-- ========================================================================= -->
   <!-- 8. TARIFF & LIVE STOCK (OPERATIONAL DASHBOARD)                            -->
   <!-- ========================================================================= -->
-  <section id="tariff-stock" class="py-16 px-4 sm:px-6 lg:px-12 max-w-7xl mx-auto">
+  <section id="tariff-stock" class="py-16 px-4 sm:px-6 lg:px-12 max-w-7xl mx-auto scroll-mt-20 sm:scroll-mt-24">
 
     <!-- Section Header -->
     <div class="mb-8 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
@@ -787,7 +907,7 @@
     <div class="grid grid-cols-1 xl:grid-cols-12 gap-5">
 
       <!-- Hospital Tariffs -->
-      <div class="xl:col-span-5 bg-white border border-[#E2E8F0] rounded-2xl overflow-hidden shadow-sm">
+      <div class="tariff-card xl:col-span-5 bg-white border border-[#E2E8F0] rounded-2xl overflow-hidden shadow-sm">
         <div class="px-5 py-4 border-b border-[#BFDBFE] bg-gradient-to-r from-[#EFF6FF] to-white flex items-center justify-between gap-3">
           <div class="flex items-center gap-3 min-w-0">
             <div class="w-10 h-10 rounded-xl bg-[#2563EB] text-white flex items-center justify-center shrink-0 shadow-sm shadow-blue-500/25">
@@ -858,7 +978,7 @@
       <div class="xl:col-span-7 flex flex-col gap-5">
 
         <!-- Pharmacy -->
-        <div class="bg-white border border-[#E2E8F0] rounded-2xl overflow-hidden flex-1 shadow-sm">
+        <div class="tariff-card bg-white border border-[#E2E8F0] rounded-2xl overflow-hidden flex-1 shadow-sm">
           <div class="px-5 py-4 border-b border-[#FECACA] bg-gradient-to-r from-[#FFF1F2] to-white flex items-center justify-between gap-3">
             <div class="flex items-center gap-3 min-w-0">
               <div class="w-10 h-10 rounded-xl bg-[#E11D48] text-white flex items-center justify-center shrink-0 shadow-sm shadow-rose-500/25">
@@ -879,22 +999,22 @@
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
               <a href="http://192.168.101.75:3000/files/Drug Stores Stock Details.pdf" target="_blank" rel="noopener noreferrer" title="Open Drugs stock PDF" class="group rounded-xl border border-[#FECDD3] bg-[#FFF1F2] p-3.5 hover:border-[#E11D48] hover:shadow-sm transition-all cursor-pointer">
                 <div class="text-[10px] font-bold uppercase tracking-wider text-[#BE123C] mb-1">Drugs</div>
-                <div class="font-mono text-2xl font-extrabold tabular-nums text-[#0F172A]">124</div>
+                <div class="font-mono text-2xl font-extrabold tabular-nums text-[#0F172A]">139</div>
                 <div class="mt-1.5 text-[11px] font-bold text-[#E11D48] group-hover:underline">View PDF →</div>
               </a>
               <a href="http://192.168.101.75:3000/files/IP Pharmacy Stock Details.pdf" target="_blank" rel="noopener noreferrer" title="Open In-Patient pharmacy stock PDF" class="group rounded-xl border border-[#FDE68A] bg-[#FFFBEB] p-3.5 hover:border-[#F59E0B] hover:shadow-sm transition-all cursor-pointer">
                 <div class="text-[10px] font-bold uppercase tracking-wider text-[#B45309] mb-1">In-Patient</div>
-                <div class="font-mono text-2xl font-extrabold tabular-nums text-[#0F172A]">82</div>
+                <div class="font-mono text-2xl font-extrabold tabular-nums text-[#0F172A]">77</div>
                 <div class="mt-1.5 text-[11px] font-bold text-[#B45309] group-hover:underline">View PDF →</div>
               </a>
               <a href="http://192.168.101.75:3000/files/Insurance Pharmacy Stock Details.pdf" target="_blank" rel="noopener noreferrer" title="Open Insurance pharmacy stock PDF" class="group rounded-xl border border-[#C7D2FE] bg-[#EEF2FF] p-3.5 hover:border-[#6366F1] hover:shadow-sm transition-all cursor-pointer">
                 <div class="text-[10px] font-bold uppercase tracking-wider text-[#4338CA] mb-1">Insurance</div>
-                <div class="font-mono text-2xl font-extrabold tabular-nums text-[#0F172A]">43</div>
+                <div class="font-mono text-2xl font-extrabold tabular-nums text-[#0F172A]">515</div>
                 <div class="mt-1.5 text-[11px] font-bold text-[#4338CA] group-hover:underline">View PDF →</div>
               </a>
               <a href="http://192.168.101.75:3000/files/Op Pharmacy Stock  Details.pdf" target="_blank" rel="noopener noreferrer" title="Open OP pharmacy stock PDF" class="group rounded-xl border border-[#A5F3FC] bg-[#ECFEFF] p-3.5 hover:border-[#06B6D4] hover:shadow-sm transition-all cursor-pointer">
                 <div class="text-[10px] font-bold uppercase tracking-wider text-[#0E7490] mb-1">OP</div>
-                <div class="font-mono text-2xl font-extrabold tabular-nums text-[#0F172A]">67</div>
+                <div class="font-mono text-2xl font-extrabold tabular-nums text-[#0F172A]">90</div>
                 <div class="mt-1.5 text-[11px] font-bold text-[#0E7490] group-hover:underline">View PDF →</div>
               </a>
             </div>
@@ -913,7 +1033,7 @@
         </div>
 
         <!-- General Store -->
-        <div class="bg-white border border-[#E2E8F0] rounded-2xl overflow-hidden shadow-sm">
+        <div class="tariff-card bg-white border border-[#E2E8F0] rounded-2xl overflow-hidden shadow-sm">
           <div class="px-5 py-4 border-b border-[#A7F3D0] bg-gradient-to-r from-[#ECFDF5] to-white flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div class="flex items-center gap-3 min-w-0">
               <div class="w-10 h-10 rounded-xl bg-[#059669] text-white flex items-center justify-center shrink-0 shadow-sm shadow-emerald-500/25">
@@ -932,19 +1052,22 @@
 
           <div class="p-4 sm:p-5 grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div class="rounded-xl border border-[#BBF7D0] bg-[#ECFDF5] p-4">
-              <div class="text-[10px] font-bold uppercase tracking-wider text-[#047857] mb-2">Inventory</div>
-              <div class="inline-flex items-center gap-2 text-sm font-bold text-[#15803D]">
-                <span class="h-2 w-2 rounded-full bg-[#22C55E]" aria-hidden="true"></span>
-                Active
+              <div class="flex items-center justify-between gap-2 mb-2">
+                <div class="text-[10px] font-bold uppercase tracking-wider text-[#047857]">Inventory</div>
+                <div class="inline-flex items-center gap-1.5 text-[10px] font-bold text-[#15803D] bg-white/80 px-2 py-0.5 rounded-full border border-[#BBF7D0]">
+                  <span class="h-1.5 w-1.5 rounded-full bg-[#22C55E]" aria-hidden="true"></span>
+                  Active
+                </div>
               </div>
+              <div class="font-mono text-2xl font-extrabold tabular-nums text-[#0F172A]">738</div>
             </div>
             <div class="rounded-xl border border-[#BFDBFE] bg-[#EFF6FF] p-4">
               <div class="text-[10px] font-bold uppercase tracking-wider text-[#1D4ED8] mb-2">Stationery</div>
-              <div class="font-mono text-2xl font-extrabold tabular-nums text-[#0F172A]">204</div>
+              <div class="font-mono text-2xl font-extrabold tabular-nums text-[#0F172A]">160</div>
             </div>
             <div class="rounded-xl border border-[#FDE68A] bg-[#FFFBEB] p-4">
-              <div class="text-[10px] font-bold uppercase tracking-wider text-[#B45309] mb-2">Surgical</div>
-              <div class="font-mono text-2xl font-extrabold tabular-nums text-[#0F172A]">89</div>
+              <div class="text-[10px] font-bold uppercase tracking-wider text-[#B45309] mb-2">Surgical &amp; Kits</div>
+              <div class="font-mono text-2xl font-extrabold tabular-nums text-[#0F172A]">93</div>
             </div>
           </div>
         </div>
@@ -957,7 +1080,7 @@
   <!-- ========================================================================= -->
   <!-- 9. ESSENTIAL HOSPITAL FORMS & REQUISITIONS (ZIGZAG SPLIT VIEW)            -->
   <!-- ========================================================================= -->
-  <section id="forms" class="py-16 sm:py-20 px-4 sm:px-6 lg:px-12 max-w-7xl mx-auto border-t border-[#E6EAF0]">
+  <section id="forms" class="py-16 sm:py-20 px-4 sm:px-6 lg:px-12 max-w-7xl mx-auto border-t border-[#E6EAF0] scroll-mt-20 sm:scroll-mt-24">
     
     <!-- Section Header -->
     <div class="text-center max-w-2xl mx-auto mb-8">
@@ -1016,7 +1139,7 @@
             <!-- Card 1: Consent -->
             <div id="cat-card-consent" onclick="selectFormsCategory('consent', true)" class="forms-card-item is-selected cursor-pointer bg-white rounded-2xl sm:rounded-3xl border border-[#E6EAF0] border-t-4 border-t-blue-600 p-5 sm:p-6 shadow-sm hover:shadow-md hover:border-blue-300 transition-all group ring-2 ring-blue-600">
               <div class="flex items-center justify-between mb-3">
-                <div class="forms-card-icon w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center transition-transform group-hover:scale-105">
+                <div class="forms-card-icon w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center transition-colors">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                 </div>
                 <span class="active-badge text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200">
@@ -1046,7 +1169,7 @@
             <!-- Card 3: HR -->
             <div id="cat-card-hr" onclick="selectFormsCategory('hr', true)" class="forms-card-item cursor-pointer bg-white rounded-2xl sm:rounded-3xl border border-[#E6EAF0] border-t-4 border-t-purple-500 p-5 sm:p-6 shadow-sm hover:shadow-md hover:border-purple-300 transition-all group">
               <div class="flex items-center justify-between mb-3">
-                <div class="forms-card-icon w-10 h-10 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center transition-transform group-hover:scale-105">
+                <div class="forms-card-icon w-10 h-10 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center transition-colors">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
                 </div>
                 <span class="active-badge hidden text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-purple-50 text-purple-700 border border-purple-200">
@@ -1079,19 +1202,19 @@
           <div class="space-y-5 sm:mt-10">
 
             <!-- Card 2: Common Forms -->
-            <div id="cat-card-clinical" onclick="selectFormsCategory('clinical', true)" class="forms-card-item cursor-pointer bg-white rounded-2xl sm:rounded-3xl border border-[#E6EAF0] border-t-4 border-t-amber-500 p-5 sm:p-6 shadow-sm hover:shadow-md hover:border-amber-300 transition-all group">
+            <div id="cat-card-clinical" onclick="selectFormsCategory('clinical', true)" class="forms-card-item cursor-pointer bg-white rounded-2xl sm:rounded-3xl border border-[#E6EAF0] border-t-4 border-t-[rgb(146,17,17)] p-5 sm:p-6 shadow-sm hover:shadow-md hover:border-[rgb(146,17,17)]/40 transition-all group">
               <div class="flex items-center justify-between mb-3">
-                <div class="forms-card-icon w-10 h-10 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center transition-transform group-hover:scale-105">
+                <div class="forms-card-icon w-10 h-10 rounded-2xl bg-[rgba(146,17,17,0.1)] text-[rgb(146,17,17)] flex items-center justify-center transition-colors">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
                 </div>
-                <span class="active-badge hidden text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200">
+                <span class="active-badge hidden text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[rgba(146,17,17,0.1)] text-[rgb(146,17,17)] border border-[rgba(146,17,17,0.25)]">
                   Selected
                 </span>
               </div>
-              <h4 class="forms-card-title text-lg font-bold text-[#0F172A] group-hover:text-amber-600 transition-colors">
+              <h4 class="forms-card-title text-lg font-bold text-[#0F172A] group-hover:text-[rgb(146,17,17)] transition-colors">
                 Common Forms
               </h4>
-              <div class="forms-card-count text-xs font-semibold text-amber-600 mt-0.5 mb-2">44 Forms Available</div>
+              <div class="forms-card-count text-xs font-semibold text-[rgb(146,17,17)] mt-0.5 mb-2">44 Forms Available</div>
               <p class="forms-card-desc text-xs text-[#64748B] leading-relaxed mb-3">
                 ICU checklists, SBAR handover, narcotic indents &amp; emergency protocols.
               </p>
@@ -1102,7 +1225,7 @@
                 <span class="forms-card-tag px-2 py-0.5 rounded bg-slate-50 text-slate-600 text-[11px] border border-[#E6EAF0]">Code Blue</span>
               </div>
               <div class="forms-card-footer pt-3 border-t border-[#E6EAF0] flex items-center justify-between text-xs">
-                <span class="forms-card-link font-bold text-amber-600 flex items-center gap-1 group-hover:underline">
+                <span class="forms-card-link font-bold text-[rgb(146,17,17)] flex items-center gap-1 group-hover:underline">
                   <span>View Forms List</span> <span>&rarr;</span>
                 </span>
                 <span class="forms-card-meta text-slate-400 text-[11px] font-medium">Approved PDF</span>
@@ -1112,7 +1235,7 @@
             <!-- Card 4: IT -->
             <div id="cat-card-it" onclick="selectFormsCategory('it', true)" class="forms-card-item cursor-pointer bg-white rounded-2xl sm:rounded-3xl border border-[#E6EAF0] border-t-4 border-t-teal-500 p-5 sm:p-6 shadow-sm hover:shadow-md hover:border-teal-300 transition-all group">
               <div class="flex items-center justify-between mb-3">
-                <div class="forms-card-icon w-10 h-10 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center transition-transform group-hover:scale-105">
+                <div class="forms-card-icon w-10 h-10 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center transition-colors">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 002 2z"/></svg>
                 </div>
                 <span class="active-badge hidden text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-teal-50 text-teal-700 border border-teal-200">
@@ -1204,90 +1327,205 @@
   </section>
 
   <!-- ========================================================================= -->
-  <!-- 10. EMPLOYEE HELP DESK & INTERNAL FEEDBACK                                -->
+  <!-- 10. EMPLOYEE HELP DESK & QUICK CONTACTS                                   -->
   <!-- ========================================================================= -->
-  <section id="feedback" class="py-16 px-4 sm:px-6 lg:px-12 max-w-4xl mx-auto border-t border-slate-200/70">
-    <!-- Talk To Us / Internal Feedback Card -->
-    <div class="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/90 shadow-sm">
-      <span class="text-xs font-bold tracking-wider text-blue-600 uppercase">EMPLOYEE HELP DESK</span>
-      <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 mb-2">Talk To Us / Internal Feedback</h2>
-      <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-6">
-        Submit clinical suggestions, infrastructural issues, or departmental queries directly to the Hospital Administration.
-      </p>
-
-      <!-- Feedback Form (wired to Web3Forms API) -->
-      <form id="contact-form" action="https://api.web3forms.com/submit" method="POST" onsubmit="submitFeedback(event)" class="space-y-4">
-        <input type="hidden" name="access_key" value="a0ebd0ed-a8ea-464b-a54e-0432b1537e04" />
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1.5">FULL NAME</label>
-            <input 
-              type="text" 
-              name="name"
-              id="feedback-name"
-              required
-              placeholder="e.g. Dr. K. Rajesh" 
-              class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
-            />
-          </div>
-          <div>
-            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1.5">OFFICIAL E-MAIL</label>
-            <input 
-              type="email" 
-              name="email"
-              id="feedback-email"
-              required
-              placeholder="name@apims.work" 
-              class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
-            />
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1.5">EMPLOYEE NUMBER</label>
-            <input 
-              type="text" 
-              name="employee id"
-              id="feedback-empid"
-              placeholder="e.g. AP-9402" 
-              class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
-            />
-          </div>
-          <div>
-            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1.5">MOBILE / EXTENSION</label>
-            <input 
-              type="tel" 
-              name="mobile"
-              id="feedback-phone"
-              placeholder="e.g. +91 98765 43210" 
-              class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
-            />
-          </div>
-        </div>
-
+  <section id="feedback" class="py-16 px-4 sm:px-6 lg:px-12 max-w-6xl mx-auto border-t border-slate-200/70 scroll-mt-20 sm:scroll-mt-24">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
+      
+      <!-- Left Column: Quick Help & Contacts Form (Col 1 to 7/8) -->
+      <div class="lg:col-span-7 xl:col-span-8 bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/90 shadow-sm flex flex-col justify-between">
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1.5">YOUR MESSAGE / FEEDBACK</label>
-          <textarea 
-            name="message"
-            id="feedback-msg"
-            rows="4" 
-            required
-            placeholder="Please describe your suggestion, question, or facility issue in detail..." 
-            class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all resize-none"
-          ></textarea>
-        </div>
+          <span class="text-xs font-bold tracking-wider text-blue-600 uppercase">EMPLOYEE HELP DESK</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 mb-2">Quick Help &amp; Contacts</h2>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-6">
+            Report an issue, submit a suggestion, or contact the appropriate hospital support team.
+          </p>
 
-        <div>
-          <button 
-            type="submit" 
-            id="feedback-submit-btn"
-            class="w-full sm:w-auto px-8 py-3.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs sm:text-sm font-bold uppercase tracking-wider shadow-lg shadow-blue-500/20 hover:shadow-blue-500/30 transition-all duration-150 flex items-center justify-center gap-2"
-          >
-            <span>SEND INTRANET MESSAGE</span>
-          </button>
+          <!-- Feedback Form (wired to Web3Forms API sending to itmgmt@mapims.edu.in) -->
+          <form id="contact-form" action="https://api.web3forms.com/submit" method="POST" onsubmit="submitFeedback(event)" class="space-y-4">
+            <!-- Web3Forms Access Key: Form notifications are delivered to itmgmt@mapims.edu.in -->
+            <input type="hidden" name="access_key" value="a0ebd0ed-a8ea-464b-a54e-0432b1537e04" />
+            <input type="hidden" name="subject" value="APH Intranet Portal - Staff Feedback &amp; Query [itmgmt@mapims.edu.in]" />
+            <input type="hidden" name="from_name" value="APH Hospital Intranet Portal" />
+            <input type="hidden" name="to_email" value="itmgmt@mapims.edu.in" />
+            <input type="hidden" name="recipient" value="itmgmt@mapims.edu.in" />
+            <input type="checkbox" name="botcheck" class="hidden" style="display: none;" />
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1.5">FULL NAME</label>
+                <input 
+                  type="text" 
+                  name="name"
+                  id="feedback-name"
+                  required
+                  placeholder="e.g. Dr. K. Rajesh" 
+                  class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
+                />
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1.5">OFFICIAL E-MAIL</label>
+                <input 
+                  type="email" 
+                  name="email"
+                  id="feedback-email"
+                  required
+                  placeholder="doctor@mapims.edu.in" 
+                  class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
+                />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1.5">EMPLOYEE NUMBER</label>
+                <input 
+                  type="text" 
+                  name="employee id"
+                  id="feedback-empid"
+                  placeholder="e.g. AP-9402" 
+                  class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
+                />
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1.5">MOBILE / EXTENSION</label>
+                <input 
+                  type="tel" 
+                  name="mobile"
+                  id="feedback-phone"
+                  placeholder="e.g. +91 98765 43210" 
+                  class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1.5">YOUR MESSAGE / FEEDBACK</label>
+              <textarea 
+                name="message"
+                id="feedback-msg"
+                rows="4" 
+                required
+                placeholder="Please describe your suggestion, question, or facility issue in detail..." 
+                class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all resize-none"
+              ></textarea>
+            </div>
+
+            <div>
+              <button 
+                type="submit" 
+                id="feedback-submit-btn"
+                class="w-full sm:w-auto px-8 py-3.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs sm:text-sm font-bold uppercase tracking-wider shadow-lg shadow-blue-500/20 hover:shadow-blue-500/30 transition-all duration-150 flex items-center justify-center gap-2"
+              >
+                <span>SEND MESSAGE</span>
+              </button>
+            </div>
+          </form>
         </div>
-      </form>
+      </div>
+
+      <!-- Right Column: Dedicated Important Intercoms Card (Col 8 to 12) -->
+      <div class="lg:col-span-5 xl:col-span-4 flex flex-col gap-4">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-sm flex flex-col justify-between h-full">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold tracking-wider text-rose-600 uppercase flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
+                KEY HELPLINES
+              </span>
+            </div>
+            <h3 class="text-xl font-extrabold text-slate-900 mb-1">Important Intercoms</h3>
+            <p class="text-xs text-slate-500 mb-5 leading-relaxed">
+              Direct departmental extensions for quick campus-wide telephone dialing:
+            </p>
+
+            <!-- Intercom Quick List -->
+            <div class="space-y-3">
+              <!-- 1. Emergency & Casualty -->
+              <div class="p-3.5 rounded-2xl bg-rose-50/70 border border-rose-100 flex items-center justify-between hover:bg-rose-50 transition-colors">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 class="text-xs font-bold text-slate-900">Emergency / Casualty</h4>
+                    <span class="text-[11px] text-slate-500">24/7 Triage &amp; Code Blue</span>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <span class="font-mono font-extrabold text-sm text-rose-700 bg-white px-2.5 py-1 rounded-lg border border-rose-200/80 shadow-2xs">2001</span>
+                </div>
+              </div>
+
+              <!-- 2. IT & HIS Support Desk -->
+              <div class="p-3.5 rounded-2xl bg-blue-50/70 border border-blue-100 flex items-center justify-between hover:bg-blue-50 transition-colors">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 class="text-xs font-bold text-slate-900">IT &amp; HIS Help Desk</h4>
+                    <span class="text-[11px] text-slate-500">Software &amp; Hardware</span>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <span class="font-mono font-extrabold text-sm text-blue-700 bg-white px-2.5 py-1 rounded-lg border border-blue-200/80 shadow-2xs">2228</span>
+                </div>
+              </div>
+
+              <!-- 3. Human Resources (HR) -->
+              <div class="p-3.5 rounded-2xl bg-emerald-50/70 border border-emerald-100 flex items-center justify-between hover:bg-emerald-50 transition-colors">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 class="text-xs font-bold text-slate-900">HR Department</h4>
+                    <span class="text-[11px] text-slate-500">Staff Admin &amp; Leaves</span>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <span class="font-mono font-extrabold text-sm text-emerald-700 bg-white px-2.5 py-1 rounded-lg border border-emerald-200/80 shadow-2xs">2173</span>
+                </div>
+              </div>
+
+              <!-- 4. Blood Bank -->
+              <div class="p-3.5 rounded-2xl bg-amber-50/70 border border-amber-100 flex items-center justify-between hover:bg-amber-50 transition-colors">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 class="text-xs font-bold text-slate-900">Blood Bank (24/7)</h4>
+                    <span class="text-[11px] text-slate-500">Cross-match &amp; Stocks</span>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <span class="font-mono font-extrabold text-sm text-amber-700 bg-white px-2.5 py-1 rounded-lg border border-amber-200/80 shadow-2xs">2131</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Action Link to Directory -->
+          <div class="pt-4 mt-4 border-t border-slate-100 text-xs">
+            <a href="./intercom.html" class="w-full inline-flex items-center justify-center gap-1.5 font-bold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 py-2.5 px-4 rounded-xl transition-colors">
+              <span>View All 180+ Extensions</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -1416,7 +1654,7 @@
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
         <a href="https://checklist.mapims.edu.in/" target="_blank" rel="noopener noreferrer" class="p-5 rounded-2xl bg-slate-50 border-2 border-slate-200 hover:border-rose-500 hover:bg-rose-50/40 text-center flex flex-col items-center justify-center transition-all group shadow-sm hover:shadow-md hover:-translate-y-0.5">
-          <div class="w-12 h-12 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+          <div class="w-12 h-12 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center mb-3 transition-colors">
             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
             </svg>
@@ -1426,7 +1664,7 @@
         </a>
 
         <a href="https://gencl.mapims.edu.in/" target="_blank" rel="noopener noreferrer" class="p-5 rounded-2xl bg-slate-50 border-2 border-slate-200 hover:border-blue-500 hover:bg-blue-50/40 text-center flex flex-col items-center justify-center transition-all group shadow-sm hover:shadow-md hover:-translate-y-0.5">
-          <div class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+          <div class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mb-3 transition-colors">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
             </svg>
@@ -1614,91 +1852,198 @@
     </div>
   </div>
 
-  <!-- Floating Quick-Action Shortcuts on Right Side (Intercom, Blood Bank, Email, Billing Manual, Nursing Manual) -->
-  <aside aria-label="Quick Access Shortcuts" class="fixed right-3 sm:right-5 top-1/2 -translate-y-1/2 z-40 flex flex-col items-center gap-2.5 sm:gap-3">
+  <!-- Floating Quick-Action Shortcuts Dock on Right Side (Non-intrusive on responsive, reveals on hover) -->
+  <aside id="quick-shortcuts-dock" aria-label="Quick Access Shortcuts" class="group">
     
-    <!-- 1. Intercom Hotline Button -->
-    <a href="./intercom.html" target="_blank" rel="noopener noreferrer" class="relative w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-rose-600 hover:bg-rose-700 text-white shadow-lg shadow-rose-600/30 flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 group focus:outline-none focus:ring-4 focus:ring-rose-500/30" title="Campus Intercom Directory" aria-label="Open Campus Intercom Directory">
-      <!-- Active Status Pulse -->
-      <span class="absolute -top-0.5 -right-0.5 flex h-3 w-3">
+    <!-- Collapsible Pull-Tab Handle (Always visible at the screen edge, zero obstruction to applications) -->
+    <button id="dock-toggle-btn" type="button" aria-label="Toggle Quick Access Shortcuts" title="Quick Access Shortcuts" 
+            class="dock-handle flex flex-col items-center justify-center py-5 px-2.5 sm:px-3 rounded-l-2xl bg-white/95 dark:bg-slate-900/95 text-slate-700 dark:text-slate-200 border border-r-0 border-slate-200/90 dark:border-slate-700/90 shadow-xl hover:bg-blue-50 hover:text-blue-600 transition-all duration-200 cursor-pointer focus:outline-none">
+      <!-- Live Status Indicator Dot -->
+      <span class="relative flex h-2.5 w-2.5 mb-2">
         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
-        <span class="relative inline-flex rounded-full h-3 w-3 bg-rose-500 border-2 border-white"></span>
+        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-rose-500"></span>
       </span>
-      <!-- Phone Handset Icon -->
-      <svg class="w-5 h-5 text-white transition-transform group-hover:rotate-12" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-2.2 2.2a15.053 15.053 0 01-6.59-6.59l2.2-2.21a.96.96 0 00.25-1.01A11.36 11.36 0 018.57 3.9c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.52c0-.55-.45-1-.99-1z"/>
+      <!-- Arrow Chevron indicating slide out -->
+      <svg class="w-4 h-4 text-slate-500 transition-transform duration-300 dock-chevron mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
       </svg>
-      <!-- Hover Tooltip -->
-      <span class="hidden sm:flex absolute right-14 sm:right-15 bg-slate-900/95 backdrop-blur text-white text-xs font-semibold px-3 py-1.5 rounded-xl shadow-xl opacity-0 pointer-events-none group-hover:opacity-100 transition-all duration-200 whitespace-nowrap items-center gap-1.5 border border-slate-700/80">
-        <span>Campus Intercoms</span>
-        <span class="text-rose-400 font-mono text-[11px] font-bold">(Live)</span>
-      </span>
-    </a>
+      <!-- Vertical Label -->
+      <span class="text-[10px] font-extrabold tracking-[0.22em] uppercase text-slate-500 dark:text-slate-400 my-1 select-none [writing-mode:vertical-rl] rotate-180">Quick</span>
+    </button>
 
-    <!-- 2. Blood Bank Stock Details -->
-    <a href="http://192.168.101.75:3000/files/Blood%20Bank%20Stock%20Details.pdf" target="_blank" rel="noopener noreferrer" class="relative w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-red-600 hover:bg-red-700 text-white shadow-lg shadow-red-600/30 flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 group focus:outline-none focus:ring-4 focus:ring-red-500/30" title="Blood Bank Stock Details" aria-label="Open Blood Bank Stock Details PDF">
-      <!-- Blood Droplet / Cross Icon -->
-      <svg class="w-5 h-5 text-white transition-transform group-hover:scale-110" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c-4.5 5.5-7 8.5-7 12a7 7 0 0014 0c0-3.5-2.5-6.5-7-12z"/>
-        <path stroke-linecap="round" stroke-linejoin="round" d="M12 11v6m-3-3h6"/>
-      </svg>
-      <!-- Hover Tooltip -->
-      <span class="hidden sm:flex absolute right-14 sm:right-15 bg-slate-900/95 backdrop-blur text-white text-xs font-semibold px-3 py-1.5 rounded-xl shadow-xl opacity-0 pointer-events-none group-hover:opacity-100 transition-all duration-200 whitespace-nowrap items-center gap-1.5 border border-slate-700/80">
-        <span>Blood Bank Stock</span>
-        <span class="text-red-400 font-mono text-[11px] font-bold">PDF</span>
-      </span>
-    </a>
+    <!-- Main Shortcuts Glass Dock Panel: Spacious, organized 2-column layout (Non-congested) -->
+    <div class="w-[325px] sm:w-[340px] max-w-[calc(100vw-36px)] bg-white/95 dark:bg-slate-900/95 backdrop-blur-md rounded-l-2xl border-l border-y border-slate-200/90 dark:border-slate-700/90 shadow-2xl overflow-hidden">
+      
+      <!-- Panel Header -->
+      <div class="flex items-center justify-between px-3.5 py-2.5 bg-gradient-to-r from-slate-50 via-blue-50/40 to-slate-50 dark:from-slate-800/80 dark:via-slate-800/60 dark:to-slate-800/80 border-b border-slate-200/80 dark:border-slate-700/80">
+        <div class="flex items-center gap-2">
+          <div class="w-6 h-6 rounded-lg bg-blue-600 text-white flex items-center justify-center shadow-sm">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-xs font-bold text-slate-800 dark:text-slate-100 tracking-tight leading-none">Quick Shortcuts</h3>
+            <p class="text-[9.5px] text-slate-500 dark:text-slate-400 mt-0.5 leading-none">Emergency & hospital links</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/60 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800/50">
+            8 Links
+          </span>
+          <button type="button" id="dock-close-btn" aria-label="Close shortcuts panel" title="Close"
+                  class="p-1 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-200/60 dark:hover:bg-slate-700 transition cursor-pointer">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
+        </div>
+      </div>
 
-    <!-- 3. Official Email Directory (email.pdf) -->
-    <a href="http://192.168.101.75:3000/files/email.pdf" target="_blank" rel="noopener noreferrer" class="relative w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-600/30 flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 group focus:outline-none focus:ring-4 focus:ring-blue-500/30" title="Staff Email Directory" aria-label="Open Email Directory PDF">
-      <!-- Mail Envelope Icon -->
-      <svg class="w-5 h-5 text-white transition-transform group-hover:-rotate-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-      </svg>
-      <!-- Hover Tooltip -->
-      <span class="hidden sm:flex absolute right-14 sm:right-15 bg-slate-900/95 backdrop-blur text-white text-xs font-semibold px-3 py-1.5 rounded-xl shadow-xl opacity-0 pointer-events-none group-hover:opacity-100 transition-all duration-200 whitespace-nowrap items-center gap-1.5 border border-slate-700/80">
-        <span>Email Directory</span>
-        <span class="text-blue-400 font-mono text-[11px] font-bold">PDF</span>
-      </span>
-    </a>
+      <!-- 2-Column Action Tiles Grid (Spacious, balanced & zero congestion) -->
+      <div class="p-2.5 sm:p-3 grid grid-cols-2 gap-2">
+        
+        <!-- 1. Intercom Hotline -->
+        <a href="./intercom.html" target="_blank" rel="noopener noreferrer" 
+           class="group/tile flex items-center gap-2 p-2 rounded-xl bg-slate-50 hover:bg-rose-50/80 dark:bg-slate-800/60 dark:hover:bg-rose-950/30 border border-slate-200/70 dark:border-slate-700/70 hover:border-rose-300 dark:hover:border-rose-700 shadow-sm hover:shadow transition-all duration-200 hover:-translate-y-0.5"
+           title="Campus Intercom Directory" aria-label="Campus Intercom Directory">
+          <div class="relative w-8 h-8 rounded-lg bg-rose-600 text-white flex items-center justify-center shrink-0 shadow-sm group-hover/tile:scale-105 transition-transform">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-2.2 2.2a15.053 15.053 0 01-6.59-6.59l2.2-2.21a.96.96 0 00.25-1.01A11.36 11.36 0 018.57 3.9c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.52c0-.55-.45-1-.99-1z"/>
+            </svg>
+            <span class="absolute -top-0.5 -right-0.5 flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-rose-500"></span>
+            </span>
+          </div>
+          <div class="flex flex-col min-w-0">
+            <span class="text-[11px] font-bold text-slate-800 dark:text-slate-200 group-hover/tile:text-rose-600 truncate leading-tight">Intercom</span>
+            <span class="text-[9px] font-semibold text-rose-600 dark:text-rose-400 mt-0.5">Live Dial</span>
+          </div>
+        </a>
 
-    <!-- 4. Billing Manual (billingmanual.pdf) -->
-    <a href="http://192.168.101.75:3000/files/billingmanual.pdf" target="_blank" rel="noopener noreferrer" class="relative w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-600/30 flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 group focus:outline-none focus:ring-4 focus:ring-emerald-500/30" title="Billing User Manual" aria-label="Open Billing User Manual PDF">
-      <!-- Receipt / Invoice Icon -->
-      <svg class="w-5 h-5 text-white transition-transform group-hover:scale-110" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z"/>
-      </svg>
-      <!-- Hover Tooltip -->
-      <span class="hidden sm:flex absolute right-14 sm:right-15 bg-slate-900/95 backdrop-blur text-white text-xs font-semibold px-3 py-1.5 rounded-xl shadow-xl opacity-0 pointer-events-none group-hover:opacity-100 transition-all duration-200 whitespace-nowrap items-center gap-1.5 border border-slate-700/80">
-        <span>Billing Manual</span>
-        <span class="text-emerald-400 font-mono text-[11px] font-bold">PDF</span>
-      </span>
-    </a>
+        <!-- 2. 24hr Duty Details -->
+        <a href="http://192.168.101.75:3000/files/24hr's%20Duty%20Details.pdf" target="_blank" rel="noopener noreferrer" 
+           class="group/tile flex items-center gap-2 p-2 rounded-xl bg-slate-50 hover:bg-amber-50/80 dark:bg-slate-800/60 dark:hover:bg-amber-950/30 border border-slate-200/70 dark:border-slate-700/70 hover:border-amber-300 dark:hover:border-amber-700 shadow-sm hover:shadow transition-all duration-200 hover:-translate-y-0.5"
+           title="24hr's Duty Details PDF" aria-label="24hr's Duty Details PDF">
+          <div class="w-8 h-8 rounded-lg bg-amber-500 text-white flex items-center justify-center shrink-0 shadow-sm group-hover/tile:scale-105 transition-transform">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="9"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+          <div class="flex flex-col min-w-0">
+            <span class="text-[11px] font-bold text-slate-800 dark:text-slate-200 group-hover/tile:text-amber-600 truncate leading-tight">24h Duty</span>
+            <span class="text-[9px] font-semibold text-amber-600 dark:text-amber-400 mt-0.5">Roster PDF</span>
+          </div>
+        </a>
 
-    <!-- 5. Nursing User Manual (nursingmanual.pdf) -->
-    <a href="http://192.168.101.75:3000/files/nursingmanual.pdf" target="_blank" rel="noopener noreferrer" class="relative w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-violet-600 hover:bg-violet-700 text-white shadow-lg shadow-violet-600/30 flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 group focus:outline-none focus:ring-4 focus:ring-violet-500/30" title="Nursing User Manual" aria-label="Open Nursing User Manual PDF">
-      <!-- Nursing / Open Book Icon -->
-      <svg class="w-5 h-5 text-white transition-transform group-hover:scale-110" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
-      </svg>
-      <!-- Hover Tooltip -->
-      <span class="hidden sm:flex absolute right-14 sm:right-15 bg-slate-900/95 backdrop-blur text-white text-xs font-semibold px-3 py-1.5 rounded-xl shadow-xl opacity-0 pointer-events-none group-hover:opacity-100 transition-all duration-200 whitespace-nowrap items-center gap-1.5 border border-slate-700/80">
-        <span>Nursing Manual</span>
-        <span class="text-violet-400 font-mono text-[11px] font-bold">PDF</span>
-      </span>
-    </a>
+        <!-- 3. Blood Bank Stock -->
+        <a href="http://192.168.101.75:3000/files/Blood%20Bank%20Stock%20Details.pdf" target="_blank" rel="noopener noreferrer" 
+           class="group/tile flex items-center gap-2 p-2 rounded-xl bg-slate-50 hover:bg-red-50/80 dark:bg-slate-800/60 dark:hover:bg-red-950/30 border border-slate-200/70 dark:border-slate-700/70 hover:border-red-300 dark:hover:border-red-700 shadow-sm hover:shadow transition-all duration-200 hover:-translate-y-0.5"
+           title="Blood Bank Stock Details PDF" aria-label="Blood Bank Stock Details PDF">
+          <div class="w-8 h-8 rounded-lg bg-red-600 text-white flex items-center justify-center shrink-0 shadow-sm group-hover/tile:scale-105 transition-transform">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c-4.5 5.5-7 8.5-7 12a7 7 0 0014 0c0-3.5-2.5-6.5-7-12z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 11v6m-3-3h6"/>
+            </svg>
+          </div>
+          <div class="flex flex-col min-w-0">
+            <span class="text-[11px] font-bold text-slate-800 dark:text-slate-200 group-hover/tile:text-red-600 truncate leading-tight">Blood Bank</span>
+            <span class="text-[9px] font-semibold text-red-600 dark:text-red-400 mt-0.5">Stock PDF</span>
+          </div>
+        </a>
 
+        <!-- 4. Email Directory -->
+        <a href="http://192.168.101.75:3000/files/email.pdf" target="_blank" rel="noopener noreferrer" 
+           class="group/tile flex items-center gap-2 p-2 rounded-xl bg-slate-50 hover:bg-blue-50/80 dark:bg-slate-800/60 dark:hover:bg-blue-950/30 border border-slate-200/70 dark:border-slate-700/70 hover:border-blue-300 dark:hover:border-blue-700 shadow-sm hover:shadow transition-all duration-200 hover:-translate-y-0.5"
+           title="Staff Email Directory PDF" aria-label="Staff Email Directory PDF">
+          <div class="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-sm group-hover/tile:scale-105 transition-transform">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            </svg>
+          </div>
+          <div class="flex flex-col min-w-0">
+            <span class="text-[11px] font-bold text-slate-800 dark:text-slate-200 group-hover/tile:text-blue-600 truncate leading-tight">Email List</span>
+            <span class="text-[9px] font-semibold text-blue-600 dark:text-blue-400 mt-0.5">Staff Directory</span>
+          </div>
+        </a>
+
+        <!-- 5. Medical Abbreviations (NEW) -->
+        <a href="http://192.168.101.75:3000/files/Abrrevation.pdf" target="_blank" rel="noopener noreferrer" 
+           class="group/tile flex items-center gap-2 p-2 rounded-xl bg-slate-50 hover:bg-violet-50/80 dark:bg-slate-800/60 dark:hover:bg-violet-950/30 border border-slate-200/70 dark:border-slate-700/70 hover:border-violet-300 dark:hover:border-violet-700 shadow-sm hover:shadow transition-all duration-200 hover:-translate-y-0.5"
+           title="Medical Abbreviations PDF" aria-label="Medical Abbreviations PDF">
+          <div class="w-8 h-8 rounded-lg bg-violet-600 text-white flex items-center justify-center shrink-0 shadow-sm group-hover/tile:scale-105 transition-transform">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+            </svg>
+          </div>
+          <div class="flex flex-col min-w-0">
+            <span class="text-[11px] font-bold text-slate-800 dark:text-slate-200 group-hover/tile:text-violet-600 truncate leading-tight">Abbreviation</span>
+            <span class="text-[9px] font-semibold text-violet-600 dark:text-violet-400 mt-0.5">Clinical Guide</span>
+          </div>
+        </a>
+
+        <!-- 6. Billing Manual -->
+        <a href="http://192.168.101.75:3000/files/billingmanual.pdf" target="_blank" rel="noopener noreferrer" 
+           class="group/tile flex items-center gap-2 p-2 rounded-xl bg-slate-50 hover:bg-emerald-50/80 dark:bg-slate-800/60 dark:hover:bg-emerald-950/30 border border-slate-200/70 dark:border-slate-700/70 hover:border-emerald-300 dark:hover:border-emerald-700 shadow-sm hover:shadow transition-all duration-200 hover:-translate-y-0.5"
+           title="Billing User Manual PDF" aria-label="Billing User Manual PDF">
+          <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-sm group-hover/tile:scale-105 transition-transform">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z"/>
+            </svg>
+          </div>
+          <div class="flex flex-col min-w-0">
+            <span class="text-[11px] font-bold text-slate-800 dark:text-slate-200 group-hover/tile:text-emerald-600 truncate leading-tight">Billing</span>
+            <span class="text-[9px] font-semibold text-emerald-600 dark:text-emerald-400 mt-0.5">User Manual</span>
+          </div>
+        </a>
+
+        <!-- 7. Nursing Manual -->
+        <a href="http://192.168.101.75:3000/files/nursingmanual.pdf" target="_blank" rel="noopener noreferrer" 
+           class="group/tile flex items-center gap-2 p-2 rounded-xl bg-slate-50 hover:bg-teal-50/80 dark:bg-slate-800/60 dark:hover:bg-teal-950/30 border border-slate-200/70 dark:border-slate-700/70 hover:border-teal-300 dark:hover:border-teal-700 shadow-sm hover:shadow transition-all duration-200 hover:-translate-y-0.5"
+           title="Nursing User Manual PDF" aria-label="Nursing User Manual PDF">
+          <div class="w-8 h-8 rounded-lg bg-teal-600 text-white flex items-center justify-center shrink-0 shadow-sm group-hover/tile:scale-105 transition-transform">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            </svg>
+          </div>
+          <div class="flex flex-col min-w-0">
+            <span class="text-[11px] font-bold text-slate-800 dark:text-slate-200 group-hover/tile:text-teal-600 truncate leading-tight">Nursing</span>
+            <span class="text-[9px] font-semibold text-teal-600 dark:text-teal-400 mt-0.5">User Manual</span>
+          </div>
+        </a>
+
+        <!-- 8. Replace PDF Portal -->
+        <a href="http://192.168.101.75:8000/server" target="_blank" rel="noopener noreferrer" 
+           class="group/tile flex items-center gap-2 p-2 rounded-xl bg-slate-50 hover:bg-slate-100 dark:bg-slate-800/60 dark:hover:bg-slate-800 border border-slate-200/70 dark:border-slate-700/70 hover:border-slate-400 dark:hover:border-slate-600 shadow-sm hover:shadow transition-all duration-200 hover:-translate-y-0.5"
+           title="Replace / Upload PDF Portal" aria-label="Replace / Upload PDF Portal">
+          <div class="w-8 h-8 rounded-lg bg-slate-700 text-white flex items-center justify-center shrink-0 shadow-sm group-hover/tile:scale-105 transition-transform">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+          </div>
+          <div class="flex flex-col min-w-0">
+            <span class="text-[11px] font-bold text-slate-800 dark:text-slate-200 group-hover/tile:text-slate-900 dark:group-hover/tile:white truncate leading-tight">Replace PDF</span>
+            <span class="text-[9px] font-semibold text-slate-500 dark:text-slate-400 mt-0.5">Admin Server</span>
+          </div>
+        </a>
+
+      </div>
+
+      <!-- Panel Footer -->
+      <div class="px-3.5 py-2 bg-slate-50/90 dark:bg-slate-800/50 border-t border-slate-200/70 dark:border-slate-700/70 flex items-center justify-between text-[10px] text-slate-500 dark:text-slate-400">
+        <span class="flex items-center gap-1.5 font-medium">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+          Hospital Quick Desk
+        </span>
+        <span class="font-mono text-[9px] text-slate-400">Esc to close</span>
+      </div>
+
+    </div>
   </aside>
-
-  <!-- Floating Upload FAB Button (Replace PDF portal) -->
-  <a href="http://192.168.101.75:8000/server" target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 z-40 w-12 h-12 rounded-full bg-emerald-700 hover:bg-emerald-800 text-white shadow-xl shadow-emerald-900/30 flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 group focus:outline-none focus:ring-4 focus:ring-emerald-500/30" title="Replace / Upload PDF" aria-label="Open Replace PDF page">
-    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-      <polyline points="17 8 12 3 7 8"/>
-      <line x1="12" y1="3" x2="12" y2="15"/>
-    </svg>
-    <span class="absolute right-14 bg-slate-900 text-white text-xs font-semibold px-2.5 py-1 rounded-lg shadow-md opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity whitespace-nowrap">Replace PDF</span>
-  </a>
 
   <!-- Toast Notification element -->
   <div id="toast" class="fixed bottom-5 left-4 right-4 sm:left-auto sm:right-6 sm:max-w-md z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none bg-slate-900 text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 border border-slate-700/80">
@@ -1709,6 +2054,14 @@
     </div>
     <span id="toast-text" class="text-xs sm:text-sm font-medium">Notification message</span>
   </div>
+
+  <!-- Floating Back-to-Top Smooth Scroll Button -->
+  <button id="back-to-top-btn" type="button" aria-label="Scroll back to top" title="Back to top"
+          class="fixed bottom-6 right-6 z-40 p-3 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white shadow-xl shadow-blue-600/30 hover:shadow-blue-600/50 hover:scale-110 active:scale-95 transition-all duration-300 opacity-0 pointer-events-none translate-y-4 focus:outline-none flex items-center justify-center cursor-pointer group">
+    <svg class="w-5 h-5 transition-transform duration-200 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+    </svg>
+  </button>
 
   <!-- ========================================================================= -->
   <!-- JAVASCRIPT LOGIC                                                          -->
@@ -1775,17 +2128,19 @@
         fullName: 'APH Common Forms',
         count: '44 Forms Available',
         badge: 'Clinical Indent & Ops',
-        color: 'amber',
-        accentBorder: 'border-t-amber-500',
-        accentRing: 'ring-amber-500',
-        accentIconBg: 'bg-amber-50',
-        accentIconText: 'text-amber-600',
-        accentBadgeClasses: 'bg-amber-50 text-amber-700 border-amber-200/60',
-        accentCountClasses: 'text-amber-600 bg-amber-50 border-amber-200/50',
+        color: 'crimson',
+        accentBorder: 'border-t-[rgb(146,17,17)]',
+        accentRing: 'ring-[rgb(146,17,17)]',
+        accentIconBg: 'bg-[rgba(146,17,17,0.1)]',
+        accentIconText: 'text-[rgb(146,17,17)]',
+        accentBadgeClasses: 'bg-[rgba(146,17,17,0.1)] text-[rgb(146,17,17)] border-[rgba(146,17,17,0.25)]',
+        accentCountClasses: 'text-[rgb(146,17,17)] bg-[rgba(146,17,17,0.1)] border-[rgba(146,17,17,0.25)]',
         description: 'Approved ICU checklists, SBAR handover, narcotic indents, ADR reporting, emergency & infection control protocols.',
         hubUrl: './commonforms.html',
         hubText: 'Explore All 44 Common Forms in Full Vault',
         forms: [
+          { name: "Code Blue", desc: "Cardiac arrest emergency response algorithm & protocol", url: "http://192.168.101.75:3000/files/Code.pdf" },
+          { name: "Code Blue Post Event Analysis Form", desc: "CPR event debrief, timeline audit & resuscitation analysis", url: "http://192.168.101.75:3000/files/Code%20Blue%20Post%20Event%20Analysis%20Form.pdf" },
           { name: "ICU Casesheet Checklist", desc: "Comprehensive clinical casesheet audit checklist for intensive care", url: "http://192.168.101.75:3000/files/ICU%20Casesheet%20Checklist.pdf" },
           { name: "ICU to Ward Shifting Criteria Checklist", desc: "Step-down stability criteria and vital sign transfer checklist", url: "http://192.168.101.75:3000/files/ICU%20to%20Ward%20Shifting%20Criteria%20Checklist.pdf" },
           { name: "HANDING OVER SBAR", desc: "Situation, Background, Assessment, Recommendation handover protocol", url: "http://192.168.101.75:3000/files/HANDING%20OVER%20SBAR.pdf" },
@@ -1804,8 +2159,6 @@
           { name: "ER - Nurses Initial Assessment Form", desc: "Triage nursing vital signs and priority assessment", url: "http://192.168.101.75:3000/files/Nurses%20Initial%20Assessment%20for%20Emergency%20Room.pdf" },
           { name: "Modified Early Warning Score", desc: "Bedside physiological scoring chart (MEWS) for deterioration", url: "http://192.168.101.75:3000/files/MODIFIED%20EARLY%20WARNING%20SCORE%20(1).pdf" },
           { name: "Food Token", desc: "Patient & attender dietary meal token requisition", url: "http://192.168.101.75:3000/files/food.pdf" },
-          { name: "Code Blue", desc: "Cardiac arrest emergency response algorithm & protocol", url: "http://192.168.101.75:3000/files/Code.pdf" },
-          { name: "Code Blue Post Event Analysis Form", desc: "CPR event debrief, timeline audit & resuscitation analysis", url: "http://192.168.101.75:3000/files/Code%20Blue%20Post%20Event%20Analysis%20Form.pdf" },
           { name: "ADR-Form", desc: "Adverse drug reaction pharmacovigilance incident report", url: "http://192.168.101.75:3000/files/ADR-Form.pdf" },
           { name: "Incident Report", desc: "Clinical & operational sentinel event incident documentation", url: "http://192.168.101.75:3000/files/Incident.pdf" },
           { name: "Transfusion Technique Protocol", desc: "Clinical protocol for safe whole blood and component delivery", url: "http://192.168.101.75:3000/files/transfusionprotocol.pdf" },
@@ -1898,7 +2251,7 @@
     function rebuildHospitalFormsCatalog() {
       hospitalFormsCatalog = [
         ...formsCategoryVaults.consent.forms.map(f => ({ ...f, title: f.name, category: 'consent', categoryLabel: 'Consent', color: 'blue' })),
-        ...formsCategoryVaults.clinical.forms.map(f => ({ ...f, title: f.name, category: 'clinical', categoryLabel: 'Common Forms', color: 'amber' })),
+        ...formsCategoryVaults.clinical.forms.map(f => ({ ...f, title: f.name, category: 'clinical', categoryLabel: 'Common Forms', color: 'crimson' })),
         ...formsCategoryVaults.hr.forms.map(f => ({ ...f, title: f.name, category: 'hr', categoryLabel: 'HR', color: 'purple' })),
         ...formsCategoryVaults.it.forms.map(f => ({ ...f, title: f.name, category: 'it', categoryLabel: 'IT', color: 'teal' }))
       ];
@@ -1921,7 +2274,7 @@
           card.classList.add('is-selected', 'ring-2', v.accentRing);
           if (badge) badge.classList.remove('hidden');
         } else {
-          card.classList.remove('is-selected', 'ring-2', 'ring-blue-600', 'ring-amber-500', 'ring-purple-500', 'ring-teal-500');
+          card.classList.remove('is-selected', 'ring-2', 'ring-blue-600', 'ring-amber-500', 'ring-[rgb(146,17,17)]', 'ring-purple-500', 'ring-teal-500');
           if (badge) badge.classList.add('hidden');
         }
       });
@@ -1930,16 +2283,16 @@
       const panel = document.getElementById('forms-active-panel');
       if (panel) {
         // Clear previous border-t accent
-        panel.classList.remove('border-t-blue-600', 'border-t-amber-500', 'border-t-purple-500', 'border-t-teal-500');
+        panel.classList.remove('border-t-blue-600', 'border-t-amber-500', 'border-t-[rgb(146,17,17)]', 'border-t-purple-500', 'border-t-teal-500');
         panel.classList.add(vault.accentBorder);
       }
 
-      // Icon container & SVG: background matches card color (blue, yellow/amber, purple, teal) with white icon
+      // Icon container & SVG: background matches card color (blue, rgb(146,17,17), purple, teal) with white icon
       const iconContainer = document.getElementById('active-cat-icon-container');
       if (iconContainer) {
         const activeCatIconStyles = {
           consent: 'bg-blue-600 text-white shadow-blue-500/25',
-          clinical: 'bg-amber-600 text-white shadow-amber-500/25',
+          clinical: 'bg-[rgb(146,17,17)] text-white shadow-[rgba(146,17,17,0.35)]',
           hr: 'bg-purple-600 text-white shadow-purple-500/25',
           it: 'bg-teal-600 text-white shadow-teal-500/25'
         };
@@ -2001,13 +2354,10 @@
       }
 
       container.innerHTML = items.map(item => `
-        <div class="py-2.5 px-2 hover:bg-slate-50 transition-colors rounded-xl flex items-center justify-between gap-3 group">
-          <div class="min-w-0 pr-1">
+        <div class="py-2.5 px-2.5 hover:bg-slate-50 transition-colors rounded-xl flex items-center justify-between gap-3 group">
+          <div class="min-w-0 pr-2">
             <div class="text-xs sm:text-sm font-semibold text-[#0F172A] group-hover:text-blue-600 truncate">
               ${escapeHtml(item.name || item.title)}
-            </div>
-            <div class="text-[11px] text-[#64748B] truncate mt-0.5">
-              ${escapeHtml(item.desc || 'Approved Departmental Document')}
             </div>
           </div>
           ${item.action ? `
@@ -2077,7 +2427,7 @@
                 <div class="flex items-center gap-2 mt-0.5">
                   <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${
                     item.color === 'blue' ? 'bg-blue-50 text-blue-700 border border-blue-200/60' :
-                    item.color === 'amber' ? 'bg-amber-50 text-amber-700 border border-amber-200/60' :
+                    item.color === 'crimson' || item.color === 'amber' ? 'bg-[rgba(146,17,17,0.1)] text-[rgb(146,17,17)] border border-[rgba(146,17,17,0.25)]' :
                     item.color === 'purple' ? 'bg-purple-50 text-purple-700 border border-purple-200/60' :
                     'bg-teal-50 text-teal-700 border border-teal-200/60'
                   }">${item.categoryLabel}</span>
@@ -2129,7 +2479,7 @@
       try {
         const responses = await Promise.allSettled(
           categorySources.map(async item => {
-            const res = await fetch(item.file);
+            const res = await fetch(`${item.file}?v=${Date.now()}`, { cache: 'no-cache' });
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
             const data = await res.json();
             return { id: item.id, data };
@@ -2350,7 +2700,7 @@
       e.target.reset();
     }
 
-    // Feedback submission handler (wired to Web3Forms API)
+    // Feedback submission handler (wired to Web3Forms API sending to itmgmt@mapims.edu.in)
     async function submitFeedback(e) {
       e.preventDefault();
       const form = document.getElementById('contact-form');
@@ -2370,15 +2720,15 @@
         });
         const data = await response.json();
         if (data.success) {
-          showToast(`Thank you, ${name}! Your feedback has been sent to Hospital Administration.`);
+          showToast(`Thank you, ${name}! Your message has been sent successfully.`);
           form.reset();
         } else {
-          showToast(`Thank you, ${name}! Your feedback has been recorded.`);
+          showToast(`Thank you, ${name}! Your message has been recorded.`);
           form.reset();
         }
       } catch (error) {
         console.warn('Web3Forms fallback submission:', error);
-        showToast(`Thank you, ${name}! Your feedback has been sent to Hospital Administration.`);
+        showToast(`Thank you, ${name}! Your message has been sent.`);
         form.reset();
       } finally {
         submitBtn.disabled = false;
@@ -2586,10 +2936,10 @@
       } else if (term.includes('intercom') || term.includes('phone') || term.includes('contact') || term.includes('casualty') || term.includes('trauma') || term.includes('extension')) {
         window.open('./intercom.html', '_blank');
         showToast(`Opening Campus Intercom Directory for "${term}"`);
-      } else if (term.includes('feedback') || term.includes('suggestion') || term.includes('message') || term.includes('help desk')) {
+      } else if (term.includes('feedback') || term.includes('suggestion') || term.includes('message') || term.includes('help desk') || term.includes('quick help')) {
         const fb = document.getElementById('feedback');
         if (fb) fb.scrollIntoView({ behavior: 'smooth' });
-        showToast(`Navigated to Employee Help Desk / Feedback`);
+        showToast(`Navigated to Quick Help & Contacts`);
       } else if (term.includes('app') || term.includes('barcode') || term.includes('eye') || term.includes('token') || term.includes('ai') || term.includes('audit') || term.includes('checklist')) {
         document.getElementById('in-house-apps').scrollIntoView({ behavior: 'smooth' });
         showToast(`Navigated to In-House Developed Applications for "${term}"`);
@@ -2677,6 +3027,145 @@
       greetingEl.textContent = `${greeting}, Hospital Team`;
     }
     updatePortalGreeting();
+
+    // Floating Quick Shortcuts Dock Mobile/Touch Toggle & Outside Click
+    const shortcutsDock = document.getElementById('quick-shortcuts-dock');
+    const dockToggleBtn = document.getElementById('dock-toggle-btn');
+    const dockCloseBtn = document.getElementById('dock-close-btn');
+    if (shortcutsDock && dockToggleBtn) {
+      dockToggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        shortcutsDock.classList.toggle('is-open');
+      });
+      if (dockCloseBtn) {
+        dockCloseBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          shortcutsDock.classList.remove('is-open');
+          shortcutsDock.classList.add('pointer-events-none');
+          setTimeout(() => shortcutsDock.classList.remove('pointer-events-none'), 350);
+        });
+      }
+      document.addEventListener('click', (e) => {
+        if (shortcutsDock.classList.contains('is-open') && !shortcutsDock.contains(e.target)) {
+          shortcutsDock.classList.remove('is-open');
+        }
+      });
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && shortcutsDock.classList.contains('is-open')) {
+          shortcutsDock.classList.remove('is-open');
+        }
+      });
+    }
+
+    // =========================================================================
+    // SMOOTH SCROLLING & SCROLLSPY NAVIGATION
+    // =========================================================================
+
+    // Smooth Anchor Navigation for all in-page links (static fixed header)
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const targetId = this.getAttribute('href');
+        if (!targetId || targetId === '#') {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          history.pushState(null, null, window.location.pathname);
+          return;
+        }
+        const targetEl = document.querySelector(targetId);
+        if (targetEl) {
+          e.preventDefault();
+          const navHeight = document.querySelector('nav')?.offsetHeight || 80;
+          const targetY = targetEl.getBoundingClientRect().top + window.pageYOffset - navHeight - 12;
+          window.scrollTo({ top: Math.max(0, targetY), behavior: 'smooth' });
+          history.pushState(null, null, targetId);
+
+          // If mobile nav drawer is open, smoothly close it
+          const mobileNav = document.getElementById('mobile-nav');
+          if (mobileNav && !mobileNav.classList.contains('hidden')) {
+            mobileNav.classList.add('hidden');
+          }
+          setTimeout(updateBackToTop, 400);
+          setTimeout(updateBackToTop, 800);
+        }
+      });
+    });
+
+    // Floating Back-to-Top Smooth Scroll Button
+    const backToTopBtn = document.getElementById('back-to-top-btn');
+    function updateBackToTop() {
+      if (!backToTopBtn) return;
+      if (window.pageYOffset > 320) {
+        backToTopBtn.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
+        backToTopBtn.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
+      } else {
+        backToTopBtn.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
+        backToTopBtn.classList.add('opacity-0', 'pointer-events-none', 'translate-y-4');
+      }
+    }
+    if (backToTopBtn) {
+      window.addEventListener('scroll', updateBackToTop, { passive: true });
+      backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+
+    // Dynamic ScrollSpy Navigation Indicator
+    const trackedSections = [
+      { id: 'hero', linkId: 'nav-link-home', mobId: 'mob-link-home' },
+      { id: 'in-house-apps', linkId: 'nav-link-inhouse', mobId: 'mob-link-inhouse' },
+      { id: 'quality', linkId: 'nav-link-quality', mobId: 'mob-link-quality' },
+      { id: 'e-circulars', linkId: 'nav-link-circulars', mobId: 'mob-link-circulars' },
+      { id: 'tariff-stock', linkId: 'nav-link-tariff', mobId: 'mob-link-tariff' },
+      { id: 'forms', linkId: 'nav-link-forms', mobId: 'mob-link-forms' }
+    ];
+
+    const activeNavStyles = ['bg-blue-50', 'text-blue-600', 'font-bold', 'border', 'border-blue-100/80', 'shadow-sm'];
+    const inactiveNavStyles = ['hover:text-blue-600', 'hover:bg-slate-100'];
+
+    function handleScrollSpy() {
+      const navHeight = document.querySelector('nav')?.offsetHeight || 80;
+      const scrollPos = window.pageYOffset + navHeight + 120;
+
+      let currentSecId = 'hero';
+      for (const sec of trackedSections) {
+        const el = document.getElementById(sec.id);
+        if (el) {
+          const top = el.offsetTop;
+          const height = el.offsetHeight;
+          if (scrollPos >= top && scrollPos < top + height) {
+            currentSecId = sec.id;
+            break;
+          }
+        }
+      }
+
+      trackedSections.forEach(sec => {
+        const deskLink = document.getElementById(sec.linkId);
+        const mobLink = document.getElementById(sec.mobId);
+        const isCurrent = sec.id === currentSecId;
+
+        if (deskLink) {
+          if (isCurrent) {
+            deskLink.classList.add(...activeNavStyles);
+            deskLink.classList.remove(...inactiveNavStyles);
+          } else {
+            deskLink.classList.remove(...activeNavStyles);
+            deskLink.classList.add(...inactiveNavStyles);
+          }
+        }
+
+        if (mobLink) {
+          if (isCurrent) {
+            mobLink.classList.add('bg-blue-50', 'text-blue-600', 'font-bold');
+            mobLink.classList.remove('text-slate-700');
+          } else {
+            mobLink.classList.remove('bg-blue-50', 'text-blue-600', 'font-bold');
+            mobLink.classList.add('text-slate-700');
+          }
+        }
+      });
+    }
+    window.addEventListener('scroll', handleScrollSpy, { passive: true });
   </script>
 
 </body>

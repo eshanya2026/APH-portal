@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Intercom Directory</title>
     <style>
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+
         * {
             box-sizing: border-box;
         }
@@ -26,15 +31,15 @@
             position: sticky;
             top: 0;
             background: linear-gradient(90deg, #0d47a1, #1976d2);
-            padding: 16px 14px;
+            padding: 14px 16px 20px;
             color: #fff;
             box-shadow: 0 2px 8px #0004;
-            z-index: 9;
+            z-index: 99;
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
-            gap: 12px;
+            gap: 10px;
             width: 100%;
         }
 
@@ -46,19 +51,29 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             width: 100%;
+        }
+
+        .logo-header img {
+            width: 200px;
+            max-width: 100%;
+            height: auto;
+            object-fit: contain;
+            filter: drop-shadow(0px 0px 1px rgba(255,255,255,0.8));
         }
 
         #search {
             width: 100%;
-            max-width: 480px;
-            padding: 12px 18px;
+            max-width: 440px;
+            margin-top: 10px;
+            padding: 11px 20px;
             border: none;
             border-radius: 25px;
             font-size: 15px;
             display: block;
             outline: none;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
         }
 
         .container {
@@ -114,13 +129,12 @@
 <body>
     <div class='wrapper'>
         <header>
-            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1050px; flex-wrap: wrap; gap: 10px;">
-                <a href="./index.html" style="color: #ffffff; text-decoration: none; font-size: 13px; font-weight: 600; background: rgba(255,255,255,0.2); padding: 8px 14px; border-radius: 20px; transition: background 0.2s;">&larr; Back to Main Portal</a>
-                <a href="./Intercom%20Directory.pdf" target="_blank" rel="noopener noreferrer" style="color: #ffffff; text-decoration: none; font-size: 13px; font-weight: 600; background: rgba(255,255,255,0.2); padding: 8px 14px; border-radius: 20px; transition: background 0.2s;">&#128196; View Official PDF</a>
+            <div style="display: flex; justify-content: flex-start; align-items: center; width: 100%; max-width: 1050px;">
+                <a href="./index.html" style="color: #ffffff; text-decoration: none; font-size: 12px; font-weight: 600; background: rgba(255,255,255,0.2); padding: 5px 12px; border-radius: 16px; transition: background 0.2s;">&larr; Back to Main Portal</a>
             </div>
             <div class="logo-header">
-                <img style="filter: drop-shadow(0px 0px 0.5px white);" src="./assets/images/logo2.png" onerror="this.src='http://192.168.101.75/assets/images/logo2.png'" width="200" alt="LOGO">
-                <input id='search' style="width: 100%; max-width: 480px; margin-top: 10px;" placeholder='Search extension or description...'>
+                <img src="./assets/images/logo2%20(1).png" onerror="this.src='./assets/images/logo2.png'" alt="APH Logo">
+                <input id='search' placeholder='Search extension or description...'>
             </div>
         </header>
         <div class='container'>
