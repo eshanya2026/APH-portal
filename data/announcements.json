@@ -1,0 +1,38 @@
+[
+  {
+    "id": "announcement-1",
+    "badge": "Quality",
+    "severity": "Information",
+    "message": "Code RRT Activation Form is published in Forms Hub).",
+    "linkText": "Common Forms Hub",
+    "linkUrl": "#forms",
+    "active": true
+  },
+  {
+    "id": "announcement-2",
+    "badge": "NABH Safety",
+    "severity": "information",
+    "message": "Patient Safety & Quality Mock Drill scheduled for Block B & ICU wards on Monday, 22nd Sep.",
+    "linkText": "Quality Hub",
+    "linkUrl": "#quality",
+    "active": false
+  },
+  {
+    "id": "announcement-3",
+    "badge": "Blood Bank",
+    "severity": "urgent",
+    "message": "STAT Alert: O-Negative (O-) units needed for emergency reserves. Dial Ext 2450.",
+    "linkText": "",
+    "linkUrl": "",
+    "active": true
+  },
+  {
+    "id": "announcement-4",
+    "badge": "Clinical Policy",
+    "severity": "success",
+    "message": "Antibiotic Stewardship Policy (ASP 2026) officially approved and published in Governance Manuals.",
+    "linkText": "Governance Manuals",
+    "linkUrl": "./manuals.html",
+    "active": false
+  }
+]

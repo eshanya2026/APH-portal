@@ -19,6 +19,7 @@ When adding, editing, or archiving documents, **no HTML, React, or JavaScript ch
 | `committees.json` | Quality committees, calendars & verified MOMs | `comitee.html` |
 | `circulars.json` | Executive memos & digital e-circulars | `recent circular.html` |
 | `intercom.json` | Hospital extension directory by floor & department | `intercom.html` |
+| `announcements.json` | Live top-bar marquee ticker announcements & alerts | `index.html` |
 
 ---
 
@@ -112,3 +113,35 @@ When adding, editing, or archiving documents, **no HTML, React, or JavaScript ch
    }
    ```
 3. Save the file. `intercom.html` renders the cards with instant live search.
+ 
+---
+
+## 6. How to Add or Edit Announcements (`data/announcements.json`)
+
+All alerts in the top marquee ticker on the homepage (`index.html`) are managed dynamically via `data/announcements.json`. **No code or HTML changes are needed.**
+
+1. Open `data/announcements.json`.
+2. To **add a new alert**, append an entry:
+   ```json
+   {
+     "id": "announcement-5",
+     "badge": "Water Maintenance",
+     "severity": "warning",
+     "message": "Routine water tank cleaning in Block B tomorrow 6:00 AM – 8:00 AM.",
+     "linkText": "",
+     "linkUrl": "",
+     "active": true
+   }
+   ```
+   * **`severity`**: Sets the color theme and icon:
+     * `"warning"` ⚠️ — Amber theme (scheduled maintenance, drills, system downtime).
+     * `"information"` (or `"info"`) ℹ️ — Blue theme (general announcements, policy updates).
+     * `"success"` ✓ — Emerald green theme (cleared audits, restored services, achievements).
+     * `"urgent"` 🚨 — Rose/Red theme (emergency blood reserves, critical notices).
+   * **`badge`** *(Optional)*: Custom label for the category pill (e.g. `IT Alert`, `NABH`, `Blood Bank`, `Clinical Policy`). If omitted, defaults to the severity name.
+   * **`message`**: The alert text displayed in the scrolling ticker.
+   * **`linkText` & `linkUrl`** *(Optional)*: Text within the message to turn into a clickable link (e.g. `#forms`, `./manuals.html`, or an external URL).
+   * **`active`**: Set to `true` to display in the ticker, or `false` to temporarily hide without deleting.
+3. To **turn off an announcement**, simply set `"active": false`.
+4. If there are no active announcements (or the array is empty `[]`), the marquee bar **automatically hides itself** so it takes zero space.
+5. Save the file. The homepage marquee refreshes dynamically.
