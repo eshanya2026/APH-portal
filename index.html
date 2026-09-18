@@ -228,16 +228,12 @@
       box-shadow: -4px 0 15px rgba(0, 0, 0, 0.08);
     }
 
-    /* Expand when hovering over the dock/handle, on focus-within, or when toggled */
-    #quick-shortcuts-dock:hover,
-    #quick-shortcuts-dock:focus-within,
+    /* Expand ONLY when toggled open by clicking the quick button */
     #quick-shortcuts-dock.is-open {
       transform: translateY(-50%) translateX(0);
     }
 
-    /* Rotate chevron when dock is open */
-    #quick-shortcuts-dock:hover .dock-chevron,
-    #quick-shortcuts-dock:focus-within .dock-chevron,
+    /* Rotate chevron arrow when dock is open to point right */
     #quick-shortcuts-dock.is-open .dock-chevron {
       transform: rotate(180deg);
     }
@@ -282,6 +278,47 @@
     .status-dot-pulse {
       animation: statusPulse 2s infinite ease-in-out;
     }
+
+    /* Green and White color pulse animation keyframes for IP Address */
+    @keyframes ipBadgePulse {
+      0%, 100% {
+        border-color: rgba(16, 185, 129, 0.7);
+        box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.35), 0 0 14px rgba(16, 185, 129, 0.25);
+      }
+      50% {
+        border-color: rgba(255, 255, 255, 0.8);
+        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.35), 0 0 14px rgba(255, 255, 255, 0.3);
+      }
+    }
+    .ip-badge-pulse {
+      animation: ipBadgePulse 3s infinite ease-in-out;
+    }
+
+    /* Icon color pulse (Green and White) */
+    @keyframes ipIconPulse {
+      0%, 100% { color: #34d399; }
+      50% { color: #ffffff; }
+    }
+    .ip-icon-pulse {
+      animation: ipIconPulse 3s infinite ease-in-out;
+    }
+
+    /* Monospace IP text & pill pulse (Green and White) */
+    @keyframes ipTextPulse {
+      0%, 100% {
+        color: #6ee7b7;
+        border-color: rgba(16, 185, 129, 0.55);
+        box-shadow: inset 0 0 6px rgba(16, 185, 129, 0.2);
+      }
+      50% {
+        color: #ffffff;
+        border-color: rgba(255, 255, 255, 0.7);
+        box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.25);
+      }
+    }
+    .ip-display-value {
+      animation: ipTextPulse 3s infinite ease-in-out;
+    }
   </style>
 </head>
 <body class="bg-slate-50 text-slate-900 antialiased selection:bg-blue-600 selection:text-white overflow-x-hidden w-full">
@@ -313,13 +350,15 @@
 
         <!-- Right Side: IP Address Badge & Mobile Menu Toggle -->
         <div class="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
-          <!-- IP Address Badge (Desktop only) -->
-          <div class="hidden xl:flex items-center gap-1.5 bg-slate-100/90 border border-slate-200/90 rounded-lg px-2.5 py-1.5 text-xs text-slate-600 shadow-sm whitespace-nowrap">
-            <svg class="w-3.5 h-3.5 text-slate-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <!-- IP Address Badge (Catchy Green & Red color animation) -->
+          <div class="hidden lg:flex items-center gap-2 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white border border-slate-700/90 rounded-xl px-3 py-1.5 shadow-md select-none whitespace-nowrap ip-badge-pulse">
+            <!-- Workstation monitor icon -->
+            <svg class="w-4 h-4 ip-icon-pulse shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
             </svg>
-            <span class="text-slate-500 font-medium">IP Address:</span>
-            <span id="workstation-ip" class="font-mono font-bold text-slate-800 bg-slate-200/70 border border-slate-300/70 px-1.5 py-0.5 rounded text-[13px] tracking-wide ip-display-value">192.168.101.45</span>
+            <span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-300">IP:</span>
+            <!-- Glowing high-visibility monospace pill -->
+            <span id="workstation-ip" class="font-mono font-black bg-slate-950/90 border px-2.5 py-0.5 rounded-lg text-xs sm:text-[13px] tracking-wider shadow-inner ip-display-value">192.168.101.45</span>
           </div>
 
           <!-- Mobile / Tablet Hamburger Toggle Button -->
@@ -335,14 +374,14 @@
       <!-- Mobile / Tablet Navigation Drawer -->
       <div id="mobile-nav" class="hidden xl:hidden py-4 border-t border-slate-200/80 space-y-1">
         <!-- Workstation IP badge in drawer -->
-        <div class="px-4 py-2.5 mb-2 flex items-center justify-between bg-slate-50 border border-slate-200/80 rounded-xl text-xs text-slate-600">
-          <div class="flex items-center gap-2">
-            <svg class="w-4 h-4 text-slate-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="px-4 py-2.5 mb-2 flex items-center justify-between bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white border border-slate-700/90 rounded-2xl shadow-md select-none ip-badge-pulse">
+          <div class="flex items-center gap-2.5">
+            <svg class="w-4 h-4 ip-icon-pulse shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
             </svg>
-            <span class="font-medium text-slate-500">IP Address:</span>
+            <span class="font-bold text-xs uppercase tracking-wider text-slate-200">Station IP:</span>
           </div>
-          <span class="font-mono font-bold text-slate-800 bg-white px-2.5 py-0.5 rounded border border-slate-200 text-[13px] tracking-wide ip-display-value">192.168.101.45</span>
+          <span class="font-mono font-black bg-slate-950/90 border px-2.5 py-0.5 rounded-lg text-[13px] tracking-wider ip-display-value shadow-inner">192.168.101.45</span>
         </div>
 
         <a id="mob-link-home" href="#hero" class="block px-4 py-2.5 rounded-lg bg-blue-50 text-blue-600 font-bold text-sm">Home</a>
@@ -1852,23 +1891,23 @@
     </div>
   </div>
 
-  <!-- Floating Quick-Action Shortcuts Dock on Right Side (Non-intrusive on responsive, reveals on hover) -->
-  <aside id="quick-shortcuts-dock" aria-label="Quick Access Shortcuts" class="group">
+  <!-- Floating Quick-Action Shortcuts Dock on Right Side (Click button/arrow to open and collapse) -->
+  <aside id="quick-shortcuts-dock" aria-label="Quick Access Shortcuts">
     
-    <!-- Collapsible Pull-Tab Handle (Always visible at the screen edge, zero obstruction to applications) -->
-    <button id="dock-toggle-btn" type="button" aria-label="Toggle Quick Access Shortcuts" title="Quick Access Shortcuts" 
-            class="dock-handle flex flex-col items-center justify-center py-5 px-2.5 sm:px-3 rounded-l-2xl bg-white/95 dark:bg-slate-900/95 text-slate-700 dark:text-slate-200 border border-r-0 border-slate-200/90 dark:border-slate-700/90 shadow-xl hover:bg-blue-50 hover:text-blue-600 transition-all duration-200 cursor-pointer focus:outline-none">
+    <!-- Collapsible Pull-Tab Handle (Click to open and collapse) -->
+    <button id="dock-toggle-btn" type="button" aria-label="Toggle Quick Access Shortcuts" aria-expanded="false" title="Click to open shortcuts" 
+            class="dock-handle flex flex-col items-center justify-center py-5 px-2.5 sm:px-3 rounded-l-2xl bg-white/95 dark:bg-slate-900/95 text-slate-700 dark:text-slate-200 border border-r-0 border-slate-200/90 dark:border-slate-700/90 shadow-xl hover:bg-blue-50 hover:text-blue-600 transition-all duration-200 cursor-pointer focus:outline-none select-none">
       <!-- Live Status Indicator Dot -->
-      <span class="relative flex h-2.5 w-2.5 mb-2">
+      <span class="relative flex h-2.5 w-2.5 mb-2 pointer-events-none">
         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
         <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-rose-500"></span>
       </span>
-      <!-- Arrow Chevron indicating slide out -->
-      <svg class="w-4 h-4 text-slate-500 transition-transform duration-300 dock-chevron mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <!-- Arrow Chevron indicating slide out / collapse -->
+      <svg class="w-4 h-4 text-slate-500 transition-transform duration-300 dock-chevron mb-1 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
       </svg>
       <!-- Vertical Label -->
-      <span class="text-[10px] font-extrabold tracking-[0.22em] uppercase text-slate-500 dark:text-slate-400 my-1 select-none [writing-mode:vertical-rl] rotate-180">Quick</span>
+      <span class="text-[10px] font-extrabold tracking-[0.22em] uppercase text-slate-500 dark:text-slate-400 my-1 select-none [writing-mode:vertical-rl] rotate-180 pointer-events-none">Quick</span>
     </button>
 
     <!-- Main Shortcuts Glass Dock Panel: Spacious, organized 2-column layout (Non-congested) -->
@@ -2082,6 +2121,21 @@
         toast.classList.remove('translate-y-0', 'opacity-100');
         toast.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
       }, 3500);
+    }
+
+    // Copy IP address to clipboard helper
+    function copyIpAddress(btnEl) {
+      const ipEl = btnEl ? btnEl.querySelector('.ip-display-value') : document.getElementById('workstation-ip');
+      const ipText = (ipEl ? ipEl.textContent : '192.168.101.45').trim();
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(ipText).then(() => {
+          showToast(`Station IP ${ipText} copied to clipboard!`);
+        }).catch(() => {
+          showToast(`Station IP: ${ipText}`);
+        });
+      } else {
+        showToast(`Station IP: ${ipText}`);
+      }
     }
 
     // =========================================================================
@@ -3028,31 +3082,40 @@
     }
     updatePortalGreeting();
 
-    // Floating Quick Shortcuts Dock Mobile/Touch Toggle & Outside Click
+    // Floating Quick Shortcuts Dock Click Toggle & Outside Click
     const shortcutsDock = document.getElementById('quick-shortcuts-dock');
     const dockToggleBtn = document.getElementById('dock-toggle-btn');
     const dockCloseBtn = document.getElementById('dock-close-btn');
+
+    function toggleShortcutsDock(forceState) {
+      if (!shortcutsDock) return;
+      const willOpen = typeof forceState === 'boolean' ? forceState : !shortcutsDock.classList.contains('is-open');
+      shortcutsDock.classList.toggle('is-open', willOpen);
+      if (dockToggleBtn) {
+        dockToggleBtn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+        dockToggleBtn.setAttribute('title', willOpen ? 'Click to collapse shortcuts' : 'Click to open shortcuts');
+      }
+    }
+
     if (shortcutsDock && dockToggleBtn) {
       dockToggleBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        shortcutsDock.classList.toggle('is-open');
+        toggleShortcutsDock();
       });
       if (dockCloseBtn) {
         dockCloseBtn.addEventListener('click', (e) => {
           e.stopPropagation();
-          shortcutsDock.classList.remove('is-open');
-          shortcutsDock.classList.add('pointer-events-none');
-          setTimeout(() => shortcutsDock.classList.remove('pointer-events-none'), 350);
+          toggleShortcutsDock(false);
         });
       }
       document.addEventListener('click', (e) => {
         if (shortcutsDock.classList.contains('is-open') && !shortcutsDock.contains(e.target)) {
-          shortcutsDock.classList.remove('is-open');
+          toggleShortcutsDock(false);
         }
       });
       window.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && shortcutsDock.classList.contains('is-open')) {
-          shortcutsDock.classList.remove('is-open');
+          toggleShortcutsDock(false);
         }
       });
     }
