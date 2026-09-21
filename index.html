@@ -4,6 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Integrated Hospital Operations Portal - Adhiparasakthi Hospitals &amp; Research Institute</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon_io/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon_io/favicon-16x16.png" />
+  <link rel="icon" type="image/png" href="assets/hospital-favicon.png" />
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" href="assets/images/favicon_io/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet" />
@@ -369,12 +374,12 @@
   <!-- ========================================================================= -->
   <nav class="fixed top-0 left-0 right-0 z-40 w-full bg-white border-b border-slate-200/90 shadow-sm">
     <div class="w-full max-w-[1600px] mx-auto px-3.5 sm:px-6">
-      <div class="flex items-center justify-between h-16 sm:h-20 gap-2 sm:gap-4">
+      <div class="flex items-center justify-between h-16 sm:h-[88px] gap-2 sm:gap-4">
         
         <!-- Logo & Brand Info -->
         <div class="flex items-center shrink-0">
           <a href="#" class="flex items-center group" aria-label="Adhiparasakthi Hospitals Home">
-            <img src="assets/images/logo2%20(1).png" alt="Adhiparasakthi Hospitals Logo" class="h-10 sm:h-14 w-auto object-contain drop-shadow-xs transition-transform duration-200 group-hover:scale-105 shrink-0" />
+            <img src="assets/images/logo2%20(1).png" alt="Adhiparasakthi Hospitals Logo" class="h-12 sm:h-[72px] md:h-[78px] w-auto object-contain drop-shadow-xs transition-transform duration-200 group-hover:scale-105 shrink-0" />
           </a>
         </div>
 
@@ -391,15 +396,15 @@
 
         <!-- Right Side: Alert Icon, IP Address Badge & Mobile Menu Toggle -->
         <div class="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
-          <!-- Alert Icon Button (Icon only: pulsing beacon + megaphone, no text label) -->
+          <!-- Alert Icon Button (Icon only: pulsing beacon + megaphone in red badge styling) -->
           <button id="reopen-announcement-btn" type="button" onclick="toggleAnnouncementBar()" 
-                  class="flex items-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300/80 shadow-xs transition-all duration-150 cursor-pointer focus:outline-none select-none shrink-0" 
+                  class="flex items-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-900 border border-rose-300/80 shadow-xs transition-all duration-150 cursor-pointer focus:outline-none select-none shrink-0" 
                   title="Toggle hospital alerts">
             <span class="relative flex h-2 w-2">
               <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-500 opacity-75"></span>
               <span class="relative inline-flex rounded-full h-2 w-2 bg-rose-600"></span>
             </span>
-            <svg class="w-4 h-4 text-amber-700 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-4 h-4 text-rose-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/>
             </svg>
           </button>
@@ -451,12 +456,12 @@
     <!-- ========================================================================= -->
     <!-- HOSPITAL ANNOUNCEMENT / ALERT MARQUEE BAR                                 -->
     <!-- ========================================================================= -->
-    <div id="hospital-announcement-bar" class="w-full bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 text-white border-t border-b border-amber-600/50 shadow-sm select-none transition-all duration-300">
+    <div id="hospital-announcement-bar" class="w-full bg-gradient-to-r from-red-600 via-rose-600 to-red-600 text-white border-t border-b border-red-700/50 shadow-sm select-none transition-all duration-300">
       <div class="w-full px-3 sm:px-6 lg:px-8 flex items-center justify-between h-9 text-xs overflow-hidden">
         
         <!-- Left: Static Alert Beacon & Tag (Icon only) -->
         <div class="flex items-center shrink-0 pr-2.5 sm:pr-4 border-r border-white/30 z-10">
-          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white text-amber-950 shadow-xs select-none" title="Hospital Announcements">
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white text-rose-950 shadow-xs select-none" title="Hospital Announcements">
             <span class="relative flex h-2 w-2">
               <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-500 opacity-75"></span>
               <span class="relative inline-flex rounded-full h-2 w-2 bg-rose-600"></span>
@@ -500,7 +505,7 @@
   </nav>
 
   <!-- Reserved Height Spacer for Fixed Header -->
-  <div id="header-spacer" class="h-[100px] sm:h-[116px] w-full shrink-0 transition-all duration-300" aria-hidden="true"></div>
+  <div id="header-spacer" class="h-[100px] sm:h-[124px] w-full shrink-0 transition-all duration-300" aria-hidden="true"></div>
 
   <!-- ========================================================================= -->
   <!-- ========================================================================= -->
@@ -3542,16 +3547,16 @@
 
       if (isOpen) {
         bar.classList.remove('bar-collapsed');
-        spacer.classList.remove('h-16', 'sm:h-20');
-        spacer.classList.add('h-[100px]', 'sm:h-[116px]');
+        spacer.classList.remove('h-16', 'sm:h-[88px]');
+        spacer.classList.add('h-[100px]', 'sm:h-[124px]');
         if (reopenBtn) {
           reopenBtn.setAttribute('title', 'Hide hospital alerts');
           reopenBtn.setAttribute('aria-expanded', 'true');
         }
       } else {
         bar.classList.add('bar-collapsed');
-        spacer.classList.remove('h-[100px]', 'sm:h-[116px]');
-        spacer.classList.add('h-16', 'sm:h-20');
+        spacer.classList.remove('h-[100px]', 'sm:h-[124px]');
+        spacer.classList.add('h-16', 'sm:h-[88px]');
         if (reopenBtn) {
           reopenBtn.setAttribute('title', 'Show hospital alerts');
           reopenBtn.setAttribute('aria-expanded', 'false');

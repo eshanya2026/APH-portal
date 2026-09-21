@@ -1,0 +1,16 @@
+<svg width="256" height="256" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="ticketGrad" x1="2" y1="6" x2="30" y2="26" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#60A5FA"/>
+      <stop offset="50%" stop-color="#3B82F6"/>
+      <stop offset="100%" stop-color="#1D4ED8"/>
+    </linearGradient>
+  </defs>
+  <path d="M4 10C4 8.89543 4.89543 8 6 8H26C27.1046 8 28 8.89543 28 10V13.5C26.6193 13.5 25.5 14.6193 25.5 16C25.5 17.3807 26.6193 18.5 28 18.5V22C28 23.1046 27.1046 24 26 24H6C4.89543 24 4 23.1046 4 22V18.5C5.38071 18.5 6.5 17.3807 6.5 16C6.5 14.6193 5.38071 13.5 4 13.5V10Z" 
+        fill="url(#ticketGrad)" stroke="#BFDBFE" stroke-width="1" />
+  <line x1="19" y1="8.5" x2="19" y2="23.5" stroke="rgba(255,255,255,0.7)" stroke-width="1" stroke-dasharray="1.5 1.5" stroke-linecap="round"/>
+  <path d="M12.8 11.2C11.8 10.5 10.4 10.6 9.5 11.5C8.8 12.2 8.6 13.2 8.9 14.1L6.8 16.2C6.4 16.6 6.4 17.2 6.8 17.6C7.2 18 7.8 18 8.2 17.6L10.3 15.5C11.2 15.8 12.2 15.6 12.9 14.9C13.8 14 13.9 12.6 13.2 11.6L11.8 13C11.6 13.2 11.2 13.2 11 13C10.8 12.8 10.8 12.4 11 12.2L12.4 10.8C12.5 10.9 12.7 11 12.8 11.2Z" fill="#FFFFFF"/>
+  <line x1="22" y1="12" x2="25" y2="12" stroke="#FFFFFF" stroke-width="1.4" stroke-linecap="round"/>
+  <line x1="22" y1="16" x2="25" y2="16" stroke="#FFFFFF" stroke-width="1.4" stroke-linecap="round"/>
+  <line x1="22" y1="20" x2="24" y2="20" stroke="#FFFFFF" stroke-width="1.4" stroke-linecap="round"/>
+</svg>
