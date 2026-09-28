@@ -280,8 +280,30 @@
       0%, 100% { opacity: 1; transform: scale(1); }
       50% { opacity: 0.6; transform: scale(1.15); }
     }
-    .status-dot-pulse {
-      animation: statusPulse 2s infinite ease-in-out;
+    /* Target Highlight Glow Animation for Auto-Scroll Jump Navigation */
+    @keyframes targetHighlightGlow {
+      0% {
+        box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.7), 0 0 25px rgba(37, 99, 235, 0.5);
+        transform: scale(1);
+      }
+      25% {
+        box-shadow: 0 0 0 8px rgba(37, 99, 235, 0.35), 0 0 35px rgba(37, 99, 235, 0.6);
+        transform: scale(1.025);
+      }
+      50% {
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2), 0 0 20px rgba(37, 99, 235, 0.3);
+        transform: scale(1.01);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+        transform: scale(1);
+      }
+    }
+    .pulse-highlight-target {
+      animation: targetHighlightGlow 2.4s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
+      outline: 3px solid #2563eb !important;
+      outline-offset: 4px !important;
+      z-index: 40 !important;
     }
 
     /* Sleek Hospital Announcement Single-Item Slider & Collapsible Container */
@@ -532,12 +554,12 @@
         Access hospital systems, applications, forms and operational resources.
       </p>
 
-      <!-- Search Bar with Outer Transparent Line & Search Button -->
+      <!-- Search Bar with Outer Transparent Line & AI Search Button -->
       <div class="relative max-w-2xl mx-auto mb-6 z-30">
         <!-- Outer Transparent Line Container -->
         <div class="p-1.5 sm:p-2 bg-white/10 border border-white/25 rounded-2xl sm:rounded-3xl backdrop-blur-md shadow-2xl">
           <form onsubmit="handleSearch(event)" class="relative flex items-center bg-white rounded-xl sm:rounded-2xl overflow-hidden group">
-            <div class="absolute inset-y-0 left-0 pl-4 sm:pl-5 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-600 transition-colors">
+            <div class="absolute inset-y-0 left-0 pl-3.5 sm:pl-4.5 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-600 transition-colors">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
               </svg>
@@ -547,36 +569,67 @@
               type="text" 
               autocomplete="off"
               oninput="handleSearchInput(event)"
-              placeholder="Search applications, forms, policies..."
-              class="w-full pl-11 sm:pl-13 pr-24 sm:pr-28 py-3.5 sm:py-4 bg-transparent text-slate-900 placeholder-slate-400 text-sm sm:text-base font-normal focus:outline-none transition-all"
+              placeholder="Ask AI anything (e.g., 'pediatric consent', 'ICU tariff', 'HIS bug')..."
+              class="w-full pl-11 sm:pl-12 pr-28 sm:pr-32 py-3.5 sm:py-4 bg-transparent text-slate-900 placeholder-slate-400 text-sm sm:text-base font-normal focus:outline-none transition-all"
             />
-            <div class="absolute inset-y-0 right-0 pr-1.5 sm:pr-2 flex items-center">
+            <div class="absolute inset-y-0 right-0 pr-1.5 sm:pr-2 flex items-center gap-1">
               <button 
                 type="submit" 
-                class="px-4 sm:px-6 py-2 sm:py-2.5 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-semibold text-xs sm:text-sm rounded-lg sm:rounded-xl transition-all duration-150 flex items-center gap-1.5 shadow-md shadow-blue-600/30"
+                id="ai-search-submit-btn"
+                class="px-3.5 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-500 hover:to-indigo-500 active:scale-95 text-white font-bold text-xs sm:text-sm rounded-lg sm:rounded-xl transition-all duration-150 flex items-center gap-1.5 shadow-md shadow-blue-600/30 shrink-0"
+                title="Search with Gemini AI"
               >
-                <span>Search</span>
+                <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-200 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+                </svg>
+                <span>Ask AI</span>
               </button>
             </div>
           </form>
         </div>
 
-        <!-- Live Instant Search Dropdown -->
+        <!-- Live Instant Search Dropdown (Fast Autocomplete) -->
         <div id="search-dropdown" class="hidden absolute top-full left-0 right-0 mt-3 bg-white text-slate-900 rounded-2xl shadow-2xl border border-slate-200 overflow-hidden z-50 text-left divide-y divide-slate-100 max-h-80 overflow-y-auto ring-1 ring-slate-900/10">
           <!-- Results injected by JS -->
         </div>
+
+        <!-- AI Smart Search Assistant Panel -->
+        <div id="ai-search-panel" class="hidden absolute top-full left-0 right-0 mt-3 bg-slate-900/95 backdrop-blur-xl text-white rounded-2xl sm:rounded-3xl shadow-2xl border border-blue-500/30 overflow-hidden z-50 text-left ring-1 ring-blue-500/20 max-h-[82vh] overflow-y-auto">
+          <!-- Header with Gemini badge & close button -->
+          <div class="px-5 py-3.5 bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border-b border-slate-800 flex items-center justify-between gap-3">
+            <div class="flex items-center gap-2.5">
+              <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-sm">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+                </svg>
+              </span>
+              <div>
+                <div class="text-xs sm:text-sm font-bold text-white flex items-center gap-2">
+                  <span>APH Gemini AI Search</span>
+                  <span class="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30">Hospital Assistant</span>
+                </div>
+                <div class="text-[11px] text-slate-400">Intelligent search across all hospital systems, forms &amp; protocols</div>
+              </div>
+            </div>
+            <button type="button" onclick="closeAiSearchPanel()" class="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors cursor-pointer" title="Close AI Search" aria-label="Close AI Search">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+          </div>
+
+          <!-- Content Container -->
+          <div id="ai-search-content" class="p-4 sm:p-6 space-y-4">
+            <!-- Injected dynamically: Loading skeleton or AI Answer + Links + Suggestions -->
+          </div>
+        </div>
       </div>
 
-      <!-- Popular: HRMS • HIS • Forms • Tariff -->
-      <div class="flex items-center justify-center flex-wrap gap-2.5 sm:gap-3 text-xs sm:text-sm text-slate-300">
-        <span class="text-slate-400 font-medium">Popular:</span>
-        <button type="button" onclick="quickFilter('HRMS', '#core-systems')" class="text-slate-200 hover:text-white font-medium hover:underline underline-offset-4 transition-colors">HRMS</button>
-        <span class="text-slate-500 select-none font-bold">•</span>
-        <button type="button" onclick="quickFilter('HIS', '#core-systems')" class="text-slate-200 hover:text-white font-medium hover:underline underline-offset-4 transition-colors">HIS</button>
-        <span class="text-slate-500 select-none font-bold">•</span>
-        <button type="button" onclick="quickFilter('Forms', '#forms')" class="text-slate-200 hover:text-white font-medium hover:underline underline-offset-4 transition-colors">Forms</button>
-        <span class="text-slate-500 select-none font-bold">•</span>
-        <button type="button" onclick="quickFilter('Tariff', '#tariff-stock')" class="text-slate-200 hover:text-white font-medium hover:underline underline-offset-4 transition-colors">Tariff</button>
+      <!-- Popular / Suggested AI Queries -->
+      <div class="flex items-center justify-center flex-wrap gap-2 sm:gap-2.5 text-xs text-slate-300">
+        <span class="text-slate-400 font-medium">Try asking:</span>
+        <button type="button" onclick="triggerAiQuickPrompt('How do I take consent for pediatric surgery?')" class="px-2.5 py-1 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 text-slate-200 hover:text-white transition-all text-[11px] font-medium flex items-center gap-1">✨ Pediatric Consent</button>
+        <button type="button" onclick="triggerAiQuickPrompt('Where can I report an IT breakdown or HIS bug?')" class="px-2.5 py-1 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 text-slate-200 hover:text-white transition-all text-[11px] font-medium flex items-center gap-1">✨ IT Breakdown</button>
+        <button type="button" onclick="triggerAiQuickPrompt('What is the ICU room and surgery OT tariff?')" class="px-2.5 py-1 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 text-slate-200 hover:text-white transition-all text-[11px] font-medium flex items-center gap-1">✨ OT Tariff</button>
+        <button type="button" onclick="triggerAiQuickPrompt('Emergency casualty and Code Blue intercom extension')" class="px-2.5 py-1 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 text-slate-200 hover:text-white transition-all text-[11px] font-medium flex items-center gap-1">✨ Code Blue Intercom</button>
       </div>
 
     </div>
@@ -591,7 +644,7 @@
     <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-4 sm:gap-5 mb-10 sm:mb-12">
       
       <!-- Card 1: HIS System -->
-      <a href="http://192.168.103.37/BB15SE/Backbone/admin/login.aspx" target="_blank" rel="noopener noreferrer" class="system-card aspect-square bg-white rounded-2xl px-3 py-4 border border-slate-200/90 shadow-sm flex flex-col items-center justify-center gap-3 group">
+      <a id="card-his-system" href="http://192.168.103.37/BB15SE/Backbone/admin/login.aspx" target="_blank" rel="noopener noreferrer" class="system-card aspect-square bg-white rounded-2xl px-3 py-4 border border-slate-200/90 shadow-sm flex flex-col items-center justify-center gap-3 group transition-all">
         <div class="flex justify-center items-center h-14 w-full">
           <img src="assets/images/aosta-proper.png" alt="AOSTA HIS Logo" class="max-h-14 max-w-[90%] object-contain" />
         </div>
@@ -599,7 +652,7 @@
       </a>
 
       <!-- Card 2: PruWorks HRMS -->
-      <a href="https://mapims-hrms.tecvinesolutions.com" target="_blank" rel="noopener noreferrer" class="system-card aspect-square bg-white rounded-2xl px-3 py-4 border border-slate-200/90 shadow-sm flex flex-col items-center justify-center gap-3 group">
+      <a id="card-pruworks-hrms" href="https://mapims-hrms.tecvinesolutions.com" target="_blank" rel="noopener noreferrer" class="system-card aspect-square bg-white rounded-2xl px-3 py-4 border border-slate-200/90 shadow-sm flex flex-col items-center justify-center gap-3 group transition-all">
         <div class="flex justify-center items-center h-14 w-full">
           <img src="assets/images/pruworks-proper.png" alt="PruWorks HRMS Logo" class="max-h-11 max-w-[90%] object-contain" />
         </div>
@@ -607,7 +660,7 @@
       </a>
 
       <!-- Card 3: M - PACS -->
-      <a href="http://192.168.101.224/User_Login.asp" target="_blank" rel="noopener noreferrer" class="system-card aspect-square bg-white rounded-2xl px-3 py-4 border border-slate-200/90 shadow-sm flex flex-col items-center justify-center gap-3 group">
+      <a id="card-medsynapse-pacs" href="http://192.168.101.224/User_Login.asp" target="_blank" rel="noopener noreferrer" class="system-card aspect-square bg-white rounded-2xl px-3 py-4 border border-slate-200/90 shadow-sm flex flex-col items-center justify-center gap-3 group transition-all">
         <div class="flex justify-center items-center h-14 w-full">
           <img src="assets/images/medsynapse-proper.png" alt="Medsynapse PACS Logo" class="max-h-12 max-w-[90%] object-contain rounded-md" />
         </div>
@@ -615,7 +668,7 @@
       </a>
 
       <!-- Card 4: HRMS - Admin -->
-      <a href="http://www.mapims.online/" target="_blank" rel="noopener noreferrer" class="system-card aspect-square bg-white rounded-2xl px-3 py-4 border border-slate-200/90 shadow-sm flex flex-col items-center justify-center gap-3 group">
+      <a id="card-hrms-admin" href="http://www.mapims.online/" target="_blank" rel="noopener noreferrer" class="system-card aspect-square bg-white rounded-2xl px-3 py-4 border border-slate-200/90 shadow-sm flex flex-col items-center justify-center gap-3 group transition-all">
         <div class="flex justify-center items-center h-14 w-full">
           <img src="assets/images/hrms-admin-proper.png" alt="Adhiparasakthi HRMS Admin Logo" class="max-h-14 max-w-[90%] object-contain" />
         </div>
@@ -623,7 +676,7 @@
       </a>
 
       <!-- Card 5: HRMS - Staff -->
-      <a href="http://www.mapims.online/staff" target="_blank" rel="noopener noreferrer" class="system-card aspect-square bg-white rounded-2xl px-3 py-4 border border-slate-200/90 shadow-sm flex flex-col items-center justify-center gap-3 group">
+      <a id="card-hrms-staff" href="http://www.mapims.online/staff" target="_blank" rel="noopener noreferrer" class="system-card aspect-square bg-white rounded-2xl px-3 py-4 border border-slate-200/90 shadow-sm flex flex-col items-center justify-center gap-3 group transition-all">
         <div class="flex justify-center items-center h-14 w-full">
           <img src="assets/images/hrms-staff-proper.png" alt="Adhiparasakthi HRMS Staff Portal Logo" class="max-h-14 max-w-[90%] object-contain" />
         </div>
@@ -631,7 +684,7 @@
       </a>
 
       <!-- Card 6: MRD Portal -->
-      <a href="http://www.mapimsmrd.com/mapimsmrd/" target="_blank" rel="noopener noreferrer" class="system-card aspect-square bg-white rounded-2xl px-3 py-4 border border-slate-200/90 shadow-sm flex flex-col items-center justify-center gap-3 group">
+      <a id="card-mrd-portal" href="http://www.mapimsmrd.com/mapimsmrd/" target="_blank" rel="noopener noreferrer" class="system-card aspect-square bg-white rounded-2xl px-3 py-4 border border-slate-200/90 shadow-sm flex flex-col items-center justify-center gap-3 group transition-all">
         <div class="flex justify-center items-center h-14 w-full">
           <img src="assets/images/fit-mrd-proper.png" alt="FIT MRD Logo" class="max-h-12 max-w-[90%] object-contain" />
         </div>
@@ -641,7 +694,7 @@
     </div>
 
     <!-- Ticketing & Maintenance Job Orders Banner -->
-    <div class="w-full bg-[#131b35] text-white rounded-2xl p-5 sm:p-6 flex flex-col lg:flex-row lg:items-center justify-between gap-5 shadow-lg border border-slate-800">
+    <div id="card-ticketing" class="w-full bg-[#131b35] text-white rounded-2xl p-5 sm:p-6 flex flex-col lg:flex-row lg:items-center justify-between gap-5 shadow-lg border border-slate-800 transition-all">
       
       <!-- Left side icon and info -->
       <div class="flex items-start sm:items-center gap-4">
@@ -1946,59 +1999,7 @@
     </div>
   </div>
 
-  <!-- PaperZero Announcement Modal -->
-  <div id="paperzero-modal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl border border-slate-200 transform transition-all">
-      <div class="bg-gradient-to-r from-blue-600 to-sky-500 p-6 text-white text-center relative">
-        <button onclick="closePaperZeroModal()" class="absolute top-4 right-4 text-white/80 hover:text-white p-1 rounded-full hover:bg-white/10 transition-colors">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-          </svg>
-        </button>
-        <span class="inline-block px-3 py-1 rounded-full bg-white/20 text-[11px] font-extrabold uppercase tracking-wider mb-2">PORTAL ANNOUNCEMENT</span>
-        <h3 class="text-2xl font-black mb-1">🎉 PaperZero is LIVE!</h3>
-        <p class="text-xs text-blue-100">Welcome to our New Digital Request &amp; Approval Platform</p>
-      </div>
 
-      <div class="p-6 sm:p-7 space-y-4 text-xs sm:text-sm">
-        <div>
-          <h4 class="text-base font-bold text-slate-900 mb-1">Go Paperless Today</h4>
-          <p class="text-slate-600 leading-relaxed text-xs">
-            We are excited to announce the launch of <strong>PaperZero</strong>. You can now submit requests online, track approval status in real time, receive notifications, and manage digital forms from one place.
-          </p>
-        </div>
-
-        <div class="grid grid-cols-2 gap-2.5 py-1">
-          <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 font-semibold text-slate-800 text-xs flex items-center gap-2">
-            <span>📄</span> <span>Digital Forms</span>
-          </div>
-          <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 font-semibold text-slate-800 text-xs flex items-center gap-2">
-            <span>⚡</span> <span>Faster Approvals</span>
-          </div>
-          <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 font-semibold text-slate-800 text-xs flex items-center gap-2">
-            <span>📊</span> <span>Status Tracking</span>
-          </div>
-          <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 font-semibold text-slate-800 text-xs flex items-center gap-2">
-            <span>🔔</span> <span>Instant Alerts</span>
-          </div>
-        </div>
-
-        <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl text-center text-amber-900 text-xs">
-          User name: <strong>Staff ID</strong> &nbsp;|&nbsp; Password: <strong class="font-mono">mapims</strong><br />
-          <span class="text-[11px] text-amber-700">These are your default login credentials for PaperZero.</span>
-        </div>
-
-        <div class="pt-2 flex flex-col sm:flex-row items-center gap-2.5">
-          <a href="https://paper.mapims.edu.in/" target="_blank" rel="noopener noreferrer" onclick="closePaperZeroModal()" class="w-full sm:flex-1 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold text-center rounded-xl text-xs sm:text-sm shadow-md transition-all">
-            🚀 Get Started on PaperZero
-          </a>
-          <button type="button" onclick="closePaperZeroModal()" class="w-full sm:w-auto px-5 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl text-xs sm:text-sm transition-all">
-            Maybe Later
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- Floating Quick-Action Shortcuts Dock on Right Side (Click button/arrow to open and collapse) -->
   <aside id="quick-shortcuts-dock" aria-label="Quick Access Shortcuts">
@@ -2329,7 +2330,7 @@
           { name: "Restricted Anti-biotic Form", desc: "HIC committee authorization for restricted reserve antimicrobials", url: "http://192.168.101.75:3000/files/HIC.pdf" },
           { name: "Restricted Anti-biotic Drug List", desc: "Approved list of reserved high-tier antimicrobial agents", url: "http://192.168.101.75:3000/files/antibiotic.pdf" },
           { name: "Performance Management System Policy", desc: "Staff KPIs, annual appraisal guidelines and HR policy", url: "http://192.168.101.75:3000/files/PMS.pdf" },
-          { name: "Purchase Process", desc: "Hospital instruments and biomedical equipment procurement (APR 2025)", url: "http://192.168.101.75:3000/files/Instruments%20and%20Equipment%20APR%202025.pdf" },
+          { name: "Purchase Process", desc: "Hospital instruments, biomedical equipment and general store indent & procurement process (APR 2025)", url: "http://192.168.101.75:3000/files/Instruments%20and%20Equipment%20APR%202025.pdf" },
           { name: "General Medicine", desc: "Clinical Privileges - General Medicine core competency credentialing", url: "http://192.168.101.75:3000/files/hrmedicine.pdf" },
           { name: "Ent", desc: "Clinical Privileges - ENT diagnostic & surgical authorization", url: "http://192.168.101.75:3000/files/hrent.pdf" },
           { name: "Anaesthesia", desc: "Clinical Privileges - Anaesthesiology and critical care sedation", url: "http://192.168.101.75:3000/files/hranaesthesia.pdf" },
@@ -2362,7 +2363,7 @@
         accentBadgeClasses: 'bg-purple-50 text-purple-700 border-purple-200/60',
         accentCountClasses: 'text-purple-600 bg-purple-50 border-purple-200/50',
         description: 'Faculty applications, non-teaching jobs, promotion, training feedback, HR manual & clinical privileging.',
-        hubUrl: './hrforms.html',
+        hubUrl: '#forms',
         hubText: 'Explore All 13 HR Forms in Full Vault',
         forms: [
           { name: "List of Holidays - 2026", desc: "Official institutional gazetted holiday schedule, national festivals, and sanctioned institutional leave dates for 2026.", url: "http://192.168.101.75:3000/files/Holiday 2025.pdf" },
@@ -2818,6 +2819,31 @@
       } catch (e) {
         console.warn('Could not load circulars.json for index search:', e);
       }
+
+      // 4. Master Portal Catalog (444+ verified hospital documents, forms, and paths)
+      try {
+        const catRes = await fetch('data/portal_catalog.json');
+        if (catRes.ok) {
+          const catItems = await catRes.json();
+          if (Array.isArray(catItems) && typeof searchIndex !== 'undefined') {
+            catItems.forEach(item => {
+              if (item.title && item.url) {
+                const alreadyIndexed = searchIndex.some(s => s.url === item.url);
+                if (!alreadyIndexed) {
+                  searchIndex.push({
+                    title: item.title,
+                    category: item.category || 'Hospital Document',
+                    url: item.url,
+                    external: item.url.startsWith('http')
+                  });
+                }
+              }
+            });
+          }
+        }
+      } catch (e) {
+        console.warn('Could not load portal_catalog.json into search index:', e);
+      }
     }
 
     // Auto-fetch forms and quality governance data from JSON on load
@@ -2846,12 +2872,8 @@
       document.getElementById('governance-modal').classList.add('hidden');
     }
 
-    function openPaperZeroModal() {
-      document.getElementById('paperzero-modal').classList.remove('hidden');
-    }
-    function closePaperZeroModal() {
-      document.getElementById('paperzero-modal').classList.add('hidden');
-    }
+    function openPaperZeroModal() {}
+    function closePaperZeroModal() {}
 
     function handleTicketSubmit(e) {
       e.preventDefault();
@@ -2918,7 +2940,6 @@
       { title: 'MAPIMS AI Health Assessment Tool', category: 'In-House App', url: 'https://mh.mapims.edu.in/', external: true },
       { title: 'Clinical Checklist App', category: 'In-House App', url: 'https://checklist.mapims.edu.in/', external: true },
       { title: 'Non-Clinical Checklist App', category: 'In-House App', url: 'https://gencl.mapims.edu.in/', external: true },
-      { title: 'PaperZero Digital Request Portal', category: 'Platform', url: 'https://paper.mapims.edu.in/', external: true },
 
       // Circulars & Duty Details
       { title: "Today 24hr's Duty Details PDF", category: 'Circular', url: "http://192.168.101.75:3000/files/24hr's Duty Details.pdf", external: true },
@@ -2981,7 +3002,13 @@
       { title: 'Non-Performer Review Form PDF', category: 'HR Form', url: 'http://192.168.101.75:3000/files/Non%20performer-%20Non%20Teaching.pdf', external: true },
       { title: 'Performance Management System (PMS) Policy PDF', category: 'HR Form', url: 'http://192.168.101.75:3000/files/PMS%20Policy.pdf', external: true },
       { title: 'Human Resources Manual (HRM - 2025) PDF', category: 'HR Form', url: 'http://192.168.101.75:3000/files/HRM%202025.pdf', external: true },
-      { title: 'APH HR Forms Hub', category: 'Forms', url: './hrforms.html', external: true },
+      { title: 'APH HR Forms Hub', category: 'HR Forms', url: './index.html#forms', external: false },
+      { title: 'PruWorks HRMS (Staff Attendance & Payroll)', category: 'HR Systems', url: 'https://mapims-hrms.tecvinesolutions.com', external: true },
+      { title: 'HRMS Staff Self-Service Login', category: 'HR Systems', url: 'http://www.mapims.online/staff', external: true },
+      { title: 'HRMS Admin Management Portal', category: 'HR Systems', url: 'http://www.mapims.online/', external: true },
+      { title: 'HUMAN RESOURCE MANAGEMENT (HRM) (NABH 6th Edition) PDF', category: 'HR Manual', url: 'http://192.168.101.75:3000/files/nabh/HRM.pdf', external: true },
+      { title: 'Chief Medical Officer (CMO) Policy PDF', category: 'HR Form', url: 'http://192.168.101.75:3000/files/CMO%20Policy.pdf', external: true },
+      { title: 'Junior Resident Policy PDF', category: 'HR Form', url: 'http://192.168.101.75:3000/files/Junior%20resident%20Policy.pdf', external: true },
 
       { title: 'New HIS User Request Form PDF', category: 'IT Form', url: 'http://192.168.101.75:3000/files/His User Creation.pdf', external: true },
       { title: 'New Doctor Name & ID Creation in HIS PDF', category: 'IT Form', url: 'http://192.168.101.75:3000/files/Doctor Name and ID Creation.pdf', external: true },
@@ -3000,14 +3027,715 @@
       { title: 'Blood Bank Stock Details PDF', category: 'Clinical', url: 'http://192.168.101.75:3000/files/Blood%20Bank%20Stock%20Details.pdf', external: true },
       { title: 'Billing Manual PDF', category: 'Manual', url: 'http://192.168.101.75:3000/files/billingmanual.pdf', external: true },
       { title: 'Nursing Manual PDF', category: 'Manual', url: 'http://192.168.101.75:3000/files/nursingmanual.pdf', external: true },
-      { title: 'Official Email Directory PDF', category: 'Directory', url: 'http://192.168.101.75:3000/files/email.pdf', external: true },
-      { title: 'Campus Intercom Directory (Searchable List)', category: 'Directory', url: './intercom.html', external: true },
-      { title: 'Campus Intercom Directory PDF', category: 'Directory', url: './Intercom%20Directory.pdf', external: true }
+      { title: 'Official Email & Staff Directory PDF', category: 'Directory', url: 'http://192.168.101.75:3000/files/email.pdf', external: true },
+      { title: 'Campus Intercom & Extension Directory (Searchable List)', category: 'Directory', url: './intercom.html', external: true },
+      { title: 'Campus Intercom & Extension Directory PDF', category: 'Directory', url: './Intercom%20Directory.pdf', external: true },
+      { title: 'Emergency & Casualty Intercom Extensions (2001 / 2002 / 2800)', category: 'Emergency Telephony', url: './intercom.html', external: true },
+      { title: 'Blood Bank 24/7 Intercom Extensions (2131 / 2132)', category: 'Emergency Telephony', url: './intercom.html', external: true },
+      { title: 'ICU & Critical Care Intercom Extensions (2156 / 2163 / 2160)', category: 'Emergency Telephony', url: './intercom.html', external: true },
+      { title: 'IT Department Intercom Extensions: Hardware (2226), Software (2228), Manager (2227), Head (2225)', category: 'IT Telephony', url: './intercom.html', external: true },
+      { title: 'Radiology & Imaging Intercom Extensions: Reception (2700), HOD (2699), MRI (2690), CT (2689), USG (2691)', category: 'Clinical Telephony', url: './intercom.html', external: true },
+      { title: 'Dialysis & Nephrology Intercom Extensions: Nephro HOD (2520), Dialysis Billing (2528), Incharge (2526)', category: 'Clinical Telephony', url: './intercom.html', external: true },
+      { title: 'Biomedical Engineering Intercom Extensions: HOD (2535), Engg (2536 / 2537)', category: 'Engineering Telephony', url: './intercom.html', external: true },
+      { title: 'Quality & Accreditation Intercom Extensions: Quality Manager (2380), Quality Team (2381 / 2382)', category: 'Administrative Telephony', url: './intercom.html', external: true },
+      { title: 'Medical Superintendent MS Office Intercom Extensions: MS (2880), Secretary (2881)', category: 'Administrative Telephony', url: './intercom.html', external: true },
+      { title: 'Pharmacy & Drug Dispensing Intercom Extensions: Central (2656), OP (2635), IP (2135 / 2136), Casualty (2801)', category: 'Pharmacy Telephony', url: './intercom.html', external: true },
+      { title: 'Campus Security & Main Gate Intercom Extensions: Main Gate (2800), A Zone (2767), B Zone (2768), C Zone (2769)', category: 'Security Telephony', url: './intercom.html', external: true }
     ];
 
-    // Live search input handler
+    let cachedGeminiKey = null;
+
+    async function getClientGeminiKey() {
+      if (cachedGeminiKey) return cachedGeminiKey;
+      try {
+        const res = await fetch('/.env');
+        if (res.ok) {
+          const text = await res.text();
+          const match = text.match(/GEMINI_API_KEY=([^\r\n]+)/);
+          if (match && match[1]) {
+            cachedGeminiKey = match[1].trim().replace(/^["']|["']$/g, '');
+            return cachedGeminiKey;
+          }
+        }
+      } catch (err) {
+        console.warn('Could not read .env from client:', err);
+      }
+      return null;
+    }
+
+    function closeAiSearchPanel() {
+      const panel = document.getElementById('ai-search-panel');
+      if (panel) panel.classList.add('hidden');
+    }
+
+    function triggerAiQuickPrompt(promptText) {
+      const input = document.getElementById('intranet-search');
+      if (input) {
+        input.value = promptText;
+        input.focus();
+      }
+      executeAiSearch(promptText);
+    }
+
+    // =========================================================================
+    // TANGLISH & TAMIL PHONETIC SYNONYM DICTIONARY FOR PORTAL SEARCH
+    // =========================================================================
+    const TANGLISH_TAMIL_DICTIONARY = {
+      // Surgery & Procedures
+      'aruvai': 'surgery surgical procedures operation ot consent அறுவை',
+      'sigichai': 'treatment procedure care surgery சிகிச்சை',
+      'sikitsai': 'treatment procedure care surgery சிகிச்சை',
+      'aruvaisikitsai': 'surgery surgical procedures operation ot consent அறுவை சிகிச்சை',
+      'aruvai sikitsai': 'surgery surgical procedures operation ot consent அறுவை சிகிச்சை',
+      'aruvai sigichai': 'surgery surgical procedures operation ot consent அறுவை சிகிச்சை',
+      'operation': 'surgery surgical procedures operation ot aruvai',
+
+      // Consent Forms & Medicolegal
+      'oputhal': 'consent informed agreement protocol medicolegal surgical அறுவை ஒப்புதல்',
+      'opputhal': 'consent informed agreement protocol medicolegal surgical அறுவை ஒப்புதல்',
+      'oppudhal': 'consent informed agreement protocol medicolegal surgical அறுவை ஒப்புதல்',
+      'sammatham': 'consent agreement willing ஒப்புதல் சம்மதம்',
+      'samatham': 'consent agreement willing ஒப்புதல் சம்மதம்',
+      'maruppu': 'refusal not willing treatment refusal dama மறுப்பு',
+      'viruppamillai': 'not willing refusal dama விருப்பமில்லை',
+      'dama': 'discharge against medical advice refusal veliye',
+
+      // Blood, Transfusion & Blood Bank
+      'radham': 'blood transfusion component prbc ffp reaction stock bank ரத்தம் இரத்தம்',
+      'radha': 'blood transfusion component bank stock ரத்த',
+      'radha vangi': 'blood bank stock details transfusion reaction ரத்த வங்கி',
+      'radha thaanam': 'blood donation transfusion reaction ரத்த தானம்',
+      'ratha': 'blood transfusion component bank stock ரத்த',
+      'ratha vangi': 'blood bank stock details transfusion reaction ரத்த வங்கி',
+      'raththam': 'blood transfusion component prbc ffp reaction stock bank ரத்தம் இரத்தம்',
+      'rattham': 'blood transfusion component prbc ffp reaction stock bank ரத்தம் இரத்தம்',
+      'raththa': 'blood transfusion component bank stock ரத்த',
+      'rattha': 'blood transfusion component bank stock ரத்த',
+      'iratham': 'blood transfusion bank stock இரத்தம்',
+      'vangi': 'bank stock storage repository details blood வங்கி',
+      'raththa vangi': 'blood bank stock details transfusion reaction ரத்த வங்கி',
+      'rattha vangi': 'blood bank stock details transfusion reaction ரத்த வங்கி',
+      'iratha vangi': 'blood bank stock details transfusion reaction இரத்த வங்கி',
+      'raththa thaanam': 'blood donation transfusion reaction ரத்த தானம்',
+
+      // Leaves, Holidays & Calendar
+      'vidumurai': 'holiday holidays calendar leave 2026 dates festival விடுமுறை',
+      'leavu': 'leave holiday attendance absence permission விடுமுறை',
+      'pandigai': 'holiday festival calendar dates pandigai பண்டிகை',
+
+      // Salary, Payroll, HR & Staff Applications
+      'hr': 'human resources hrm hrms staff payroll attendance leaves payslip pruworks recruitment appraisal promotion sambalam employee faculty',
+      'hr details': 'human resources hrm hrms staff payroll attendance leaves payslip pruworks recruitment appraisal promotion manual employee faculty',
+      'human resources': 'hr hrm hrms staff payroll attendance leaves payslip pruworks recruitment appraisal promotion manual employee faculty',
+      'human resource': 'hr hrm hrms staff payroll attendance leaves payslip pruworks recruitment appraisal promotion manual employee faculty',
+      'hrm': 'human resources hr hrms manual policy staff nabh',
+      'hrms': 'pruworks attendance payroll login staff self service portal leave shifts sambalam varugai biometrics',
+      'staff': 'employee faculty teaching non teaching hr hrms directory attendance recruitment',
+      'faculty': 'teaching application appraisal recruitment biodata medical college hr',
+      'payroll': 'salary payslip sambalam hrms pruworks wages hr',
+      'payslip': 'salary payroll sambalam hrms pruworks wages hr',
+      'attendance': 'varugai biometric shift punch hrms pruworks hr leave absence',
+      'recruitment': 'velai application form teaching non teaching faculty vacancy hr',
+      'appraisal': 'performance pms faculty teaching non teaching promotion evaluation review hr',
+      'promotion': 'pathavi non teaching elevation seniority recommendation appraisal hr',
+      'sambalam': 'salary payslip payroll hrms wages attendance pruworks சம்பளம் hr',
+      'sampalam': 'salary payslip payroll hrms wages attendance pruworks சம்பளம் hr',
+      'varugai': 'attendance biometric shift hrms punch biometrics வருகை hr',
+      'velai': 'application recruitment teaching non teaching appraisal biodata வேலை hr',
+      'vinnappam': 'application form appraisal requisition biodata விண்ணப்பம் hr',
+      'vinnapam': 'application form appraisal requisition biodata விண்ணப்பம் hr',
+      'pathavi': 'promotion non teaching appraisal head பதவி hr',
+      'pathavi uyartvu': 'promotion non teaching appraisal பதவி உயர்வு hr',
+      'payirchi': 'training feedback drill induction பயிற்சி hr',
+      'vidhi': 'manual policy hrm pms protocol விதிமுறை hr',
+
+      // IT, Hardware, Computer & Telecom
+      'it': 'information technology computer system workstation pc hardware software network wifi printer email mail cug his kanini itforms',
+      'it forms': 'system request form printer request wifi mail email his user creation cug workstation desktop pc itforms',
+      'information technology': 'it forms system printer wifi mail email his cug workstation computer hardware software',
+      'kanini': 'system pc computer workstation desktop request hardware cpu கணினி it',
+      'kanipori': 'system pc computer workstation hardware கணினி it',
+      'acchaagam': 'printer toner cartridge printing request label barcode அச்சகம் it',
+      'achagam': 'printer toner cartridge printing request label barcode அச்சகம் it',
+      'inaiyam': 'wifi wireless network internet mac binding router இணையம் it',
+      'minnanjal': 'official email request mail domain mapims மின்னஞ்சல் it',
+      'tholaipesi': 'intercom telephony extension phone contact directory தொலைபேசி',
+      'inaippu': 'extension intercom direct hotline இணைப்பு',
+      'extension': 'intercom telephony phone contact directory tholaipesi inaippu emergency numbers hotline',
+      'extensions': 'intercom telephony phone contact directory tholaipesi inaippu emergency numbers hotline',
+      'intercom': 'extension telephony phone contact directory tholaipesi inaippu 2001 2131 2800',
+      'intercoms': 'extension telephony phone contact directory tholaipesi inaippu 2001 2131 2800',
+      'phone': 'intercom extension telephony contact directory telephone',
+      'telephone': 'intercom extension directory contact phone',
+      'telephony': 'intercom extension directory contact phone internal line',
+      'contact': 'intercom extension directory phone email official',
+      'sim': 'cug mobile line request sim voucher சிம் it',
+
+      // Tariffs, Billing & Charges
+      'kattanam': 'tariff charges rate price fee packages investigation billing கட்டணம்',
+      'vilai': 'tariff price cost charges rate package விலை',
+      'selavu': 'tariff charges rate bill packages cost செலவு',
+      'bill': 'tariff billing user manual discharge cashier',
+      'thittam': 'special packages admission health package திட்டம்',
+
+      // Pharmacy, Medicine & Drug Stores
+      'marunthu': 'drug pharmacy stock formulary medicine stores nmc free prescription மருந்து',
+      'marunthukal': 'drugs pharmacy stock formulary medication stores மருந்துகள்',
+      'marunthagam': 'pharmacy drug store ip op stock stores formulary மருந்தகம்',
+      'mathirai': 'tablet capsule drug medicine formulary மாத்திரை',
+      'niluvai': 'stock balance details inventory register இருப்பு',
+      'iruppu': 'stock balance details inventory register இருப்பு',
+
+      // Clinical Demographics & Emergency
+      'avacharam': 'emergency casualty 2800 code blue triage er ambulance அவசரம்',
+      'avasaram': 'emergency casualty 2800 code blue triage er ambulance அவசரம்',
+      'kuzhanthai': 'paediatric pediatric child infant newborn guardian paed குழந்தை',
+      'kulandhai': 'paediatric pediatric child infant newborn guardian paed குழந்தை',
+      'pillai': 'paediatric pediatric child infant newborn பிள்ளை',
+      'kan': 'eye ophthalmology vision screening camp கண்',
+      'thol': 'dermatology skin தோல்',
+      'elumbu': 'orthopaedics bone fracture plaster எலும்பு',
+      'theevira': 'intensive icu critical care emergency ventilator தீவிர',
+      'theevira sigichai': 'icu casesheet checklist ward shifting room tariff தீவிர சிகிச்சை',
+      'magaperu': 'obstetrics gynaecology delivery maternity obg மகப்பேறு',
+      'thaai': 'maternity obstetrics delivery தாய்',
+      'unavu': 'diet dietician food token nutrition attender meal உணவு',
+      'sapadu': 'food meal dietary attender token சாப்பாடு',
+      'siruneer': 'urology nephrology urine catheter cauti சிறுநீரகம்',
+      'moochu': 'ventilator vae vap respiratory asthma மூச்சு',
+      'kaichal': 'fever infection antibiogram antibiotic காய்ச்சல்',
+      'thotru': 'infection control hic bundle cauti clabsi ssi vae தொற்று',
+      'aavanam': 'medical records fit mrd discharge summary archive ஆவணம்',
+      'kuraigal': 'ticketing maintenance job orders complaint bugs குறைகள்',
+
+      // Stores, Purchase, Indents & Procurement
+      'indent': 'stores store purchase procurement requisition material stock கொள்முதல்',
+      'indents': 'stores store purchase procurement requisition material stock கொள்முதல்',
+      'store': 'stores purchase procurement inventory stock material கொள்முதல்',
+      'stores': 'store purchase procurement inventory stock material கொள்முதல்',
+      'purchase': 'stores store procurement instruments equipment indent material கொள்முதல்',
+      'procurement': 'purchase stores indent requisition equipment material கொள்முதல்',
+      'requisition': 'indent request form application approval purchase stores',
+      'inventory': 'stock balance details register stores equipment',
+      'material': 'store stores purchase procurement indent',
+      'kolmuthal': 'purchase stores inventory indent procurement கொள்முதல்',
+
+      // Tamil Script (U+0B80 - U+0BFF)
+      'அறுவை': 'surgery surgical procedures operation ot consent aruvai தமிழ்',
+      'சிகிச்சை': 'treatment procedure care surgery sigichai',
+      'ஒப்புதல்': 'consent informed agreement protocol medicolegal surgical oputhal',
+      'சம்மதம்': 'consent agreement willing sammatham',
+      'ரத்தம்': 'blood transfusion component prbc ffp reaction stock bank rattham',
+      'இரத்தம்': 'blood transfusion component prbc ffp reaction stock bank iratham',
+      'ரத்த': 'blood transfusion component bank stock rattha',
+      'வங்கி': 'bank stock storage repository details blood vangi',
+      'விடுமுறை': 'holiday holidays calendar leave 2026 dates festival vidumurai',
+      'சம்பளம்': 'salary payslip payroll hrms wages attendance sambalam',
+      'வருகை': 'attendance biometric shift hrms punch varugai',
+      'பயிற்சி': 'training feedback induction payirchi',
+      'விண்ணப்பம்': 'application form biodata teaching non teaching vinnappam',
+      'பதவி': 'promotion non teaching appraisal pathavi',
+      'மருந்து': 'drug pharmacy stock formulary medicine stores marunthu',
+      'மருந்துகள்': 'drugs pharmacy stock formulary medication stores marunthukal',
+      'மருந்தகம்': 'pharmacy drug store ip op stock stores marunthagam',
+      'கட்டணம்': 'tariff charges rate price fee packages billing kattanam',
+      'விலை': 'tariff price cost charges rate package vilai',
+      'செலவு': 'tariff charges bill cost selavu',
+      'கணினி': 'system pc computer workstation desktop request hardware kanini',
+      'அச்சகம்': 'printer toner cartridge printing request label acchaagam',
+      'இணையம்': 'wifi wireless network internet mac binding inaiyam',
+      'மின்னஞ்சல்': 'official email request mail minnanjal',
+      'குழந்தை': 'paediatric pediatric child infant newborn guardian kuzhanthai',
+      'பிள்ளை': 'paediatric child infant pillai',
+      'கண்': 'eye ophthalmology vision screening camp kan',
+      'தோல்': 'dermatology skin thol',
+      'எலும்பு': 'orthopaedics bone fracture plaster elumbu',
+      'தீவிர': 'intensive icu critical care emergency theevira',
+      'அவசரம்': 'emergency casualty 2800 code blue triage er avasaram',
+      'உணவு': 'diet dietician food token unavu',
+      'தொற்று': 'infection control hic bundle cauti clabsi ssi vae thotru',
+      'ஆவணம்': 'medical records fit mrd archive aavanam',
+      'தொலைபேசி': 'intercom extension directory telephone tholaipesi'
+    };
+
+    function expandTanglishSearch(query) {
+      const q = query.toLowerCase().trim();
+      const tokens = q.match(/[\w\u0B80-\u0BFF]+/g) || [];
+      const expandedTerms = new Set(tokens);
+      let matchedLabel = '';
+
+      // 1. Match multi-word Tanglish & Tamil phrases first
+      for (const [phrase, mappedWords] of Object.entries(TANGLISH_TAMIL_DICTIONARY)) {
+        if (phrase.includes(' ') && q.includes(phrase)) {
+          mappedWords.split(/\s+/).forEach(w => expandedTerms.add(w));
+          if (!matchedLabel) matchedLabel = phrase;
+        }
+      }
+
+      // 2. Match individual tokens
+      tokens.forEach(tok => {
+        if (TANGLISH_TAMIL_DICTIONARY[tok]) {
+          TANGLISH_TAMIL_DICTIONARY[tok].split(/\s+/).forEach(w => expandedTerms.add(w));
+          if (!matchedLabel) matchedLabel = tok;
+        }
+      });
+
+      return {
+        tokens: Array.from(expandedTerms),
+        matchedLabel: matchedLabel
+      };
+    }
+
+    // =========================================================================
+    // 5. ON-PAGE SECTION DESTINATIONS & INSTANT SMOOTH SCROLL JUMP
+    // =========================================================================
+    const PAGE_SECTION_DESTINATIONS = [
+      {
+        id: 'common-forms',
+        title: 'Common Forms (Clinical Indent & ICU)',
+        sectionId: 'forms',
+        categoryTab: 'clinical',
+        highlightId: 'cat-card-clinical',
+        description: '44 approved hospital ICU checklists, SBAR handover, narcotic indents & clinical protocols',
+        keywords: [
+          'common form', 'common forms', 'clinical form', 'clinical forms',
+          'icu form', 'icu forms', 'sbar form', 'sbar forms', 'narcotic form',
+          'narcotic drugs form', 'code blue form', 'casesheet checklist', 'general forms',
+          'day care assessment', 'antibiotics review'
+        ],
+        patterns: [
+          /common\s*forms?/i,
+          /clinical\s*forms?/i,
+          /icu\s*checklists?/i,
+          /sbar\s*handover/i,
+          /podhu\s*vinnappam/i,
+          /பொது\s*படிவ/i
+        ]
+      },
+      {
+        id: 'it-forms',
+        title: 'IT Forms & HIS Requests',
+        sectionId: 'forms',
+        categoryTab: 'it',
+        highlightId: 'cat-card-it',
+        description: '8 forms: New HIS User Request, Doctor HIS ID Creation, Item Creation, WiFi, System & Printer Requisitions',
+        keywords: [
+          'it form', 'it forms', 'it form his', 'it forms his', 'his form', 'his forms',
+          'his user creation form', 'his user request form', 'his user creation', 'his user form',
+          'system request form', 'printer request form', 'wifi request form', 'wifi form',
+          'doctor id creation form', 'doctor id creation in his', 'item creation form',
+          'item creation in his', 'cug request form', 'official email request', 'email request form'
+        ],
+        patterns: [
+          /\bit\s*forms?\b/i,
+          /it\s*form\s*his/i,
+          /\bhis\s*forms?\b/i,
+          /his\s*user\s*request/i,
+          /system\s*request\s*form/i,
+          /wifi\s*request/i,
+          /kanini\s*vinnappam/i,
+          /கணினி\s*படிவ/i
+        ]
+      },
+      {
+        id: 'his-system',
+        title: 'HIS System (AOSTA Backbone)',
+        sectionId: 'core-systems',
+        categoryTab: null,
+        highlightId: 'card-his-system',
+        description: 'Core AOSTA Backbone Hospital Information System login portal',
+        keywords: [
+          'his', 'his system', 'his portal', 'his login', 'aosta', 'aosta his',
+          'backbone his', 'hospital information system', 'backbone login'
+        ],
+        patterns: [
+          /^where\s+is\s+(the\s+)?his(\s+system)?\??$/i,
+          /\bhis\s+system\b/i,
+          /\bhis\s+login\b/i,
+          /\bhis\s+portal\b/i,
+          /\baosta(\s+his)?\b/i,
+          /^his$/i
+        ]
+      },
+      {
+        id: 'hr-forms',
+        title: 'HR Forms (Faculty & Staff)',
+        sectionId: 'forms',
+        categoryTab: 'hr',
+        highlightId: 'cat-card-hr',
+        description: '13 forms: Faculty Applications, Non-Teaching Jobs, Promotion, Training & Holidays',
+        keywords: [
+          'hr form', 'hr forms', 'faculty application', 'teaching faculty application',
+          'non-teaching form', 'non-teaching staff form', 'promotion form', 'teaching form',
+          'staff form', 'training feedback form', 'pms form', 'hrm manual'
+        ],
+        patterns: [
+          /\bhr\s*forms?\b/i,
+          /faculty\s*application/i,
+          /non[- ]?teaching\s*(staff\s*)?form/i,
+          /promotion\s*form/i
+        ]
+      },
+      {
+        id: 'consent-forms',
+        title: 'Consent Forms (Surgical & Clinical)',
+        sectionId: 'forms',
+        categoryTab: 'consent',
+        highlightId: 'cat-card-consent',
+        description: '6 bilingual surgical consent, blood transfusion consent, and DAMA refusal protocols',
+        keywords: [
+          'consent form', 'consent forms', 'surgery consent', 'surgical consent',
+          'dama form', 'dama consent', 'blood transfusion consent', 'not willing consent',
+          'oputhal form', 'opputhal form'
+        ],
+        patterns: [
+          /consent\s*forms?/i,
+          /surgical\s*consent/i,
+          /surgery\s*consent/i,
+          /dama\s*consent/i,
+          /oputhal/i,
+          /opputhal/i
+        ]
+      },
+      {
+        id: 'pruworks-hrms',
+        title: 'PruWorks HRMS (Staff Attendance & Leaves)',
+        sectionId: 'core-systems',
+        categoryTab: null,
+        highlightId: 'card-pruworks-hrms',
+        description: 'Staff attendance punch, leave management, shifts & monthly payslips',
+        keywords: [
+          'pruworks', 'pruworks hrms', 'hrms portal', 'hrms admin', 'hrms staff',
+          'attendance portal', 'payroll portal', 'payslip portal', 'staff self service',
+          'biometric attendance'
+        ],
+        patterns: [
+          /\bpruworks\b/i,
+          /\bhrms\b/i,
+          /\battendance\s+portal\b/i,
+          /\bpayslip\s+portal\b/i
+        ]
+      },
+      {
+        id: 'medsynapse-pacs',
+        title: 'M - PACS (Medsynapse Radiology)',
+        sectionId: 'core-systems',
+        categoryTab: null,
+        highlightId: 'card-medsynapse-pacs',
+        description: 'Medsynapse Radiology PACS diagnostic imaging & scan viewer',
+        keywords: [
+          'pacs', 'm pacs', 'm-pacs', 'medsynapse', 'medsynapse pacs',
+          'radiology pacs', 'xray pacs', 'scan pacs', 'scan viewer'
+        ],
+        patterns: [
+          /\bpacs\b/i,
+          /\bmedsynapse\b/i,
+          /\bm-?pacs\b/i
+        ]
+      },
+      {
+        id: 'card-ticketing',
+        title: 'Ticketing & Maintenance Job Orders',
+        sectionId: 'core-systems',
+        categoryTab: null,
+        highlightId: 'card-ticketing',
+        description: 'SLA Monitored IT breakdown reports, HIS bug reporting, and facilities maintenance',
+        keywords: [
+          'ticketing', 'maintenance', 'job orders', 'it breakdown', 'his bug',
+          'ticket desk', 'repair request', 'maintenance portal', 'ticketing portal',
+          'hardware complaint'
+        ],
+        patterns: [
+          /\bticketing\b/i,
+          /\bjob\s*orders?\b/i,
+          /\bbreakdown\s*report/i,
+          /\bmaintenance\s*desk\b/i
+        ]
+      },
+      {
+        id: 'mrd-portal',
+        title: 'MRD Portal (Medical Records)',
+        sectionId: 'core-systems',
+        categoryTab: null,
+        highlightId: 'card-mrd-portal',
+        description: 'Medical Records Department tracking and patient archive',
+        keywords: ['mrd', 'mrd portal', 'medical records department', 'medical records'],
+        patterns: [/\bmrd(\s+portal)?\b/i, /\bmedical\s*records\b/i]
+      },
+      {
+        id: 'tariff-stock',
+        title: 'Hospital Tariffs & Drug Stock',
+        sectionId: 'tariff-stock',
+        categoryTab: null,
+        highlightId: 'tariff-stock',
+        description: 'OT, ICU and OPD tariffs, Pharmacy 139 drugs stock & General store inventory',
+        keywords: ['tariff', 'tariffs', 'drug stock', 'pharmacy stock', 'hospital charges', 'room tariff', 'ot tariff', 'investigation charges', 'billing rates'],
+        patterns: [/\btariffs?\b/i, /\bdrug\s*stores?\s*stock\b/i, /\bpharmacy\s*stock\b/i]
+      },
+      {
+        id: 'quality-manuals',
+        title: 'Quality Manuals & NABH SOPs',
+        sectionId: 'quality',
+        categoryTab: null,
+        highlightId: 'quality',
+        description: 'NABH accreditation manuals, clinical SOPs, infection control & hospital protocols',
+        keywords: ['quality manual', 'quality manuals', 'quality', 'manuals', 'nabh manual', 'nabh manuals', 'sop', 'sops', 'quality protocols', 'committees'],
+        patterns: [/\bquality\s*manuals?\b/i, /\bnabh\s*manuals?\b/i, /\bsops?\b/i, /\bcommittees\b/i]
+      },
+      {
+        id: 'e-circulars',
+        title: 'Institutional E-Circulars & Duty Rosters',
+        sectionId: 'e-circulars',
+        categoryTab: null,
+        highlightId: 'e-circulars',
+        description: 'Administrative circulars, office orders, and 24-hour doctor on-duty rosters',
+        keywords: ['circular', 'circulars', 'e-circular', 'e circular', 'duty details', 'duty roster', 'roster', '24hr duty'],
+        patterns: [/\bcirculars?\b/i, /\be-?circulars?\b/i, /\bduty\s*details?\b/i, /\bduty\s*rosters?\b/i]
+      },
+      {
+        id: 'in-house-apps',
+        title: 'In-House Developed Applications',
+        sectionId: 'in-house-apps',
+        categoryTab: null,
+        highlightId: 'in-house-apps',
+        description: 'Pathology Barcode App, Blood Donor Management, and internal clinical tools',
+        keywords: ['in house', 'in house apps', 'in-house applications', 'pathology barcode', 'internal apps', 'blood donation app'],
+        patterns: [/\bin[- ]?house(\s+apps?)?\b/i, /\bpathology\s*barcode\b/i]
+      },
+      {
+        id: 'intercom-directory',
+        title: 'Campus Intercom & Extension Directory',
+        sectionId: 'quick-shortcuts-dock',
+        categoryTab: null,
+        highlightId: 'quick-shortcuts-dock',
+        description: 'Live campus intercom telephone directory and emergency hotlines (Emergency: 2001, Main Gate: 2800, ICU: 2156)',
+        keywords: ['intercom', 'extension', 'extensions', 'phone directory', 'telephone directory', 'intercom numbers', 'extension numbers', 'emergency extension'],
+        patterns: [/\bintercoms?\b/i, /\bextensions?\b/i, /\bphone\s*directory\b/i, /\btelephone\s*directory\b/i]
+      }
+    ];
+
+    // Word match helper for exact boundary tokens
+    function isWordMatch(term, text) {
+      if (!term || !text) return false;
+      const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      return new RegExp('\\b' + escaped + '\\b', 'i').test(text);
+    }
+
+    // Destination Matcher: Finds all matching on-page sections for user queries
+    function findMatchingDestinations(rawQuery) {
+      if (!rawQuery) return [];
+      const q = rawQuery.toLowerCase().trim().replace(/[?.,!]/g, '');
+      if (!q) return [];
+
+      // Telephony Rule: If query contains any telephony words in English, Tamil, or Tanglish, let AI Search & Intercom Directory handle it exclusively
+      const isTelephony = /\b(intercom|inercom|intercoms|extension|extensions|ext|exts|call|calling|calls|phone|phones|telephone|telephones|tholaipesi|tholaipasi|inaippu|inaippugal|azhaippu|alaippu|koopidu|pesa|en|yenn|dial|dialing)\b/i.test(q) ||
+        /(தொலைபேசி|இணைப்பு|இணைப்புகள்|அழைப்பு|அழைப்புகள்|எண்|எண்கள்|போன்|கால்|கூப்பிடு|பேசு|தொடர்பு|இன்டர்காம்|எக்ஸ்டென்ஷன்)/.test(q);
+      if (isTelephony) {
+        return [];
+      }
+
+      const matches = [];
+      const seen = new Set();
+
+      for (const dest of PAGE_SECTION_DESTINATIONS) {
+        let hit = false;
+
+        // Guard: If query contains 'form', do not match his-system unless explicitly asking for 'his system' or 'his login'
+        if (dest.id === 'his-system' && q.includes('form') && !q.includes('his system') && !q.includes('his login') && !q.includes('his portal') && !q.includes('aosta')) {
+          continue;
+        }
+
+        // Guard: If asking for specific department extensions or asking a question, do not jump to shortcuts dock, let AI Search handle it
+        if (dest.id === 'intercom-directory') {
+          const isQuestionOrDept = /\b(it|hr|billing|admin|ortho|dialysis|ent|radiology|blood|biomedical|quality|security|gate|canteen|diet|food|mrd|physio|casualty|emergency|cardio|surgery|paediatric|pediatric|ophthalmology|eye|gynaec|derma|skin|psychiatry|siddha|lab|laboratory|cssd|purchase|laundry|maintenance|art|lift|icu|ot|ms|ns|superintendent|doctor|duty|room|ward|number|numbers|need|what|who|where|how|tell|give|please|for|of|in|contact|phone|call)\b/i.test(q);
+          if (isQuestionOrDept) {
+            continue;
+          }
+        }
+        if (dest.id === 'tariff-stock' && (q.includes('intercom') || q.includes('extension') || q.includes('phone') || q.includes('number'))) {
+          continue;
+        }
+        if (dest.id === 'hr-forms' && (q.includes('intercom') || q.includes('extension') || q.includes('phone') || q.includes('number'))) {
+          continue;
+        }
+
+        // 1. Keyword check
+        for (const kw of dest.keywords) {
+          if (kw.length <= 3) {
+            if (isWordMatch(kw, q)) {
+              hit = true;
+              break;
+            }
+          } else {
+            if (q === kw || q.includes(kw)) {
+              hit = true;
+              break;
+            }
+          }
+        }
+
+        // 2. Regex pattern check
+        if (!hit) {
+          for (const pat of dest.patterns) {
+            if (pat.test(q)) {
+              hit = true;
+              break;
+            }
+          }
+        }
+
+        if (hit && !seen.has(dest.id)) {
+          seen.add(dest.id);
+          matches.push(dest);
+        }
+      }
+
+      return matches;
+    }
+
+    // Auto-Scroll and Visual Pulse Highlight Function
+    function navigateToPageSection(sectionId, categoryTab = null, highlightId = null, reasonText = '') {
+      // 1. If categoryTab specified, activate that category under Forms
+      if (categoryTab && typeof selectFormsCategory === 'function') {
+        selectFormsCategory(categoryTab, false);
+      }
+
+      // 2. Hide search dropdown and AI panel so user sees the page
+      const dropdown = document.getElementById('search-dropdown');
+      if (dropdown) dropdown.classList.add('hidden');
+      const aiPanel = document.getElementById('ai-search-panel');
+      if (aiPanel) aiPanel.classList.add('hidden');
+
+      // 3. Handle quick shortcuts dock if target is shortcuts dock or intercom
+      if (sectionId === 'quick-shortcuts-dock' || highlightId === 'quick-shortcuts-dock') {
+        const dock = document.getElementById('quick-shortcuts-dock');
+        if (dock) {
+          dock.classList.add('is-open');
+          const toggleBtn = document.getElementById('dock-toggle-btn');
+          if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'true');
+        }
+        if (reasonText && typeof showToast === 'function') {
+          showToast(reasonText);
+        }
+        return true;
+      }
+
+      // 4. Find target element
+      const targetElement = (highlightId && document.getElementById(highlightId)) ||
+                            (sectionId && document.getElementById(sectionId));
+      if (!targetElement) return false;
+
+      // 5. Calculate smooth scroll offset taking navbar into account
+      const navHeader = document.querySelector('nav') || document.getElementById('navbar');
+      const navHeight = navHeader ? navHeader.getBoundingClientRect().height : 110;
+      const elementPosition = targetElement.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - (navHeight + 24);
+
+      window.scrollTo({
+        top: Math.max(0, offsetPosition),
+        behavior: 'smooth'
+      });
+
+      // 6. Visual pulse highlight glow animation
+      targetElement.classList.remove('pulse-highlight-target');
+      void targetElement.offsetWidth; // force DOM reflow
+      targetElement.classList.add('pulse-highlight-target');
+
+      setTimeout(() => {
+        targetElement.classList.remove('pulse-highlight-target');
+      }, 3200);
+
+      // 7. Show toast notification to give clear feedback
+      if (reasonText && typeof showToast === 'function') {
+        showToast(reasonText);
+      }
+
+      return true;
+    }
+
+    // Helper to detect if a search result or link points to an on-page section / forms vault
+    function getOnPageAction(url, title = '') {
+      const u = (url || '').toLowerCase();
+      const t = (title || '').toLowerCase();
+
+      // HR Forms Hub (APH HR Forms Hub, hrforms.html, index.html#forms, ?tab=hr)
+      if (u.includes('hrforms') || ((u.includes('#forms') || u === '#forms') && (t.includes('hr') || t.includes('leave') || t.includes('holiday') || t.includes('faculty') || t.includes('pms'))) || t.includes('hr forms hub') || t.includes('aph hr form')) {
+        return {
+          isSection: true,
+          onclick: "navigateToPageSection('forms', 'hr', 'cat-card-hr', '📍 Switched to HR Forms in Forms Vault!'); return false;",
+          badge: 'Forms Vault'
+        };
+      }
+
+      // IT Forms Hub (APH IT Forms Hub, itforms.html, index.html#forms, ?tab=it)
+      if (u.includes('itforms') || ((u.includes('#forms') || u === '#forms') && (t.includes('it') || t.includes('hardware') || t.includes('wifi') || t.includes('system request'))) || t.includes('it forms hub') || t.includes('aph it form')) {
+        return {
+          isSection: true,
+          onclick: "navigateToPageSection('forms', 'it', 'cat-card-it', '📍 Switched to IT Forms in Forms Vault!'); return false;",
+          badge: 'Forms Vault'
+        };
+      }
+
+      // Consent Forms Hub (APH Consent Forms, consent.html, index.html#forms, ?tab=consent)
+      if (u.includes('consent.html') || ((u.includes('#forms') || u === '#forms') && t.includes('consent')) || t.includes('consent forms hub') || t.includes('consent vault')) {
+        return {
+          isSection: true,
+          onclick: "navigateToPageSection('forms', 'consent', 'cat-card-consent', '📍 Switched to Consent Forms in Forms Vault!'); return false;",
+          badge: 'Forms Vault'
+        };
+      }
+
+      // Clinical / Common Forms Hub (APH Common Forms Hub, commonforms.html, index.html#forms, ?tab=clinical)
+      if (u.includes('commonforms') || ((u.includes('#forms') || u === '#forms') && (t.includes('clinical') || t.includes('common form'))) || t.includes('common forms hub') || t.includes('aph common form')) {
+        return {
+          isSection: true,
+          onclick: "navigateToPageSection('forms', 'clinical', 'cat-card-clinical', '📍 Switched to Common Forms in Forms Vault!'); return false;",
+          badge: 'Forms Vault'
+        };
+      }
+
+      // Generic Forms Hub with #forms
+      if (u.includes('#forms') || u === '#forms') {
+        return {
+          isSection: true,
+          onclick: "navigateToPageSection('forms', 'hr', 'cat-card-hr', '📍 Switched to Forms Vault!'); return false;",
+          badge: 'Forms Vault'
+        };
+      }
+
+      // Hospital Tariffs & Stock
+      if (u.includes('#tariff-stock')) {
+        return {
+          isSection: true,
+          onclick: "navigateToPageSection('tariff-stock', null, 'tariff-stock', '📍 Switched to Tariffs & Stock!'); return false;",
+          badge: 'Hospital Tariffs'
+        };
+      }
+
+      // Institutional E-Circulars
+      if (u.includes('#e-circulars')) {
+        return {
+          isSection: true,
+          onclick: "navigateToPageSection('e-circulars', null, 'e-circulars', '📍 Switched to E-Circulars!'); return false;",
+          badge: 'Circulars'
+        };
+      }
+
+      // Quality Manuals & SOPs
+      if (u.includes('#quality')) {
+        return {
+          isSection: true,
+          onclick: "navigateToPageSection('quality', null, 'quality', '📍 Switched to Quality Manuals!'); return false;",
+          badge: 'Accreditation'
+        };
+      }
+
+      return { isSection: false };
+    }
+
+    // Live search input handler with Tanglish / Tamil Bilingual support
     function handleSearchInput(e) {
-      const query = e.target.value.trim().toLowerCase();
+      const query = e.target.value.trim();
       const dropdown = document.getElementById('search-dropdown');
       if (!dropdown) return;
 
@@ -3017,37 +3745,306 @@
         return;
       }
 
-      const cleanQuery = query.replace(/[^a-z0-9]/g, '');
-      const matches = searchIndex.filter(item => {
-        const titleClean = item.title.toLowerCase().replace(/[^a-z0-9]/g, '');
-        const catClean = item.category.toLowerCase().replace(/[^a-z0-9]/g, '');
-        return item.title.toLowerCase().includes(query) || 
-               item.category.toLowerCase().includes(query) ||
-               (cleanQuery.length >= 3 && (titleClean.includes(cleanQuery) || catClean.includes(cleanQuery)));
-      }).slice(0, 8);
+      const qLower = query.toLowerCase();
+      const tanglishInfo = expandTanglishSearch(qLower);
+      const expandedKeywords = tanglishInfo.tokens;
+      const isBilingual = !!tanglishInfo.matchedLabel;
 
-      if (matches.length === 0) {
-        dropdown.innerHTML = `
-          <div class="p-3 text-xs text-slate-500 text-center">
-            No exact documents matching "<strong>${escapeHtml(query)}</strong>". Press Enter to search portal sections.
-          </div>
-        `;
-        dropdown.classList.remove('hidden');
-        return;
-      }
+      // Smart score-based ranking for searchIndex
+      const isWordMatch = (term, text) => {
+        if (!term || !text) return false;
+        const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        return new RegExp('\\b' + escaped + '\\b', 'i').test(text);
+      };
+
+      const GENERIC_STOP_WORDS = new Set([
+        'details', 'detail', 'form', 'forms', 'pdf', 'portal', 'hub', 'sheet',
+        'file', 'files', 'list', 'lists', 'document', 'documents', 'view', 'download',
+        'department', 'hospital', 'aph', 'mapims', 'institute', 'online', 'link',
+        'please', 'show', 'give', 'about', 'the', 'is', 'in', 'of', 'and', 'for', 'to', 'with',
+        'what', 'which', 'where', 'when', 'who', 'how', 'why', 'available', 'availability',
+        'are', 'can', 'get', 'need', 'want', 'tell', 'me', 'i', 'a', 'an', 'any', 'all', 'there',
+        'have', 'has', 'do', 'does', 'find', 'some', 'know'
+      ]);
+      const informativeKeywords = expandedKeywords.filter(kw => !GENERIC_STOP_WORDS.has(kw));
+
+      // Domain Intent Classifications
+      const isHrQuery = isWordMatch('hr', qLower) || isWordMatch('hrm', qLower) || isWordMatch('hrms', qLower) ||
+        qLower.includes('human resource') || qLower.includes('pruworks') || qLower.includes('payroll') ||
+        qLower.includes('payslip') || qLower.includes('attendance') || qLower.includes('teaching') ||
+        qLower.includes('non-teaching') || qLower.includes('appraisal') || qLower.includes('promotion') ||
+        qLower.includes('sambalam') || qLower.includes('சம்பளம்') || qLower.includes('velai') ||
+        qLower.includes('வேலை') || qLower.includes('vinnappam') || qLower.includes('விண்ணப்பம்') ||
+        qLower.includes('pathavi') || qLower.includes('varugai') || qLower.includes('pms');
+
+      const isBloodQuery = (
+        qLower.includes('vangi') || qLower.includes('வங்கி') || qLower.includes('radha') ||
+        qLower.includes('ratha') || qLower.includes('raththa') || qLower.includes('ரத்த') || qLower.includes('blood')
+      ) && !isHrQuery;
+
+      const hasDrugTerm = (
+        qLower.includes('marunthu') || qLower.includes('மருந்து') || qLower.includes('pharmacy') || qLower.includes('drug')
+      ) && !isHrQuery;
+
+      const isLeaveQuery = qLower.includes('vidumurai') || qLower.includes('விடுமுறை') || qLower.includes('holiday') || qLower.includes('leave');
+
+      const isTelecomQuery = qLower.includes('extension') || qLower.includes('intercom') || qLower.includes('tholaipesi') ||
+        qLower.includes('தொலைபேசி') || qLower.includes('inaippu') || qLower.includes('phone') || qLower.includes('telephony') || qLower.includes('contact');
+
+      const isItQuery = (qLower === 'it' || qLower === 'i.t' || qLower === 'it forms' || isWordMatch('it', qLower) ||
+        qLower.includes('kanini') || qLower.includes('கணினி') || qLower.includes('hardware') || qLower.includes('software')) &&
+        !qLower.includes('fit') && !qLower.includes('credit') && !qLower.includes('audit');
+
+      const isStoreQuery = (
+        qLower.includes('indent') || qLower.includes('store') || qLower.includes('purchase') ||
+        qLower.includes('procurement') || qLower.includes('requisition') || qLower.includes('kolmuthal') ||
+        qLower.includes('கொள்முதல்')
+      ) && !isHrQuery && !isBloodQuery && !isItQuery;
+
+      const scoredMatches = searchIndex.map(item => {
+        const titleLower = item.title.toLowerCase();
+        const catLower = item.category.toLowerCase();
+
+        // Strict global filter: Never show PaperZero
+        if (titleLower.includes('paperzero') || (item.url && item.url.includes('paper.mapims'))) {
+          return { item, score: -1 };
+        }
+        let score = 0;
+        let hasHit = false;
+
+        // STRICT DOMAIN ISOLATION & PRUNING:
+        // 1. If searching for HR, strictly reject Pharmacy, Drug Stores, and Blood Bank
+        if (isHrQuery) {
+          if (catLower.includes('pharmacy') || titleLower.includes('pharmacy') || titleLower.includes('drug stores') || titleLower.includes('formulary') || titleLower.includes('blood bank') || catLower.includes('consent')) {
+            return { item, score: -1 };
+          }
+        }
+
+        // 2. If searching for Blood Bank, strictly reject Pharmacy & Drug Store files
+        if (isBloodQuery && !hasDrugTerm) {
+          if (catLower.includes('pharmacy') || titleLower.includes('pharmacy') || titleLower.includes('drug stores')) {
+            return { item, score: -1 };
+          }
+        }
+
+        // 3. If searching for Holidays, reject committee schedules
+        if (isLeaveQuery && !qLower.includes('committee') && !qLower.includes('mock')) {
+          if (titleLower.includes('committee') || titleLower.includes('mock drill')) {
+            return { item, score: -1 };
+          }
+        }
+
+        // 4. Store / Indent query guardrail: strictly reject non-store IT PC forms, imaging results, and consent
+        if (isStoreQuery) {
+          if (!qLower.includes('pc') && !qLower.includes('hardware') && !qLower.includes('desktop') && !qLower.includes('computer') && !qLower.includes('printer') && !qLower.includes('wifi') && !qLower.includes('it')) {
+            if (catLower.includes('it form') || titleLower.includes('system request') || titleLower.includes('printer request') || titleLower.includes('wifi request')) {
+              return { item, score: -1 };
+            }
+          }
+          if (titleLower.includes('imaging results') || titleLower.includes('cauti') || titleLower.includes('clabsi') || titleLower.includes('ssi') || catLower.includes('consent') || catLower.includes('hr')) {
+            return { item, score: -1 };
+          }
+        }
+
+        // Direct query match (word boundary for short tokens <= 3 chars)
+        if (qLower.length <= 3) {
+          if (isWordMatch(qLower, titleLower)) { score += 90; hasHit = true; }
+          if (isWordMatch(qLower, catLower)) { score += 55; hasHit = true; }
+        } else {
+          if (titleLower.includes(qLower)) { score += 85; hasHit = true; }
+          if (catLower.includes(qLower)) { score += 35; hasHit = true; }
+        }
+
+        // Active keywords matching
+        const activeKeywords = informativeKeywords.length > 0 ? informativeKeywords : expandedKeywords;
+        activeKeywords.forEach(kw => {
+          if (kw.length >= 2) {
+            if (kw.length <= 3) {
+              if (isWordMatch(kw, titleLower)) { score += 35; hasHit = true; }
+              if (isWordMatch(kw, catLower)) { score += 20; hasHit = true; }
+            } else {
+              if (titleLower.includes(kw)) { score += 35; hasHit = true; }
+              if (catLower.includes(kw)) { score += 15; hasHit = true; }
+            }
+          }
+        });
+
+        // Intent priority rules
+        // 1. HR Domain intent
+        if (isHrQuery) {
+          if (catLower.includes('hr') || titleLower.includes('hr forms hub') || titleLower.includes('human resources manual') || titleLower.includes('pruworks') || titleLower.includes('hrms') || titleLower.includes('teaching') || titleLower.includes('non-teaching') || titleLower.includes('promotion') || titleLower.includes('holiday')) {
+            score += 160;
+            hasHit = true;
+          }
+        }
+
+        // 2. Consent intent
+        if (qLower.includes('aruvai') || qLower.includes('அறுவை') || qLower.includes('oputhal') || qLower.includes('opputhal') || qLower.includes('ஒப்புதல்')) {
+          if (titleLower.includes('tamil') || titleLower.includes('தமிழ்')) { score += 60; hasHit = true; }
+          if (titleLower.includes('informed consent form for surgery')) { score += 45; hasHit = true; }
+        }
+
+        // 3. Blood Bank intent
+        if (isBloodQuery) {
+          if (titleLower.includes('blood bank stock')) { score += 95; hasHit = true; }
+          if (titleLower.includes('blood component transfusion')) { score += 65; hasHit = true; }
+          if (titleLower.includes('transfusion technique')) { score += 50; hasHit = true; }
+        }
+
+        // 4. Leave & Holiday intent
+        if (isLeaveQuery) {
+          if (titleLower.includes('holiday')) { score += 95; hasHit = true; }
+          if (titleLower.includes('hrms')) { score += 45; hasHit = true; }
+        }
+
+        // 5. Tariff intent
+        if (qLower.includes('kattanam') || qLower.includes('கட்டணம்') || qLower.includes('vilai')) {
+          if (catLower.includes('tariff') || titleLower.includes('tariff')) { score += 60; hasHit = true; }
+        }
+        
+        // 6. IT / Computer Department intent
+        if (isItQuery) {
+          if (qLower.includes('hardware') || qLower.includes('system request') || qLower.includes('pc') || qLower.includes('desktop')) {
+            if (titleLower.includes('system request')) { score += 320; hasHit = true; }
+          }
+          if (catLower.includes('it form') || catLower === 'it') { score += 120; hasHit = true; }
+          if (titleLower.includes('system request') || titleLower.includes('printer request') || titleLower.includes('wifi request') || titleLower.includes('mail request') || titleLower.includes('his user') || titleLower.includes('item creation') || titleLower.includes('cug request')) { score += 90; hasHit = true; }
+          if (item.url && item.url.includes('itforms')) { score += 105; hasHit = true; }
+        }
+
+        // 7. Pharmacy intent
+        if (hasDrugTerm) {
+          if (titleLower.includes('drug stores stock') || catLower.includes('pharmacy')) { score += 70; hasHit = true; }
+        }
+
+        // 8. Intercom & Extension Telephony intent
+        if (isTelecomQuery) {
+          if (isItQuery) {
+            if (titleLower.includes('it department intercom') || titleLower.includes('it & his help desk')) { score += 280; hasHit = true; }
+            else if (titleLower.includes('intercom & extension directory pdf')) { score += 260; hasHit = true; }
+            else if (titleLower.includes('intercom & extension') || (item.url && item.url.includes('intercom.html'))) { score += 200; hasHit = true; }
+          } else {
+            if (titleLower.includes('intercom & extension directory pdf')) { score += 160; hasHit = true; }
+            else if (titleLower.includes('intercom & extension') || (item.url && item.url.includes('intercom.html'))) { score += 150; hasHit = true; }
+            else if (titleLower.includes('intercom extensions')) { score += 140; hasHit = true; }
+            else if (titleLower.includes('email & staff directory')) { score += 80; hasHit = true; }
+          }
+        }
+
+        // 9. Store / Indent / Procurement intent
+        if (isStoreQuery) {
+          if (titleLower.includes('purchase process') || (item.url && item.url.includes('instruments and equipment'))) {
+            score += (qLower.includes('indent') || qLower.includes('purchase')) ? 360 : 280;
+            hasHit = true;
+          } else if (titleLower.includes('inventory stock details')) {
+            score += 240;
+            hasHit = true;
+          } else if (titleLower.includes('drug stores stock')) {
+            score += 230;
+            hasHit = true;
+          } else if (titleLower.includes('stock out medicine purchase')) {
+            score += 200;
+            hasHit = true;
+          } else if (titleLower.includes('narcotic drugs form') && (qLower.includes('drug') || qLower.includes('narcotic'))) {
+            score += 190;
+            hasHit = true;
+          }
+        }
+
+        return { item, score: hasHit ? score : -1 };
+      })
+      .filter(entry => entry.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 6)
+      .map(entry => entry.item);
 
       let html = '';
-      matches.forEach(item => {
+
+      // Check for direct on-page section jump destinations (e.g. "where is common form", "where is it form his", "where is his")
+      const sectionMatches = findMatchingDestinations(query);
+      if (sectionMatches.length > 0) {
+        sectionMatches.forEach(dest => {
+          html += `
+            <button type="button" onclick="navigateToPageSection('${dest.sectionId}', '${dest.categoryTab || ''}', '${dest.highlightId || ''}', '📍 Scrolled to ${escapeHtml(dest.title)} for easy access!')" 
+                    class="w-full p-3 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-700 hover:to-indigo-700 text-white flex items-center justify-between text-left transition-all duration-150 cursor-pointer shadow-sm group border-b border-blue-500/40">
+              <div class="flex items-center gap-2.5 min-w-0">
+                <div class="w-8 h-8 rounded-xl bg-white/20 border border-white/30 flex items-center justify-center shrink-0 text-white shadow-xs group-hover:scale-105 transition-transform">
+                  <svg class="w-4 h-4 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                  </svg>
+                </div>
+                <div class="min-w-0">
+                  <div class="text-[9.5px] font-extrabold uppercase tracking-wider text-blue-200 flex items-center gap-1">
+                    <span>📍 JUMP TO PAGE SECTION</span>
+                  </div>
+                  <div class="text-xs sm:text-sm font-black text-white truncate">
+                    ${escapeHtml(dest.title)} &darr;
+                  </div>
+                  <div class="text-[10.5px] text-blue-100/90 truncate">
+                    ${escapeHtml(dest.description)}
+                  </div>
+                </div>
+              </div>
+              <span class="px-2.5 py-1 rounded-lg bg-white text-blue-700 font-bold text-xs shrink-0 shadow-sm group-hover:bg-blue-50">
+                Scroll &darr;
+              </span>
+            </button>
+          `;
+        });
+      }
+
+      // Bilingual banner indicator
+      if (isBilingual) {
         html += `
-          <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="p-3 hover:bg-blue-50 flex items-center justify-between gap-3 text-left transition-colors group">
-            <div class="min-w-0">
-              <div class="font-bold text-xs sm:text-sm text-slate-900 group-hover:text-blue-600 truncate">${escapeHtml(item.title)}</div>
-              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">${item.category}</span>
-            </div>
-            <span class="text-xs font-semibold text-blue-600 shrink-0">Open &rarr;</span>
-          </a>
+          <div class="px-3 py-2 bg-gradient-to-r from-amber-50 to-orange-50 border-b border-amber-200/80 text-[11px] font-bold text-amber-900 flex items-center justify-between">
+            <span class="flex items-center gap-1.5">
+              <span>🌐</span>
+              <span>தமிழ் / Tanglish: <strong>"${escapeHtml(tanglishInfo.matchedLabel)}"</strong></span>
+            </span>
+            <span class="text-[9px] uppercase tracking-wider font-extrabold bg-amber-200/80 text-amber-950 px-2 py-0.5 rounded-full">Bilingual Match</span>
+          </div>
         `;
-      });
+      }
+
+      if (scoredMatches.length > 0) {
+        scoredMatches.forEach(item => {
+          const onPage = getOnPageAction(item.url, item.title);
+          if (onPage.isSection) {
+            html += `
+              <a href="#forms" onclick="${onPage.onclick}" class="p-3 hover:bg-purple-50 flex items-center justify-between gap-3 text-left transition-colors group cursor-pointer">
+                <div class="min-w-0">
+                  <div class="font-bold text-xs sm:text-sm text-purple-950 group-hover:text-purple-700 truncate">${escapeHtml(item.title)} &darr;</div>
+                  <span class="text-[10px] font-bold uppercase tracking-wider text-purple-600">${item.category}</span>
+                </div>
+                <span class="text-xs font-semibold text-purple-600 shrink-0">View &darr;</span>
+              </a>
+            `;
+          } else {
+            html += `
+              <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="p-3 hover:bg-blue-50 flex items-center justify-between gap-3 text-left transition-colors group">
+                <div class="min-w-0">
+                  <div class="font-bold text-xs sm:text-sm text-slate-900 group-hover:text-blue-600 truncate">${escapeHtml(item.title)}</div>
+                  <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">${item.category}</span>
+                </div>
+                <span class="text-xs font-semibold text-blue-600 shrink-0">Open &rarr;</span>
+              </a>
+            `;
+          }
+        });
+      }
+
+      // Bottom banner: Ask Gemini AI directly
+      html += `
+        <button type="button" onclick="executeAiSearch('${escapeHtml(query)}')" 
+                class="w-full p-3 bg-gradient-to-r from-blue-50 via-indigo-50 to-blue-50 hover:from-blue-100 hover:to-indigo-100 flex items-center justify-between text-left transition-colors border-t border-blue-200 text-blue-700 font-bold text-xs sm:text-sm cursor-pointer">
+          <div class="flex items-center gap-2">
+            <span class="flex h-5 w-5 rounded-full bg-gradient-to-br from-blue-600 to-indigo-600 text-white items-center justify-center text-[10px] shadow-xs">✨</span>
+            <span>Ask Gemini AI: "<strong>${escapeHtml(query)}</strong>"</span>
+          </div>
+          <span class="text-xs font-extrabold text-blue-600 flex items-center gap-0.5"><span>Ask AI</span> <span>&rarr;</span></span>
+        </button>
+      `;
+
       dropdown.innerHTML = html;
       dropdown.classList.remove('hidden');
     }
@@ -3059,9 +4056,18 @@
     // Close search dropdowns on click outside
     document.addEventListener('click', (e) => {
       const dropdown = document.getElementById('search-dropdown');
+      const aiPanel = document.getElementById('ai-search-panel');
       const searchInput = document.getElementById('intranet-search');
+      const submitBtn = document.getElementById('ai-search-submit-btn');
+
       if (dropdown && !dropdown.contains(e.target) && e.target !== searchInput) {
         dropdown.classList.add('hidden');
+      }
+
+      if (aiPanel && !aiPanel.contains(e.target) && e.target !== searchInput && (!submitBtn || !submitBtn.contains(e.target))) {
+        if (!e.target.closest('[onclick^="triggerAiQuickPrompt"]')) {
+          aiPanel.classList.add('hidden');
+        }
       }
 
       const formsDropdown = document.getElementById('forms-search-results');
@@ -3071,45 +4077,682 @@
       }
     });
 
-    // Search filter helper
+    // Form submission triggers direct section auto-scroll OR AI Search
     function handleSearch(e) {
-      e.preventDefault();
-      const term = document.getElementById('intranet-search').value.trim().toLowerCase();
+      if (e) e.preventDefault();
+      const term = document.getElementById('intranet-search').value.trim();
       const dropdown = document.getElementById('search-dropdown');
       if (dropdown) dropdown.classList.add('hidden');
 
       if (!term) {
-        showToast('Please type a search query (e.g., "blood", "tariff", "his", "consent").');
+        showToast('Please type a search query or question (e.g., "pediatric surgery consent", "ICU tariff").');
         return;
       }
 
-      // Check if matches sections or titles
-      if (term.includes('tariff') || term.includes('price') || term.includes('billing') || term.includes('stock') || term.includes('pharmacy') || term.includes('package') || term.includes('formulary')) {
-        document.getElementById('tariff-stock').scrollIntoView({ behavior: 'smooth' });
-        showToast(`Navigated to Tariff & Live Stock Status for "${term}"`);
-      } else if (term.includes('form') || term.includes('consent') || term.includes('indent') || term.includes('requisition')) {
-        document.getElementById('forms').scrollIntoView({ behavior: 'smooth' });
-        showToast(`Navigated to Hospital Forms & Requisitions for "${term}"`);
-      } else if (term.includes('circular') || term.includes('duty') || term.includes('roster') || term.includes('police') || term.includes('mlc') || term.includes('pms')) {
-        document.getElementById('e-circulars').scrollIntoView({ behavior: 'smooth' });
-        showToast(`Navigated to Digital E-Circulars for "${term}"`);
-      } else if (term.includes('quality') || term.includes('nabh') || term.includes('meeting') || term.includes('minutes') || term.includes('manual') || term.includes('mom')) {
-        document.getElementById('quality').scrollIntoView({ behavior: 'smooth' });
-        showToast(`Navigated to Core Quality Committee Hub for "${term}"`);
-      } else if (term.includes('intercom') || term.includes('phone') || term.includes('contact') || term.includes('casualty') || term.includes('trauma') || term.includes('extension')) {
-        window.open('./intercom.html', '_blank');
-        showToast(`Opening Campus Intercom Directory for "${term}"`);
-      } else if (term.includes('feedback') || term.includes('suggestion') || term.includes('message') || term.includes('help desk') || term.includes('quick help')) {
-        const fb = document.getElementById('feedback');
-        if (fb) fb.scrollIntoView({ behavior: 'smooth' });
-        showToast(`Navigated to Quick Help & Contacts`);
-      } else if (term.includes('app') || term.includes('barcode') || term.includes('eye') || term.includes('token') || term.includes('ai') || term.includes('audit') || term.includes('checklist')) {
-        document.getElementById('in-house-apps').scrollIntoView({ behavior: 'smooth' });
-        showToast(`Navigated to In-House Developed Applications for "${term}"`);
-      } else {
-        document.getElementById('core-systems').scrollIntoView({ behavior: 'smooth' });
-        showToast(`Displaying core results for "${term}"`);
+      // Check if query targets on-page sections (e.g. "where is common form", "where is it form his", "where is his")
+      const matches = findMatchingDestinations(term);
+      if (matches.length > 0) {
+        const primaryDest = matches[0];
+        let toastMsg = `📍 Scrolled to ${primaryDest.title} for easy access!`;
+        if (matches.length > 1) {
+          toastMsg = `📍 Scrolled to ${primaryDest.title}! (${matches[1].title} also available)`;
+        }
+        navigateToPageSection(
+          primaryDest.sectionId,
+          primaryDest.categoryTab,
+          primaryDest.highlightId,
+          toastMsg
+        );
+        return;
       }
+
+      executeAiSearch(term);
+    }
+
+    // Execute Gemini AI Search with fallback pipeline
+    async function executeAiSearch(query) {
+      query = (query || '').trim();
+      if (!query) return;
+
+      const dropdown = document.getElementById('search-dropdown');
+      if (dropdown) dropdown.classList.add('hidden');
+
+      const panel = document.getElementById('ai-search-panel');
+      const content = document.getElementById('ai-search-content');
+      if (!panel || !content) return;
+
+      // Show panel & loading state
+      panel.classList.remove('hidden');
+      content.innerHTML = `
+        <div class="py-6 px-2 flex flex-col items-center justify-center text-center space-y-3">
+          <div class="relative flex h-10 w-10">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-10 w-10 bg-gradient-to-tr from-blue-600 to-indigo-600 items-center justify-center text-white shadow-md">
+              <svg class="w-5 h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+            </span>
+          </div>
+          <div>
+            <h5 class="text-sm font-bold text-white">Gemini AI is researching hospital records...</h5>
+            <p class="text-xs text-slate-400 mt-0.5">Searching clinical systems, surgical consent forms, SOP manuals &amp; tariffs</p>
+          </div>
+          <div class="w-full max-w-md bg-slate-800/80 rounded-full h-1.5 overflow-hidden mt-2">
+            <div class="bg-gradient-to-r from-blue-500 via-indigo-500 to-sky-400 h-full w-full animate-pulse"></div>
+          </div>
+        </div>
+      `;
+
+      let aiResult = null;
+
+      // 1. Try backend server endpoint /api/ai-search
+      try {
+        const response = await fetch('/api/ai-search', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ query: query })
+        });
+        if (response.ok) {
+          aiResult = await response.json();
+        }
+      } catch (err) {
+        console.warn('Backend /api/ai-search unreachable, trying client fallback:', err);
+      }
+
+      // 2. Client fallback direct Gemini call if backend unavailable
+      if (!aiResult || aiResult.error) {
+        const key = await getClientGeminiKey();
+        if (key) {
+          try {
+            const models = ['gemini-2.5-flash-lite', 'gemini-flash-latest', 'gemini-3.6-flash'];
+            const systemPrompt = `You are the AI Search Assistant for Adhiparasakthi Hospitals & Research Institute (APH) Intranet Portal.
+Answer concisely in 2-3 sentences. Recommend matching hospital systems (AOSTA HIS, PruWorks HRMS, Medsynapse PACS, MRD Portal, Ticketing Desk), forms (Surgery Consent English/Tamil, Pediatric Consent, ICU Checklist, SBAR Handover, ADR form, Narcotic Indent), tariffs, and emergency extensions (Emergency Reception 2001, Main Gate 2800, ICU 2156, Blood Bank 2131).
+CRITICAL: When asked for IT department intercom or extension numbers, you MUST state the numbers: IT Hardware Support (2226), IT Software Support (2228), IT Manager (2227), and DGM & IT Head (2225), and recommend the Campus Intercom & Extension Directory PDF (http://192.168.101.75:3000/files/Intercom Directory.pdf).
+CRITICAL: All hospital document PDFs are hosted strictly at http://192.168.101.75:3000/files/ - NEVER use mapimshis.com for PDF files.
+Respond strictly in JSON format:
+{
+  "answer": "...",
+  "links": [{"title": "...", "url": "...", "category": "...", "badge": "..."}],
+  "suggestions": ["..."]
+}`;
+            const payload = {
+              contents: [{ parts: [{ text: `${systemPrompt}\n\nUser Question: ${query}` }] }],
+              generationConfig: { responseMimeType: 'application/json', temperature: 0.2 }
+            };
+
+            for (const model of models) {
+              try {
+                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`, {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify(payload)
+                });
+                if (res.ok) {
+                  const data = await res.json();
+                  const raw = data.candidates[0].content.parts[0].text;
+                  aiResult = JSON.parse(raw);
+                  break;
+                }
+              } catch (e) {
+                console.warn(`Model ${model} error:`, e);
+              }
+            }
+          } catch (e) {
+            console.warn('Direct Gemini API call error:', e);
+          }
+        }
+      }
+
+      // 3. Fallback to local fuzzy index
+      if (!aiResult || aiResult.error) {
+        aiResult = localSmartFallback(query);
+      }
+
+      renderAiSearchResults(query, aiResult);
+    }
+
+    function localSmartFallback(query) {
+      const qLower = query.toLowerCase().trim();
+      const tanglishInfo = expandTanglishSearch(qLower);
+      const expandedKeywords = tanglishInfo.tokens;
+      const isBilingual = !!tanglishInfo.matchedLabel;
+
+      const isWordMatch = (term, text) => {
+        if (!term || !text) return false;
+        const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        return new RegExp('\\b' + escaped + '\\b', 'i').test(text);
+      };
+
+      const GENERIC_STOP_WORDS = new Set([
+        'details', 'detail', 'form', 'forms', 'pdf', 'portal', 'hub', 'sheet',
+        'file', 'files', 'list', 'lists', 'document', 'documents', 'view', 'download',
+        'department', 'hospital', 'aph', 'mapims', 'institute', 'online', 'link',
+        'please', 'show', 'give', 'about', 'the', 'is', 'in', 'of', 'and', 'for', 'to', 'with',
+        'what', 'which', 'where', 'when', 'who', 'how', 'why', 'available', 'availability',
+        'are', 'can', 'get', 'need', 'want', 'tell', 'me', 'i', 'a', 'an', 'any', 'all', 'there',
+        'have', 'has', 'do', 'does', 'find', 'some', 'know'
+      ]);
+      const informativeKeywords = expandedKeywords.filter(kw => !GENERIC_STOP_WORDS.has(kw));
+
+      // Domain Intent Classifications
+      const isHrQuery = isWordMatch('hr', qLower) || isWordMatch('hrm', qLower) || isWordMatch('hrms', qLower) ||
+        qLower.includes('human resource') || qLower.includes('pruworks') || qLower.includes('payroll') ||
+        qLower.includes('payslip') || qLower.includes('attendance') || qLower.includes('teaching') ||
+        qLower.includes('non-teaching') || qLower.includes('appraisal') || qLower.includes('promotion') ||
+        qLower.includes('sambalam') || qLower.includes('சம்பளம்') || qLower.includes('velai') ||
+        qLower.includes('வேலை') || qLower.includes('vinnappam') || qLower.includes('விண்ணப்பம்') ||
+        qLower.includes('pathavi') || qLower.includes('varugai') || qLower.includes('pms');
+
+      const isBloodQuery = (
+        qLower.includes('vangi') || qLower.includes('வங்கி') || qLower.includes('radha') ||
+        qLower.includes('ratha') || qLower.includes('raththa') || qLower.includes('ரத்த') || qLower.includes('blood')
+      ) && !isHrQuery;
+
+      const hasDrugTerm = (
+        qLower.includes('marunthu') || qLower.includes('மருந்து') || qLower.includes('pharmacy') || qLower.includes('drug')
+      ) && !isHrQuery;
+
+      const isLeaveQuery = qLower.includes('vidumurai') || qLower.includes('விடுமுறை') || qLower.includes('holiday') || qLower.includes('leave');
+
+      const isTelecomQuery = /\b(intercom|inercom|intercoms|extension|extensions|ext|exts|call|calling|calls|phone|phones|telephone|telephones|telephony|tholaipesi|tholaipasi|inaippu|inaippugal|azhaippu|alaippu|koopidu|pesa|en|yenn|hotline|hotlines|dial|dialing)\b/i.test(qLower) ||
+        /(தொலைபேசி|இணைப்பு|இணைப்புகள்|அழைப்பு|அழைப்புகள்|எண்|எண்கள்|போன்|கால்|கூப்பிடு|பேசு|தொடர்பு|இன்டர்காம்|எக்ஸ்டென்ஷன்)/.test(qLower);
+
+      const isItQuery = (qLower === 'it' || qLower === 'i.t' || qLower === 'it forms' || isWordMatch('it', qLower) ||
+        qLower.includes('kanini') || qLower.includes('கணினி') || qLower.includes('hardware') || qLower.includes('software')) &&
+        !qLower.includes('fit') && !qLower.includes('credit') && !qLower.includes('audit');
+
+      const isStoreQuery = (
+        qLower.includes('indent') || qLower.includes('store') || qLower.includes('purchase') ||
+        qLower.includes('procurement') || qLower.includes('requisition') || qLower.includes('kolmuthal') ||
+        qLower.includes('கொள்முதல்')
+      ) && !isHrQuery && !isBloodQuery && !isItQuery;
+
+      const scoredMatches = searchIndex.map(item => {
+        const titleLower = item.title.toLowerCase();
+        const catLower = item.category.toLowerCase();
+
+        // Strict global filter: Never show PaperZero
+        if (titleLower.includes('paperzero') || (item.url && item.url.includes('paper.mapims'))) {
+          return { item, score: -1 };
+        }
+        let score = 0;
+        let hasHit = false;
+
+        // STRICT DOMAIN ISOLATION & PRUNING:
+        // 1. If searching for HR, strictly reject Pharmacy, Drug Stores, and Blood Bank
+        if (isHrQuery) {
+          if (catLower.includes('pharmacy') || titleLower.includes('pharmacy') || titleLower.includes('drug stores') || titleLower.includes('formulary') || titleLower.includes('blood bank') || catLower.includes('consent')) {
+            return { item, score: -1 };
+          }
+        }
+
+        // 2. If searching for Blood Bank, strictly reject Pharmacy & Drug Store files
+        if (isBloodQuery && !hasDrugTerm) {
+          if (catLower.includes('pharmacy') || titleLower.includes('pharmacy') || titleLower.includes('drug stores')) {
+            return { item, score: -1 };
+          }
+        }
+
+        // 3. If searching for Holidays, reject committee schedules
+        if (isLeaveQuery && !qLower.includes('committee') && !qLower.includes('mock')) {
+          if (titleLower.includes('committee') || titleLower.includes('mock drill')) {
+            return { item, score: -1 };
+          }
+        }
+
+        // 4. Telephony query guardrail: strictly reject medication recall and unrelated documents
+        if (isTelecomQuery && titleLower.includes('recall') && !qLower.includes('recall')) {
+          return { item, score: -1 };
+        }
+
+        // 5. Store / Indent query guardrail: strictly reject non-store IT PC forms, imaging results, and consent
+        if (isStoreQuery) {
+          if (!qLower.includes('pc') && !qLower.includes('hardware') && !qLower.includes('desktop') && !qLower.includes('computer') && !qLower.includes('printer') && !qLower.includes('wifi') && !qLower.includes('it')) {
+            if (catLower.includes('it form') || titleLower.includes('system request') || titleLower.includes('printer request') || titleLower.includes('wifi request')) {
+              return { item, score: -1 };
+            }
+          }
+          if (titleLower.includes('imaging results') || titleLower.includes('cauti') || titleLower.includes('clabsi') || titleLower.includes('ssi') || catLower.includes('consent') || catLower.includes('hr')) {
+            return { item, score: -1 };
+          }
+        }
+
+        if (qLower.length <= 4) {
+          if (isWordMatch(qLower, titleLower)) { score += 90; hasHit = true; }
+          if (isWordMatch(qLower, catLower)) { score += 55; hasHit = true; }
+        } else {
+          if (isWordMatch(qLower, titleLower) || (qLower.length > 5 && titleLower.includes(qLower))) { score += 85; hasHit = true; }
+          if (isWordMatch(qLower, catLower) || (qLower.length > 5 && catLower.includes(qLower))) { score += 35; hasHit = true; }
+        }
+
+        const activeKeywords = informativeKeywords.length > 0 ? informativeKeywords : expandedKeywords;
+        activeKeywords.forEach(kw => {
+          if (kw.length >= 2) {
+            if (kw.length <= 3) {
+              if (isWordMatch(kw, titleLower)) { score += 35; hasHit = true; }
+              if (isWordMatch(kw, catLower)) { score += 20; hasHit = true; }
+            } else {
+              if (titleLower.includes(kw)) { score += 35; hasHit = true; }
+              if (catLower.includes(kw)) { score += 15; hasHit = true; }
+            }
+          }
+        });
+
+        // Intent priority rules
+        // 1. HR Domain intent
+        if (isHrQuery) {
+          if (catLower.includes('hr') || titleLower.includes('hr forms hub') || titleLower.includes('human resources manual') || titleLower.includes('pruworks') || titleLower.includes('hrms') || titleLower.includes('teaching') || titleLower.includes('non-teaching') || titleLower.includes('promotion') || titleLower.includes('holiday')) {
+            score += 160;
+            hasHit = true;
+          }
+        }
+
+        // 2. Consent intent
+        if (qLower.includes('aruvai') || qLower.includes('அறுவை') || qLower.includes('oputhal') || qLower.includes('opputhal') || qLower.includes('ஒப்புதல்')) {
+          if (titleLower.includes('tamil') || titleLower.includes('தமிழ்')) { score += 60; hasHit = true; }
+          if (titleLower.includes('informed consent form for surgery')) { score += 45; hasHit = true; }
+        }
+
+        // 3. Blood Bank intent
+        if (isBloodQuery) {
+          if (titleLower.includes('blood bank stock')) { score += 95; hasHit = true; }
+          if (titleLower.includes('blood component transfusion')) { score += 65; hasHit = true; }
+          if (titleLower.includes('transfusion technique')) { score += 50; hasHit = true; }
+        }
+
+        // 4. Leave & Holiday intent
+        if (isLeaveQuery) {
+          if (titleLower.includes('holiday')) { score += 95; hasHit = true; }
+          if (titleLower.includes('hrms')) { score += 45; hasHit = true; }
+        }
+
+        // 5. Tariff intent
+        if (qLower.includes('kattanam') || qLower.includes('கட்டணம்') || qLower.includes('vilai')) {
+          if (catLower.includes('tariff') || titleLower.includes('tariff')) { score += 60; hasHit = true; }
+        }
+
+        // 6. IT / Computer Department intent
+        if (isItQuery) {
+          if (qLower.includes('hardware') || qLower.includes('system request') || qLower.includes('pc') || qLower.includes('desktop')) {
+            if (titleLower.includes('system request')) { score += 320; hasHit = true; }
+          }
+          if (catLower.includes('it form') || catLower === 'it') { score += 120; hasHit = true; }
+          if (titleLower.includes('system request') || titleLower.includes('printer request') || titleLower.includes('wifi request') || titleLower.includes('mail request') || titleLower.includes('his user') || titleLower.includes('item creation') || titleLower.includes('cug request')) { score += 90; hasHit = true; }
+          if (item.url && item.url.includes('itforms')) { score += 105; hasHit = true; }
+        }
+
+        // 7. Pharmacy intent
+        if (hasDrugTerm) {
+          if (titleLower.includes('drug stores stock') || catLower.includes('pharmacy')) { score += 70; hasHit = true; }
+        }
+
+        // 8. Intercom & Extension Telephony intent
+        if (isTelecomQuery) {
+          if (isItQuery) {
+            if (titleLower.includes('it department intercom') || titleLower.includes('it & his help desk')) { score += 280; hasHit = true; }
+            else if (titleLower.includes('intercom & extension directory pdf')) { score += 260; hasHit = true; }
+            else if (titleLower.includes('intercom & extension') || (item.url && item.url.includes('intercom.html'))) { score += 200; hasHit = true; }
+          } else {
+            if (titleLower.includes('intercom & extension directory pdf')) { score += 160; hasHit = true; }
+            else if (titleLower.includes('intercom & extension') || (item.url && item.url.includes('intercom.html'))) { score += 150; hasHit = true; }
+            else if (titleLower.includes('intercom extensions')) { score += 140; hasHit = true; }
+            else if (titleLower.includes('email & staff directory')) { score += 80; hasHit = true; }
+          }
+        }
+
+        // 9. Store / Indent / Procurement intent
+        if (isStoreQuery) {
+          if (titleLower.includes('purchase process') || (item.url && item.url.includes('instruments and equipment'))) {
+            score += (qLower.includes('indent') || qLower.includes('purchase')) ? 360 : 280;
+            hasHit = true;
+          } else if (titleLower.includes('inventory stock details')) {
+            score += 240;
+            hasHit = true;
+          } else if (titleLower.includes('drug stores stock')) {
+            score += 230;
+            hasHit = true;
+          } else if (titleLower.includes('stock out medicine purchase')) {
+            score += 200;
+            hasHit = true;
+          } else if (titleLower.includes('narcotic drugs form') && (qLower.includes('drug') || qLower.includes('narcotic'))) {
+            score += 190;
+            hasHit = true;
+          }
+        }
+
+        return { item, score: hasHit ? score : -1 };
+      })
+      .filter(entry => entry.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 6)
+      .map(entry => entry.item);
+
+      const CLIENT_DEPT_INTERCOM = {
+        'billing': { dept: 'Billing', exts: 'Billing Manager: 2610, IP Billing: 2611, 2612, 2613' },
+        'bill': { dept: 'Billing', exts: 'Billing Manager: 2610, IP Billing: 2611, 2612, 2613' },
+        'கட்டணம்': { dept: 'Billing', exts: 'Billing Manager: 2610, IP Billing: 2611, 2612, 2613' },
+        'kattanam': { dept: 'Billing', exts: 'Billing Manager: 2610, IP Billing: 2611, 2612, 2613' },
+        'பில்லிங்': { dept: 'Billing', exts: 'Billing Manager: 2610, IP Billing: 2611, 2612, 2613' },
+
+        'hr': { dept: 'HR', exts: 'HR Senior Manager: 2173, HR Jr Executive: 2169, HR Assistant: 2168' },
+        'human resource': { dept: 'HR', exts: 'HR Senior Manager: 2173, HR Jr Executive: 2169, HR Assistant: 2168' },
+        'மனிதவளம்': { dept: 'HR', exts: 'HR Senior Manager: 2173, HR Jr Executive: 2169, HR Assistant: 2168' },
+        'manithavalam': { dept: 'HR', exts: 'HR Senior Manager: 2173, HR Jr Executive: 2169, HR Assistant: 2168' },
+        'சம்பளம்': { dept: 'HR', exts: 'HR Senior Manager: 2173, HR Jr Executive: 2169, HR Assistant: 2168' },
+        'sambalam': { dept: 'HR', exts: 'HR Senior Manager: 2173, HR Jr Executive: 2169, HR Assistant: 2168' },
+
+        'it': { dept: 'IT', exts: 'IT Hardware Support: 2226, IT Software Support: 2228, IT Manager: 2227, DGM & IT Head: 2225' },
+        'kanini': { dept: 'IT', exts: 'IT Hardware Support: 2226, IT Software Support: 2228, IT Manager: 2227, DGM & IT Head: 2225' },
+        'கணினி': { dept: 'IT', exts: 'IT Hardware Support: 2226, IT Software Support: 2228, IT Manager: 2227, DGM & IT Head: 2225' },
+        'ஐடி': { dept: 'IT', exts: 'IT Hardware Support: 2226, IT Software Support: 2228, IT Manager: 2227, DGM & IT Head: 2225' },
+
+        'ortho': { dept: 'Ortho', exts: 'Ortho HOD: 2340 / 2040, Ortho Male Ward: 2342, Ortho Female Ward: 2343' },
+        'எலும்பு': { dept: 'Ortho', exts: 'Ortho HOD: 2340 / 2040, Ortho Male Ward: 2342, Ortho Female Ward: 2343' },
+        'elumbu': { dept: 'Ortho', exts: 'Ortho HOD: 2340 / 2040, Ortho Male Ward: 2342, Ortho Female Ward: 2343' },
+
+        'dialysis': { dept: 'Dialysis', exts: 'Dialysis Billing: 2528, Dialysis Incharge: 2526, Nephro HOD: 2520' },
+        'டயாலிசிஸ்': { dept: 'Dialysis', exts: 'Dialysis Billing: 2528, Dialysis Incharge: 2526, Nephro HOD: 2520' },
+        'சிறுநீரகம்': { dept: 'Dialysis', exts: 'Dialysis Billing: 2528, Dialysis Incharge: 2526, Nephro HOD: 2520' },
+
+        'casualty': { dept: 'Emergency Medicine', exts: 'Casualty Reception: 2001, Casualty CMO: 2002, Casualty Nursing: 2003' },
+        'emergency': { dept: 'Emergency Medicine', exts: 'Emergency Reception: 2001, Emergency Priority: 2002, OP Room: 2004' },
+        'அவசரம்': { dept: 'Emergency Medicine', exts: 'Casualty Reception: 2001, Casualty CMO: 2002, Casualty Nursing: 2003' },
+        'avasaram': { dept: 'Emergency Medicine', exts: 'Casualty Reception: 2001, Casualty CMO: 2002, Casualty Nursing: 2003' },
+
+        'blood': { dept: 'Blood Bank', exts: 'Blood Bank 24/7: 2131, Blood Bank Donor Collection: 2132' },
+        'ரத்த வங்கி': { dept: 'Blood Bank', exts: 'Blood Bank 24/7: 2131, Blood Bank Donor Collection: 2132' },
+        'rattha vangi': { dept: 'Blood Bank', exts: 'Blood Bank 24/7: 2131, Blood Bank Donor Collection: 2132' },
+        'ரத்தம்': { dept: 'Blood Bank', exts: 'Blood Bank 24/7: 2131, Blood Bank Donor Collection: 2132' },
+
+        'mrd': { dept: 'MRD', exts: 'MRO: 2601, MRD 1: 2602, MRD 2: 2603, MRD 3: 2604' },
+        'diet': { dept: 'Dietetics', exts: 'Dietician: 2018, Dietetics Incharge: 2197' },
+        'canteen': { dept: 'Dietetics', exts: 'Dietician: 2018, Dietetics Incharge: 2197' },
+        'உணவு': { dept: 'Dietetics', exts: 'Dietician: 2018, Dietetics Incharge: 2197' },
+        'unavu': { dept: 'Dietetics', exts: 'Dietician: 2018, Dietetics Incharge: 2197' },
+
+        'radiology': { dept: 'Radiology', exts: 'Radiology Reception: 2700, MRI: 2690, CT: 2689, USG: 2691' },
+        'security': { dept: 'Security', exts: 'Main Gate: 2800, A Zone Security: 2767, B Zone: 2768, C Zone: 2769' },
+        'biomedical': { dept: 'Biomedical', exts: 'Biomedical HOD: 2535, Biomedical Engg: 2536, 2537' },
+        'quality': { dept: 'Quality', exts: 'Quality Manager: 2380, Quality Team: 2381, 2382' },
+        'icu': { dept: 'ICU', exts: 'ICU HOD: 2156, TICU 1: 2163, ICU Security: 2766' },
+        'தீவிர': { dept: 'ICU', exts: 'ICU HOD: 2156, TICU 1: 2163, ICU Security: 2766' },
+        'theevira': { dept: 'ICU', exts: 'ICU HOD: 2156, TICU 1: 2163, ICU Security: 2766' },
+
+        'pharmacy': { dept: 'Pharmacy', exts: 'Pharmacy: 2656, OP Pharmacy: 2635, IP Pharmacy: 2135, 2136' },
+        'மருந்தகம்': { dept: 'Pharmacy', exts: 'Pharmacy: 2656, OP Pharmacy: 2635, IP Pharmacy: 2135, 2136' },
+        'மருந்து': { dept: 'Pharmacy', exts: 'Pharmacy: 2656, OP Pharmacy: 2635, IP Pharmacy: 2135, 2136' },
+
+        'ent': { dept: 'ENT', exts: 'ENT HOD: 2060, ENT Reception: 2061, ENT Ward: 2286' },
+        'physio': { dept: 'Physiotherapy', exts: 'Physiotherapy HOD: 2637, Physiotherapy: 2636' },
+        'eye': { dept: 'Ophthalmology', exts: 'Ophthalmology Reception: 2050, Eye Ward: 2051' },
+        'கண்': { dept: 'Ophthalmology', exts: 'Ophthalmology Reception: 2050, Eye Ward: 2051' },
+        'kan': { dept: 'Ophthalmology', exts: 'Ophthalmology Reception: 2050, Eye Ward: 2051' },
+        'தோல்': { dept: 'Dermatology', exts: 'Dermatology OP: 2070' },
+        'thol': { dept: 'Dermatology', exts: 'Dermatology OP: 2070' }
+      };
+
+      let matchedClientIntercom = null;
+      for (const [key, info] of Object.entries(CLIENT_DEPT_INTERCOM)) {
+        if (isWordMatch(key, qLower) || qLower.includes(key)) {
+          matchedClientIntercom = info;
+          break;
+        }
+      }
+
+      let answerText = '';
+      if (matchedClientIntercom && isTelecomQuery) {
+        answerText = isBilingual
+          ? `**${matchedClientIntercom.dept}** துறையின் அதிகாரப்பூர்வ தொலைபேசி / இன்டர்காம் இணைப்பு எண்கள்: **${matchedClientIntercom.exts}**. முழுமையான துறை தொடர்பு பட்டியலை கீழே உள்ள PDF மூலம் பார்க்கலாம்.`
+          : `The intercom extension numbers for **${matchedClientIntercom.dept}** are: **${matchedClientIntercom.exts}**. You can download the filtered department directory PDF below.`;
+      } else if (isTelecomQuery) {
+        answerText = isBilingual
+          ? `மருத்துவமனை அவசர உதவி மற்றும் முக்கிய துறை தொலைபேசி எண்கள்: அவசர சிகிச்சை (Casualty): 2001 / 2002, ரத்த வங்கி (24/7): 2131, தீவிர சிகிச்சை (ICU): 2156, மெயின் கேட்: 2800, கணினி உதவி மையம் (IT): 2226 / 2228. அனைத்து துறை எண்களையும் அதிகாரப்பூர்வ PDF அல்லது தேடல் பட்டியலில் பார்க்கலாம்.`
+          : `Find hospital intercom extension numbers in the official Campus Intercom & Extension Directory PDF or searchable online list.`;
+      } else if (isHrQuery) {
+        answerText = isBilingual
+          ? `'${query}' (மனிதவளத் துறை / HR) தொடர்பான அதிகாரப்பூர்வ படிவங்கள் மற்றும் போர்ட்டல்கள் கண்டறியப்பட்டுள்ளன. முதன்மை தளம்: '${scoredMatches[0]?.title || 'HR Hub'}'.`
+          : `Found verified hospital Human Resources (HR) portals and official documents matching "${query}". Primary resource is "${scoredMatches[0]?.title || 'APH HR Forms Hub'}".`;
+      } else if (isStoreQuery) {
+        answerText = isBilingual
+          ? `மருத்துவமனை ஸ்டோர்ஸ் இந்தென்ட் (Store Indent) மற்றும் கொள்முதல் நடைமுறைகளுக்கு **Purchase Process** வழிகாட்டுதல் (Instruments & Equipment APR 2025) பார்க்கவும். இருப்பு நிலவரத்திற்கு **General Store Inventory Stock Details** மற்றும் **Drug Stores Stock Details** ஆவணங்களைப் பார்க்கவும்.`
+          : `For hospital store indents and equipment procurement, departments use the **Purchase Process** workflow (Instruments & Equipment APR 2025). For active inventory and pharmaceutical stocks, refer to **General Store Inventory Stock Details** and **Drug Stores Stock Details**.`;
+      } else if (isBilingual) {
+        answerText = `'${query}' (தமிழ் / Tanglish: "${tanglishInfo.matchedLabel}") தொடர்பான மருத்துவ ஆவணங்கள் கண்டறியப்பட்டுள்ளன. கீழே உள்ள இணைப்புகளை கிளிக் செய்து ஆவணங்களைத் திறக்கலாம்.`;
+      } else {
+        answerText = `Direct search results matching "${query}" from the hospital portal directory. Click any resource below to open immediately.`;
+      }
+
+      if (matchedClientIntercom && isStoreQuery) {
+        answerText += `\n\n📞 **${matchedClientIntercom.dept} Intercom Extensions**: ${matchedClientIntercom.exts}.`;
+      }
+
+      let finalLinks = scoredMatches.map(m => ({
+        title: m.title,
+        url: m.url,
+        category: m.category,
+        badge: m.category.includes('Form') ? 'Form' : (m.category.includes('PDF') || m.url.endsWith('.pdf') ? 'PDF' : 'Portal')
+      }));
+
+      if (matchedClientIntercom && isTelecomQuery) {
+        const deptLink = {
+          title: `${matchedClientIntercom.dept} Department Intercom Directory`,
+          url: `./intercom.html?dept=${encodeURIComponent(matchedClientIntercom.dept)}`,
+          category: 'Staff Directory',
+          badge: `${matchedClientIntercom.dept} Directory`
+        };
+        finalLinks.unshift(deptLink);
+      } else if (isTelecomQuery) {
+        finalLinks = [
+          {
+            title: 'Campus Intercom & Extension Directory (Searchable List)',
+            url: './intercom.html',
+            category: 'Staff Directory',
+            badge: 'Directory'
+          },
+          {
+            title: 'Official Campus Intercom Directory PDF (Full Hospital)',
+            url: 'http://192.168.101.75:3000/files/Intercom%20Directory.pdf',
+            category: 'Staff Directory',
+            badge: 'Full PDF'
+          }
+        ];
+      }
+
+      let suggestions = [];
+      if (isStoreQuery) {
+        suggestions = ['Purchase Process PDF', 'Inventory Stock Details 2024', 'Drug Stores Stock Details', 'Purchase Stores Ext: 2701'];
+      } else if (matchedClientIntercom && isTelecomQuery) {
+        suggestions = [`${matchedClientIntercom.dept} Directory PDF`, `${matchedClientIntercom.dept} Extensions`, 'Campus Directory PDF'];
+      } else if (isTelecomQuery) {
+        suggestions = ['IT Intercom: 2226 / 2228', 'Emergency Casualty: 2001 / 2800', 'Blood Bank Ext: 2131'];
+      } else if (isHrQuery) {
+        suggestions = ['PruWorks HRMS Portal', 'Teaching & Non-Teaching Forms', 'Human Resources Manual 2025'];
+      } else {
+        const cleanSug = query.replace(/\b(details|detail|forms|form|pdf|portal|available|what|is|for)\b/gi, '').trim().replace(/\s+/g, ' ');
+        if (cleanSug) {
+          suggestions = [`${cleanSug.charAt(0).toUpperCase() + cleanSug.slice(1)} Form`, 'Hospital Forms Vault', 'NABH SOPs'];
+        } else {
+          suggestions = ['Informed Consent Form - Tamil', 'Blood Bank Stock Details', 'List of Holidays 2026', 'Campus Intercom & Extension Directory'];
+        }
+      }
+
+      return {
+        answer: answerText,
+        links: finalLinks,
+        suggestions: suggestions
+      };
+    }
+
+    function formatMarkdownText(text) {
+      if (!text) return '';
+      let safe = escapeHtml(text);
+      safe = safe.replace(/\*\*(.*?)\*\*/g, '<strong class="text-blue-300 font-bold">$1</strong>');
+      safe = safe.replace(/^[*-]\s+(.+)$/gm, '<li class="ml-4 list-disc text-slate-300">$1</li>');
+      safe = safe.replace(/\n/g, '<br/>');
+      return safe;
+    }
+
+    function renderAiSearchResults(query, result) {
+      const content = document.getElementById('ai-search-content');
+      if (!content) return;
+
+      const answer = result.answer || 'No AI summary available.';
+      const links = Array.isArray(result.links) ? result.links : [];
+      const suggestions = Array.isArray(result.suggestions) ? result.suggestions : [];
+
+      // Check if user's question points to an on-page section
+      const sectionMatches = findMatchingDestinations(query);
+      let jumpBannersHtml = '';
+      if (sectionMatches.length > 0) {
+        jumpBannersHtml = `
+          <div class="space-y-2">
+            ${sectionMatches.map(dest => `
+              <div class="rounded-2xl bg-gradient-to-r from-blue-950/90 via-slate-900 to-indigo-950/90 border border-blue-400/50 p-3 sm:p-4 flex items-center justify-between gap-3 shadow-lg">
+                <div class="flex items-center gap-3 min-w-0">
+                  <span class="w-8 h-8 rounded-xl bg-blue-500/20 text-blue-300 border border-blue-400/30 flex items-center justify-center shrink-0">
+                    <svg class="w-4 h-4 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                    </svg>
+                  </span>
+                  <div class="min-w-0">
+                    <div class="text-[10px] font-extrabold uppercase tracking-wider text-blue-300 flex items-center gap-1">
+                      <span>📍 Available Directly on this Portal Page</span>
+                    </div>
+                    <div class="text-xs sm:text-sm font-black text-white truncate">${escapeHtml(dest.title)}</div>
+                    <div class="text-[11px] text-slate-300 truncate">${escapeHtml(dest.description)}</div>
+                  </div>
+                </div>
+                <button type="button" onclick="navigateToPageSection('${dest.sectionId}', '${dest.categoryTab || ''}', '${dest.highlightId || ''}', '📍 Jumped to ${escapeHtml(dest.title)}!')" 
+                        class="px-3.5 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 active:scale-95 text-white font-bold text-xs rounded-xl transition-all shrink-0 flex items-center gap-1.5 shadow-md cursor-pointer">
+                  <span>Jump &darr;</span>
+                </button>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }
+
+      let html = `
+        ${jumpBannersHtml}
+        <!-- AI Direct Answer Card -->
+        <div class="rounded-2xl bg-gradient-to-br from-slate-950 via-slate-900 to-[#0e1b38] border border-blue-500/40 p-4 sm:p-5 shadow-lg relative overflow-hidden">
+          <div class="flex items-start gap-3">
+            <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-500 to-indigo-600 flex items-center justify-center shrink-0 text-white shadow-sm mt-0.5">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+              </svg>
+            </div>
+            <div class="min-w-0 flex-1">
+              <div class="text-[11px] font-extrabold uppercase tracking-wider text-blue-400 mb-1 flex items-center gap-1.5">
+                <span>AI Guidance for "${escapeHtml(query)}"</span>
+              </div>
+              <div class="text-xs sm:text-sm text-slate-200 leading-relaxed font-normal">
+                ${formatMarkdownText(answer)}
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Matching Recommended Links
+      if (links.length > 0) {
+        html += `
+          <div>
+            <div class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400 mb-2 flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+              <span>Recommended Hospital Portals &amp; Documents</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+        `;
+
+        links.forEach(link => {
+          let targetUrl = (link.url || '#').trim();
+          // Sanitize any hallucinated domain: Hospital files are strictly on 192.168.101.75:3000/files/
+          if (targetUrl.includes('mapimshis.com') && (targetUrl.includes('files/') || targetUrl.endsWith('.pdf'))) {
+            const fname = targetUrl.split('/').pop();
+            targetUrl = `http://192.168.101.75:3000/files/${fname}`;
+          }
+          const badgeText = link.badge || link.category || 'Portal';
+          const isPdf = targetUrl && (targetUrl.endsWith('.pdf') || (link.title && link.title.includes('PDF')));
+          const onPage = getOnPageAction(targetUrl, link.title);
+
+          if (onPage.isSection) {
+            html += `
+              <a href="#forms" onclick="${onPage.onclick}" 
+                 class="group p-3 rounded-xl bg-slate-800/80 hover:bg-purple-900/40 border border-slate-700/80 hover:border-purple-500/60 transition-all duration-150 flex items-center justify-between gap-3 shadow-xs cursor-pointer">
+                <div class="min-w-0 flex items-center gap-2.5">
+                  <span class="w-7 h-7 rounded-lg bg-purple-500/20 text-purple-300 border border-purple-500/30 flex items-center justify-center shrink-0">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                    </svg>
+                  </span>
+                  <div class="min-w-0">
+                    <div class="text-xs sm:text-sm font-bold text-white group-hover:text-purple-300 truncate">${escapeHtml(link.title)}</div>
+                    <span class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">${escapeHtml(badgeText)}</span>
+                  </div>
+                </div>
+                <span class="text-xs font-bold text-purple-400 group-hover:text-purple-200 shrink-0 flex items-center gap-0.5">
+                  <span>View &darr;</span>
+                </span>
+              </a>
+            `;
+          } else {
+            html += `
+              <a href="${escapeHtml(targetUrl)}" target="_blank" rel="noopener noreferrer" 
+                 class="group p-3 rounded-xl bg-slate-800/80 hover:bg-blue-900/40 border border-slate-700/80 hover:border-blue-500/60 transition-all duration-150 flex items-center justify-between gap-3 shadow-xs">
+                <div class="min-w-0 flex items-center gap-2.5">
+                  <span class="w-7 h-7 rounded-lg ${isPdf ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30' : 'bg-blue-500/20 text-blue-300 border border-blue-500/30'} flex items-center justify-center shrink-0">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${isPdf ? 'M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z' : 'M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14'}"/>
+                    </svg>
+                  </span>
+                  <div class="min-w-0">
+                    <div class="text-xs sm:text-sm font-bold text-white group-hover:text-blue-300 truncate">${escapeHtml(link.title)}</div>
+                    <span class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">${escapeHtml(badgeText)}</span>
+                  </div>
+                </div>
+                <span class="text-xs font-bold text-blue-400 group-hover:text-blue-200 shrink-0 flex items-center gap-0.5">
+                  <span>Open</span>
+                  <span>&rarr;</span>
+                </span>
+              </a>
+            `;
+          }
+        });
+
+        html += `
+            </div>
+          </div>
+        `;
+      }
+
+      // Suggested Follow-up Queries
+      if (suggestions.length > 0) {
+        html += `
+          <div class="pt-2 border-t border-slate-800/80">
+            <div class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400 mb-2 flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <span>Related Questions &amp; Queries</span>
+            </div>
+            <div class="flex items-center flex-wrap gap-2">
+        `;
+        suggestions.forEach(s => {
+          html += `
+            <button type="button" onclick="triggerAiQuickPrompt('${escapeHtml(s)}')" 
+                    class="px-3 py-1 rounded-full bg-slate-800 hover:bg-blue-600/30 hover:text-blue-200 text-slate-300 border border-slate-700/80 hover:border-blue-500/40 text-xs font-medium transition-colors cursor-pointer flex items-center gap-1.5">
+              <span>✨</span>
+              <span>${escapeHtml(s)}</span>
+            </button>
+          `;
+        });
+        html += `
+            </div>
+          </div>
+        `;
+      }
+
+      content.innerHTML = html;
     }
 
     // Quick trending chip helper
@@ -3732,6 +5375,33 @@
       });
     }
     window.addEventListener('scroll', handleScrollSpy, { passive: true });
+
+    // Handle incoming navigation with ?tab=hr or #forms or stored active tab
+    function handleInitialTabNavigation() {
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const tabParam = urlParams.get('tab') || sessionStorage.getItem('active_form_tab');
+        const hash = window.location.hash;
+        
+        if (tabParam && ['consent', 'clinical', 'hr', 'it'].includes(tabParam.toLowerCase())) {
+          const cat = tabParam.toLowerCase();
+          sessionStorage.removeItem('active_form_tab');
+          setTimeout(() => {
+            navigateToPageSection('forms', cat, `cat-card-${cat}`, `📍 Opened ${cat.toUpperCase()} Forms in Forms Vault`);
+          }, 200);
+        } else if (hash === '#forms') {
+          setTimeout(() => {
+            navigateToPageSection('forms', 'hr', 'cat-card-hr', '📍 Switched to HR Forms in Forms Vault');
+          }, 200);
+        }
+      } catch (err) {
+        console.warn('Initial tab navigation error:', err);
+      }
+    }
+    window.addEventListener('DOMContentLoaded', handleInitialTabNavigation);
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      handleInitialTabNavigation();
+    }
   </script>
 
 </body>

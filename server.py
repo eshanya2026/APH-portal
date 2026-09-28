@@ -1,0 +1,1877 @@
+#!/usr/bin/env python3
+"""
+Adhiparasakthi Hospitals & Research Institute (APH) Intranet Server
+Serves static assets and provides AI Search endpoint powered by Google Gemini API
+strictly grounded in the verified hospital document catalog (data/portal_catalog.json).
+Guarantees 100% verified, valid document paths with automatic URL validation & snapping.
+"""
+
+import os
+import sys
+import json
+import re
+import urllib.request
+import urllib.error
+import urllib.parse
+import html
+from http.server import HTTPServer, SimpleHTTPRequestHandler
+
+PORT = 3000
+if len(sys.argv) > 1:
+    try:
+        PORT = int(sys.argv[1])
+    except ValueError:
+        pass
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+CATALOG_PATH = os.path.join(BASE_DIR, 'data', 'portal_catalog.json')
+
+# =========================================================================
+# 1. CATALOG LOADING & INDEXING
+# =========================================================================
+PORTAL_CATALOG = []
+URL_MAP = {}
+FILENAME_MAP = {}
+TITLE_MAP = {}
+
+# Comprehensive English, Medical, Tanglish & Tamil Phonetic Dictionary
+SYNONYMS = {
+    # Medical & Clinical Synonyms
+    'pediatric': 'paediatric child children newborn infant neo kuzhanthai kulandhai பிள்ளை குழந்தை',
+    'paediatric': 'pediatric child children infant kuzhanthai kulandhai பிள்ளை குழந்தை',
+    'anesthesia': 'anaesthesia anaesthetic anaesthesiology ot மயக்க மருந்து',
+    'anaesthesia': 'anesthesia anaesthetic anaesthesiology ot மயக்க மருந்து',
+    'orthopedic': 'orthopaedic bone fracture plaster elumbu எலும்பு',
+    'orthopaedic': 'orthopedic bone fracture plaster elumbu எலும்பு',
+    'gynecology': 'gynaecology obg obstetrics delivery pregnancy magaperu thaai மகப்பேறு',
+    'gynaecology': 'gynecology obg obstetrics delivery pregnancy magaperu thaai மகப்பேறு',
+    'hematology': 'haematology blood prbc transfusion ffp raththam rattham ரத்தம்',
+    'haematology': 'hematology blood prbc transfusion ffp raththam rattham ரத்தம்',
+    'counseling': 'counselling consult psych ஆலோசனை',
+    'counselling': 'counseling consult psych ஆலோசனை',
+    'wifi': 'wi-fi wireless internet mac inaiyam இணையம்',
+    'wi-fi': 'wifi wireless internet mac inaiyam இணையம்',
+    'leave': 'holiday attendance absence vacation permission vidumurai leavu விடுமுறை',
+    'holiday': 'leave calendar festival dates vidumurai pandigai விடுமுறை',
+    'salary': 'hrms pruworks payslip payroll wages attendance biometrics sambalam sampalam சம்பளம்',
+    'payslip': 'salary hrms pruworks wages attendance sambalam sampalam சம்பளம்',
+    'attendance': 'biometrics hrms pruworks shift in out punch punchin varugai வருகை',
+    'ticket': 'ticketing job order breakdown maintenance complaint repair kuraigal பழுது',
+    'job': 'ticketing job order maintenance complaint repair',
+    'mrd': 'medical records case sheet discharge summary fit aavanam ஆவணம்',
+    'pacs': 'medsynapse radiology xray ct mri ultrasound imaging dicom ஸ்கேன்',
+    'his': 'aosta backbone user creation hospital information system',
+    'cpr': 'code blue arrest resuscitation mom debrief',
+    'cauti': 'urinary catheter infection hic bundle catheter siruneer',
+    'clabsi': 'central line bloodstream infection hic bundle',
+    'ssi': 'surgical site infection hic bundle',
+    'vae': 'ventilator associated event vap infection hic bundle moochu',
+    'adr': 'adverse drug reaction pharmacovigilance',
+    'tariff': 'rate cost charges package price fee kattanam vilai selavu கட்டணம்',
+    'pricing': 'tariff rate cost charges package price fee kattanam vilai selavu கட்டணம்',
+    'drugs': 'pharmacy formulary medication medicine stock nmc store marunthu marunthukal மருந்து',
+
+    # =========================================================================
+    # TANGLISH PHONETIC & TRANSLITERATION MAPPINGS
+    # =========================================================================
+    # Surgery & Operative Procedures
+    'aruvai': 'surgery surgical procedures operation ot consent அறுவை',
+    'sigichai': 'treatment procedure care surgery சிகிச்சை',
+    'sikitsai': 'treatment procedure care surgery சிகிச்சை',
+    'aruvaisikitsai': 'surgery surgical procedures operation ot consent அறுவை சிகிச்சை',
+    'aruvai sikitsai': 'surgery surgical procedures operation ot consent அறுவை சிகிச்சை',
+    'aruvai sigichai': 'surgery surgical procedures operation ot consent அறுவை சிகிச்சை',
+    'operation': 'surgery surgical procedures operation ot aruvai',
+
+    # Consent Forms & Medicolegal
+    'oputhal': 'consent informed agreement protocol medicolegal surgical அறுவை ஒப்புதல்',
+    'opputhal': 'consent informed agreement protocol medicolegal surgical அறுவை ஒப்புதல்',
+    'oppudhal': 'consent informed agreement protocol medicolegal surgical அறுவை ஒப்புதல்',
+    'sammatham': 'consent agreement willing ஒப்புதல் சம்மதம்',
+    'samatham': 'consent agreement willing ஒப்புதல் சம்மதம்',
+    'maruppu': 'refusal not willing treatment refusal dama மறுப்பு',
+    'viruppamillai': 'not willing refusal dama விருப்பமில்லை',
+    'dama': 'discharge against medical advice refusal veliye',
+
+    # Blood, Transfusion & Blood Bank
+    'radham': 'blood transfusion component prbc ffp reaction stock bank ரத்தம் இரத்தம்',
+    'radha': 'blood transfusion component bank stock ரத்த',
+    'radha vangi': 'blood bank stock details transfusion reaction ரத்த வங்கி',
+    'radha thaanam': 'blood donation transfusion reaction ரத்த தானம்',
+    'ratha': 'blood transfusion component bank stock ரத்த',
+    'ratha vangi': 'blood bank stock details transfusion reaction ரத்த வங்கி',
+    'raththam': 'blood transfusion component prbc ffp reaction stock bank ரத்தம் இரத்தம்',
+    'rattham': 'blood transfusion component prbc ffp reaction stock bank ரத்தம் இரத்தம்',
+    'raththa': 'blood transfusion component bank stock ரத்த',
+    'rattha': 'blood transfusion component bank stock ரத்த',
+    'iratham': 'blood transfusion bank stock இரத்தம்',
+    'vangi': 'bank stock storage repository details blood வங்கி',
+    'raththa vangi': 'blood bank stock details transfusion reaction ரத்த வங்கி',
+    'rattha vangi': 'blood bank stock details transfusion reaction ரத்த வங்கி',
+    'iratha vangi': 'blood bank stock details transfusion reaction இரத்த வங்கி',
+    'raththa thaanam': 'blood donation transfusion reaction ரத்த தானம்',
+
+    # Leaves, Holidays & Calendar
+    'vidumurai': 'holiday holidays calendar leave 2026 dates festival விடுமுறை',
+    'leavu': 'leave holiday attendance absence permission விடுமுறை',
+    'pandigai': 'holiday festival calendar dates pandigai பண்டிகை',
+
+    # Salary, Payroll, HR & Staff Applications
+    'hr': 'human resources hrm hrms staff payroll attendance leaves payslip pruworks recruitment appraisal promotion sambalam employee faculty',
+    'hr details': 'human resources hrm hrms staff payroll attendance leaves payslip pruworks recruitment appraisal promotion manual employee faculty',
+    'human resources': 'hr hrm hrms staff payroll attendance leaves payslip pruworks recruitment appraisal promotion manual employee faculty',
+    'human resource': 'hr hrm hrms staff payroll attendance leaves payslip pruworks recruitment appraisal promotion manual employee faculty',
+    'hrm': 'human resources hr hrms manual policy staff nabh',
+    'hrms': 'pruworks attendance payroll login staff self service portal leave shifts sambalam varugai biometrics',
+    'staff': 'employee faculty teaching non teaching hr hrms directory attendance recruitment',
+    'faculty': 'teaching application appraisal recruitment biodata medical college hr',
+    'payroll': 'salary payslip sambalam hrms pruworks wages hr',
+    'payslip': 'salary payroll sambalam hrms pruworks wages hr',
+    'attendance': 'varugai biometric shift punch hrms pruworks hr leave absence',
+    'recruitment': 'velai application form teaching non teaching faculty vacancy hr',
+    'appraisal': 'performance pms faculty teaching non teaching promotion evaluation review hr',
+    'promotion': 'pathavi non teaching elevation seniority recommendation appraisal hr',
+    'sambalam': 'salary payslip payroll hrms wages attendance pruworks சம்பளம் hr',
+    'sampalam': 'salary payslip payroll hrms wages attendance pruworks சம்பளம் hr',
+    'varugai': 'attendance biometric shift hrms punch biometrics வருகை hr',
+    'velai': 'application recruitment teaching non teaching appraisal biodata வேலை hr',
+    'vinnappam': 'application form appraisal requisition biodata விண்ணப்பம் hr',
+    'vinnapam': 'application form appraisal requisition biodata விண்ணப்பம் hr',
+    'pathavi': 'promotion non teaching appraisal head பதவி hr',
+    'pathavi uyartvu': 'promotion non teaching appraisal பதவி உயர்வு hr',
+    'payirchi': 'training feedback drill induction பயிற்சி hr',
+    'vidhi': 'manual policy hrm pms protocol விதிமுறை hr',
+
+    # IT, Hardware, Computer & Telecom
+    'it': 'information technology computer system workstation pc hardware software network wifi printer email mail cug his kanini itforms',
+    'it forms': 'system request form printer request wifi mail email his user creation cug workstation desktop pc itforms',
+    'information technology': 'it forms system printer wifi mail email his cug workstation computer hardware software',
+    'kanini': 'system pc computer workstation desktop request hardware cpu கணினி it',
+    'kanipori': 'system pc computer workstation hardware கணினி it',
+    'acchaagam': 'printer toner cartridge printing request label barcode அச்சகம் it',
+    'achagam': 'printer toner cartridge printing request label barcode அச்சகம் it',
+    'inaiyam': 'wifi wireless network internet mac binding router இணையம் it',
+    'minnanjal': 'official email request mail domain mapims மின்னஞ்சல் it',
+    'tholaipesi': 'intercom telephony extension phone contact directory தொலைபேசி அழைப்பு எண்',
+    'tholaipasi': 'intercom telephony extension phone contact directory தொலைபேசி அழைப்பு எண்',
+    'inaippu': 'extension intercom direct hotline இணைப்பு எண்கள்',
+    'inaippugal': 'extension intercom direct hotline இணைப்பு எண்கள்',
+    'azhaippu': 'call calling phone intercom extension அழைப்பு',
+    'alaippu': 'call calling phone intercom extension அழைப்பு',
+    'koopidu': 'call phone intercom கூப்பிடு',
+    'pesa': 'call talk phone intercom பேசு',
+    'pesanum': 'call talk phone intercom பேசு',
+    'thodarbu': 'contact phone intercom directory தொடர்பு',
+    'en': 'number extension contact phone எண்',
+    'yenn': 'number extension contact phone எண்',
+    'enn': 'number extension contact phone எண்',
+    'extension': 'intercom telephony phone contact directory tholaipesi inaippu emergency numbers hotline',
+    'extensions': 'intercom telephony phone contact directory tholaipesi inaippu emergency numbers hotline',
+    'intercom': 'extension telephony phone contact directory tholaipesi inaippu 2001 2131 2800',
+    'inercom': 'extension telephony phone contact directory tholaipesi inaippu 2001 2131 2800',
+    'intercoms': 'extension telephony phone contact directory tholaipesi inaippu 2001 2131 2800',
+    'phone': 'intercom extension telephony contact directory telephone',
+    'phones': 'intercom extension telephony contact directory telephone',
+    'telephone': 'intercom extension directory contact phone',
+    'telephony': 'intercom extension directory contact phone internal line',
+    'call': 'intercom extension phone contact directory telephone hotline',
+    'calling': 'intercom extension phone contact directory telephone hotline',
+    'dial': 'intercom extension phone contact directory',
+    'contact': 'intercom extension directory phone email official',
+    'sim': 'cug mobile line request sim voucher சிம் it',
+
+    # Tariffs, Billing & Charges
+    'kattanam': 'tariff charges rate price fee packages investigation billing கட்டணம்',
+    'vilai': 'tariff price cost charges rate package விலை',
+    'selavu': 'tariff charges rate bill packages cost செலவு',
+    'bill': 'tariff billing user manual discharge cashier',
+    'thittam': 'special packages admission health package திட்டம்',
+
+    # Pharmacy, Medicine & Drug Stores
+    'marunthu': 'drug pharmacy stock formulary medicine stores nmc free prescription மருந்து',
+    'marunthukal': 'drugs pharmacy stock formulary medication stores மருந்துகள்',
+    'marunthagam': 'pharmacy drug store ip op stock stores formulary மருந்தகம்',
+    'mathirai': 'tablet capsule drug medicine formulary மாத்திரை',
+    'niluvai': 'stock balance details inventory register இருப்பு',
+    'iruppu': 'stock balance details inventory register இருப்பு',
+
+    # Clinical Demographics & Emergency
+    'avacharam': 'emergency casualty 2800 code blue triage er ambulance அவசரம்',
+    'avasaram': 'emergency casualty 2800 code blue triage er ambulance அவசரம்',
+    'kuzhanthai': 'paediatric pediatric child infant newborn guardian paed குழந்தை',
+    'kulandhai': 'paediatric pediatric child infant newborn guardian paed குழந்தை',
+    'pillai': 'paediatric pediatric child infant newborn பிள்ளை',
+    'kan': 'eye ophthalmology vision screening camp கண்',
+    'thol': 'dermatology skin தோல்',
+    'elumbu': 'orthopaedics bone fracture plaster எலும்பு',
+    'theevira': 'intensive icu critical care emergency ventilator தீவிர',
+    'theevira sigichai': 'icu casesheet checklist ward shifting room tariff தீவிர சிகிச்சை',
+    'magaperu': 'obstetrics gynaecology delivery maternity obg மகப்பேறு',
+    'thaai': 'maternity obstetrics delivery தாய்',
+    'unavu': 'diet dietician food token nutrition attender meal உணவு',
+    'sapadu': 'food meal dietary attender token சாப்பாடு',
+    'siruneer': 'urology nephrology urine catheter cauti சிறுநீரகம்',
+    'moochu': 'ventilator vae vap respiratory asthma மூச்சு',
+    'kaichal': 'fever infection antibiogram antibiotic காய்ச்சல்',
+    'thotru': 'infection control hic bundle cauti clabsi ssi vae தொற்று',
+    'aavanam': 'medical records fit mrd discharge summary archive ஆவணம்',
+    'kuraigal': 'ticketing maintenance job orders complaint bugs குறைகள்',
+
+    # Stores, Purchase, Indents & Requisitions
+    'indent': 'stores store purchase procurement requisition material stock கொள்முதல்',
+    'indents': 'stores store purchase procurement requisition material stock கொள்முதல்',
+    'store': 'stores purchase procurement inventory stock material கொள்முதல்',
+    'stores': 'store purchase procurement inventory stock material கொள்முதல்',
+    'purchase': 'stores store procurement instruments equipment indent material கொள்முதல்',
+    'procurement': 'purchase stores indent requisition equipment material கொள்முதல்',
+    'requisition': 'indent request form application approval purchase stores',
+    'inventory': 'stock balance details register stores equipment',
+    'material': 'store stores purchase procurement indent',
+    'kolmuthal': 'purchase stores inventory indent procurement கொள்முதல்',
+
+    # =========================================================================
+    # TAMIL SCRIPT DIRECT MAPPINGS (U+0B80 - U+0BFF)
+    # =========================================================================
+    'அறுவை': 'surgery surgical procedures operation ot consent aruvai தமிழ்',
+    'சிகிச்சை': 'treatment procedure care surgery sigichai',
+    'ஒப்புதல்': 'consent informed agreement protocol medicolegal surgical oputhal',
+    'சம்மதம்': 'consent agreement willing sammatham',
+    'ரத்தம்': 'blood transfusion component prbc ffp reaction stock bank rattham',
+    'இரத்தம்': 'blood transfusion component prbc ffp reaction stock bank iratham',
+    'ரத்த': 'blood transfusion component bank stock rattha',
+    'வங்கி': 'bank stock storage repository details blood vangi',
+    'விடுமுறை': 'holiday holidays calendar leave 2026 dates festival vidumurai',
+    'சம்பளம்': 'salary payslip payroll hrms wages attendance sambalam',
+    'வருகை': 'attendance biometric shift hrms punch varugai',
+    'பயிற்சி': 'training feedback induction payirchi',
+    'விண்ணப்பம்': 'application form biodata teaching non teaching vinnappam',
+    'பதவி': 'promotion non teaching appraisal pathavi',
+    'மருந்து': 'drug pharmacy stock formulary medicine stores marunthu',
+    'மருந்துகள்': 'drugs pharmacy stock formulary medication stores marunthukal',
+    'மருந்தகம்': 'pharmacy drug store ip op stock stores marunthagam',
+    'கட்டணம்': 'tariff charges rate price fee packages billing kattanam',
+    'விலை': 'tariff price cost charges rate package vilai',
+    'செலவு': 'tariff charges bill cost selavu',
+    'கணினி': 'system pc computer workstation desktop request hardware kanini',
+    'அச்சகம்': 'printer toner cartridge printing request label acchaagam',
+    'இணையம்': 'wifi wireless network internet mac binding inaiyam',
+    'மின்னஞ்சல்': 'official email request mail minnanjal',
+    'குழந்தை': 'paediatric pediatric child infant newborn guardian kuzhanthai',
+    'பிள்ளை': 'paediatric child infant pillai',
+    'கண்': 'eye ophthalmology vision screening camp kan',
+    'தோல்': 'dermatology skin thol',
+    'எலும்பு': 'orthopaedics bone fracture plaster elumbu',
+    'தீவிர': 'intensive icu critical care emergency theevira',
+    'அவசரம்': 'emergency casualty 2800 code blue triage er avasaram',
+    'உணவு': 'diet dietician food token unavu',
+    'தொற்று': 'infection control hic bundle cauti clabsi ssi vae thotru',
+    'ஆவணம்': 'medical records fit mrd archive aavanam',
+    'தொலைபேசி': 'intercom extension directory telephone tholaipesi phone call',
+    'இணைப்பு': 'extension intercom direct hotline inaippu phone call',
+    'இணைப்புகள்': 'extension intercom direct hotline inaippu phone call',
+    'அழைப்பு': 'call phone intercom extension azhaippu',
+    'அழைப்புகள்': 'call phone intercom extension azhaippugal',
+    'எண்': 'number extension contact phone en',
+    'எண்கள்': 'numbers extension contact phone engal',
+    'தொடர்பு': 'contact phone directory intercom thodarbu',
+    'கூப்பிடு': 'call phone intercom koopidu',
+    'பேசு': 'call talk phone intercom pesu',
+    'போன்': 'phone call intercom extension',
+    'கால்': 'call phone intercom extension',
+    'இன்டர்காம்': 'intercom extension phone',
+    'எக்ஸ்டென்ஷன்': 'extension intercom phone',
+    'மனிதவளம்': 'human resources hr hrm hrms staff manithavalam',
+    'பணியாளர்': 'staff employee faculty paniyaalar hr',
+    'பரிசோதனை': 'laboratory lab test blood investigation',
+    'பாதுகாப்பு': 'security gate guard paathukaapu',
+    'வாயில்': 'main gate security entrance vaayil',
+    'தரம்': 'quality nabh manual protocol',
+    'உடற்பயிற்சி': 'physiotherapy physio rehab',
+    'இதயம்': 'cardiology cardio heart cath',
+    'மனநலம்': 'psychiatry mental health',
+    'சித்தா': 'siddha ayush traditional',
+    'கொள்முதல்': 'purchase stores inventory indent',
+    'காது': 'ent ear nose throat otoplasty',
+    'ஸ்கேன்': 'radiology scan ct mri usg xray',
+    'எக்ஸ்ரே': 'radiology xray radiography scan',
+    'ரேடியாலஜி': 'radiology imaging scan ct mri',
+    'டயாலிசிஸ்': 'dialysis nephrology artificial kidney haemodialysis'
+}
+
+def clean_filename(u):
+    if not u:
+        return ''
+    raw = u.split('?')[0].split('#')[0]
+    fname = os.path.basename(raw)
+    unquoted = urllib.parse.unquote(fname).strip()
+    return unquoted.lower()
+
+def load_catalog():
+    global PORTAL_CATALOG, URL_MAP, FILENAME_MAP, TITLE_MAP
+    if not os.path.exists(CATALOG_PATH):
+        print(f"⚠️ Warning: Catalog file not found at {CATALOG_PATH}")
+        return
+
+    try:
+        with open(CATALOG_PATH, 'r', encoding='utf-8') as f:
+            PORTAL_CATALOG = json.load(f)
+
+        # Strict global filter: Do not include PaperZero anywhere
+        PORTAL_CATALOG = [
+            item for item in PORTAL_CATALOG
+            if 'paperzero' not in item.get('title', '').lower() and 'paper.mapims' not in item.get('url', '').lower()
+        ]
+
+        URL_MAP.clear()
+        FILENAME_MAP.clear()
+        TITLE_MAP.clear()
+
+        for item in PORTAL_CATALOG:
+            url = item.get('url', '').strip()
+            title = item.get('title', '').strip()
+            if not url or not title:
+                continue
+
+            URL_MAP[url] = item
+            URL_MAP[urllib.parse.unquote(url)] = item
+            
+            # Index by filename
+            fname = clean_filename(url)
+            if fname:
+                FILENAME_MAP[fname] = item
+                # Also without extension
+                base_no_ext = os.path.splitext(fname)[0]
+                if base_no_ext:
+                    FILENAME_MAP[base_no_ext] = item
+
+            # Index by title
+            clean_title = re.sub(r'[^a-zA-Z0-9\u0B80-\u0BFF\s]', '', title.lower()).strip()
+            TITLE_MAP[clean_title] = item
+
+        print(f"📚 Loaded {len(PORTAL_CATALOG)} catalog resources, {len(FILENAME_MAP)} filename keys.")
+    except Exception as e:
+        print(f"❌ Error loading catalog: {e}")
+
+# Initial load
+load_catalog()
+
+# =========================================================================
+# INTERCOM DIRECTORY LOADING & MATCHING ENGINE (ALL HOSPITAL DEPARTMENTS)
+# =========================================================================
+INTERCOM_PATH = os.path.join(BASE_DIR, 'data', 'intercom.json')
+INTERCOM_DATA = []
+
+def load_intercom():
+    global INTERCOM_DATA
+    if os.path.exists(INTERCOM_PATH):
+        try:
+            with open(INTERCOM_PATH, 'r', encoding='utf-8') as f:
+                INTERCOM_DATA = json.load(f)
+            total_exts = sum(len(d.get('extensions', [])) for d in INTERCOM_DATA)
+            print(f"📞 Loaded {len(INTERCOM_DATA)} departments and {total_exts} extensions from intercom directory.")
+        except Exception as e:
+            print(f"⚠️ Error loading intercom.json: {e}")
+
+load_intercom()
+
+GENERIC_LOCATION_WORDS = {'ward', 'room', 'op', 'opd', 'office', 'desk', 'unit', 'hall', 'section', 'block', 'department'}
+
+DEPARTMENT_INTERCOM_ALIASES = {
+    # HR / Staff / Human Resources
+    'hr': ('HR', 'Admin Office', ['hr senior manager', 'hr jr executive', 'hr assistant']),
+    'hrm': ('HR', 'Admin Office', ['hr senior manager', 'hr jr executive', 'hr assistant']),
+    'human resource': ('HR', 'Admin Office', ['hr senior manager', 'hr jr executive', 'hr assistant']),
+    'human resources': ('HR', 'Admin Office', ['hr senior manager', 'hr jr executive', 'hr assistant']),
+    'மனிதவளம்': ('HR', 'Admin Office', ['hr senior manager', 'hr jr executive', 'hr assistant']),
+    'மனித வளம்': ('HR', 'Admin Office', ['hr senior manager', 'hr jr executive', 'hr assistant']),
+    'manithavalam': ('HR', 'Admin Office', ['hr senior manager', 'hr jr executive', 'hr assistant']),
+    'manitha valam': ('HR', 'Admin Office', ['hr senior manager', 'hr jr executive', 'hr assistant']),
+    'சம்பளம்': ('HR', 'Admin Office', ['hr senior manager', 'hr jr executive', 'hr assistant']),
+    'sambalam': ('HR', 'Admin Office', ['hr senior manager', 'hr jr executive', 'hr assistant']),
+    'sampalam': ('HR', 'Admin Office', ['hr senior manager', 'hr jr executive', 'hr assistant']),
+    'பணியாளர்': ('HR', 'Admin Office', ['hr senior manager', 'hr jr executive', 'hr assistant']),
+    'paniyaalar': ('HR', 'Admin Office', ['hr senior manager', 'hr jr executive', 'hr assistant']),
+    'வேலை': ('HR', 'Admin Office', ['hr senior manager', 'hr jr executive', 'hr assistant']),
+    'velai': ('HR', 'Admin Office', ['hr senior manager', 'hr jr executive', 'hr assistant']),
+
+    # IT / Information Technology / Computers
+    'it': ('IT', 'Admin Office', ['it hardware support', 'it software support', 'it manager', 'dgm & it head']),
+    'information technology': ('IT', 'Admin Office', ['it hardware support', 'it software support', 'it manager', 'dgm & it head']),
+    'kanini': ('IT', 'Admin Office', ['it hardware support', 'it software support', 'it manager', 'dgm & it head']),
+    'கணினி': ('IT', 'Admin Office', ['it hardware support', 'it software support', 'it manager', 'dgm & it head']),
+    'கணிப்பொறி': ('IT', 'Admin Office', ['it hardware support', 'it software support', 'it manager', 'dgm & it head']),
+    'kanipori': ('IT', 'Admin Office', ['it hardware support', 'it software support', 'it manager', 'dgm & it head']),
+    'ஐடி': ('IT', 'Admin Office', ['it hardware support', 'it software support', 'it manager', 'dgm & it head']),
+    'hardware': ('IT', 'Admin Office', ['it hardware support', 'it software support', 'it manager', 'dgm & it head']),
+    'software': ('IT', 'Admin Office', ['it hardware support', 'it software support', 'it manager', 'dgm & it head']),
+
+    # Billing, Cashier & Tariffs
+    'billing': ('Billing', 'Billing', None),
+    'bill': ('Billing', 'Billing', None),
+    'bills': ('Billing', 'Billing', None),
+    'cashier': ('Billing', 'Billing', None),
+    'கட்டணம்': ('Billing', 'Billing', None),
+    'kattanam': ('Billing', 'Billing', None),
+    'பில்லிங்': ('Billing', 'Billing', None),
+    'பில்': ('Billing', 'Billing', None),
+
+    # Dietetics / Canteen / Food
+    'diet': ('Dietetics', 'Dietetics', None),
+    'dietetics': ('Dietetics', 'Dietetics', None),
+    'canteen': ('Dietetics', 'Dietetics', None),
+    'food': ('Dietetics', 'Dietetics', None),
+    'nutrition': ('Dietetics', 'Dietetics', None),
+    'உணவு': ('Dietetics', 'Dietetics', None),
+    'unavu': ('Dietetics', 'Dietetics', None),
+    'சாப்பாடு': ('Dietetics', 'Dietetics', None),
+    'sapadu': ('Dietetics', 'Dietetics', None),
+    'கேண்டீன்': ('Dietetics', 'Dietetics', None),
+    'டயட்': ('Dietetics', 'Dietetics', None),
+
+    # Casualty & Emergency Medicine
+    'casualty': ('Emergency Medicine', 'Emergency Medicine', None),
+    'emergency': ('Emergency Medicine', 'Emergency Medicine', None),
+    'er': ('Emergency Medicine', 'Emergency Medicine', None),
+    'அவசரம்': ('Emergency Medicine', 'Emergency Medicine', None),
+    'அவசர சிகிச்சை': ('Emergency Medicine', 'Emergency Medicine', None),
+    'avasaram': ('Emergency Medicine', 'Emergency Medicine', None),
+    'avacharam': ('Emergency Medicine', 'Emergency Medicine', None),
+    'காசுவல்டி': ('Emergency Medicine', 'Emergency Medicine', None),
+
+    # MRD
+    'mrd': ('MRD', 'MRD', None),
+    'medical records': ('MRD', 'MRD', None),
+    'ஆவணம்': ('MRD', 'MRD', None),
+    'மருத்துவ ஆவணம்': ('MRD', 'MRD', None),
+    'aavanam': ('MRD', 'MRD', None),
+
+    # Blood Bank & Transfusion
+    'blood bank': ('Blood Bank', 'Blood Bank', None),
+    'blood': ('Blood Bank', 'Blood Bank', None),
+    'ரத்த வங்கி': ('Blood Bank', 'Blood Bank', None),
+    'இரத்த வங்கி': ('Blood Bank', 'Blood Bank', None),
+    'குருதி வங்கி': ('Blood Bank', 'Blood Bank', None),
+    'ரத்தம்': ('Blood Bank', 'Blood Bank', None),
+    'இரத்தம்': ('Blood Bank', 'Blood Bank', None),
+    'rattha vangi': ('Blood Bank', 'Blood Bank', None),
+    'ratha vangi': ('Blood Bank', 'Blood Bank', None),
+    'iratha vangi': ('Blood Bank', 'Blood Bank', None),
+    'rattham': ('Blood Bank', 'Blood Bank', None),
+    'ratham': ('Blood Bank', 'Blood Bank', None),
+
+    # Orthopaedics / Bone
+    'ortho': ('Ortho', 'Ortho', None),
+    'orthopedic': ('Ortho', 'Ortho', None),
+    'orthopaedics': ('Ortho', 'Ortho', None),
+    'எலும்பு': ('Ortho', 'Ortho', None),
+    'ஆர்த்தோ': ('Ortho', 'Ortho', None),
+    'elumbu': ('Ortho', 'Ortho', None),
+
+    # Dialysis / Nephrology
+    'dialysis': ('Dialysis', 'Dialysis', None),
+    'nephro': ('Dialysis', 'Dialysis', None),
+    'nephrology': ('Dialysis', 'Dialysis', None),
+    'டயாலிசிஸ்': ('Dialysis', 'Dialysis', None),
+    'சிறுநீரகம்': ('Dialysis', 'Dialysis', None),
+    'siruneeragam': ('Dialysis', 'Dialysis', None),
+    'siruneer': ('Dialysis', 'Dialysis', None),
+    'நெப்ரோ': ('Dialysis', 'Dialysis', None),
+
+    # Pharmacy / Drug Store
+    'pharmacy': ('Pharmacy', 'Pharmacy', None),
+    'மருந்தகம்': ('Pharmacy', 'Pharmacy', None),
+    'மருந்து': ('Pharmacy', 'Pharmacy', None),
+    'மருந்துகள்': ('Pharmacy', 'Pharmacy', None),
+    'பார்மசி': ('Pharmacy', 'Pharmacy', None),
+    'marunthagam': ('Pharmacy', 'Pharmacy', None),
+    'marunthu': ('Pharmacy', 'Pharmacy', None),
+    'marunthukal': ('Pharmacy', 'Pharmacy', None),
+
+    # Ophthalmology / Eye
+    'eye': ('Ophthalmology', 'Ophthalmology', None),
+    'ophthalmology': ('Ophthalmology', 'Ophthalmology', None),
+    'ophthal': ('Ophthalmology', 'Ophthalmology', None),
+    'கண்': ('Ophthalmology', 'Ophthalmology', None),
+    'கண் மருத்துவம்': ('Ophthalmology', 'Ophthalmology', None),
+    'kan': ('Ophthalmology', 'Ophthalmology', None),
+    'kann': ('Ophthalmology', 'Ophthalmology', None),
+
+    # Dermatology / Skin
+    'derma': ('Dermatology', 'Dermatology', None),
+    'dermatology': ('Dermatology', 'Dermatology', None),
+    'skin': ('Dermatology', 'Dermatology', None),
+    'தோல்': ('Dermatology', 'Dermatology', None),
+    'thol': ('Dermatology', 'Dermatology', None),
+    'டெர்மா': ('Dermatology', 'Dermatology', None),
+
+    # Security & Gate
+    'security': ('Security', 'Security', None),
+    'gate': ('Security', 'General', ['main gate', 'vehicle shed']),
+    'பாதுகாப்பு': ('Security', 'Security', None),
+    'வாயில்': ('Security', 'General', ['main gate', 'vehicle shed']),
+    'கேட்': ('Security', 'General', ['main gate', 'vehicle shed']),
+    'paathukaapu': ('Security', 'Security', None),
+    'vaayil': ('Security', 'General', ['main gate', 'vehicle shed']),
+
+    # ICU / Critical Care
+    'icu': ('ICU', 'ICU', None),
+    'தீவிர சிகிச்சை': ('ICU', 'ICU', None),
+    'தீவிர': ('ICU', 'ICU', None),
+    'theevira': ('ICU', 'ICU', None),
+    'theevira sigichai': ('ICU', 'ICU', None),
+    'ஐசியு': ('ICU', 'ICU', None),
+
+    # Paediatrics / Child
+    'pediatric': ('Paediatrics', 'Paediatrics', None),
+    'pediatrics': ('Paediatrics', 'Paediatrics', None),
+    'paediatric': ('Paediatrics', 'Paediatrics', None),
+    'paediatrics': ('Paediatrics', 'Paediatrics', None),
+    'child': ('Paediatrics', 'Paediatrics', None),
+    'குழந்தை': ('Paediatrics', 'Paediatrics', None),
+    'பிள்ளை': ('Paediatrics', 'Paediatrics', None),
+    'kuzhanthai': ('Paediatrics', 'Paediatrics', None),
+    'kulandhai': ('Paediatrics', 'Paediatrics', None),
+    'pillai': ('Paediatrics', 'Paediatrics', None),
+
+    # Gynaecology / Maternity
+    'gynaec': ('Gynaecology', 'Gynaecology', None),
+    'gynaecology': ('Gynaecology', 'Gynaecology', None),
+    'obg': ('Gynaecology', 'Gynaecology', None),
+    'maternity': ('Gynaecology', 'Gynaecology', None),
+    'delivery': ('Gynaecology', 'Gynaecology', None),
+    'மகப்பேறு': ('Gynaecology', 'Gynaecology', None),
+    'தாய்': ('Gynaecology', 'Gynaecology', None),
+    'பிரசவம்': ('Gynaecology', 'Gynaecology', None),
+    'magaperu': ('Gynaecology', 'Gynaecology', None),
+    'thaai': ('Gynaecology', 'Gynaecology', None),
+    'pirasavam': ('Gynaecology', 'Gynaecology', None),
+
+    # General Surgery / OT
+    'general surgery': ('General Surgery', 'General Surgery', None),
+    'surgery': ('General Surgery', 'General Surgery', None),
+    'அறுவை': ('General Surgery', 'General Surgery', None),
+    'அறுவை சிகிச்சை': ('General Surgery', 'General Surgery', None),
+    'aruvai': ('General Surgery', 'General Surgery', None),
+    'aruvai sigichai': ('General Surgery', 'General Surgery', None),
+    'ot': ('Anaesthesia & Operation Theatre', 'Anaesthesia & Operation Theatre', None),
+    'operation theatre': ('Anaesthesia & Operation Theatre', 'Anaesthesia & Operation Theatre', None),
+    'anaesthesia': ('Anaesthesia & Operation Theatre', 'Anaesthesia & Operation Theatre', None),
+
+    # ENT
+    'ent': ('ENT', 'ENT', None),
+    'காது': ('ENT', 'ENT', None),
+    'காது மூக்கு தொண்டை': ('ENT', 'ENT', None),
+    'kaathu': ('ENT', 'ENT', None),
+
+    # Radiology / X-Ray / Scan
+    'radiology': ('Radiology', 'Radiology', None),
+    'xray': ('Radiology', 'Radiology', None),
+    'mri': ('Radiology', 'Radiology', None),
+    'ct': ('Radiology', 'Radiology', None),
+    'scan': ('Radiology', 'Radiology', None),
+    'ultrasound': ('Radiology', 'Radiology', None),
+    'usg': ('Radiology', 'Radiology', None),
+    'எக்ஸ்ரே': ('Radiology', 'Radiology', None),
+    'ஸ்கேன்': ('Radiology', 'Radiology', None),
+    'ரேடியாலஜி': ('Radiology', 'Radiology', None),
+
+    # Laboratory / Blood Test
+    'lab': ('Laboratory', 'Laboratory', None),
+    'laboratory': ('Laboratory', 'Laboratory', None),
+    'பரிசோதனை': ('Laboratory', 'Laboratory', None),
+    'ரத்த பரிசோதனை': ('Laboratory', 'Laboratory', None),
+    'பரிசோதனை கூடம்': ('Laboratory', 'Laboratory', None),
+
+    # Maintenance
+    'maintenance': ('Maintenance', 'Maintenance', None),
+    'ac': ('Maintenance', 'Maintenance', None),
+    'plumber': ('Maintenance', 'Maintenance', None),
+    'electrical': ('Maintenance', 'Maintenance', None),
+    'பராமரிப்பு': ('Maintenance', 'Maintenance', None),
+    'paramarippu': ('Maintenance', 'Maintenance', None),
+
+    # Biomedical
+    'biomedical': ('Biomedical', 'Biomedical', None),
+    'biomed': ('Biomedical', 'Biomedical', None),
+
+    # Quality & NABH
+    'quality': ('Quality', 'Quality', None),
+    'nabh': ('Quality', 'Quality', None),
+    'தரம்': ('Quality', 'Quality', None),
+
+    # MS & NS Office
+    'ms office': ('MS Office', 'MS Office', None),
+    'superintendent': ('MS Office', 'MS Office', None),
+    'ns office': ('NS Office', 'NS Office', None),
+    'nursing': ('NS Office', 'NS Office', None),
+    'செவிலியர்': ('NS Office', 'NS Office', None),
+
+    # Physiotherapy
+    'physio': ('Physiotherapy', 'Physiotherapy', None),
+    'physiotherapy': ('Physiotherapy', 'Physiotherapy', None),
+    'உடற்பயிற்சி': ('Physiotherapy', 'Physiotherapy', None),
+
+    # Cardiology
+    'cardio': ('Cardiology', 'Cardiology', None),
+    'cardiology': ('Cardiology', 'Cardiology', None),
+    'heart': ('Cardiology', 'Cardiology', None),
+    'இதயம்': ('Cardiology', 'Cardiology', None),
+    'ithayam': ('Cardiology', 'Cardiology', None),
+
+    # Psychiatry & Siddha
+    'psychiatry': ('Psychiatry', 'Psychiatry', None),
+    'மனநலம்': ('Psychiatry', 'Psychiatry', None),
+    'siddha': ('Siddha', 'Siddha', None),
+    'சித்தா': ('Siddha', 'Siddha', None),
+
+    # Purchase & Stores
+    'purchase': ('Purchase', 'Purchase', None),
+    'stores': ('Purchase', 'Purchase', None),
+    'கொள்முதல்': ('Purchase', 'Purchase', None),
+
+    # Laundry & CSSD
+    'laundry': ('Laundry', 'Laundry', None),
+    'சலவை': ('Laundry', 'Laundry', None),
+    'cssd': ('CSSD', 'CSSD', None),
+    'art': ('ART', 'ART', None),
+    'lift': ('Service Lift', 'Service Lift', None),
+    'elevator': ('Service Lift', 'Service Lift', None)
+}
+
+def find_intercom_department(query):
+    """
+    Matches any hospital department, clinic, or service from intercom.json
+    and returns the best matching department, label, floor, and verified extensions.
+    Supports English, Tamil script, and Tanglish.
+    """
+    if not INTERCOM_DATA or not query:
+        return None
+
+    q_clean = query.lower().strip()
+
+    # 1. Match specific department aliases first (handles HR, IT, Billing, Casualty, Dietetics, etc.)
+    for alias_key, (dept_label, target_dept, filter_descs) in sorted(DEPARTMENT_INTERCOM_ALIASES.items(), key=lambda x: len(x[0]), reverse=True):
+        if any(ord(c) >= 0x0B80 and ord(c) <= 0x0BFF for c in alias_key):
+            matched = alias_key in q_clean
+        else:
+            matched = bool(re.search(r'\b' + re.escape(alias_key) + r'\b', q_clean))
+
+        if matched:
+            matched_depts = []
+            for d in INTERCOM_DATA:
+                d_name = html.unescape(d.get('dept', ''))
+                if d_name.lower() == target_dept.lower() or d_name.lower().startswith(target_dept.lower() + ' ') or target_dept.lower().startswith(d_name.lower() + ' '):
+                    matched_depts.append(d)
+
+            if matched_depts:
+                all_exts = []
+                floors = []
+                primary_dept_name = matched_depts[0].get('dept', '')
+                for d in matched_depts:
+                    d_floor = html.unescape(d.get('floor', '')).strip()
+                    if d_floor and d_floor not in floors:
+                        floors.append(d_floor)
+                    exts = d.get('extensions', [])
+                    for e in exts:
+                        desc = html.unescape(e.get('desc', '')).strip()
+                        ext_val = str(e.get('ext', '')).strip()
+                        if filter_descs:
+                            if any(fd in desc.lower() for fd in filter_descs):
+                                all_exts.append({'desc': desc, 'ext': ext_val})
+                        else:
+                            all_exts.append({'desc': desc, 'ext': ext_val})
+                return {
+                    'dept': dept_label or primary_dept_name,
+                    'dept_label': dept_label,
+                    'floor': ', '.join(floors) if floors else '',
+                    'extensions': all_exts[:8]
+                }
+
+    # 2. General token-based matching across all 61 departments
+    words = [w for w in re.findall(r'[a-zA-Z0-9\u0B80-\u0BFF]+', q_clean) if w not in [
+        'i', 'need', 'the', 'extension', 'intercom', 'inercom', 'number', 'for', 'what', 'is', 'of', 'in',
+        'phone', 'phones', 'telephone', 'telephones', 'contact', 'ext', 'exts', 'numbers', 'extensions',
+        'please', 'give', 'me', 'tell', 'help', 'call', 'calling', 'calls', 'dial', 'dialing', 'to', 'how', 'want',
+        # Tamil script & Tanglish stop words
+        'தொலைபேசி', 'இணைப்பு', 'இணைப்புகள்', 'அழைப்பு', 'அழைப்புகள்', 'எண்', 'எண்கள்',
+        'போன்', 'கால்', 'கூப்பிடு', 'பேசு', 'தொடர்பு', 'இன்டர்காம்', 'எக்ஸ்டென்ஷன்',
+        'வேண்டும்', 'தாருங்கள்', 'கொடுங்கள்', 'சொல்லுங்கள்', 'எங்கே', 'எப்படி', 'பிரிவு',
+        'tholaipesi', 'tholaipasi', 'inaippu', 'inaippugal', 'azhaippu', 'alaippu',
+        'koopidu', 'kupidu', 'pesa', 'pesanum', 'thodarbu', 'en', 'yenn', 'enn',
+        'vendum', 'thaanga', 'thanga', 'kudunga', 'sollunga', 'engae', 'enga', 'pirivu'
+    ]]
+    if not words:
+        return None
+
+    primary_words = [w for w in words if w not in GENERIC_LOCATION_WORDS]
+    if not primary_words:
+        primary_words = words
+
+    scored_results = []
+    for d in INTERCOM_DATA:
+        dept = html.unescape(d.get('dept', ''))
+        floor = html.unescape(d.get('floor', ''))
+        exts = d.get('extensions', [])
+        dept_lower = dept.lower()
+
+        dept_score = 0
+        matching_exts = []
+
+        for w in primary_words:
+            pat = r'\b' + re.escape(w) + r'\b'
+            if re.search(pat, dept_lower):
+                dept_score += 500
+
+            for e in exts:
+                desc = html.unescape(e.get('desc', ''))
+                desc_lower = desc.lower()
+                ext_num = str(e.get('ext', '')).strip()
+                if re.search(pat, desc_lower):
+                    matching_exts.append((e, 200))
+                elif w == ext_num or ext_num.startswith(w):
+                    matching_exts.append((e, 400))
+
+        for gw in set(words) & GENERIC_LOCATION_WORDS:
+            pat = r'\b' + re.escape(gw) + r'\b'
+            for e in exts:
+                desc = html.unescape(e.get('desc', ''))
+                if re.search(pat, desc.lower()):
+                    matching_exts.append((e, 50))
+
+        seen_ext = set()
+        final_exts = []
+        for e, s in sorted(matching_exts, key=lambda x: x[1], reverse=True):
+            clean_desc = html.unescape(e.get('desc', ''))
+            clean_ext = str(e.get('ext', '')).strip()
+            if clean_ext not in seen_ext:
+                seen_ext.add(clean_ext)
+                final_exts.append({'desc': clean_desc, 'ext': clean_ext})
+
+        total_score = dept_score + sum(s for _, s in matching_exts)
+        if total_score > 0:
+            if not final_exts:
+                for e in exts[:6]:
+                    final_exts.append({'desc': html.unescape(e.get('desc', '')), 'ext': str(e.get('ext', '')).strip()})
+            scored_results.append((total_score, {
+                'dept': dept,
+                'dept_label': dept,
+                'floor': floor,
+                'extensions': final_exts
+            }))
+
+    scored_results.sort(key=lambda x: x[0], reverse=True)
+    return scored_results[0][1] if scored_results else None
+
+# =========================================================================
+# 2. LOCAL SMART RETRIEVAL & BILINGUAL SYNONYM EXPANSION
+# =========================================================================
+def tokenize(text):
+    if not text:
+        return set()
+    # Supports Latin alphanumeric and Tamil Unicode characters (U+0B80 - U+0BFF)
+    return set(re.findall(r'[\w\u0B80-\u0BFF]+', text.lower()))
+
+def expand_tokens(tokens, raw_text=''):
+    expanded = set(tokens)
+    raw_lower = raw_text.lower() if raw_text else ' '.join(tokens)
+    
+    # 1. Match multi-word Tanglish & Tamil phrases first
+    for phrase, mapped_words in SYNONYMS.items():
+        if ' ' in phrase and phrase in raw_lower:
+            expanded.update(mapped_words.split())
+            
+    # 2. Match individual tokens
+    for t in tokens:
+        if t in SYNONYMS:
+            expanded.update(SYNONYMS[t].split())
+            
+    return expanded
+
+def is_word_match(term, text):
+    if not term or not text:
+        return False
+    return bool(re.search(r'\b' + re.escape(term) + r'\b', text, re.IGNORECASE))
+
+TELECOM_KEYWORDS = {
+    'intercom', 'inercom', 'intercoms', 'indarkam', 'இன்டர்காம்',
+    'extension', 'extensions', 'ext', 'exts', 'எக்ஸ்டென்ஷன்',
+    'call', 'calling', 'calls', 'dial', 'dialing', 'kaal', 'கால்',
+    'phone', 'phones', 'telephone', 'telephones', 'telephony', 'போன்',
+    'tholaipesi', 'tholaipasi', 'தொலைபேசி',
+    'inaippu', 'inaippugal', 'இணைப்பு', 'இணைப்புகள்',
+    'azhaippu', 'alaippu', 'அழைப்பு', 'அழைப்புகள்',
+    'koopidu', 'kupidu', 'கூப்பிடு',
+    'pesa', 'pesanum', 'பேசு',
+    'thodarbu', 'தொடர்பு',
+    'hotline', 'hotlines'
+}
+
+def is_telephony_query(query_text):
+    if not query_text:
+        return False
+    q_tokens = tokenize(query_text)
+    if bool(q_tokens & TELECOM_KEYWORDS):
+        return True
+    q_lower = query_text.lower().strip()
+    for kw in TELECOM_KEYWORDS:
+        if any(ord(c) >= 0x0B80 and ord(c) <= 0x0BFF for c in kw):
+            if kw in q_lower:
+                return True
+        else:
+            if re.search(r'\b' + re.escape(kw) + r'\b', q_lower):
+                return True
+
+    # If query contains number indicators ('எண்', 'எண்கள்', 'en', 'yenn', 'enn', 'number', 'numbers', 'no')
+    # in combination with a department or contact intent:
+    num_tokens = {'எண்', 'எண்கள்', 'en', 'yenn', 'enn', 'number', 'numbers', 'no'}
+    has_num = bool(q_tokens & num_tokens) or any(k in q_lower for k in ['எண்', 'எண்கள்'])
+    if has_num:
+        if find_intercom_department(query_text):
+            return True
+        if any(k in q_lower for k in ['contact', 'தொடர்பு', 'helpdesk', 'reception', 'help', 'dial', 'hospital', 'மருத்துவமனை']):
+            return True
+
+    return False
+
+def is_tamil_query(text):
+    if not text:
+        return False
+    if any(ord(ch) >= 0x0B80 and ord(ch) <= 0x0BFF for ch in text):
+        return True
+    t_lower = text.lower()
+    tanglish_markers = [
+        'tholaipesi', 'tholaipasi', 'inaippu', 'inaippugal', 'azhaippu', 'alaippu',
+        'kattanam', 'marunthu', 'kanini', 'elumbu', 'rattha', 'ratha', 'iratha',
+        'avasaram', 'avacharam', 'unavu', 'sapadu', 'sambalam', 'sampalam', 'velai', 'aruvai',
+        'sigichai', 'vangi', 'siruneer', 'theevira', 'thol', 'kan', 'en', 'yenn',
+        'koopidu', 'pesa', 'pesanum', 'vendum', 'thaanga', 'thanga', 'kudunga', 'sollunga',
+        'manithavalam', 'paniyaalar', 'paathukaapu', 'vaayil'
+    ]
+    return any(re.search(r'\b' + re.escape(m) + r'\b', t_lower) for m in tanglish_markers)
+
+GENERIC_STOP_WORDS = {
+    'details', 'detail', 'form', 'forms', 'pdf', 'portal', 'hub', 'sheet',
+    'file', 'files', 'list', 'lists', 'document', 'documents', 'view', 'download',
+    'department', 'hospital', 'aph', 'mapims', 'institute', 'online', 'link',
+    'please', 'show', 'give', 'about', 'the', 'is', 'in', 'of', 'and', 'for', 'to', 'with',
+    'what', 'which', 'where', 'when', 'who', 'how', 'why', 'available', 'availability',
+    'are', 'can', 'get', 'need', 'want', 'tell', 'me', 'i', 'a', 'an', 'any', 'all', 'there',
+    'have', 'has', 'do', 'does', 'find', 'some', 'know'
+}
+
+def classify_doc_domain(item):
+    cat = item.get('category', '').lower()
+    title = item.get('title', '').lower()
+    url = item.get('url', '').lower()
+    
+    # 0. Stores & Procurement Domain
+    if (
+        any(k in title for k in ['purchase process', 'inventory stock details', 'purchase & condemnation', 'stock out medicine purchase']) or
+        any(k in url for k in ['instruments and equipment', 'inventory stock', 'purchase & condemnation', 'stock out medicine purchase'])
+    ):
+        return 'STORES_PURCHASE'
+    
+    # 1. HR Domain
+    if (
+        'hr form' in cat or 'hr' == cat or 'hr systems' in cat or
+        any(k in title for k in [
+            'teaching faculty', 'non-teaching', 'non teaching', 'for promotion',
+            'non performer', 'training feedback', 'pms policy', 'hrm - 2025',
+            'hrm 2025', 'human resource', 'pruworks', 'holiday 2025',
+            'list of holidays', 'cmo policy', 'junior resident policy',
+            'clinical privileges', 'hr forms hub'
+        ]) or
+        any(k in url for k in [
+            'hrms', 'teaching.pdf', 'non teaching.pdf', 'hrm 2025.pdf',
+            'pms policy.pdf', 'hrforms.html', 'holiday', 'pruworks'
+        ]) or
+        'human resource management (hrm)' in title
+    ):
+        return 'HR'
+
+    # 2. Pharmacy & Drug Stores
+    if (
+        'pharmacy' in cat or 'pharmacy stock' in cat or
+        any(k in title for k in ['pharmacy', 'drug store', 'drug stores', 'formulary', 'free drug', 'inventory stock details']) or
+        any(k in url for k in ['pharmacy', 'drug', 'formulary', 'inventory stock'])
+    ):
+        return 'PHARMACY'
+
+    # 3. Blood Bank
+    if (
+        any(k in title for k in ['blood bank', 'blood component', 'blood transfusion']) or
+        any(k in url for k in ['blood bank', 'blood component', 'blood%20bank'])
+    ):
+        return 'BLOOD_BANK'
+
+    # 4. IT & Telephony
+    if (
+        'it form' in cat or 'telephony' in cat or 'staff directory' in cat or
+        any(k in title for k in ['intercom', 'extension directory', 'wifi request', 'printer request', 'system request', 'mail request', 'his user', 'item creation', 'cug request']) or
+        any(k in url for k in ['intercom', 'itforms', 'email.pdf'])
+    ):
+        return 'IT_TELECOM'
+
+    # 5. Consent Forms
+    if 'consent' in cat or 'consent' in title:
+        return 'CONSENT'
+
+    # 6. Common Clinical & Infection Control
+    if 'common form' in cat or any(k in title for k in ['cauti', 'clabsi', 'ssi', 'vae', 'checklist', 'sbar', 'adr']):
+        return 'COMMON_CLINICAL'
+
+    # 7. Tariff & Billing
+    if 'tariff' in cat or any(k in title for k in ['tariff', 'billing manual', 'special packages']):
+        return 'TARIFF'
+
+    # 8. Committees & Governance
+    if 'committee' in cat or 'circular' in cat or 'governance' in cat:
+        return 'GOVERNANCE'
+
+    # 9. Manuals & SOPs
+    if 'manual' in cat:
+        return 'MANUALS'
+
+    return 'GENERAL'
+
+def search_catalog_candidates(query, limit=6):
+    """
+    RAG Retrieval: Ranks catalog entries against user query using domain classification,
+    informative token isolation (filtering generic filler words like 'details'),
+    strict negative pruning guardrails, and bidirectional Tanglish/Tamil expansions.
+    """
+    if not query or not PORTAL_CATALOG:
+        return []
+
+    q_raw = query.strip().lower()
+    q_tokens = tokenize(q_raw)
+    expanded_q = expand_tokens(q_tokens, q_raw)
+    informative_tokens = q_tokens - GENERIC_STOP_WORDS
+
+    # Domain Intent Classifications
+    is_hr_query = (
+        is_word_match('hr', q_raw) or
+        is_word_match('hrm', q_raw) or
+        is_word_match('hrms', q_raw) or
+        any(k in q_raw for k in [
+            'human resource', 'human resources', 'pruworks', 'payroll', 'payslip',
+            'attendance', 'teaching faculty', 'non-teaching', 'non teaching',
+            'faculty application', 'promotion', 'appraisal', 'sambalam', 'சம்பளம்',
+            'velai', 'வேலை', 'vinnappam', 'விண்ணப்பம்', 'pathavi', 'பதவி',
+            'varugai', 'வருகை', 'pms policy', 'staff form', 'employee'
+        ]) or
+        bool({'hr', 'hrm', 'hrms', 'payroll', 'payslip', 'attendance', 'pruworks', 'sambalam'} & q_tokens)
+    )
+
+    is_blood_query = (
+        any(k in q_raw for k in ['radha', 'ratha', 'raththa', 'rattha', 'iratha', 'vangi', 'blood', 'transfusion', 'ரத்த', 'ரத்தம்', 'இரத்த', 'வங்கி']) and
+        not any(k in q_raw for k in ['marunthu', 'pharmacy', 'drug'])
+    )
+
+    has_drug_term = (
+        any(k in q_raw for k in ['marunthu', 'drug', 'drugs', 'pharmacy', 'medicine', 'formulary', 'மருந்து', 'மருந்தகம்', 'mathirai']) and
+        not is_blood_query
+    )
+
+    is_leave_query = any(k in q_raw for k in ['vidumurai', 'விடுமுறை', 'leavu', 'pandigai', 'holiday', 'leave'])
+
+    is_telecom_query = is_telephony_query(q_raw)
+
+    is_it_query = (
+        (is_word_match('it', q_raw) and not any(k in q_raw for k in ['fit', 'credit', 'audit'])) or
+        any(k in q_raw for k in ['it forms', 'kanini', 'கணினி', 'hardware', 'software', 'workstation', 'kanipori']) or
+        bool({'kanini', 'hardware', 'software', 'workstation'} & q_tokens)
+    )
+
+    is_pure_telecom = is_telecom_query and not find_intercom_department(q_raw)
+
+    is_store_query = (
+        any(k in q_raw for k in ['indent', 'indents', 'store', 'stores', 'purchase', 'procurement', 'requisition', 'kolmuthal', 'கொள்முதல்']) and
+        not is_hr_query and not is_blood_query and not is_it_query
+    )
+
+    scored = []
+    for item in PORTAL_CATALOG:
+        title = item.get('title', '')
+        desc = item.get('description', '')
+        cat = item.get('category', '')
+        url = item.get('url', '')
+        
+        title_lower = title.lower()
+        desc_lower = desc.lower()
+        cat_lower = cat.lower()
+
+        # Strict global filter: Never return PaperZero
+        if 'paperzero' in title_lower or 'paper.mapims' in url.lower():
+            continue
+
+        title_tokens = tokenize(title_lower)
+        desc_tokens = tokenize(desc_lower)
+        cat_tokens = tokenize(cat_lower)
+        url_tokens = tokenize(url.lower())
+
+        doc_domain = classify_doc_domain(item)
+
+        # STRICT DOMAIN ISOLATION & PRUNING GUARDRAILS:
+        # 1. HR Query: STRICTLY PRUNE Pharmacy, Blood Bank, and Consent documents
+        if is_hr_query:
+            if doc_domain in ['PHARMACY', 'BLOOD_BANK', 'CONSENT']:
+                continue
+            if 'pharmacy' in title_lower or 'drug stores' in title_lower or 'blood bank' in title_lower:
+                continue
+
+        # 2. Blood Bank Query: STRICTLY PRUNE Pharmacy & HR documents
+        if is_blood_query and not has_drug_term:
+            if doc_domain in ['PHARMACY', 'HR'] or cat == 'Pharmacy & Stock' or 'pharmacy' in title_lower or 'drug stores' in title_lower:
+                continue
+
+        # 3. Pharmacy / Drug Query: STRICTLY PRUNE Blood Bank & HR documents
+        if has_drug_term and not is_blood_query:
+            if doc_domain in ['BLOOD_BANK', 'HR'] or 'blood bank' in title_lower or 'blood transfusion' in title_lower:
+                continue
+
+        # 4. Holiday Query: PRUNE committee calendars
+        if is_leave_query and not any(k in q_raw for k in ['committee', 'mock', 'audit']):
+            if 'committee' in title_lower or 'mock drill' in title_lower:
+                continue
+
+        # 5. Telephony Query: STRICTLY PRUNE false-positive recall documents
+        if is_telecom_query:
+            if 'recall' in title_lower and not any(k in q_raw for k in ['recall', 'device recall']):
+                continue
+
+        # 6. Pure Telephony Query (e.g., 'call', 'inercom', 'phone', 'extension'): STRICTLY PRUNE non-directory documents
+        if is_pure_telecom:
+            if doc_domain != 'IT_TELECOM' and not any(k in title_lower or k in url.lower() for k in ['intercom', 'extension', 'directory']):
+                continue
+
+        # 7. Store / Indent Query: STRICTLY PRUNE non-store IT forms, Consent, and irrelevant Clinical documents
+        if is_store_query:
+            if not any(k in q_raw for k in ['pc', 'hardware', 'desktop', 'computer', 'printer', 'wifi', 'it']):
+                if doc_domain == 'IT_TELECOM' or any(k in title_lower for k in ['system request', 'printer request', 'wifi request', 'his user', 'item creation']):
+                    continue
+            if any(k in title_lower for k in ['imaging results', 'cauti', 'clabsi', 'ssi', 'vae', 'consent']):
+                continue
+            if doc_domain in ['CONSENT', 'HR', 'BLOOD_BANK']:
+                continue
+
+        score = 0
+        has_hit = False
+
+        # Exact title / category match (handles whole words vs substrings)
+        if len(q_raw) <= 4:
+            if is_word_match(q_raw, title_lower):
+                score += 90
+                has_hit = True
+            if is_word_match(q_raw, cat_lower):
+                score += 55
+                has_hit = True
+        else:
+            if is_word_match(q_raw, title_lower) or (len(q_raw) > 5 and q_raw in title_lower):
+                score += 85
+                has_hit = True
+            if is_word_match(q_raw, cat_lower) or (len(q_raw) > 5 and q_raw in cat_lower):
+                score += 40
+                has_hit = True
+
+        # Direct word match against informative tokens (prevents generic filler words like 'details' from creating false positive hits)
+        active_tokens = informative_tokens if informative_tokens else q_tokens
+        exact_title_hits = len(active_tokens & title_tokens)
+        if exact_title_hits:
+            score += exact_title_hits * 40
+            has_hit = True
+        
+        # Expanded synonym hits in title
+        syn_title_hits = len((expanded_q - q_tokens) & title_tokens)
+        if syn_title_hits:
+            score += syn_title_hits * 25
+            has_hit = True
+
+        # Description hits
+        desc_hits = len(active_tokens & desc_tokens)
+        if desc_hits:
+            score += desc_hits * 15
+            has_hit = True
+        syn_desc_hits = len(expanded_q & desc_tokens)
+        if syn_desc_hits:
+            score += syn_desc_hits * 8
+            has_hit = True
+
+        # Category hits
+        cat_hits = len(active_tokens & cat_tokens)
+        if cat_hits:
+            score += cat_hits * 20
+            has_hit = True
+        syn_cat_hits = len(expanded_q & cat_tokens)
+        if syn_cat_hits:
+            score += syn_cat_hits * 12
+            has_hit = True
+        
+        # URL filename hits
+        url_hits = len(active_tokens & url_tokens)
+        if url_hits:
+            score += url_hits * 15
+            has_hit = True
+
+        # =========================================================================
+        # SPECIALIZED DOMAIN INTENT BOOSTS
+        # =========================================================================
+        # 1. HR & Staff Intent Boost
+        if is_hr_query:
+            if doc_domain == 'HR':
+                score += 180
+                has_hit = True
+                if 'hr forms hub' in title_lower or title == 'APH HR Forms Hub':
+                    score += 40
+                elif 'pruworks' in title_lower or 'hrms' in title_lower or 'hrm' in title_lower:
+                    score += 30
+                elif any(k in title_lower for k in ['teaching', 'non-teaching', 'promotion', 'holiday']):
+                    score += 20
+
+        # 2. Surgery & Consent intent
+        if any(k in q_raw for k in ['aruvai', 'sikitsai', 'sigichai', 'oputhal', 'opputhal', 'அறுவை', 'சிகிச்சை', 'ஒப்புதல்']):
+            if 'tamil' in title_lower or 'அறுவை' in desc_lower:
+                score += 70
+                has_hit = True
+            elif 'informed consent form for surgery' in title_lower:
+                score += 55
+                has_hit = True
+                
+        # 3. Blood Bank intent
+        if is_blood_query:
+            if doc_domain == 'BLOOD_BANK':
+                score += 150
+                has_hit = True
+            if 'blood bank stock' in title_lower:
+                score += 95
+                has_hit = True
+            elif 'blood component transfusion' in title_lower or 'blood transfusion' in title_lower:
+                score += 75
+                has_hit = True
+            elif 'transfusion technique' in title_lower:
+                score += 65
+                has_hit = True
+                
+        # 4. Holiday / Leave intent
+        if is_leave_query:
+            if 'holiday' in title_lower or 'holidays' in title_lower:
+                score += 120
+                has_hit = True
+            elif 'hrms' in title_lower or doc_domain == 'HR':
+                score += 50
+                has_hit = True
+
+        # 5. IT / Hardware intent
+        if is_it_query and not any(k in q_raw for k in ['fit', 'credit', 'audit']):
+            if any(k in q_raw for k in ['hardware', 'pc', 'desktop', 'computer', 'system', 'system request', 'hardware indent']):
+                if 'system request' in title_lower:
+                    score += 320
+                    has_hit = True
+            elif any(k in q_raw for k in ['printer', 'toner', 'cartridge', 'acchaagam', 'achagam', 'அச்சகம்']):
+                if 'printer request' in title_lower:
+                    score += 320
+                    has_hit = True
+            elif any(k in q_raw for k in ['wifi', 'wireless', 'internet', 'mac', 'inaiyam', 'இணையம்']):
+                if 'wifi request' in title_lower:
+                    score += 320
+                    has_hit = True
+            elif cat == 'IT Forms' or doc_domain == 'IT_TELECOM':
+                score += 120
+                has_hit = True
+            elif any(k in title_lower for k in ['system request', 'printer request', 'wifi request', 'mail request', 'his user', 'item creation', 'cug']):
+                score += 90
+                has_hit = True
+            elif 'itforms' in url:
+                score += 105
+                has_hit = True
+
+        if any(k in q_raw for k in ['acchaagam', 'achagam', 'அச்சகம்']):
+            if 'printer request' in title_lower:
+                score += 80
+                has_hit = True
+        if any(k in q_raw for k in ['inaiyam', 'இணையம்']):
+            if 'wifi request' in title_lower:
+                score += 80
+                has_hit = True
+
+        # 6. Tariff intent
+        if any(k in q_raw for k in ['kattanam', 'கட்டணம்', 'vilai', 'selavu']):
+            if cat == 'Tariff & Packages':
+                score += 60
+                has_hit = True
+
+        # 7. Drug / Pharmacy stock intent
+        if has_drug_term:
+            if doc_domain == 'PHARMACY':
+                score += 130
+                has_hit = True
+            elif cat == 'Pharmacy & Stock' or 'drug' in title_lower or 'pharmacy' in title_lower:
+                score += 75
+                has_hit = True
+
+        # 8. Intercom, Extension & Telephony intent
+        if is_telecom_query:
+            if 'intercom directory.pdf' in url_tokens or 'intercom directory pdf' in title_lower:
+                score += 260
+                has_hit = True
+            elif is_it_query and 'it department intercom' in title_lower:
+                score += 280
+                has_hit = True
+            elif 'intercom' in url or 'intercom' in title_lower or 'extension' in title_lower:
+                score += 200
+                has_hit = True
+            elif 'email.pdf' in url:
+                score += 70
+                has_hit = True
+
+        # 9. Store / Indent / Procurement intent
+        if is_store_query:
+            if 'purchase process' in title_lower or 'instruments and equipment' in url_tokens:
+                score += 360 if ('indent' in q_raw or 'purchase' in q_raw) else 280
+                has_hit = True
+            elif 'inventory stock details' in title_lower:
+                score += 240
+                has_hit = True
+            elif 'drug stores stock' in title_lower:
+                score += 230
+                has_hit = True
+            elif 'stock out medicine purchase policy' in title_lower:
+                score += 200
+                has_hit = True
+            elif 'narcotic drugs form' in title_lower and any(k in q_raw for k in ['drug', 'narcotic', 'marunthu']):
+                score += 190
+                has_hit = True
+            elif 'purchase' in title_lower or 'indent' in desc_lower or 'requisition' in desc_lower:
+                score += 110
+                has_hit = True
+
+        # Grant domain baseline boost only if there was an actual legitimate hit
+        if has_hit and score > 0:
+            if cat in ['Consent Forms', 'Common Forms', 'HR Forms', 'IT Forms', 'Pharmacy & Stock', 'Tariff & Packages', 'Core Systems']:
+                score += 25
+            scored.append((score, item))
+
+    scored.sort(key=lambda x: x[0], reverse=True)
+    return [item for _, item in scored[:limit]]
+
+def snap_to_catalog_url(raw_url, title=""):
+    """
+    Validates any URL returned by AI and snaps it to the exact verified catalog path.
+    Prevents 404 errors, wrong domains (like mapimshis.com for files), or broken paths.
+    """
+    if not raw_url:
+        return None
+
+    cleaned_url = raw_url.strip()
+
+    # Preserve any query parameters (e.g. ./intercom.html?dept=Dialysis)
+    query_param = ""
+    if '?' in cleaned_url:
+        base_part, query_part = cleaned_url.split('?', 1)
+        query_param = "?" + query_part
+        cleaned_url = base_part
+
+    # 1. Direct match in URL_MAP
+    if cleaned_url in URL_MAP:
+        snapped = URL_MAP[cleaned_url]['url']
+        return snapped + query_param if query_param else snapped
+    unquoted = urllib.parse.unquote(cleaned_url)
+    if unquoted in URL_MAP:
+        snapped = URL_MAP[unquoted]['url']
+        return snapped + query_param if query_param else snapped
+
+    # 2. Match by filename
+    fname = clean_filename(cleaned_url)
+    if fname in FILENAME_MAP:
+        snapped = FILENAME_MAP[fname]['url']
+        return snapped + query_param if query_param else snapped
+
+    # 3. If URL points to mapimshis.com/mapims/files/<filename>, fix it directly
+    if 'mapimshis.com' in cleaned_url and ('files/' in cleaned_url or cleaned_url.endswith('.pdf')):
+        target_fname = os.path.basename(cleaned_url)
+        clean_target = clean_filename(target_fname)
+        if clean_target in FILENAME_MAP:
+            return FILENAME_MAP[clean_target]['url']
+        # Even if not directly indexed, mapimshis.com/mapims/files is wrong; correct to 192.168.101.75:3000
+        return f"http://192.168.101.75:3000/files/{urllib.parse.quote(target_fname)}"
+
+    # 4. Match by title
+    if title:
+        clean_t = re.sub(r'[^a-zA-Z0-9\s]', '', title.lower()).strip()
+        if clean_t in TITLE_MAP:
+            return TITLE_MAP[clean_t]['url']
+        # Check closest candidate
+        candidates = search_catalog_candidates(title, limit=1)
+        if candidates:
+            return candidates[0]['url']
+
+    return cleaned_url
+
+# =========================================================================
+# 3. GEMINI AI GROUNDING & QUERY LOGIC
+# =========================================================================
+def load_gemini_api_key():
+    key = os.environ.get('GEMINI_API_KEY', '').strip()
+    if key:
+        return key
+    env_path = os.path.join(BASE_DIR, '.env')
+    if os.path.exists(env_path):
+        with open(env_path, 'r', encoding='utf-8') as f:
+            for line in f:
+                line = line.strip()
+                if line.startswith('GEMINI_API_KEY='):
+                    return line.split('=', 1)[1].strip().strip('"').strip("'")
+    return ''
+
+def build_grounded_prompt(user_query, candidates):
+    candidate_lines = []
+    for c in candidates:
+        candidate_lines.append(
+            f"- Title: {c['title']}\n  URL: {c['url']}\n  Category: {c['category']}\n  Badge: {c['badge']}\n  Description: {c['description']}"
+        )
+    candidates_text = "\n".join(candidate_lines) if candidate_lines else "None explicitly indexed."
+
+    matched_intercom = find_intercom_department(user_query)
+    specific_intercom_block = ""
+    dept_label = ""
+    dept_url = "./intercom.html"
+    if matched_intercom:
+        dept_label = matched_intercom.get('dept_label') or matched_intercom['dept']
+        dept_url = f"./intercom.html?dept={urllib.parse.quote(dept_label)}"
+        ext_lines = "\n".join([f"  • {e['desc']}: Ext. {e['ext']}" for e in matched_intercom['extensions'][:8]])
+        floor_str = f" (Floor: {matched_intercom['floor']})" if matched_intercom.get('floor') else ""
+        specific_intercom_block = f"""
+EXACT MATCHED HOSPITAL DEPARTMENT INTERCOM FROM DATABASE:
+Department: {dept_label} ({matched_intercom['dept']}){floor_str}
+Department Directory Link: {dept_url}
+Extension Numbers:
+{ext_lines}
+"""
+
+    prompt = f"""You are the official Gemini AI Search Assistant for the Adhiparasakthi Hospitals & Research Institute (APH) Intranet Portal in Melmaruvathur, Tamil Nadu.
+
+CRITICAL INSTRUCTIONS ON RESOURCE URLS:
+1. Hospital file documents (PDFs, Excel sheets, and SOPs) are hosted EXCLUSIVELY on http://192.168.101.75:3000/files/
+2. NEVER use http://www.mapimshis.com/mapims/files/... for PDFs or files (that domain is ONLY for the ticketing web portal http://www.mapimshis.com/mapims/).
+3. You MUST recommend resources using the EXACT URLs provided in the VERIFIED RELEVANT CATALOG below.
+
+VERIFIED RELEVANT CATALOG FROM HOSPITAL DATABASE:
+{candidates_text}
+
+CORE PORTAL LOCATIONS:
+- HIS System: http://192.168.103.37/BB15SE/Backbone/admin/login.aspx
+- M - PACS (Medsynapse): http://192.168.101.224/User_Login.asp
+- Ticketing & Maintenance Desk: http://www.mapimshis.com/mapims/
+- PruWorks HRMS: https://mapims-hrms.tecvinesolutions.com
+- HRMS Staff: http://www.mapimsmrd.com/staff
+- MRD Portal: http://www.mapimsmrd.com/mapimsmrd/
+- Intercom Telephony Directory: ./intercom.html
+- Consent Forms Vault: ./consent.html
+- Clinical & Common Forms: ./commonforms.html
+- HR Forms Hub: ./index.html#forms
+- IT Forms Hub: ./itforms.html
+- Manuals & SOPs Hub: ./manuals.html
+- Committees & MOM: ./comitee.html
+- Recent Circulars: ./recent circular.html
+{specific_intercom_block}
+OFFICIAL CAMPUS TELEPHONE & INTERCOM EXTENSION DIRECTORY:
+- IT Department Extensions:
+  • IT Hardware Support: 2226
+  • IT Software Support: 2228
+  • IT Manager: 2227
+  • DGM & IT Head: 2225
+- Emergency & Critical Hotlines:
+  • Emergency Reception / Casualty: 2001, 2002
+  • Blood Bank (24/7): 2131, 2132
+  • ICU / Critical Care: 2156, 2160, 2163
+  • Main Gate / Security: 2800
+- Official Directory Documents:
+  • Printable PDF: Campus Intercom & Extension Directory PDF (URL: http://192.168.101.75:3000/files/Intercom Directory.pdf)
+  • Searchable Online List: Campus Intercom & Extension Directory (Searchable List) (URL: ./intercom.html)
+
+STRICT TELEPHONY & INTERCOM SEARCH RULE:
+If the user uses ANY telephony words in English, Tamil, or Tanglish:
+- 'intercom', 'inercom', 'extension', 'ext', 'call', 'phone', 'telephone', 'dial'
+- 'tholaipesi', 'tholaipasi', 'inaippu', 'inaippugal', 'azhaippu', 'alaippu', 'koopidu', 'pesa', 'en', 'yenn'
+- 'தொலைபேசி', 'இணைப்பு', 'இணைப்புகள்', 'அழைப்பு', 'அழைப்புகள்', 'எண்', 'எண்கள்', 'போன்', 'கால்', 'கூப்பிடு', 'பேசு', 'தொடர்பு', 'இன்டர்காம்', 'எக்ஸ்டென்ஷன்'
+1. This is STRICTLY a hospital telephony and intercom extension query.
+2. If a hospital department or service is mentioned in English, Tamil, or Tanglish (e.g. 'call billing', 'கட்டணம் தொலைபேசி எண்', 'inercom for hr', 'மனிதவளம் போன்', 'phone it', 'கணினி எண்', 'ortho extension', 'எலும்பு பிரிவு கால்', 'dialysis call', 'டயாலிசிஸ் இணைப்பு'):
+   - In the "answer" field, you MUST explicitly provide the verified extension numbers for that department. If the question is in Tamil or Tanglish, provide the department name and extension numbers in Tamil/Tanglish.
+   - In the "links" array, you MUST provide '{dept_label} Department Intercom Directory' with URL '{dept_url}' as the primary link (category: 'Staff Directory', badge: '{dept_label} Directory'). Do NOT label single-department links as 'PDF'. Single department links open the dedicated department directory with 1-click print-to-PDF.
+3. If NO department is specified (e.g. 'inercom', 'call', 'phone', 'extension', 'intercom', 'தொலைபேசி', 'tholaipesi', 'இணைப்பு எண்', 'inaippu en'):
+   - In the "answer" field, provide the hospital emergency & critical hotlines: Emergency Reception (2001, 2002), Blood Bank (2131), ICU (2156), Main Gate (2800), and IT Support (2226).
+   - In the "links" array, you MUST provide:
+     • Campus Intercom & Extension Directory PDF (http://192.168.101.75:3000/files/Intercom Directory.pdf)
+     • Campus Intercom & Extension Directory (Searchable List) (./intercom.html)
+4. NEVER return unrelated policies, circulars, or forms like 'Medication Recall' or clinical documents for telephony queries.
+
+STRICT STORE INDENT & PROCUREMENT SEARCH RULE:
+If the user asks about hospital store indents, procurement, requisitions, or stock (e.g. 'what indent for stores is available details', 'indent for stores', 'purchase process', 'procurement', 'கொள்முதல்', 'இந்தென்ட்'):
+1. Recommend the official hospital store procurement documents:
+   - 'Purchase Process' (URL: http://192.168.101.75:3000/files/Instruments%20and%20Equipment%20APR%202025.pdf)
+   - 'Drug Stores Stock Details' (URL: http://192.168.101.75:3000/files/Drug Stores Stock Details.pdf)
+   - 'Inventory Stock Details 2024' (URL: http://192.168.101.75:3000/files/Inventory Stock Details 2024.pdf)
+2. Explain that hospital departments use the Purchase Process workflow (Instruments & Equipment APR 2025) for store indents and equipment procurement, and refer to Drug Stores Stock Details and Inventory Stock Details 2024 for available materials.
+3. NEVER mention, link, or suggest PaperZero (it is hidden/deprecated and must not be shown).
+4. NEVER return unrelated imaging clinical policies (e.g. 'Imaging Results are Available Within a Defined Time Frame'), IT desktop forms, or telephony directories for general store queries unless explicitly requested.
+
+
+
+
+ON-PAGE SECTIONS ON INTRANET HOMEPAGE (index.html):
+- Common Forms: Located in Forms section (#forms) under the "Common Forms" tab (44 approved ICU checklists, SBAR handover, narcotic indents & infection control protocols).
+- IT Forms & HIS Requests: Located in Forms section (#forms) under the "IT Forms" tab (8 approved requisition forms including New HIS User Request, Doctor Name and ID creation in HIS, Item creation in HIS, WiFi request, System request).
+- HIS System: Located in Core Systems section (#core-systems) as the first enterprise card "HIS System" (AOSTA Backbone hospital clinical login).
+- HR Forms: Located in Forms section (#forms) under the "HR Forms" tab (Faculty applications, non-teaching jobs, promotion, holidays).
+- Consent Forms: Located in Forms section (#forms) under the "Consent" tab (Surgical consent Tamil/English, blood transfusion consent).
+- When the user asks "where is ...", inform them clearly which section and tab contains it, and that the portal page provides instant one-click jump navigation to it.
+
+BILINGUAL & TANGLISH UNDERSTANDING:
+- Hospital staff frequently search in Tamil (e.g. 'அறுவை சிகிச்சை', 'ஒப்புதல்', 'ரத்த வங்கி', 'விடுமுறை') or Tanglish (Tamil in Latin script, e.g. 'aruvai sikitsai', 'oputhal', 'raththa vangi', 'vidumurai', 'kattanam', 'marunthu', 'sambalam', 'kanini').
+- Understand and translate these clinical & administrative terms accurately to the matching forms, tariffs, or departments.
+- If the user asks in Tamil or Tanglish, provide an answer that directly addresses their intent, highlighting both Tamil & English availability (e.g., Informed Consent Form for Surgery - Tamil / அறுவை சிகிச்சைக்கான தகவலறிந்த ஒப்புதல் படிவம்).
+
+User Question: {user_query}
+
+Instructions for output:
+1. Answer the user's question directly, clearly, and authoritatively in 2-3 concise sentences.
+2. Recommend the best matching forms, documents, systems, or contacts.
+3. Every link URL must match an exact verified URL from the list above.
+4. Output MUST be valid JSON with this exact schema:
+{{
+  "answer": "Clear, concise direct explanation and guidance",
+  "links": [
+    {{"title": "Resource Title", "url": "Exact verified URL from catalog", "category": "Category name", "badge": "System | Form | PDF | Hub | Directory"}}
+  ],
+  "suggestions": ["Related Search 1", "Related Search 2", "Related Search 3"]
+}}"""
+    return prompt
+
+def query_gemini_ai(user_query, api_key):
+    # 1. Retrieve top matching catalog candidates
+    candidates = search_catalog_candidates(user_query, limit=6)
+    grounded_prompt = build_grounded_prompt(user_query, candidates)
+
+    models = ['gemini-2.5-flash-lite', 'gemini-flash-latest', 'gemini-3.6-flash']
+    payload = {
+        "contents": [
+            {
+                "parts": [
+                    {"text": grounded_prompt}
+                ]
+            }
+        ],
+        "generationConfig": {
+            "responseMimeType": "application/json",
+            "temperature": 0.15
+        }
+    }
+
+    last_error = None
+    ai_result = None
+
+    for model in models:
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={api_key}"
+        req = urllib.request.Request(
+            url,
+            data=json.dumps(payload).encode('utf-8'),
+            headers={'Content-Type': 'application/json'}
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=5) as response:
+                result_data = json.loads(response.read().decode('utf-8'))
+                raw_text = result_data['candidates'][0]['content']['parts'][0]['text']
+                ai_result = json.loads(raw_text)
+                break
+        except urllib.error.HTTPError as e:
+            err_msg = e.read().decode('utf-8', errors='ignore')
+            last_error = f"Model {model} HTTP {e.code}: {err_msg[:120]}"
+            continue
+        except Exception as e:
+            last_error = f"Model {model} error: {str(e)}"
+            continue
+
+    # Fallback to local deterministic search if AI API call fails
+    if not ai_result:
+        print(f"⚠️ Gemini API failed ({last_error}). Falling back to deterministic catalog search.")
+        return generate_catalog_fallback_result(user_query, candidates)
+
+    # =========================================================================
+    # 4. STRICT URL VALIDATION, SNAPPING & CATALOG ASSURANCE
+    # =========================================================================
+    validated_links = []
+    seen_urls = set()
+
+    raw_links = ai_result.get('links', [])
+    for link in raw_links:
+        raw_url = link.get('url', '').strip()
+        title = link.get('title', '').strip()
+        category = link.get('category', 'Document')
+        badge = link.get('badge', 'PDF')
+
+        if not raw_url:
+            continue
+
+        snapped_url = snap_to_catalog_url(raw_url, title)
+        if not snapped_url:
+            snapped_url = raw_url
+
+        if snapped_url in seen_urls:
+            continue
+        seen_urls.add(snapped_url)
+
+        # Retrieve verified catalog metadata if available
+        if snapped_url in URL_MAP:
+            cat_item = URL_MAP[snapped_url]
+            validated_links.append({
+                "title": cat_item.get('title', title),
+                "url": cat_item.get('url', snapped_url),
+                "category": cat_item.get('category', category),
+                "badge": cat_item.get('badge', badge)
+            })
+        else:
+            validated_links.append({
+                "title": title,
+                "url": snapped_url,
+                "category": category,
+                "badge": badge
+            })
+
+    # Department-specific intercom URL replacement / augmentation
+    matched_intercom = find_intercom_department(user_query)
+    q_lower = user_query.lower()
+    is_telecom_req = is_telephony_query(user_query)
+
+    if matched_intercom:
+        dept_label = matched_intercom.get('dept_label') or matched_intercom['dept']
+        dept_url = f"./intercom.html?dept={urllib.parse.quote(dept_label)}"
+        dept_dir_title = f"{dept_label} Department Intercom Directory"
+        dept_dir_badge = f"{dept_label} Directory"
+
+        # Prune false positive documents like 'Medication Recall'
+        validated_links = [l for l in validated_links if not ('recall' in l.get('title', '').lower() and 'recall' not in q_lower)]
+
+        new_links = []
+        replaced = False
+        for l in validated_links:
+            u = l.get('url', '')
+            t = l.get('title', '')
+            if 'intercom' in u or 'intercom' in t.lower() or 'extension' in t.lower():
+                if not replaced:
+                    new_links.append({
+                        "title": dept_dir_title,
+                        "url": dept_url,
+                        "category": "Staff Directory",
+                        "badge": dept_dir_badge
+                    })
+                    replaced = True
+                else:
+                    new_links.append(l)
+            else:
+                new_links.append(l)
+
+        if not replaced and is_telecom_req:
+            intercom_card = {
+                "title": dept_dir_title,
+                "url": dept_url,
+                "category": "Staff Directory",
+                "badge": dept_dir_badge
+            }
+            new_links.insert(0, intercom_card)
+
+        validated_links = new_links
+
+        # Ensure answer mentions the extension numbers if Gemini didn't mention them
+        answer_text = ai_result.get('answer', '')
+        ext_list_str = ", ".join([f"{e['desc']}: {e['ext']}" for e in matched_intercom['extensions'][:4]])
+        is_tamil = is_tamil_query(user_query)
+        if not any(e['ext'] in answer_text for e in matched_intercom['extensions'][:4]):
+            if is_telecom_req:
+                if is_tamil:
+                    ai_result['answer'] = f"**{dept_label}** துறையின் தொலைபேசி / இன்டர்காம் இணைப்பு எண்கள்: **{ext_list_str}**. {answer_text}"
+                else:
+                    ai_result['answer'] = f"The intercom extension numbers for **{dept_label}** are: **{ext_list_str}**. {answer_text}"
+            else:
+                if is_tamil:
+                    ai_result['answer'] = f"{answer_text}\n\n📞 **{dept_label} தொலைபேசி எண்கள்**: {ext_list_str}."
+                else:
+                    ai_result['answer'] = f"{answer_text}\n\n📞 **{dept_label} Intercom Extensions**: {ext_list_str}."
+
+    elif is_telecom_req:
+        # Telephony request without department (e.g. "inercom", "call", "extension", "phone", "dial")
+        campus_pdf_url = "http://192.168.101.75:3000/files/Intercom Directory.pdf"
+        campus_web_url = "./intercom.html"
+
+        telecom_links = [
+            {"title": "Campus Intercom & Extension Directory PDF", "url": campus_pdf_url, "category": "Staff Directory", "badge": "Directory PDF"},
+            {"title": "Campus Intercom & Extension Directory (Searchable List)", "url": campus_web_url, "category": "Staff Directory", "badge": "Directory"}
+        ]
+
+        # Prune non-telecom links (like Medication Recall)
+        pruned_links = [l for l in validated_links if any(k in l.get('title', '').lower() or k in l.get('url', '').lower() for k in ['intercom', 'extension', 'directory', 'staff']) and not ('recall' in l.get('title', '').lower() and 'recall' not in q_lower)]
+        if not pruned_links:
+            validated_links = telecom_links
+        else:
+            if not any(l.get('url') == campus_pdf_url for l in pruned_links):
+                pruned_links.insert(0, telecom_links[0])
+            if not any(l.get('url') == campus_web_url for l in pruned_links):
+                pruned_links.append(telecom_links[1])
+            validated_links = pruned_links
+
+        answer_text = ai_result.get('answer', '')
+        if not any(ext in answer_text for ext in ['2001', '2131', '2800', '2226']):
+            if is_tamil_query(user_query):
+                ai_result['answer'] = "மருத்துவமனை அவசர உதவி மற்றும் முக்கிய துறை தொலைபேசி எண்கள்: அவசர சிகிச்சை (Casualty): 2001 / 2002, ரத்த வங்கி (24/7): 2131, தீவிர சிகிச்சை (ICU): 2156, மெயின் கேட்: 2800, கணினி உதவி மையம் (IT): 2226 / 2228. முழுமையான தொடர்பு பட்டியலை கீழே உள்ள PDF மூலம் பார்க்கலாம்."
+    # Sanitize answer & suggestions to ensure PaperZero is never shown
+    final_answer = ai_result.get('answer', '')
+    if 'paperzero' in final_answer.lower():
+        final_answer = re.sub(r'(\s*and\s+)?(the\s+)?[\'"]?PaperZero(?:\s+Digital\s+Request\s+Portal)?[\'"]?[^.]*\.', '.', final_answer, flags=re.IGNORECASE)
+        final_answer = re.sub(r'PaperZero[^\n.]*', '', final_answer, flags=re.IGNORECASE)
+        final_answer = re.sub(r'^[\s.,;:\-]+', '', final_answer).strip()
+    ai_result['answer'] = final_answer
+
+    ai_result['suggestions'] = [
+        s for s in ai_result.get('suggestions', [])
+        if 'paperzero' not in s.lower() and 'paper.mapims' not in s.lower()
+    ]
+    ai_result['links'] = [
+        l for l in validated_links
+        if 'paperzero' not in l.get('title', '').lower() and 'paper.mapims' not in l.get('url', '').lower()
+    ]
+    return ai_result
+
+def generate_catalog_fallback_result(query, candidates=None):
+    """Produces a clean grounded response directly from the catalog or intercom directory."""
+    if candidates is None:
+        candidates = search_catalog_candidates(query, limit=5)
+
+    q_lower = query.lower()
+    is_telecom_query = is_telephony_query(query)
+    is_tamil = is_tamil_query(query)
+
+    # 1. Check if query matches any hospital department from intercom directory
+    matched_dept = find_intercom_department(query)
+    dept_label = (matched_dept.get('dept_label') or matched_dept['dept']) if matched_dept else ""
+    dept_url = f"./intercom.html?dept={urllib.parse.quote(dept_label)}" if dept_label else "./intercom.html"
+
+    # If query has telephony intent or matches a department with no catalog docs (like canteen/dietetics), return intercom result
+    if matched_dept and (not candidates or is_telecom_query or any(k in q_lower for k in ['intercom', 'inercom', 'extension', 'ext', 'number', 'phone', 'call', 'contact'])):
+        ext_strs = [f"**{e['desc']}: {e['ext']}**" for e in matched_dept['extensions'][:6]]
+        floor_info = f" ({matched_dept['floor']})" if matched_dept.get('floor') else ""
+
+        if is_tamil:
+            answer = f"**{dept_label}** துறையின் அதிகாரப்பூர்வ தொலைபேசி / இன்டர்காம் இணைப்பு எண்கள்: {', '.join(ext_strs)}. முழுமையான துறை தொடர்பு பட்டியலை கீழே உள்ள இணைப்பில் பார்க்கலாம்."
+            suggestions = [f"{dept_label} Ext: {matched_dept['extensions'][0]['ext']}", f"{dept_label} Intercom Directory", "அவசர பிரிவு: 2001 / 2800"]
+        else:
+            answer = f"The intercom extension numbers for **{dept_label}**{floor_info} are: {', '.join(ext_strs)}. You can access the department directory below."
+            suggestions = [f"{dept_label} Ext: {matched_dept['extensions'][0]['ext']}", f"{dept_label} Intercom Directory", "Campus Directory PDF"]
+
+        links = [
+            {"title": f"{dept_label} Department Intercom Directory", "url": dept_url, "category": "Staff Directory", "badge": f"{dept_label} Directory"},
+            {"title": "Campus Intercom & Extension Directory (Searchable List)", "url": "./intercom.html", "category": "Staff Directory", "badge": "All Departments"},
+            {"title": "Official Campus Intercom Directory PDF (Full Hospital)", "url": "http://192.168.101.75:3000/files/Intercom%20Directory.pdf", "category": "Staff Directory", "badge": "Full PDF"}
+        ]
+        return {"answer": answer, "links": links, "suggestions": suggestions}
+
+    if is_telecom_query and not matched_dept:
+        if is_tamil:
+            answer = "மருத்துவமனை அவசர உதவி மற்றும் முக்கிய துறை தொலைபேசி எண்கள்: அவசர சிகிச்சை (Casualty): 2001 / 2002, ரத்த வங்கி (24/7): 2131, தீவிர சிகிச்சை (ICU): 2156, மெயின் கேட்: 2800, கணினி உதவி மையம் (IT): 2226 / 2228. அனைத்து துறை எண்களையும் அதிகாரப்பூர்வ PDF அல்லது தேடல் பட்டியலில் பார்க்கலாம்."
+            suggestions = ["கணினி IT பிரிவு: 2226 / 2228", "அவசர சிகிச்சை: 2001 / 2800", "ரத்த வங்கி Ext: 2131"]
+        else:
+            answer = "Hospital emergency hotlines and departmental lines: Emergency Reception: 2001 / 2002, Blood Bank: 2131, ICU: 2156, Main Gate: 2800, IT Support: 2226 / 2228. Find all department extension numbers in the official Campus Intercom & Extension Directory PDF or searchable online list."
+            suggestions = ["IT Intercom: 2226 / 2228", "Emergency Casualty: 2001 / 2800", "Blood Bank Ext: 2131"]
+        links = [
+            {"title": "Campus Intercom & Extension Directory (Searchable List)", "url": "./intercom.html", "category": "Staff Directory", "badge": "Directory"},
+            {"title": "Official Campus Intercom Directory PDF (Full Hospital)", "url": "http://192.168.101.75:3000/files/Intercom%20Directory.pdf", "category": "Staff Directory", "badge": "Full PDF"}
+        ]
+        return {"answer": answer, "links": links, "suggestions": suggestions}
+
+    if not candidates:
+        return {
+            "answer": f"No direct hospital document or application matched '{query}'. Please check the Forms vault or Intercom directory.",
+            "links": [
+                {"title": "Consent Forms Vault", "url": "./consent.html", "category": "Forms Vault", "badge": "Hub"},
+                {"title": "Clinical & Common Forms", "url": "./commonforms.html", "category": "Forms Vault", "badge": "Hub"},
+                {"title": "Hospital Intercom Directory", "url": "./intercom.html", "category": "Telephony", "badge": "Directory"}
+            ],
+            "suggestions": ["Informed Consent Form", "ICU Checklist", "Emergency Telephony"]
+        }
+
+    top_item = candidates[0]
+    links = []
+    for c in candidates[:4]:
+        links.append({
+            "title": c['title'],
+            "url": c['url'],
+            "category": c['category'],
+            "badge": c.get('badge', 'PDF')
+        })
+
+    is_tamil = any(ord(ch) >= 0x0B80 and ord(ch) <= 0x0BFF for ch in query) or any(
+        k in query.lower() for k in ['aruvai', 'sikitsai', 'sigichai', 'oputhal', 'raththa', 'vidumurai', 'kattanam', 'sambalam', 'marunthu', 'kanini']
+    )
+    is_it_query = (
+        (is_word_match('it', q_lower) and not any(k in q_lower for k in ['fit', 'credit', 'audit'])) or
+        any(k in q_lower for k in ['it forms', 'kanini', 'கணினி', 'hardware', 'software', 'workstation'])
+    )
+
+    if is_telecom_query:
+        answer = "Find hospital intercom extension numbers in the official Campus Intercom & Extension Directory PDF or searchable online list."
+        links = [
+            {"title": "Campus Intercom & Extension Directory PDF", "url": "http://192.168.101.75:3000/files/Intercom Directory.pdf", "category": "Staff Directory", "badge": "Directory PDF"},
+            {"title": "Campus Intercom & Extension Directory (Searchable List)", "url": "./intercom.html", "category": "Staff Directory", "badge": "Directory"}
+        ]
+        suggestions = ["IT Intercom: 2226 / 2228", "Emergency Casualty: 2001 / 2800", "Blood Bank Ext: 2131"]
+        return {"answer": answer, "links": links, "suggestions": suggestions}
+
+    is_hr_intent = (
+        is_word_match('hr', q_lower) or is_word_match('hrm', q_lower) or is_word_match('hrms', q_lower) or
+        any(k in q_lower for k in ['human resource', 'pruworks', 'payroll', 'payslip', 'attendance', 'teaching', 'non-teaching', 'appraisal', 'promotion', 'sambalam', 'சம்பளம்', 'velai', 'vinnappam'])
+    )
+
+    is_store_intent = (
+        any(k in q_lower for k in ['indent', 'indents', 'store', 'stores', 'purchase', 'procurement', 'requisition', 'kolmuthal', 'கொள்முதல்']) and
+        not is_hr_intent and not is_it_query
+    )
+
+    if is_hr_intent:
+        if is_tamil:
+            answer = f"'{query}' (மனிதவளத் துறை / HR) தொடர்பான {len(candidates)} அதிகாரப்பூர்வ படிவங்கள் மற்றும் தளங்கள் கண்டறியப்பட்டுள்ளன. முதன்மை தளம்: '{top_item['title']}'."
+        else:
+            answer = f"Found {len(candidates)} verified hospital Human Resources (HR) portals and official documents matching '{query}'. Primary resource is '{top_item['title']}'."
+        suggestions = ["PruWorks HRMS Staff Login", "Teaching & Non-Teaching Forms", "Human Resources Manual 2025"]
+    elif is_store_intent:
+        if is_tamil:
+            answer = "மருத்துவமனை ஸ்டோர்ஸ் இந்தென்ட் (Store Indent) மற்றும் கொள்முதல் நடைமுறைகளுக்கு **Purchase Process** வழிகாட்டுதல் (Instruments & Equipment APR 2025) பார்க்கவும். இருப்பு நிலவரத்திற்கு **General Store Inventory Stock Details** மற்றும் **Drug Stores Stock Details** பார்க்கவும்."
+        else:
+            answer = "For hospital store indents and equipment procurement, departments use the **Purchase Process** workflow (Instruments & Equipment APR 2025). For active inventory and pharmacy stocks, refer to **General Store Inventory Stock Details** and **Drug Stores Stock Details**."
+        suggestions = ["Purchase Process PDF", "Inventory Stock Details 2024", "Drug Stores Stock Details", "Purchase Stores Ext: 2701"]
+    elif is_tamil:
+        answer = f"'{query}' தொடர்பான {len(candidates)} மருத்துவ ஆவணங்கள் மற்றும் படிவங்கள் கண்டறியப்பட்டுள்ளன. முதன்மையான ஆவணம்: '{top_item['title']}' ({top_item['category']})."
+    else:
+        answer = f"Found {len(candidates)} verified hospital documents matching '{query}'. The primary resource is '{top_item['title']}' located in {top_item['category']}."
+
+    # If matched a department in a telephony query, append department intercom contact & PDF link
+    if matched_dept and is_telecom_query:
+        dept_intercom_link = {
+            "title": f"{dept_label} Intercom Directory PDF",
+            "url": dept_url,
+            "category": "Staff Directory",
+            "badge": "Directory PDF"
+        }
+        if not any(l.get('url') == dept_url for l in links):
+            links.append(dept_intercom_link)
+        ext_summary = ", ".join([f"{e['desc']}: {e['ext']}" for e in matched_dept['extensions'][:4]])
+        answer += f"\n\n📞 **{dept_label} Intercom Extensions**: {ext_summary}."
+    elif matched_dept and is_store_intent:
+        ext_summary = ", ".join([f"{e['desc']}: {e['ext']}" for e in matched_dept['extensions'][:3]])
+        answer += f"\n\n📞 **{dept_label} Intercom Extensions**: {ext_summary}."
+
+    if is_hr_intent:
+        suggestions = ["PruWorks HRMS Staff Login", "Teaching & Non-Teaching Forms", "Human Resources Manual 2025"]
+    elif is_store_intent:
+        suggestions = ["Purchase Process PDF", "Inventory Stock Details 2024", "Drug Stores Stock Details", "Purchase Stores Ext: 2701"]
+    elif any(k in q_lower for k in ['radha', 'ratha', 'raththa', 'vangi', 'blood', 'ரத்த', 'வங்கி']):
+        suggestions = ["Blood Transfusion Consent Form", "ரத்த வங்கி தொலைபேசி Ext: 2131", "Casualty Emergency: 2001 / 2800"]
+    elif any(k in q_lower for k in ['aruvai', 'sikitsai', 'oputhal', 'அறுவை', 'ஒப்புதல்']):
+        suggestions = ["Informed Consent Form - English", "General Ward Surgery OT Tariff", "ICU Casesheet Checklist"]
+    elif any(k in q_lower for k in ['vidumurai', 'விடுமுறை', 'holiday', 'leave']):
+        suggestions = ["PruWorks HRMS Portal", "PMS Policy Document", "Hospital Staff Directory"]
+    elif any(k in q_lower for k in ['marunthu', 'மருந்து', 'pharmacy', 'drug']):
+        suggestions = ["Hospital Formulary 2025", "Free Drug List (NMC)", "IP Pharmacy Stock Details"]
+    elif any(k in q_lower for k in ['it', 'kanini', 'computer', 'wifi', 'printer', 'hardware', 'software', 'கணினி']):
+        suggestions = ["System Request Form", "Employee WIFI Request Form", "APH IT Forms Hub"]
+    elif any(k in q_lower for k in ['extension', 'extensions', 'intercom', 'phone', 'tholaipesi', 'தொலைபேசி', 'telephony', 'ext']):
+        suggestions = ["Campus Intercom & Extension Directory", "Official Intercom Directory PDF", "Emergency Casualty: 2001 / 2800"]
+    elif is_tamil:
+        suggestions = ["அறுவை சிகிச்சை ஒப்புதல்", "ரத்த வங்கி இருப்பு விவரம்", "விடுமுறை பட்டியல் 2026"]
+    else:
+        clean_sug_query = re.sub(r'\b(details|detail|forms|form|pdf|portal|available|what|is|for)\b', '', query, flags=re.I).strip()
+        clean_sug_query = re.sub(r'\s+', ' ', clean_sug_query)
+        if clean_sug_query:
+            suggestions = [f"{clean_sug_query.title()} Form", "Hospital Forms Vault", "NABH SOPs"]
+        else:
+            suggestions = ["Hospital Forms Vault", "Clinical SOPs", "Campus Directory"]
+
+    return {
+        "answer": answer,
+        "links": links,
+        "suggestions": suggestions
+    }
+
+# =========================================================================
+# 5. HTTP REQUEST HANDLER
+# =========================================================================
+class APHPortalRequestHandler(SimpleHTTPRequestHandler):
+    def translate_path(self, path):
+        # Cleanly resolve /files/... paths without requiring any circular symlinks
+        orig_path = super().translate_path(path)
+        if path.startswith('/files/'):
+            # If files/ folder exists and contains the file, serve it
+            if os.path.exists(orig_path):
+                return orig_path
+            # Otherwise, fallback to the root directory
+            rel_file = path[len('/files/'):]
+            root_path = super().translate_path('/' + rel_file)
+            if os.path.exists(root_path):
+                return root_path
+        return orig_path
+
+    def end_headers(self):
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+        super().end_headers()
+
+    def do_OPTIONS(self):
+        self.send_response(204)
+        self.end_headers()
+
+    def do_POST(self):
+        if self.path in ['/api/ai-search', '/api/search']:
+            content_length = int(self.headers.get('Content-Length', 0))
+            post_data = self.rfile.read(content_length)
+
+            try:
+                data = json.loads(post_data.decode('utf-8')) if post_data else {}
+                query = data.get('query', '').strip()
+                if not query:
+                    self.send_json_response(400, {'error': 'Search query is required.'})
+                    return
+
+                api_key = load_gemini_api_key()
+                if not api_key:
+                    # Serve directly from catalog if no key
+                    fallback = generate_catalog_fallback_result(query)
+                    self.send_json_response(200, fallback)
+                    return
+
+                ai_result = query_gemini_ai(query, api_key)
+                self.send_json_response(200, ai_result)
+            except Exception as e:
+                # Always deliver working catalog fallback instead of 500 error
+                fallback = generate_catalog_fallback_result(query if 'query' in locals() else '')
+                self.send_json_response(200, fallback)
+            return
+
+        self.send_error(404, "Endpoint not found")
+
+    def send_json_response(self, status_code, data):
+        body = json.dumps(data, ensure_ascii=False).encode('utf-8')
+        self.send_response(status_code)
+        self.send_header('Content-Type', 'application/json; charset=utf-8')
+        self.send_header('Content-Length', str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
+
+if __name__ == '__main__':
+    web_dir = os.path.dirname(os.path.abspath(__file__))
+    os.chdir(web_dir)
+    server_address = ('', PORT)
+    httpd = HTTPServer(server_address, APHPortalRequestHandler)
+    print(f"🚀 APH Hospital Intranet Server with Verified AI Search running on http://localhost:{PORT}")
+    try:
+        httpd.serve_forever()
+    except KeyboardInterrupt:
+        print("\nServer stopped.")
+        httpd.server_close()

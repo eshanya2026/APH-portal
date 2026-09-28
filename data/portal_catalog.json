@@ -1,0 +1,4016 @@
+[
+  {
+    "title": "CONSENT FOR BLOOD COMPONENT TRANSFUSIONS",
+    "url": "http://192.168.101.75:3000/files/Blood%20Transfusion%20Reaction%20Form%20version%202.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Blood Transfusion Reaction Form version 2.pdf",
+    "category": "Consent Forms",
+    "description": "Blood and blood components transfusion consent",
+    "badge": "Medicolegal",
+    "hubPage": "./consent.html"
+  },
+  {
+    "title": "Dama Consent Form",
+    "url": "http://192.168.101.75:3000/files/Dama%20Consent%20Form.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Dama Consent Form.pdf",
+    "category": "Consent Forms",
+    "description": "Discharge against medical advice declaration",
+    "badge": "Medicolegal",
+    "hubPage": "./consent.html"
+  },
+  {
+    "title": "Not Willing Consent",
+    "url": "http://192.168.101.75:3000/files/Not%20Willing%20Consent.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Not Willing Consent.pdf",
+    "category": "Consent Forms",
+    "description": "Clinical treatment or procedure refusal document",
+    "badge": "Medicolegal",
+    "hubPage": "./consent.html"
+  },
+  {
+    "title": "Visiting Consultant Requisition Form",
+    "url": "http://192.168.101.75:3000/files/Visiting%20Consultant%20Requisition%20letter.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Visiting Consultant Requisition letter.pdf",
+    "category": "Consent Forms",
+    "description": "Specialist consultation requisition protocol",
+    "badge": "Medicolegal",
+    "hubPage": "./consent.html"
+  },
+  {
+    "title": "Informed Consent Form For Surgery or Procedures -English",
+    "url": "http://192.168.101.75:3000/files/INFORMED%20CONSENT%20FORM%20FOR%20SURGERY%20OR%20PROCEDURES%20-English.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/INFORMED CONSENT FORM FOR SURGERY OR PROCEDURES -English.pdf",
+    "category": "Consent Forms",
+    "description": "Standard operative & invasive surgical consent",
+    "badge": "Medicolegal",
+    "hubPage": "./consent.html"
+  },
+  {
+    "title": "Informed Consent Form For Surgery or Procedures-Tamil",
+    "url": "http://192.168.101.75:3000/files/INFORMED%20CONSENT%20FORM%20FOR%20SURGERY%20OR%20PROCEDURES-Tamil.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/INFORMED CONSENT FORM FOR SURGERY OR PROCEDURES-Tamil.pdf",
+    "category": "Consent Forms",
+    "description": "அறுவை சிகிச்சைக்கான தகவலறிந்த ஒப்புதல் படிவம்",
+    "badge": "Medicolegal",
+    "hubPage": "./consent.html"
+  },
+  {
+    "title": "Paediatric Consent Form",
+    "url": "http://192.168.101.75:3000/files/paedconsent.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/paedconsent.pdf",
+    "category": "Consent Forms",
+    "description": "Guardian consent for neonatal, infant, and child medical and surgical interventions",
+    "badge": "Medicolegal",
+    "hubPage": "./consent.html"
+  },
+  {
+    "title": "General Patient Admission Consent",
+    "url": "http://192.168.101.75:3000/files/consent.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/consent.pdf",
+    "category": "Consent Forms",
+    "description": "General hospital in-patient care, nursing rounds, and routine diagnostic tests authorization",
+    "badge": "Medicolegal",
+    "hubPage": "./consent.html"
+  },
+  {
+    "title": "Code Blue",
+    "url": "http://192.168.101.75:3000/files/Code.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Code.pdf",
+    "category": "Common Forms",
+    "description": "Cardiac arrest emergency response algorithm & protocol",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "Code Blue Post Event Analysis Form",
+    "url": "http://192.168.101.75:3000/files/Code%20Blue%20Post%20Event%20Analysis%20Form.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Code Blue Post Event Analysis Form.pdf",
+    "category": "Common Forms",
+    "description": "CPR event debrief, timeline audit & resuscitation analysis",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "Code RRT Activation Form",
+    "url": "http://192.168.101.75:3000/files/Code RRT Activation Form.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Code RRT Activation Form.pdf",
+    "category": "Common Forms",
+    "description": "CPR event debrief, timeline audit & resuscitation analysis",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "ICU Casesheet Checklist",
+    "url": "http://192.168.101.75:3000/files/ICU%20Casesheet%20Checklist.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/ICU Casesheet Checklist.pdf",
+    "category": "Common Forms",
+    "description": "Comprehensive clinical casesheet audit checklist for intensive care",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "ICU to Ward Shifting Criteria Checklist",
+    "url": "http://192.168.101.75:3000/files/ICU%20to%20Ward%20Shifting%20Criteria%20Checklist.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/ICU to Ward Shifting Criteria Checklist.pdf",
+    "category": "Common Forms",
+    "description": "Step-down stability criteria and vital sign transfer checklist",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "HANDING OVER SBAR",
+    "url": "http://192.168.101.75:3000/files/HANDING%20OVER%20SBAR.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/HANDING OVER SBAR.pdf",
+    "category": "Common Forms",
+    "description": "Situation, Background, Assessment, Recommendation handover protocol",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "NARCOTIC DRUGS FORM",
+    "url": "http://192.168.101.75:3000/files/NARCOTIC%20DRUGS%20FORM.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/NARCOTIC DRUGS FORM.pdf",
+    "category": "Common Forms",
+    "description": "Controlled substances indent & dispensing register",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "DRUG - FOOD INTERACTION LIST",
+    "url": "http://192.168.101.75:3000/files/DRUG%20-%20FOOD%20INTERACTION%20LIST.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/DRUG - FOOD INTERACTION LIST.pdf",
+    "category": "Common Forms",
+    "description": "Clinical formulary guide on drug and dietary interactions",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "DRUG - DRUG INTERACTION LIST",
+    "url": "http://192.168.101.75:3000/files/DRUG%20-%20DRUG%20INTERACTION%20LIST.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/DRUG - DRUG INTERACTION LIST.pdf",
+    "category": "Common Forms",
+    "description": "Reference chart for medication contraindications",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "Approved abbreviation July 2025 -2026",
+    "url": "http://192.168.101.75:3000/files/Approved%20abbreviation%20July%202025%20-2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Approved abbreviation July 2025 -2026.pdf",
+    "category": "Common Forms",
+    "description": "Official NABH accredited medical abbreviations list",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "EMERGENCY MEDICATION LIST - JAN 2026",
+    "url": "http://192.168.101.75:3000/files/EMERGENCY%20MEDICATION%20LIST%20-%20JAN%202026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/EMERGENCY MEDICATION LIST - JAN 2026.pdf",
+    "category": "Common Forms",
+    "description": "Official emergency drugs, crash cart & antidotes inventory",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "HIGH ALERT MEDICATIONS",
+    "url": "http://192.168.101.75:3000/files/HIGH%20ALERT%20MEDICATIONS.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/HIGH ALERT MEDICATIONS.pdf",
+    "category": "Common Forms",
+    "description": "High-alert medication safety storage and double-check protocol",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "48 Hour Antibiotics Review From",
+    "url": "http://192.168.101.75:3000/files/48%20Hour%20Antibiotics%20Review%20From.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/48 Hour Antibiotics Review From.pdf",
+    "category": "Common Forms",
+    "description": "Stewardship review form for broad-spectrum antimicrobials",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "Day Care Assessment Form",
+    "url": "http://192.168.101.75:3000/files/Day%20Care%20Assessment%20Form.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Day Care Assessment Form.pdf",
+    "category": "Common Forms",
+    "description": "Same-day surgical and medical assessment sheet",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "Day Care Discharge Summary",
+    "url": "http://192.168.101.75:3000/files/Day%20Care%20-%20Discharge%20Summary.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Day Care - Discharge Summary.pdf",
+    "category": "Common Forms",
+    "description": "Day care procedure completion and discharge summary",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "Emergency Transfer Record",
+    "url": "http://192.168.101.75:3000/files/EMERGENCY%20TRANSFER%20RECORD%20(3).pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/EMERGENCY TRANSFER RECORD (3).pdf",
+    "category": "Common Forms",
+    "description": "Critical patient inter-hospital transfer documentation",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "ER - Discharge Summary Form",
+    "url": "http://192.168.101.75:3000/files/ER%20-%20DISCHARGE%20SUMMARY%20FORM.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/ER - DISCHARGE SUMMARY FORM.pdf",
+    "category": "Common Forms",
+    "description": "Emergency room treatment completion & discharge summary",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "ER - Doctors Initial Assessment Form",
+    "url": "http://192.168.101.75:3000/files/DOCTORS%20INITIAL%20ASSESSMENT%20FOR%20EMERGENCY%20ROOM.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/DOCTORS INITIAL ASSESSMENT FOR EMERGENCY ROOM.pdf",
+    "category": "Common Forms",
+    "description": "Emergency medicine physician admission evaluation",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "ER - Nurses Initial Assessment Form",
+    "url": "http://192.168.101.75:3000/files/Nurses%20Initial%20Assessment%20for%20Emergency%20Room.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Nurses Initial Assessment for Emergency Room.pdf",
+    "category": "Common Forms",
+    "description": "Triage nursing vital signs and priority assessment",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "Modified Early Warning Score",
+    "url": "http://192.168.101.75:3000/files/MODIFIED%20EARLY%20WARNING%20SCORE%20(1).pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/MODIFIED EARLY WARNING SCORE (1).pdf",
+    "category": "Common Forms",
+    "description": "Bedside physiological scoring chart (MEWS) for deterioration",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "Food Token",
+    "url": "http://192.168.101.75:3000/files/food.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/food.pdf",
+    "category": "Common Forms",
+    "description": "Patient & attender dietary meal token requisition",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "ADR-Form",
+    "url": "http://192.168.101.75:3000/files/ADR-Form.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/ADR-Form.pdf",
+    "category": "Common Forms",
+    "description": "Adverse drug reaction pharmacovigilance incident report",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "Incident Report",
+    "url": "http://192.168.101.75:3000/files/Incident.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Incident.pdf",
+    "category": "Common Forms",
+    "description": "Clinical & operational sentinel event incident documentation",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "Transfusion Technique Protocol",
+    "url": "http://192.168.101.75:3000/files/transfusionprotocol.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/transfusionprotocol.pdf",
+    "category": "Common Forms",
+    "description": "Clinical protocol for safe whole blood and component delivery",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "Antibiogram",
+    "url": "http://192.168.101.75:3000/files/ANTIBIOGRAM.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/ANTIBIOGRAM.pdf",
+    "category": "Common Forms",
+    "description": "Institutional pathogen surveillance and antibiotic sensitivity",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "Restricted Anti-biotic Form",
+    "url": "http://192.168.101.75:3000/files/HIC.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/HIC.pdf",
+    "category": "Common Forms",
+    "description": "HIC committee authorization for restricted reserve antimicrobials",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "Restricted Anti-biotic Drug List",
+    "url": "http://192.168.101.75:3000/files/antibiotic.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/antibiotic.pdf",
+    "category": "Common Forms",
+    "description": "Approved list of reserved high-tier antimicrobial agents",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "Performance Management System Policy",
+    "url": "http://192.168.101.75:3000/files/PMS.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/PMS.pdf",
+    "category": "Common Forms",
+    "description": "Staff KPIs, annual appraisal guidelines and HR policy",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "Purchase Process",
+    "url": "http://192.168.101.75:3000/files/Instruments%20and%20Equipment%20APR%202025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Instruments and Equipment APR 2025.pdf",
+    "category": "Common Forms",
+    "description": "Hospital instruments and biomedical equipment procurement (APR 2025)",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "General Medicine",
+    "url": "http://192.168.101.75:3000/files/hrmedicine.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/hrmedicine.pdf",
+    "category": "Common Forms",
+    "description": "Clinical Privileges - General Medicine core competency credentialing",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "Ent",
+    "url": "http://192.168.101.75:3000/files/hrent.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/hrent.pdf",
+    "category": "Common Forms",
+    "description": "Clinical Privileges - ENT diagnostic & surgical authorization",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "Anaesthesia",
+    "url": "http://192.168.101.75:3000/files/hranaesthesia.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/hranaesthesia.pdf",
+    "category": "Common Forms",
+    "description": "Clinical Privileges - Anaesthesiology and critical care sedation",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "CMO Policy",
+    "url": "http://192.168.101.75:3000/files/CMO%20Policy.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/CMO Policy.pdf",
+    "category": "Common Forms",
+    "description": "Chief Medical Officer administrative jurisdiction and duty roles",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "Junior Resident Policy",
+    "url": "http://192.168.101.75:3000/files/Junior%20resident%20Policy.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Junior resident Policy.pdf",
+    "category": "Common Forms",
+    "description": "Resident medical officer shift rosters and clinical guidelines",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "Transport Policy",
+    "url": "http://192.168.101.75:3000/files/Transport.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Transport.pdf",
+    "category": "Common Forms",
+    "description": "Hospital fleet, patient ambulance and transport requisition guidelines",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "HVAC PM schedule",
+    "url": "http://192.168.101.75:3000/files/PMSheduleHVACsystem2021.xlsx",
+    "canonicalUrl": "http://192.168.101.75:3000/files/PMSheduleHVACsystem2021.xlsx",
+    "category": "Common Forms",
+    "description": "Facility management preventative maintenance plan for OT & ICU HVAC",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "Antimicrobial Policy 2026-2027",
+    "url": "http://192.168.101.75:3000/files/Antimicrobial%20Policy%202026-2027.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Antimicrobial Policy 2026-2027.pdf",
+    "category": "Common Forms",
+    "description": "Official hospital antibiotic stewardship and empiric therapy manual",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "Antimicrobial policy 2024-2025",
+    "url": "http://192.168.101.75:3000/files/Antimicrobial%20policy%202024-25.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Antimicrobial policy 2024-25.pdf",
+    "category": "Common Forms",
+    "description": "Prior edition hospital antimicrobial policy reference",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "Aph Disinfection Policy",
+    "url": "http://192.168.101.75:3000/files/APHDISINFECTIONPOLICY.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/APHDISINFECTIONPOLICY.pdf",
+    "category": "Common Forms",
+    "description": "Infection control disinfection and sterilization procedures",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "Hospital Linen Policy",
+    "url": "http://192.168.101.75:3000/files/HOSPITALLINENPOLICY.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/HOSPITALLINENPOLICY.pdf",
+    "category": "Common Forms",
+    "description": "Clean linen distribution, laundry sanitization and OT protocols",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "Counselling Documentation",
+    "url": "http://192.168.101.75:3000/files/Counselling%20Documentation%20Form.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Counselling Documentation Form.pdf",
+    "category": "Common Forms",
+    "description": "Patient and family counselling interview notes",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "Catheter Associtated Urinary Tract Infection",
+    "url": "http://192.168.101.75:3000/files/Catheter%20Associtated%20Urinary%20Tract%20Infection.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Catheter Associtated Urinary Tract Infection.pdf",
+    "category": "Common Forms",
+    "description": "HIC bundle: CAUTI insertion and maintenance surveillance",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "Central Line – Associated Bloodstream Infection",
+    "url": "http://192.168.101.75:3000/files/Central%20Line%20Associated%20Bloodstream%20Infection.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Central Line Associated Bloodstream Infection.pdf",
+    "category": "Common Forms",
+    "description": "HIC bundle: CLABSI prevention checklist and surveillance",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "Surgical Site Infection",
+    "url": "http://192.168.101.75:3000/files/Surgical%20Site%20Infection.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Surgical Site Infection.pdf",
+    "category": "Common Forms",
+    "description": "HIC bundle: SSI pre-op prep and post-op wound surveillance",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "Ventilator-associated Event (Vae)",
+    "url": "http://192.168.101.75:3000/files/Ventilator-associated%20Event%20(Vae).pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Ventilator-associated Event (Vae).pdf",
+    "category": "Common Forms",
+    "description": "HIC bundle: VAE/VAP prevention bundle and daily checklist",
+    "badge": "Clinical",
+    "hubPage": "./commonforms.html"
+  },
+  {
+    "title": "List of Holidays - 2026",
+    "url": "http://192.168.101.75:3000/files/Holiday 2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Holiday 2025.pdf",
+    "category": "HR Forms",
+    "description": "Official institutional gazetted holiday schedule, national festivals, and sanctioned institutional leave dates for 2026.",
+    "badge": "HR",
+    "hubPage": "./hrforms.html"
+  },
+  {
+    "title": "Teaching Faculty Application & Appraisal Form",
+    "url": "http://192.168.101.75:3000/files/Teaching.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Teaching.pdf",
+    "category": "HR Forms",
+    "description": "Standard recruitment biodata, teaching credentials, research publications, and annual self-appraisal form for medical faculty.",
+    "badge": "HR",
+    "hubPage": "./hrforms.html"
+  },
+  {
+    "title": "Non-Teaching Staff Application Form",
+    "url": "http://192.168.101.75:3000/files/Non Teaching.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Non Teaching.pdf",
+    "category": "HR Forms",
+    "description": "Formal employment application for nursing staff, paramedical professionals, laboratory technicians, and administrative personnel.",
+    "badge": "HR",
+    "hubPage": "./hrforms.html"
+  },
+  {
+    "title": "For Promotion - Non Teaching",
+    "url": "http://192.168.101.75:3000/files/For promotion - Non Teaching.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/For promotion - Non Teaching.pdf",
+    "category": "HR Forms",
+    "description": "Department head appraisal, service seniority verification, and career elevation recommendation form for non-teaching employees.",
+    "badge": "HR",
+    "hubPage": "./hrforms.html"
+  },
+  {
+    "title": "Non Performer - Non Teaching",
+    "url": "http://192.168.101.75:3000/files/Non performer- Non Teaching.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Non performer- Non Teaching.pdf",
+    "category": "HR Forms",
+    "description": "Departmental evaluation log for identifying performance gaps, structuring retraining modules, and mentoring non-performing staff.",
+    "badge": "HR",
+    "hubPage": "./hrforms.html"
+  },
+  {
+    "title": "Staff Training Feedback Form",
+    "url": "http://192.168.101.75:3000/files/Training Feedback Form.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Training Feedback Form.pdf",
+    "category": "HR Forms",
+    "description": "Post-training assessment and participant feedback form for hospital induction, fire safety drills, and clinical CME courses.",
+    "badge": "HR",
+    "hubPage": "./hrforms.html"
+  },
+  {
+    "title": "Performance Management System (PMS) Policy",
+    "url": "http://192.168.101.75:3000/files/PMS Policy.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/PMS Policy.pdf",
+    "category": "HR Forms",
+    "description": "Institutional framework establishing key performance indicators (KPIs), 360-degree appraisal benchmarks, and merit increments.",
+    "badge": "HR",
+    "hubPage": "./hrforms.html"
+  },
+  {
+    "title": "Human Resources Manual (HRM - 2025)",
+    "url": "http://192.168.101.75:3000/files/HRM 2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/HRM 2025.pdf",
+    "category": "HR Forms",
+    "description": "Comprehensive institutional manual governing recruitment rules, attendance, leave entitlements, code of conduct, and disciplinary actions.",
+    "badge": "HR",
+    "hubPage": "./hrforms.html"
+  },
+  {
+    "title": "New HIS User Request Form",
+    "url": "http://192.168.101.75:3000/files/His%20User%20Creation.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/His User Creation.pdf",
+    "category": "IT Forms",
+    "description": "Hospital Information System user credentials & access permissions",
+    "badge": "IT",
+    "hubPage": "./itforms.html"
+  },
+  {
+    "title": "System Request Form",
+    "url": "http://192.168.101.75:3000/files/System%20Request%20Form.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/System Request Form.pdf",
+    "category": "IT Forms",
+    "description": "Desktop PC, CPU, dual monitor hardware indent & workstation setup",
+    "badge": "IT",
+    "hubPage": "./itforms.html"
+  },
+  {
+    "title": "Printer Request Form",
+    "url": "http://192.168.101.75:3000/files/Printer%20Request%20Form.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Printer Request Form.pdf",
+    "category": "IT Forms",
+    "description": "Network laser printer, barcode label printer & toner requisitions",
+    "badge": "IT",
+    "hubPage": "./itforms.html"
+  },
+  {
+    "title": "New Doctor Name and ID Creation in HIS",
+    "url": "http://192.168.101.75:3000/files/Doctor%20Name%20and%20ID%20Creation.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Doctor Name and ID Creation.pdf",
+    "category": "IT Forms",
+    "description": "Consultant clinician ID generation and OPD roster registration",
+    "badge": "IT",
+    "hubPage": "./itforms.html"
+  },
+  {
+    "title": "Item Creation in HIS",
+    "url": "http://192.168.101.75:3000/files/Item%20Creation.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Item Creation.pdf",
+    "category": "IT Forms",
+    "description": "Master catalogue addition for pharmacy drugs, lab tests & tariffs",
+    "badge": "IT",
+    "hubPage": "./itforms.html"
+  },
+  {
+    "title": "Employee WIFI Request Form",
+    "url": "http://192.168.101.75:3000/files/Wifi%20Request%20Form.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Wifi Request Form.pdf",
+    "category": "IT Forms",
+    "description": "Secure campus wireless network authorization via MAC address binding",
+    "badge": "IT",
+    "hubPage": "./itforms.html"
+  },
+  {
+    "title": "CUG Request Form",
+    "url": "http://192.168.101.75:3000/files/Cug%20Request%20Form.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Cug Request Form.pdf",
+    "category": "IT Forms",
+    "description": "Closed User Group departmental mobile line & SIM allocation voucher",
+    "badge": "IT",
+    "hubPage": "./itforms.html"
+  },
+  {
+    "title": "Official Email Request",
+    "url": "http://192.168.101.75:3000/files/Mail%20Request.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Mail Request.pdf",
+    "category": "IT Forms",
+    "description": "@mapims.edu.in institutional email domain credentials form",
+    "badge": "IT",
+    "hubPage": "./itforms.html"
+  },
+  {
+    "title": "COMMITTEE’S SCHEDULED CALENDAR-2026",
+    "url": "http://192.168.101.75:3000/files/Committee’s Scheduled Calendar-2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Committee’s Scheduled Calendar-2026.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "SCHEDULED CALENDER – MOCK DRILL FOR THE YEAR -2026",
+    "url": "http://192.168.101.75:3000/files/SCHEDULED CALENDER – MOCK DRILL FOR THE YEAR -2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/SCHEDULED CALENDER – MOCK DRILL FOR THE YEAR -2026.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "CPR MOM AUG - 2026",
+    "url": "http://192.168.101.75:3000/files/CPR MOM 25.08.2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/CPR MOM 25.08.2026.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "IPC MOM JULY- 2026",
+    "url": "http://192.168.101.75:3000/files/IPC MOM - 23.07.2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/IPC MOM - 23.07.2026.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "CAC MOM JULY - 2026",
+    "url": "http://192.168.101.75:3000/files/CAC-MOM--21.07.2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/CAC-MOM--21.07.2026.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "FMS MOM JUNE - 2026",
+    "url": "http://192.168.101.75:3000/files/FMS MOM-29.06.2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/FMS MOM-29.06.2026.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "CAC MOM JUNE - 2026",
+    "url": "http://192.168.101.75:3000/files/CAC MOM -25.06.2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/CAC MOM -25.06.2026.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "BTC MOM JUN 2026",
+    "url": "http://192.168.101.75:3000/files/BTC MOM - 08.06.2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/BTC MOM - 08.06.2026.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "DTC MOM JUN 2026",
+    "url": "http://192.168.101.75:3000/files/DTC-MINUTES  02.06.2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/DTC-MINUTES  02.06.2026.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "QC MOM MAY 2026",
+    "url": "http://192.168.101.75:3000/files/QC MOM 27.05.26.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/QC MOM 27.05.26.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "CPR MOM APR 2026",
+    "url": "http://192.168.101.75:3000/files/CPR MOM APR 2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/CPR MOM APR 2026.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "IPC MOM APR 2026",
+    "url": "http://192.168.101.75:3000/files/IPC MOM APR 2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/IPC MOM APR 2026.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "CAC MOM APR 2026",
+    "url": "http://192.168.101.75:3000/files/CAC MOM -21.04.2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/CAC MOM -21.04.2026.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "FMS MOM APR 2026",
+    "url": "http://192.168.101.75:3000/files/FMS MOM -17.04.2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/FMS MOM -17.04.2026.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "IPC MOM FEB 2026",
+    "url": "http://192.168.101.75:3000/files/IPC  MOM -27.02.2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/IPC  MOM -27.02.2026.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "DTC MOM FEB 2026",
+    "url": "http://192.168.101.75:3000/files/DTC-MINUTES -26-02-2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/DTC-MINUTES -26-02-2026.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "FMS MOM FEB 2026",
+    "url": "http://192.168.101.75:3000/files/FMS_MOM_FEB_2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/FMS_MOM_FEB_2026.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "BTC MOM FEB 2026",
+    "url": "http://192.168.101.75:3000/files/BTC MOM - 24.02.2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/BTC MOM - 24.02.2026.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "AMS MOM FEB 2026",
+    "url": "http://192.168.101.75:3000/files/AMS_MOM_FEB_2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/AMS_MOM_FEB_2026.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "IPC MOM JAN 2026",
+    "url": "http://192.168.101.75:3000/files/IPC MOM JAN 2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/IPC MOM JAN 2026.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "CPR MOM JAN 2026",
+    "url": "http://192.168.101.75:3000/files/CPR MOM JAN 2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/CPR MOM JAN 2026.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "CAC MOM JAN 2026",
+    "url": "http://192.168.101.75:3000/files/CAC MOM JAN.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/CAC MOM JAN.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "FMS MOM DEC 2025",
+    "url": "http://192.168.101.75:3000/files/FMS MOM DEC 2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/FMS MOM DEC 2025.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "QC MOM DEC 2025",
+    "url": "http://192.168.101.75:3000/files/QC MOM DEC 2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/QC MOM DEC 2025.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "CAC MOM DEC 2025",
+    "url": "http://192.168.101.75:3000/files/CAC MOM DEC 2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/CAC MOM DEC 2025.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "BMW MOM NOV 2025",
+    "url": "http://192.168.101.75:3000/files/BMW MOM NOV 2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/BMW MOM NOV 2025.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "HICC MOM NOV 2025",
+    "url": "http://192.168.101.75:3000/files/HICC MOM NOV 2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/HICC MOM NOV 2025.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "BTC MOM OCT 2025",
+    "url": "http://192.168.101.75:3000/files/BTC MOM OCT 2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/BTC MOM OCT 2025.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "DTC MOM OCT 2025",
+    "url": "http://192.168.101.75:3000/files/DTC MOM OCT 2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/DTC MOM OCT 2025.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "FMS MOM OCT 2025",
+    "url": "http://192.168.101.75:3000/files/FMS MOM OCT 2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/FMS MOM OCT 2025.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "CAC MOM SEP 2025",
+    "url": "http://192.168.101.75:3000/files/CAC MOM -26.09.2025.PDF",
+    "canonicalUrl": "http://192.168.101.75:3000/files/CAC MOM -26.09.2025.PDF",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "QC MOM SEP 2025",
+    "url": "http://192.168.101.75:3000/files/QC MOM SEP 2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/QC MOM SEP 2025.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "CPR MOM SEP 2025",
+    "url": "http://192.168.101.75:3000/files/CPR MOM SEP 2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/CPR MOM SEP 2025.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "CAC MOM AUG 2025",
+    "url": "http://192.168.101.75:3000/files/CAC MOM AUG 2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/CAC MOM AUG 2025.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "BMW MOM AUG 2025",
+    "url": "http://192.168.101.75:3000/files/BMW MOM AUG 2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/BMW MOM AUG 2025.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "M&M MOM AUG 2025",
+    "url": "http://192.168.101.75:3000/files/M&M MOM AUG 2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/M&M MOM AUG 2025.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "MRD MOM JULY 2025",
+    "url": "http://192.168.101.75:3000/files/MRD MOM JULY 2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/MRD MOM JULY 2025.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "QC MOM JULY 2025",
+    "url": "http://192.168.101.75:3000/files/QC MOM July 2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/QC MOM July 2025.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "DTC MOM JULY 2025",
+    "url": "http://192.168.101.75:3000/files/DTC MOM JULY 2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/DTC MOM JULY 2025.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "CAC MOM JULY 2025",
+    "url": "http://192.168.101.75:3000/files/CAC MOM JULY 2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/CAC MOM JULY 2025.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "FMS MOM JULY 2025",
+    "url": "http://192.168.101.75:3000/files/FMS MOM 11.07.2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/FMS MOM 11.07.2025.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "QC MOM JUNE 2025",
+    "url": "http://192.168.101.75:3000/files/QC MOM JUNE 2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/QC MOM JUNE 2025.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "QC MOM MAY 2025",
+    "url": "http://192.168.101.75:3000/files/QC MOM MAY-2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/QC MOM MAY-2025.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "QC MOM APR 2025",
+    "url": "http://192.168.101.75:3000/files/QC MOM- APR-2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/QC MOM- APR-2025.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "PURCHASE MOM APR 2025",
+    "url": "http://192.168.101.75:3000/files/Purchase &  Condemnation MOM-APR 2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Purchase &  Condemnation MOM-APR 2025.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "CPR MOM APR 2025",
+    "url": "http://192.168.101.75:3000/files/CPR MOM APRIL 2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/CPR MOM APRIL 2025.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "CAC MOM APR-2025",
+    "url": "http://192.168.101.75:3000/files/MOM CAC APR-2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/MOM CAC APR-2025.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "HIC MOM APR 2025",
+    "url": "http://192.168.101.75:3000/files/HIC MOM APR 2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/HIC MOM APR 2025.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "DTC MOM APR 2025",
+    "url": "http://192.168.101.75:3000/files/DTC MOM APR 2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/DTC MOM APR 2025.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "MRD MOM APR 2025",
+    "url": "http://192.168.101.75:3000/files/MRD MOM -APRIL.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/MRD MOM -APRIL.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "FMS MOM MAR 2025",
+    "url": "http://192.168.101.75:3000/files/FMS MOM- 03.03.2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/FMS MOM- 03.03.2025.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "QC MOM MAR 2025",
+    "url": "http://192.168.101.75:3000/files/QC MOM Mar - 2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/QC MOM Mar - 2025.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "MOM FEB 2025",
+    "url": "http://192.168.101.75:3000/files/MOM Feb - 2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/MOM Feb - 2025.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "MOM JAN 2025",
+    "url": "http://192.168.101.75:3000/files/MOM Jan - 2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/MOM Jan - 2025.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "MOM DEC 2024",
+    "url": "http://192.168.101.75:3000/files/MOM Dec - 2024.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/MOM Dec - 2024.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "MOM NOV 2024",
+    "url": "http://192.168.101.75:3000/files/MOM Nov - 2024.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/MOM Nov - 2024.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "Safety Meeting Circular- 2026",
+    "url": "http://192.168.101.75:3000/files/Safety meeting Circular- 2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Safety meeting Circular- 2026.pdf",
+    "category": "Circulars",
+    "description": "Official institutional circular dated 18.02.2026",
+    "badge": "Circular",
+    "hubPage": "./recent circular.html"
+  },
+  {
+    "title": "AMSOUR DEVELOPED INHOUSE APPLICATIONS - 2026",
+    "url": "http://192.168.101.75:3000/files/AMS.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/AMS.pdf",
+    "category": "Circulars",
+    "description": "Official institutional circular dated 04.02.2026",
+    "badge": "Circular",
+    "hubPage": "./recent circular.html"
+  },
+  {
+    "title": "Refugee - 2026",
+    "url": "http://192.168.101.75:3000/files/Refugee.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Refugee.pdf",
+    "category": "Circulars",
+    "description": "Official institutional circular dated 04.02.2026",
+    "badge": "Circular",
+    "hubPage": "./recent circular.html"
+  },
+  {
+    "title": "Circular - 2026",
+    "url": "http://192.168.101.75:3000/files/CIRCULAR - 2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/CIRCULAR - 2026.pdf",
+    "category": "Circulars",
+    "description": "Official institutional circular dated 02.02.2026",
+    "badge": "Circular",
+    "hubPage": "./recent circular.html"
+  },
+  {
+    "title": "SWOT Analysis Circular Jan 2026",
+    "url": "http://192.168.101.75:3000/files/SWOT ANALYSIS CIRCULAR jan 2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/SWOT ANALYSIS CIRCULAR jan 2026.pdf",
+    "category": "Circulars",
+    "description": "Official institutional circular dated 02.02.2026",
+    "badge": "Circular",
+    "hubPage": "./recent circular.html"
+  },
+  {
+    "title": "Circular QC Meeting-2025",
+    "url": "http://192.168.101.75:3000/files/CIRCULAR QC MEETING-2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/CIRCULAR QC MEETING-2025.pdf",
+    "category": "Circulars",
+    "description": "Official institutional circular dated 16.06.2025",
+    "badge": "Circular",
+    "hubPage": "./recent circular.html"
+  },
+  {
+    "title": "Patient Valuable Policy",
+    "url": "http://192.168.101.75:3000/files/Patient Valuable Policy.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Patient Valuable Policy.pdf",
+    "category": "Circulars",
+    "description": "Official institutional circular dated 26.11.2024",
+    "badge": "Circular",
+    "hubPage": "./recent circular.html"
+  },
+  {
+    "title": "Code Violet",
+    "url": "http://192.168.101.75:3000/files/Code Violet.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Code Violet.pdf",
+    "category": "Circulars",
+    "description": "Official institutional circular dated 27.11.2024",
+    "badge": "Circular",
+    "hubPage": "./recent circular.html"
+  },
+  {
+    "title": "Emergency Rescue Team",
+    "url": "http://192.168.101.75:3000/files/Emergency Rescue Team.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Emergency Rescue Team.pdf",
+    "category": "Circulars",
+    "description": "Official institutional circular dated 27.11.2024",
+    "badge": "Circular",
+    "hubPage": "./recent circular.html"
+  },
+  {
+    "title": "Anaesthesiology (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/ANAESTHESIOLOGY.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/ANAESTHESIOLOGY.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Departmental Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Dermatology (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/DERMATOLOGY.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/DERMATOLOGY.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Departmental Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Dietician (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/Dietician.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/Dietician.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Departmental Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Emergency Department (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/EMERGENCY DEPARTMENT.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/EMERGENCY DEPARTMENT.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Departmental Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "General Medicine (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/GENERAL MEDICINE.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/GENERAL MEDICINE.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Departmental Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "General Surgery (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/GENERAL SURGERY.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/GENERAL SURGERY.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Departmental Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Intensive Care Unit (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/INTENSIVE CARE UNIT.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/INTENSIVE CARE UNIT.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Departmental Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Nursing (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/NURSING.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/NURSING.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Departmental Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Opthalmology (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/OPTHALMOLOGY.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/OPTHALMOLOGY.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Departmental Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Orthopaedics (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/ORTHOPAEDICS.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/ORTHOPAEDICS.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Departmental Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Oto-Rhino-Laryngology (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/OTO-RHINO-LARYNGOLOGY.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/OTO-RHINO-LARYNGOLOGY.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Departmental Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Paediatrics (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/PAEDIATRICS.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/PAEDIATRICS.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Departmental Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Psychiatry (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/PSYCHIATRY.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/PSYCHIATRY.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Departmental Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Radiology (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/RADIOLOGY.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/RADIOLOGY.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Departmental Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "ANNEXURES TO NABH 6th EDITION (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Annexures to NABH  6th Edition.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Annexures to NABH  6th Edition.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "GUIDE BOOK TO NABH 6th EDITION (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Guide Book to NABH 6th Edition.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Guide Book to NABH 6th Edition.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "NABH CHECKLIST (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/APH NABH Checklist-2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/APH NABH Checklist-2025.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "NABH GUIDE BOOK (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Nabh Guide Book-2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Nabh Guide Book-2025.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "AAC (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/AAC 2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/AAC 2025.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "COP - PART I (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/COP - PART I 2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/COP - PART I 2025.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "COP - PART II (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/COP - PART II 2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/COP - PART II 2025.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "MOM (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/MOM MANUAL-2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/MOM MANUAL-2025.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "PRE (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/PRE 2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/PRE 2025.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "PSQ (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/PSQ Manual 2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/PSQ Manual 2025.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "ROM (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/ROM 2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/ROM 2025.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "FMS (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/FMS 2025 Manual.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/FMS 2025 Manual.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "IMS (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/IMS 2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/IMS 2025.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "MRD Manual-2025 (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/MRD Manual-2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/MRD Manual-2025.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "FMS - Security Manual (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/FMS -  Security Manual-2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/FMS -  Security Manual-2025.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "CSSD (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/CSSD 2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/CSSD 2025.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "FMS - Bio Medical Manual (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/FMS - Bio Medical Manual-2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/FMS - Bio Medical Manual-2025.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "FMS - HK Manual (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/FMS - HK Manual-2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/FMS - HK Manual-2025.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "FMS - Maintenance Manual (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/FMS - Maintenance  Manual-2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/FMS - Maintenance  Manual-2025.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "FMS - Safety manual (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/FMS - Safety manual-2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/FMS - Safety manual-2025.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "FMS - Transport Manual (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/FMS - Transport Manual-2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/FMS - Transport Manual-2025.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Billing and Insurance Policies (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/Billing and Insurance Policies.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/Billing and Insurance Policies.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Patient Transfer To And From Imaging Services (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/Patient Transfer To And FROM Imaging Services.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/Patient Transfer To And FROM Imaging Services.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Pharmacy Standard Operative Procedures (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/PHARMACY STANDARD OPERATIVE PROCEDURES.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/PHARMACY STANDARD OPERATIVE PROCEDURES.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Policy And Procedure on Sedation (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/-POLICY AND PROCEDURE ON SEDATION.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/-POLICY AND PROCEDURE ON SEDATION.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Acquisition of medical supplies and consumables (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/Acquisition of medical supplies and consumables.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/Acquisition of medical supplies and consumables.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Adheres Transmission Based Precautions (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/ADHERES TRANSMISSION BASED.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/ADHERES TRANSMISSION BASED.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Antenatel Services (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/ANTENATEL SERVICES.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/ANTENATEL SERVICES.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Brought Dead Protocol (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/BROUGHT DEAD PROTOCOL.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/BROUGHT DEAD PROTOCOL.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Criteria for Vendor Selection Evaluation (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/criteria for vendor selection evaluation.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/criteria for vendor selection evaluation.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Disaster Management (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/DISASTER MANAGEMENT.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/DISASTER MANAGEMENT.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Discharge Against Medical Advice (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/DISCHARGE AGAINST MEDICAL ADVICE.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/DISCHARGE AGAINST MEDICAL ADVICE.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Discharge Summary (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/discharge summary.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/discharge summary.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Effective and Enhanced (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/EFFECTIVE AND ENHANCED.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/EFFECTIVE AND ENHANCED.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Effective Communication With Paitent & Family (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/EFFECTIVE COMMUNICATION WITH PATIENT & FAMILY.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/EFFECTIVE COMMUNICATION WITH PATIENT & FAMILY.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "End of Life Care (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/END OF LIFE CARE.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/END OF LIFE CARE.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Guidance on Medications Return (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/Guidance on medication return.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/Guidance on medication return.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Guideline for Infection Control Practices ICU (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/Guideline for infection control practices ICU.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/Guideline for infection control practices ICU.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Guideline for Medical Clinical Services (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/Guideline for medical clinical services.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/Guideline for medical clinical services.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Guideline for CPR (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/GUIDELINES for CPR.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/GUIDELINES for CPR.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Guidelines for Registration, Admission, Nonavailability of beds (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/Guidelines for registration, admission, nonavailability of beds.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/Guidelines for registration, admission, nonavailability of beds.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Guidelines for the Rational Prescriptions of Medication (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/Guidelines for the rational prescriptions of medication.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/Guidelines for the rational prescriptions of medication.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Guidelines Minimum Requirement (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/GUIDELINES MINIMUM REQUIREMENT.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/GUIDELINES MINIMUM REQUIREMENT.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Hand Hygine (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/HAND HYGIENE.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/HAND HYGIENE.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "High Risk Activities (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/HIGH RISK ACTIVITIES.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/HIGH RISK ACTIVITIES.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Hospital Infection Control Committee (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/HOSPITAL INFECTION CONTROL COMMITTEE.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/HOSPITAL INFECTION CONTROL COMMITTEE.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "ICU Bed Shortage (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/ICU BED SHORTAGE.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/ICU BED SHORTAGE.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Imaging Results are Available Within a Defined Time Frame (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/Imaging results are available within a defined time frame.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/Imaging results are available within a defined time frame.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Implantable Prosthesis (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/IMPLANTABLE PROSTHESIS.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/IMPLANTABLE PROSTHESIS.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Infection Control Programme (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/INFECTION CONTROL PROGRAMME.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/INFECTION CONTROL PROGRAMME.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Informed Consent Taking Process (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/INFORMED CONSENT TAKING PROCESS.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/INFORMED CONSENT TAKING PROCESS.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Interdept Referral (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/interdept referral.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/interdept referral.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Labelling Requirements of Medicine (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/LABELLING REQUIREMENTS OF MEDICINE.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/LABELLING REQUIREMENTS OF MEDICINE.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "List of Emergency Medicine and its Storage (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/list of emergency medicine and its storage.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/list of emergency medicine and its storage.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "List of High Risk Medicine (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/LIST OF HIGH RISK MEDICINE..pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/LIST OF HIGH RISK MEDICINE..pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Medication Recall (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/Medication recall.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/Medication recall.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Monitoring of Patients After Medication Administration (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/Monitoring of patients after medication administration.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/Monitoring of patients after medication administration.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Pain Assesment (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/PAIN ASSESMENT.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/PAIN ASSESMENT.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Paitent And Visitors Complaints (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/PATIENT AND VISITORS COMPLAINTS.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/PATIENT AND VISITORS COMPLAINTS.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Paitent Rights and Responsibilities (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/PATIENT RIGHTS AND RESPONSIBILITIES ,.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/PATIENT RIGHTS AND RESPONSIBILITIES ,.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Paitent Transfer from Recovery (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/PATIENTS TRANSFER FROM RECOVERY.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/PATIENTS TRANSFER FROM RECOVERY.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Paitent's Self Administration (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/PATIENT\\UffffffffS SELF \\UffffffffADMINISTRATION.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/PATIENT\\UffffffffS SELF \\UffffffffADMINISTRATION.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Physiotherapy (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/PHYSIOTHERAPY.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/PHYSIOTHERAPY.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Policy and Process on Verbal Orders of Medications (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/Policy and process on verbal orders of medications.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/Policy and process on verbal orders of medications.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Prescription of Medicine (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/PRESCRIPTION OF MEDICINE.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/PRESCRIPTION OF MEDICINE.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Procedure for Near Expiry Medication (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/procedure for near expiry medication.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/procedure for near expiry medication.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Procedure for Usage of Narcotic Drugs and Psychotropic Medications (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/PROCEDURE FOR USAGE OF NARCOTIC DRUGS AND PSYCHOTROPIC MEDICATIONS.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/PROCEDURE FOR USAGE OF NARCOTIC DRUGS AND PSYCHOTROPIC MEDICATIONS.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Process Addresses Registering and Admitting Outpatients (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/Process addresses registering and admitting outpatients.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/Process addresses registering and admitting outpatients.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Process of Acquisition of Medicine Not Listed in the Formulary (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/Process of acquisition of medicine not listed in the formulary.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/Process of acquisition of medicine not listed in the formulary.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Process on Communication for Medication Usage and Shortage (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/process on communication for medication usage and shortage.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/process on communication for medication usage and shortage.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Protocal For Five Common Emergencies (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/PROTOCOL FOR FIVE COMMON EMERGENCIES..pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/PROTOCOL FOR FIVE COMMON EMERGENCIES..pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Protocals Pretaining To Medications (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/PROTOCOLS PERTAINING TO MEDICATION.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/PROTOCOLS PERTAINING TO MEDICATION.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Quality Assurance Program (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/QUALITY ASSURANCE PROGRAM.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/QUALITY ASSURANCE PROGRAM.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Recording and Reporting of Medication Errors, Adverse Events And Near Misses (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/Recording and reporting of medication errors, adverse events and near misses..pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/Recording and reporting of medication errors, adverse events and near misses..pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Safe Administration Of Medications (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/SAFE ADMINISTRATION OF MEDICATION.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/SAFE ADMINISTRATION OF MEDICATION.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Safe Dispensing of Medications (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/Safe dispensing of medications.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/Safe dispensing of medications.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Safe Injection And Infusion Practices (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/SAFE INJECTION AND INFUSION PRACTICES.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/SAFE INJECTION AND INFUSION PRACTICES.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Safe Storage And Handling Of Look Alike And Sound Alike Medications (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/SAFE STORAGE AND HANDLING OF LOOK ALIKE AND SOUND AlLIKE MEDICATION..pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/SAFE STORAGE AND HANDLING OF LOOK ALIKE AND SOUND AlLIKE MEDICATION..pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Safe Transport In And Out Of Radiology (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/safe transport in and out of radiology.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/safe transport in and out of radiology.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Sample Collection CL (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/SAMPLE COLLECTION CL.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/SAMPLE COLLECTION CL.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Scope Of Services (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/SCOPE OF SERVICES.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/SCOPE OF SERVICES.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "SOP On Procedure For Acquisition Of Formulary Medications (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/SOP on procedure for cquisition of formulary medications.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/SOP on procedure for cquisition of formulary medications.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "SOP On Transplant (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/SOP ON TRANSPLANT.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/SOP ON TRANSPLANT.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Sound Clinical Anaesthesia (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/SOUND CLINICAL ANAESTHESIA.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/SOUND CLINICAL ANAESTHESIA.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Standard Precautions (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/STANDARD PRECAUTIONS.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/STANDARD PRECAUTIONS.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Surgical Service I (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/SURGICAL SERVICES.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/SURGICAL SERVICES.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Surgical Service II (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/SURGICAL SERVICES.2.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/SURGICAL SERVICES.2.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Surrogate Consent (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/SURROGATE CONSENT.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/SURROGATE CONSENT.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "TAT For Crossmatch MAPIMS (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/TAT for crossmatch MAPIMS.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/TAT for crossmatch MAPIMS.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "TAT Lab (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/TAT LAB.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/TAT LAB.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Telemedicine (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/TELEMEDICINE.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/TELEMEDICINE.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Traige Policy (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/Traige Policy..pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/Traige Policy..pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Transfer In Of The Paitent To The Hospital (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/TRANSFER IN OF THE PATIENT TO THE HOSPITAL.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/TRANSFER IN OF THE PATIENT TO THE HOSPITAL.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Transfer Out Or Refferal Of Patients (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/TRANSFER OUT OR REFERRAL OF PATIENTS.1.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/TRANSFER OUT OR REFERRAL OF PATIENTS.1.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Uniform Paient Care (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/uniform paient care.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/uniform paient care.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Vulnerable Paitents (NABH 5th Edition)",
+    "url": "http://192.168.101.75:3000/files/Qc/VULNERABLE PATIENTS.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/VULNERABLE PATIENTS.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "ACCESS, ASSESSMENT & CONTINUITY OF CARE (AAC) (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/AAC.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/AAC.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Departmental Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "CARE OF PATIENT - VOL 1 (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/COPV1.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/COPV1.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Departmental Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "CARE OF PATIENT - VOL 2 (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/COPV2.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/COPV2.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Departmental Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "MEDICATION MANAGEMENT (MOM) (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/MOM.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/MOM.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Departmental Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "PATIENT RIGHTS & EDUCATION (PRE) (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/PRE.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/PRE.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Departmental Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "INFECTION PREVENTION AND CONTROL (IPC) (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/IPC.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/IPC.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Departmental Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "PATIENT SAFETY AND QUALITY (PSQ) (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/PSQ.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/PSQ.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Departmental Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "RESPONSIBILITIES OF MANAGEMENT (ROM) (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/ROM.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/ROM.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Departmental Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "FACILITY MANAGEMENT & SAFETY (FMS) (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/FMS.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/FMS.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Departmental Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "HUMAN RESOURCE MANAGEMENT (HRM) (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/HRM.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/HRM.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Departmental Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "INFORMATION MANAGEMENT SYSTEM (IMS) (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/IMS.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/IMS.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Departmental Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "ER MANUAL NABH - 2026 (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/ER mannual NABH -2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/ER mannual NABH -2026.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "CARDIO THORASIC SURGERY (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/Cardio thorasic surgery.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/Cardio thorasic surgery.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "CARDIOLOGY (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/Cardiology.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/Cardiology.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "GEN SURGERY (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/General surgery.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/General surgery.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "GENERAL MEDICINE (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/General Medicine.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/General Medicine.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "HEPATOLOGY (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/Hepatology.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/Hepatology.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "MEDICAL GASTROENTEROLOGY (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/Medical Gastroenterology.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/Medical Gastroenterology.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "MEDICAL ONCOLOGY (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/Medical Oncology.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/Medical Oncology.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "NEPHROLOGY (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/Nephrology.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/Nephrology.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "NEURO SURGERY (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/Neuro Surgery.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/Neuro Surgery.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "NEUROLOGY (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/Neurology.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/Neurology.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "ONCOLOGY SURGERY (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/Oncology surgery.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/Oncology surgery.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "PAEDIATRIC DEPT (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/Paediatric Dept.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/Paediatric Dept.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "PLASTIC SURGERY (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/Plastic Surgery.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/Plastic Surgery.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "PULMONARY MEDICINE (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/Pulmonary Medicine Manual.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/Pulmonary Medicine Manual.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "SGE (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/SGE MANUAL.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/SGE MANUAL.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "UROLOGY (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/Urology.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/Urology.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "VASCULAR SURGERY (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/vascular surgery.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/vascular surgery.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "ANAESTHESIA (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/ANAESTHESIA.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/ANAESTHESIA.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "ENT (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/ENT.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/ENT.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "KRIYASAKTHI FERTILITY CENTRE (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/KRIYASAKTHI FERTILITY CENTRE.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/KRIYASAKTHI FERTILITY CENTRE.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "OG (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/OG.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/OG.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "OPTHAL (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/OPTHAL Manual.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/OPTHAL Manual.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "ORTHOPAEDICS (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/ORTHOPAEDICS NABH MANUAL 2026 (1) (1).pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/ORTHOPAEDICS NABH MANUAL 2026 (1) (1).pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "PAEDIATRICS (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/Paediatrics Manual Version 4 FINAL.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/Paediatrics Manual Version 4 FINAL.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "RADIOLOGY (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/RADIOLOGY MANUAL.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/RADIOLOGY MANUAL.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "OPTHAL DEPT (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/DEP-OPTHAL Manual.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/DEP-OPTHAL Manual.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "CENTRAL LAB BIOCHEMISTRY (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/CENTRAL LAB BIOCHEMISTRY MANUAL.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/CENTRAL LAB BIOCHEMISTRY MANUAL.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "PSQ1 SAFETY MANUAL (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/PSQ1 SAFETY MANUAL.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/PSQ1 SAFETY MANUAL.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "AAC 7 E LAB SAFETY MANUAL (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/AAC 7 E LAB SAFETY MANUAL.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/AAC 7 E LAB SAFETY MANUAL.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "HAZARD IDENTIFICATION AND RISK ASSESSMENT (HIRA) (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/HAZARD IDENTIFICATION AND RISK ASSESSMENT (HIRA).pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/HAZARD IDENTIFICATION AND RISK ASSESSMENT (HIRA).pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "FMS Safety Manual (NABH 6th Edition)",
+    "url": "#",
+    "canonicalUrl": "#",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "NURSING MANUAL (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/Nursing Manual New.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Nursing Manual New.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "FMS - Bio Medical Manual (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/FMS - Bio Medical Manual New.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/FMS - Bio Medical Manual New.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "FMS - Engineering Manual (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/FMS - Engineering Manual New.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/FMS - Engineering Manual New.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "FMS - HK Manual (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/FMS - HK Manual New.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/FMS - HK Manual New.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "FMS - Laundry Manual (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/FMS - Laundry Manual New.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/FMS - Laundry Manual New.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "FMS - Safety manual (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/FMS - Safety Manual New.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/FMS - Safety Manual New.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "FMS - Security manual (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/FMS - Security Manual New.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/FMS - Security Manual New.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "FMS - Transport Manual (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/FMS - Transport Manual New.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/FMS - Transport Manual New.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "CODE YELLOW POLICY (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/code yellow policy.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/code yellow policy.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "BROUGHT DEATH POLICY REVISED (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/Brought death policy revised (1).pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/Brought death policy revised (1).pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "AMBULANCE POLICY REVISED (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/AMBULANCE POLICY REVISED (2).pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/AMBULANCE POLICY REVISED (2).pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "FMS - CGSS SOP FINAL (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/FMS - CGSS SOP FINAL  05.03.2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/FMS - CGSS SOP FINAL  05.03.2026.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "FMS - ELECTRICAL SOP FINAL (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/FMS - ELECTRICAL SOP FINAL 05-03-2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/FMS - ELECTRICAL SOP FINAL 05-03-2026.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "FMS - Eng. SOP FINAL (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/FMS - Eng. SOP FINAL 05-03-2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/FMS - Eng. SOP FINAL 05-03-2026.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "FMS - HK SOP FINAL (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/FMS - HK SOP FINAL 05-03-2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/FMS - HK SOP FINAL 05-03-2026.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "FMS - HVAC SOP FINAL (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/FMS - HVAC SOP FINAL 05-03-2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/FMS - HVAC SOP FINAL 05-03-2026.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "FMS - Laundry SOP (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/FMS - Laundry SOP 05-03-2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/FMS - Laundry SOP 05-03-2026.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "FMS - PLUMBING SOP FINAL (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/FMS - PLUMBING SOP FINAL 05-03-2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/FMS - PLUMBING SOP FINAL 05-03-2026.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "FMS - Safety SOP FINAL (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/FMS - Safety SOP FINAL 05-03-2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/FMS - Safety SOP FINAL 05-03-2026.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "FMS - Transport SOP FINAL - (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/FMS - Transport  SOP FINAL - 05-3-2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/FMS - Transport  SOP FINAL - 05-3-2026.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "FMS - BME SOP FINAL (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/FMS  - BME SOP FINAL 05.03.2026.docx.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/FMS  - BME SOP FINAL 05.03.2026.docx.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "FMS - Security SOP FINAL (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/FMS -  Security SOP FINAL 07.03.2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/FMS -  Security SOP FINAL 07.03.2026.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Approved abbreviation July 2025 -2026 (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/Approved abbreviation July 2025 -2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/Approved abbreviation July 2025 -2026.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "MOM 1 D,E STOCK OUT MEDICINE PURCHASE POLICY (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/MOM 1 D,E STOCK OUT MEDICINE PURCHASE POLICY.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/MOM 1 D,E STOCK OUT MEDICINE PURCHASE POLICY.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "MOM 10 MEDICAL DEVICES & IMPLANT USAGE AND RECALL POLICY (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/MOM 10 MEDICAL DEVICES & IMPLANT USAGE AND RECALL POLICY.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/MOM 10 MEDICAL DEVICES & IMPLANT USAGE AND RECALL POLICY.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "MOM 11 MEDICAL SUPPLIES AND CONSUMABLES STORAGE POLICY (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/MOM 11 MEDICAL SUPPLIES AND CONSUMABLES STORAGE POLICY.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/MOM 11 MEDICAL SUPPLIES AND CONSUMABLES STORAGE POLICY.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "MOM 2 E PROCEDURE FOR THE ACQUISITION OF FORMULARY MEDICATIONS (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/MOM 2 E PROCEDURE FOR THE ACQUISITION OF FORMULARY MEDICATIONS.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/MOM 2 E PROCEDURE FOR THE ACQUISITION OF FORMULARY MEDICATIONS.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "MOM 2 F PROCEDURE FOR THE ACQUISITION OF NON FORMULARY MEDICATIONS (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/MOM 2 F PROCEDURE FOR THE ACQUISITION OF NON FORMULARY MEDICATIONS.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/MOM 2 F PROCEDURE FOR THE ACQUISITION OF NON FORMULARY MEDICATIONS.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "MOM 3 C HIGH RISK MEDICATION LIST (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/MOM 3 C HIGH RISK MEDICATION LIST.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/MOM 3 C HIGH RISK MEDICATION LIST.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "MOM 3 E LASA DRUGS LIST (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/MOM 3 E LASA DRUGS LIST.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/MOM 3 E LASA DRUGS LIST.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "MOM 3 F LIST OF EMERGENCY MEDICINES (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/MOM 3 F LIST OF EMERGENCY MEDICINES.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/MOM 3 F LIST OF EMERGENCY MEDICINES.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "MOM 4 A,B MEDICATION PRESCRIPTION GUIDELINES (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/MOM 4 A,B MEDICATION PRESCRIPTION GUIDELINES.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/MOM 4 A,B MEDICATION PRESCRIPTION GUIDELINES.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "MOM 4 F VERBAL ORDER POLICY (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/MOM 4 F VERBAL ORDER POLICY.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/MOM 4 F VERBAL ORDER POLICY.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "MOM 5 A MEDICATION PRESCRIPTION PREVILEGES (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/MOM 5 A MEDICATION PRESCRIPTION PREVILEGES.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/MOM 5 A MEDICATION PRESCRIPTION PREVILEGES.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "MOM 6 MEDICATION DISPENSING, RECALL, RETURN POLICY (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/MOM 6 MEDICATION DISPENSING, RECALL, RETURN POLICY.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/MOM 6 MEDICATION DISPENSING, RECALL, RETURN POLICY.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "MOM 7 H CATHETER TUBING MISCONNECTION (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/MOM 7 H CATHETER TUBING MISCONNECTION.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/MOM 7 H CATHETER TUBING MISCONNECTION.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "MOM 7 J K SELF ADMINISTRATION AND OWN MEDICATION POLICY (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/MOM 7 J K SELF ADMINISTRATION AND OWN MEDICATION POLICY.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/MOM 7 J K SELF ADMINISTRATION AND OWN MEDICATION POLICY.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "MOM 8 A MEDICATION ADMINISTRATION POLICY (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/MOM 8 A MEDICATION ADMINISTRATION POLICY.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/MOM 8 A MEDICATION ADMINISTRATION POLICY.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "MOM 8 C,D,E MEDICATION ERROR MANAGEMENT (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/MOM 8 C,D,E MEDICATION ERROR MANAGEMENT.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/MOM 8 C,D,E MEDICATION ERROR MANAGEMENT.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "MOM 9 NARCOTICS AND CHEMOTHERAPY POLICY (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/MOM 9 NARCOTICS AND CHEMOTHERAPY POLICY.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/MOM 9 NARCOTICS AND CHEMOTHERAPY POLICY.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "Pharmacy SOP Updated June 2025-2026 (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/Pharmacy SOP Updated June 2025-2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/Pharmacy SOP Updated June 2025-2026.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "UPDATED DRUG FORMULARY 2026 (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/UPDATED DRUG FORMULARY 2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/UPDATED DRUG FORMULARY 2026.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "AAC 10 E SAFE TRANSPORT OF PATIENT WITHIN THE HOSPITAL (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/AAC 10 E SAFE TRANSPORT OF PATIENT WITHIN THE HOSPITAL.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/AAC 10 E SAFE TRANSPORT OF PATIENT WITHIN THE HOSPITAL.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "AAC 10 F REFERRAL OF PATIENTS TO OTHER DEPARTMENTS (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/AAC 10 F REFERRAL OF PATIENTS TO OTHER DEPARTMENTS.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/AAC 10 F REFERRAL OF PATIENTS TO OTHER DEPARTMENTS.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "AAC 11 PREVENTIVE AND PROMOTIVE HEALTH SERVICE POLICY (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/AAC 11 PREVENTIVE AND PROMOTIVE HEALTH SERVICE POLICY.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/AAC 11 PREVENTIVE AND PROMOTIVE HEALTH SERVICE POLICY.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "AAC 12 DISCHARGE PROCESS (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/AAC 12 DISCHARGE PROCESS.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/AAC 12 DISCHARGE PROCESS.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "AAC 13 POLICY ON DISCHARGE SUMMARY CONTENT (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/AAC 13 POLICY ON DISCHARGE SUMMARY CONTENT.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/AAC 13 POLICY ON DISCHARGE SUMMARY CONTENT.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "AAC 2 A DEFINED REGISTRATION AND ADMISSION PROCESS (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/AAC 2 A DEFINED REGISTRATION AND ADMISSION PROCESS.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/AAC 2 A DEFINED REGISTRATION AND ADMISSION PROCESS.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "AAC 2 D POLICY ON NON AVAILABILITY OF BEDS (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/AAC 2 D POLICY ON NON AVAILABILITY OF BEDS.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/AAC 2 D POLICY ON NON AVAILABILITY OF BEDS.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "AAC 3 TRANSFER IN OF PLANNED, UNPLANNED OR UNSTABLE PATIENT (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/AAC 3 TRANSFER IN OF  PLANNED, UNPLANNED OR UNSTABLE PATIENT.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/AAC 3 TRANSFER IN OF  PLANNED, UNPLANNED OR UNSTABLE PATIENT.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "AAC 3B TRANSFER OUT REFERRAL (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/AAC 3B TRANSFER OUT REFERRAL.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/AAC 3B TRANSFER OUT REFERRAL.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "AAC 4 POLICY ON ESTABLISHED INITIAL ASSESSMENT (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/AAC 4 POLICY ON ESTABLISHED INITIAL ASSESSMENT.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/AAC 4 POLICY ON ESTABLISHED INITIAL ASSESSMENT.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "AAC 5 A POLICY ON PATIENT REASSESSMENT (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/AAC 5 A POLICY ON PATIENT REASSESSMENT.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/AAC 5 A POLICY ON PATIENT REASSESSMENT.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "AAC 5 E MEWS PROTOCOL (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/AAC 5 E MEWS PROTOCOL.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/AAC 5 E MEWS PROTOCOL.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "AAC 6 E REQUESITION, COLLECTION, TRANSPORT LAB (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/AAC 6 E REQUESITION, COLLECTION, TRANSPORT LAB.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/AAC 6 E REQUESITION, COLLECTION, TRANSPORT LAB.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "AAC 6 F TAT LAB (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/AAC 6 F TAT LAB.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/AAC 6 F TAT LAB.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "AAC 6 G CRITICAL RESULT INTIMATION LAB (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/AAC 6 G CRITICAL RESULT INTIMATION LAB.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/AAC 6 G CRITICAL RESULT INTIMATION LAB.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "AAC 6 J LAB OUTSOURCE POLICY (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/AAC 6 J LAB OUTSOURCE POLICY.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/AAC 6 J LAB OUTSOURCE POLICY.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "AAC 7 A LAB QUALITY ASSURANCE MANUAL (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/AAC 7 A LAB QUALITY ASSURANCE MANUAL.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/AAC 7 A LAB QUALITY ASSURANCE MANUAL.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "AAC 7 E LAB SAFETY MANUAL (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/AAC 7 E LAB SAFETY MANUAL.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/AAC 7 E LAB SAFETY MANUAL.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "AAC 8 E RADIOLOGY TAT TIME (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/AAC 8 E RADIOLOGY TAT TIME.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/AAC 8 E RADIOLOGY TAT TIME.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "AAC 8 F RADIOLOGY CRITICAL ALERT POLICY (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/AAC 8 F RADIOLOGY CRITICAL ALERT POLICY.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/AAC 8 F RADIOLOGY CRITICAL ALERT POLICY.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "AAC 9 A RADIOLOGY QUALITY MANUAL (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/AAC 9 A RADIOLOGY QUALITY MANUAL.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/AAC 9 A RADIOLOGY QUALITY MANUAL.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "AAC 9 F RADIATION SAFETY MANUAL (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/AAC 9 F RADIATION SAFETY MANUAL.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/AAC 9 F RADIATION SAFETY MANUAL.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "APH - SCOPE OF SERVICES (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/APH - Scope of Services.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/APH - Scope of Services.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "LAB SAMPLE COLLECTION MANUAL (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/LAB SAMPLE COLLECTION MANUAL.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/LAB SAMPLE COLLECTION MANUAL.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "APH ANTIBIOGRAM 2025 (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/APH ANTIBIOGRAM 2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/APH ANTIBIOGRAM 2025.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "AWARE CLASSIFICATION 2025 (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/AWaRe classification 2025.xlsx",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/AWaRe classification 2025.xlsx",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "ANTIMICROBIAL POLICY 2025-26 (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/Antimicrobial policy 2025-26.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/Antimicrobial policy 2025-26.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "AMSP TEACHING MATERIAL (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/AMSP teaching material.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/AMSP teaching material.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "'25 ANTIMICROBIAL RESISTANCE PATTERN LAB DATA (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "AMBULANCE SERVICES (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/AMBULANCE SERVICES.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/AMBULANCE SERVICES.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "ANTE-NATAL SERVICES (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/ANTE-NATAL SERVICES.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/ANTE-NATAL SERVICES.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "CHILD ABDUCTION AND ABUSE (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/CHILD ABDUCTION AND ABUSE.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/CHILD ABDUCTION AND ABUSE.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "CODE YELLOW (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/CODE YELLOW.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/CODE YELLOW.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "COP 1 f TELEMEDICINE (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/COP 1 f TELEMEDICINE.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/COP 1 f TELEMEDICINE.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "COP 1 UNIFORM CARE OF PATIENT (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/COP 1 UNIFORM CARE OF PATIENT.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/COP 1 UNIFORM CARE OF PATIENT.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "COP 2 d TRIAGE PROTOCOL FOLLOWED IN THE CASUALTY (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/COP 2 d TRIAGE PROTOCOL FOLLOWED IN THE CASUALTY.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/COP 2 d TRIAGE PROTOCOL FOLLOWED IN THE CASUALTY.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "COP 2 I BROUGHT DEATH POLICY (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/COP 2 I BROUGHT DEATH POLICY.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/COP 2 I BROUGHT DEATH POLICY.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "COP 2 i PATIENT FOUND DEAD ON ARRIVAL (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/COP 2 i PATIENT FOUND DEAD ON ARRIVAL.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/COP 2 i PATIENT FOUND DEAD ON ARRIVAL.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "COP 3 AMBULANCE SERVICE (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/COP 3 AMBULANCE SERVICE.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/COP 3 AMBULANCE SERVICE.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "COP 4 DISASTER MANAGEMENT (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/COP 4 DISASTER MANAGEMENT.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/COP 4 DISASTER MANAGEMENT.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "COP 5 GUIDELINE FOR CPR (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/COP 5 GUIDELINE FOR CPR.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/COP 5 GUIDELINE FOR CPR.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "COP 6 f NURSING EMPOWERMENT (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/COP 6 f NURSING EMPOWERMENT.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/COP 6 f NURSING EMPOWERMENT.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "COP 6 NURSING CARE (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/COP 6 NURSING CARE.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/COP 6 NURSING CARE.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "COP 7 CLINICAL PROCEDURES IN SAFE MANNER (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/COP 7 CLINICAL PROCEDURES IN SAFE MANNER.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/COP 7 CLINICAL PROCEDURES IN SAFE MANNER.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "COP 7 D CARE IS TAKEN TO PREVENT ADVERSE EVENTS LIKE A WRONG PATIENT, WRONG PROCEDURE AND WRONG SITE (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/COP 7 D CARE IS TAKEN TO PREVENT ADVERSE EVENTS LIKE A WRONG PATIENT, WRONG PROCEDURE AND WRONG SITE.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/COP 7 D CARE IS TAKEN TO PREVENT ADVERSE EVENTS LIKE A WRONG PATIENT, WRONG PROCEDURE AND WRONG SITE.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "COP 8 GUIDELINE FOR PACKED RED BLOOD CELL TRANSFUSION (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/COP 8 GUIDELINE FOR PACKED RED BLOOD CELL TRANSFUSION.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/COP 8 GUIDELINE FOR PACKED RED BLOOD CELL TRANSFUSION.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "COP 9 B ADMISSION AND DISCHARGE CRITERIA FOR INTENSIVE CARE (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/COP 9 B ADMISSION AND DISCHARGE CRITERIA FOR INTENSIVE CARE.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/COP 9 B ADMISSION AND DISCHARGE CRITERIA FOR INTENSIVE CARE.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "COP 9 d ICU BED SHORTAGE (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/COP 9 d ICU BED SHORTAGE.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/COP 9 d ICU BED SHORTAGE.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "COP 9 e INFECTION CONTROL PRACTICES IN ICU (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/COP 9 e INFECTION CONTROL PRACTICES IN ICU.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/COP 9 e INFECTION CONTROL PRACTICES IN ICU.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "COP 17 PAIN MANAGEMENT (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/COP 17 PAIN MANAGEMENT.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/COP 17 PAIN MANAGEMENT.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "COP 18 PHYSIOTHERAPY MANUAL (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/COP 18 PHYSIOTHERAPY MANUAL.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/COP 18 PHYSIOTHERAPY MANUAL.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "COP 19 DIETICIAN MANUAL (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/COP 19 DIETICIAN MANUAL.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/COP 19 DIETICIAN MANUAL.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "COP.15 ORGAN TRANSPLANT PROGRAMME (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/COP.15 ORGAN TRANSPLANT PROGRAMME.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/COP.15 ORGAN TRANSPLANT PROGRAMME.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "COP.16.a IDENTIFIES & MANAGES VULNERABLE PATIENTS (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/COP.16.a IDENTIFIES & MANAGES VULNERABLE PATIENTS.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/COP.16.a IDENTIFIES & MANAGES VULNERABLE PATIENTS.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "COP.16.e RESTRAINT MANAGEMENT (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/COP.16.e RESTRAINT MANAGEMENT.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/COP.16.e RESTRAINT MANAGEMENT.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "SEDATION & ANAESTHESIA SERVICE (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/SEDATION & ANAESTHESIA SERVICE.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/SEDATION & ANAESTHESIA SERVICE.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "SURGICAL SERVICE (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/SURGICAL  SERVICE.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/SURGICAL  SERVICE.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "UNIFORM CARE OF PATIENT (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/UNIFORM CARE OF PATIENT.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/UNIFORM CARE OF PATIENT.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "PRE 8 c - Communication with Family members (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/PRE 8 c - Communication with Family members.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/PRE 8 c - Communication with Family members.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "PRE 1b - Patient and Family Rights and Responsibilities (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/PRE 1b - Patient and Family Rights and Responsibilities.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/PRE 1b - Patient and Family Rights and Responsibilities.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "PRE 4d - Incapable of independent decision-making (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/PRE 4d - Incapable of independent decision-making.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/PRE 4d - Incapable of independent decision-making.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "PRE 1a - Patient Rights and Responsibility (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/PRE 1a - Patient Rights and Responsibility.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/PRE 1a - Patient Rights and Responsibility.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "PRE 8 a - Effective Communication with Patient and Families (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/PRE 8 a - Effective Communication with Patient and Families.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/PRE 8 a - Effective Communication with Patient and Families.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "PRE 8 b - ENHANCED COMMUNICATION (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/PRE 8 b - ENHANCED COMMUNICATION.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/PRE 8 b - ENHANCED COMMUNICATION.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "PRE 4a - Patient and family rights include informed consent (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/PRE 4a - Patient and family rights include informed consent.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/PRE 4a - Patient and family rights include informed consent.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "The Enhanced Communication (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/The Enhanced Communication.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/The Enhanced Communication.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "The 7 C\\Uffffffffs of Effective Communication (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/The 7 C\\Uffffffffs of Effective Communication.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/The 7 C\\Uffffffffs of Effective Communication.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "PRE.1 D - Violation of Patient and Family Rights (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/PRE.1 D - Violation of Patient and Family Rights.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/PRE.1 D - Violation of Patient and Family Rights.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "IPC - SOP FOR REPROCESSING OF DIALYSIS TUBING (NABH 6th Edition)",
+    "url": "http://192.168.101.75:3000/files/nabh/SOP FOR REPROCESSING OF SINGLE USE TUBINGS - DIALYSIS.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/SOP FOR REPROCESSING OF SINGLE USE TUBINGS - DIALYSIS.pdf",
+    "category": "Manuals & SOPs",
+    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
+    "badge": "Manual",
+    "hubPage": "./manuals.html"
+  },
+  {
+    "title": "HIS System (Backbone / Admin Login)",
+    "url": "http://192.168.103.37/BB15SE/Backbone/admin/login.aspx",
+    "canonicalUrl": "http://192.168.103.37/BB15SE/Backbone/admin/login.aspx",
+    "category": "Core Systems",
+    "description": "Hospital Information System for patient IP/OP registration, billing, orders & clinical documentation",
+    "badge": "HIS System",
+    "hubPage": "./index.html#applications"
+  },
+  {
+    "title": "M - PACS (Medsynapse Radiology DICOM Viewer)",
+    "url": "http://192.168.101.224/User_Login.asp",
+    "canonicalUrl": "http://192.168.101.224/User_Login.asp",
+    "category": "Core Systems",
+    "description": "Radiology PACS DICOM viewer for X-Ray, CT scans, Ultrasound & MRI medical imaging",
+    "badge": "PACS System",
+    "hubPage": "./index.html#applications"
+  },
+  {
+    "title": "PruWorks HRMS Staff Attendance & Payroll",
+    "url": "https://mapims-hrms.tecvinesolutions.com",
+    "canonicalUrl": "https://mapims-hrms.tecvinesolutions.com",
+    "category": "Core Systems",
+    "description": "Employee biometric attendance, pay slips, salary and shift schedule portal",
+    "badge": "HRMS",
+    "hubPage": "./index.html#applications"
+  },
+  {
+    "title": "HRMS Staff Self-Service Login",
+    "url": "http://www.mapims.online/staff",
+    "canonicalUrl": "http://www.mapims.online/staff",
+    "category": "Core Systems",
+    "description": "Hospital employee self-service login portal",
+    "badge": "HRMS",
+    "hubPage": "./index.html#applications"
+  },
+  {
+    "title": "HRMS Admin Management Portal",
+    "url": "http://www.mapims.online/",
+    "canonicalUrl": "http://www.mapims.online/",
+    "category": "Core Systems",
+    "description": "Administration portal for HR management, recruitment and employee records",
+    "badge": "HRMS",
+    "hubPage": "./index.html#applications"
+  },
+  {
+    "title": "Campus Ticketing & Maintenance Desk (Job Orders)",
+    "url": "http://www.mapimshis.com/mapims/",
+    "canonicalUrl": "http://www.mapimshis.com/mapims/",
+    "category": "Core Systems",
+    "description": "Institutional ticketing system to lodge IT, HIS, biomedical, civil and electrical job orders",
+    "badge": "Ticketing",
+    "hubPage": "./index.html#applications"
+  },
+  {
+    "title": "Medical Records Department (FIT MRD Portal)",
+    "url": "http://www.mapimsmrd.com/mapimsmrd/",
+    "canonicalUrl": "http://www.mapimsmrd.com/mapimsmrd/",
+    "category": "Core Systems",
+    "description": "Digital discharge summary archiving and patient medical records tracking",
+    "badge": "MRD Portal",
+    "hubPage": "./index.html#applications"
+  },
+  {
+    "title": "Laboratory Pathology Barcode App v2.4.4",
+    "url": "http://192.168.103.158:8081",
+    "canonicalUrl": "http://192.168.103.158:8081",
+    "category": "Clinical Apps",
+    "description": "Central clinical laboratory sample barcoding and tube tracking module",
+    "badge": "Clinical App",
+    "hubPage": "./index.html#applications"
+  },
+  {
+    "title": "Community Health Eye Camp-25 Outreach",
+    "url": "http://192.168.103.158:8082",
+    "canonicalUrl": "http://192.168.103.158:8082",
+    "category": "Clinical Apps",
+    "description": "Ophthalmology community outreach, camp registration and patient screening tool",
+    "badge": "Clinical App",
+    "hubPage": "./index.html#applications"
+  },
+  {
+    "title": "Clinical Care Counselling & ICU App",
+    "url": "https://192.168.103.158:8083",
+    "canonicalUrl": "https://192.168.103.158:8083",
+    "category": "Clinical Apps",
+    "description": "Critical care counselling notes, psychological consults and ICU encrypted logs",
+    "badge": "Clinical App",
+    "hubPage": "./index.html#applications"
+  },
+  {
+    "title": "LineLoom Token Engine (OPD Live Stream)",
+    "url": "http://192.168.103.158:8086",
+    "canonicalUrl": "http://192.168.103.158:8086",
+    "category": "Clinical Apps",
+    "description": "Real-time OPD queue flow, patient token engine and digital waiting display",
+    "badge": "Clinical App",
+    "hubPage": "./index.html#applications"
+  },
+  {
+    "title": "MAPIMS AI Health Assessment",
+    "url": "https://mh.mapims.edu.in/",
+    "canonicalUrl": "https://mh.mapims.edu.in/",
+    "category": "Clinical Apps",
+    "description": "Health assessment and digital clinical screening application",
+    "badge": "Clinical App",
+    "hubPage": "./index.html#applications"
+  },
+  {
+    "title": "Clinical Checklist App",
+    "url": "https://checklist.mapims.edu.in/",
+    "canonicalUrl": "https://checklist.mapims.edu.in/",
+    "category": "Clinical Apps",
+    "description": "Daily nursing checklists and paperless clinical workflows",
+    "badge": "Clinical App",
+    "hubPage": "./index.html#applications"
+  },
+  {
+    "title": "Non-Clinical Checklist App",
+    "url": "https://gencl.mapims.edu.in/",
+    "canonicalUrl": "https://gencl.mapims.edu.in/",
+    "category": "Operational Apps",
+    "description": "Hospital sanitation, housekeeping and general facilities checklists",
+    "badge": "Checklist App",
+    "hubPage": "./index.html#applications"
+  },
+  {
+    "title": "Special Treatment & Health Packages (04.05.2026)",
+    "url": "http://192.168.101.75:3000/files/Adhiparasakthi Hospitals Special Packages (04.05.2026).pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Adhiparasakthi Hospitals Special Packages (04.05.2026).pdf",
+    "category": "Tariff & Packages",
+    "description": "Approved hospital inpatient admission and surgical package charges",
+    "badge": "Tariff PDF",
+    "hubPage": "./index.html#tariff-stock"
+  },
+  {
+    "title": "Laboratory Investigation Tariff",
+    "url": "http://192.168.101.75:3000/files/Lab Tariff.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Lab Tariff.pdf",
+    "category": "Tariff & Packages",
+    "description": "Pathology, biochemistry, microbiology and haematology lab test charges",
+    "badge": "Tariff PDF",
+    "hubPage": "./index.html#tariff-stock"
+  },
+  {
+    "title": "Radiology Imaging Tariff",
+    "url": "http://192.168.101.75:3000/files/Radiology Tariff.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Radiology Tariff.pdf",
+    "category": "Tariff & Packages",
+    "description": "X-Ray, Ultrasound, CT, MRI and interventional imaging investigation charges",
+    "badge": "Tariff PDF",
+    "hubPage": "./index.html#tariff-stock"
+  },
+  {
+    "title": "Physiotherapy Department Tariff",
+    "url": "http://192.168.101.75:3000/files/Physiotherapy Tariff.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Physiotherapy Tariff.pdf",
+    "category": "Tariff & Packages",
+    "description": "Physical therapy, rehabilitation, electrotherapy and traction treatment rates",
+    "badge": "Tariff PDF",
+    "hubPage": "./index.html#tariff-stock"
+  },
+  {
+    "title": "General Ward Surgery OT Tariff",
+    "url": "http://192.168.101.75:3000/files/General Ward Surgery OT Tariff.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/General Ward Surgery OT Tariff.pdf",
+    "category": "Tariff & Packages",
+    "description": "Operating theatre charges, surgeon fees and general ward surgical packages",
+    "badge": "Tariff PDF",
+    "hubPage": "./index.html#tariff-stock"
+  },
+  {
+    "title": "ICU and Special Ward Room Tariff",
+    "url": "http://192.168.101.75:3000/files/ICU and Special Ward Room Tariff.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/ICU and Special Ward Room Tariff.pdf",
+    "category": "Tariff & Packages",
+    "description": "Intensive Care Unit bed charges, deluxe room, AC and special ward tariffs",
+    "badge": "Tariff PDF",
+    "hubPage": "./index.html#tariff-stock"
+  },
+  {
+    "title": "Other Departments Tariff",
+    "url": "http://192.168.101.75:3000/files/Other Department Tariff.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Other Department Tariff.pdf",
+    "category": "Tariff & Packages",
+    "description": "Specialty clinical departmental tariffs and outpatient service charges",
+    "badge": "Tariff PDF",
+    "hubPage": "./index.html#tariff-stock"
+  },
+  {
+    "title": "Drug Stores Stock Details",
+    "url": "http://192.168.101.75:3000/files/Drug Stores Stock Details.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Drug Stores Stock Details.pdf",
+    "category": "Pharmacy & Stock",
+    "description": "Central pharmacy drug inventory and active stock counts (139 items)",
+    "badge": "Stock PDF",
+    "hubPage": "./index.html#tariff-stock"
+  },
+  {
+    "title": "IP Pharmacy Stock Details",
+    "url": "http://192.168.101.75:3000/files/IP Pharmacy Stock Details.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/IP Pharmacy Stock Details.pdf",
+    "category": "Pharmacy & Stock",
+    "description": "Inpatient ward pharmacy current stock balance (77 items)",
+    "badge": "Stock PDF",
+    "hubPage": "./index.html#tariff-stock"
+  },
+  {
+    "title": "Insurance Pharmacy Stock Details",
+    "url": "http://192.168.101.75:3000/files/Insurance Pharmacy Stock Details.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Insurance Pharmacy Stock Details.pdf",
+    "category": "Pharmacy & Stock",
+    "description": "TPA / Insurance pharmacy inventory and approved formulary stock (515 items)",
+    "badge": "Stock PDF",
+    "hubPage": "./index.html#tariff-stock"
+  },
+  {
+    "title": "OP Pharmacy Stock Details",
+    "url": "http://192.168.101.75:3000/files/Op Pharmacy Stock  Details.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Op Pharmacy Stock  Details.pdf",
+    "category": "Pharmacy & Stock",
+    "description": "Outpatient dispensing pharmacy stock details (90 items)",
+    "badge": "Stock PDF",
+    "hubPage": "./index.html#tariff-stock"
+  },
+  {
+    "title": "Hospital Formulary - 2025",
+    "url": "http://192.168.101.75:3000/files/Hospital Formulary - 2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Hospital Formulary - 2025.pdf",
+    "category": "Pharmacy & Stock",
+    "description": "Official APH hospital drug formulary, dosage recommendations and generic catalog",
+    "badge": "Formulary PDF",
+    "hubPage": "./index.html#tariff-stock"
+  },
+  {
+    "title": "Free Drug List (NMC)",
+    "url": "http://192.168.101.75:3000/files/Pharmacy_Updated_11.05.26.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Pharmacy_Updated_11.05.26.pdf",
+    "category": "Pharmacy & Stock",
+    "description": "National Medical Commission approved complimentary hospital medicines list",
+    "badge": "Formulary PDF",
+    "hubPage": "./index.html#tariff-stock"
+  },
+  {
+    "title": "Inventory Stock Details 2024",
+    "url": "http://192.168.101.75:3000/files/Inventory Stock Details 2024.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Inventory Stock Details 2024.pdf",
+    "category": "Pharmacy & Stock",
+    "description": "Biomedical and general store hospital equipment inventory status",
+    "badge": "Stock PDF",
+    "hubPage": "./index.html#tariff-stock"
+  },
+  {
+    "title": "Blood Bank Stock Details",
+    "url": "http://192.168.101.75:3000/files/Blood Bank Stock Details.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Blood Bank Stock Details.pdf",
+    "category": "Clinical Governance",
+    "description": "Real-time blood components, PRBC, FFP, platelets units stock register",
+    "badge": "Stock PDF",
+    "hubPage": "./index.html#resources"
+  },
+  {
+    "title": "24-Hour Doctor On-Duty Roster",
+    "url": "http://192.168.101.75:3000/files/24hr%27s%20Duty%20Details.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/24hr's Duty Details.pdf",
+    "category": "Clinical Governance",
+    "description": "Casualty, ICU, surgical and specialist medical officers on-call schedule",
+    "badge": "Roster",
+    "hubPage": "./index.html#resources"
+  },
+  {
+    "title": "MLC & Police Station Hotlines",
+    "url": "http://192.168.101.75:3000/files/police.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/police.pdf",
+    "category": "Clinical Governance",
+    "description": "Local jurisdiction police stations and Medico-Legal Case reporting emergency hotlines",
+    "badge": "Contact PDF",
+    "hubPage": "./index.html#resources"
+  },
+  {
+    "title": "Clinical Protocols & Standing Orders",
+    "url": "http://192.168.101.75:3000/files/clinical.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/clinical.pdf",
+    "category": "Clinical Governance",
+    "description": "Inpatient clinical treatment protocols and medical management directives",
+    "badge": "Protocol PDF",
+    "hubPage": "./index.html#resources"
+  },
+  {
+    "title": "User Billing Manual",
+    "url": "http://192.168.101.75:3000/files/billingmanual.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/billingmanual.pdf",
+    "category": "Operational Manuals",
+    "description": "Hospital billing desk, IP discharge billing and cashier SOP handbook",
+    "badge": "Manual PDF",
+    "hubPage": "./index.html#resources"
+  },
+  {
+    "title": "Nursing Operations Manual",
+    "url": "http://192.168.101.75:3000/files/nursingmanual.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/nursingmanual.pdf",
+    "category": "Operational Manuals",
+    "description": "Standard operating procedures and nursing protocols for general and intensive care wards",
+    "badge": "Manual PDF",
+    "hubPage": "./index.html#resources"
+  },
+  {
+    "title": "Official Staff Email Directory",
+    "url": "http://192.168.101.75:3000/files/email.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/email.pdf",
+    "category": "Staff Directory",
+    "description": "Official institutional faculty and departmental email directory",
+    "badge": "Directory PDF",
+    "hubPage": "./index.html#resources"
+  },
+  {
+    "title": "Medical Abbreviations Register",
+    "url": "http://192.168.101.75:3000/files/Abrrevation.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Abrrevation.pdf",
+    "category": "Clinical Governance",
+    "description": "NABH standard approved clinical abbreviations register and 'Do Not Use' list",
+    "badge": "Register PDF",
+    "hubPage": "./index.html#resources"
+  },
+  {
+    "title": "Campus Intercom & Extension Directory PDF",
+    "url": "http://192.168.101.75:3000/files/Intercom Directory.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/Intercom Directory.pdf",
+    "category": "Staff Directory",
+    "description": "Official campus telephone extension directory PDF with internal department lines",
+    "badge": "Directory PDF",
+    "hubPage": "./intercom.html"
+  },
+  {
+    "title": "Campus Intercom & Extension Directory (Searchable List)",
+    "url": "./intercom.html",
+    "canonicalUrl": "./intercom.html",
+    "category": "Staff Directory",
+    "description": "Searchable internal departmental telephone extensions and casualty hotlines",
+    "badge": "Directory",
+    "hubPage": "./intercom.html"
+  },
+  {
+    "title": "APH HR Forms Hub",
+    "url": "./index.html#forms",
+    "canonicalUrl": "./index.html#forms",
+    "category": "HR Forms",
+    "description": "Central repository on the main portal for teaching faculty recruitment, non-teaching jobs, appraisals, PMS policy and leave schedule",
+    "badge": "Forms Hub",
+    "hubPage": "./index.html#forms"
+  },
+  {
+    "title": "List of Committees",
+    "url": "http://192.168.101.75:3000/files/24hr",
+    "canonicalUrl": "http://192.168.101.75:3000/files/24hr",
+    "category": "Portal Resources",
+    "description": "List of Committees\n           (Portal Resources)",
+    "badge": "Document",
+    "hubPage": "./index.html"
+  },
+  {
+    "title": "Non-Clinical Checklist",
+    "url": "http://192.168.101.75:3000/files/CPR_MOM-23.10.2024.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/CPR_MOM-23.10.2024.pdf",
+    "category": "Portal Resources",
+    "description": "Non-Clinical Checklist (Portal Resources)",
+    "badge": "Document",
+    "hubPage": "./index.html"
+  },
+  {
+    "title": "FMS MOM (24.10.2024) PDF &rarr;",
+    "url": "http://192.168.101.75:3000/files/FMS_MOM-24.10.2024.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/FMS_MOM-24.10.2024.pdf",
+    "category": "Portal Resources",
+    "description": "FMS MOM (24.10.2024) PDF &rarr; (Portal Resources)",
+    "badge": "Document",
+    "hubPage": "./index.html"
+  },
+  {
+    "title": "HIC MOM (24.10.2024) PDF &rarr;",
+    "url": "http://192.168.101.75:3000/files/HIC_MOM_24-10-24_FINAL.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/HIC_MOM_24-10-24_FINAL.pdf",
+    "category": "Portal Resources",
+    "description": "HIC MOM (24.10.2024) PDF &rarr; (Portal Resources)",
+    "badge": "Document",
+    "hubPage": "./index.html"
+  },
+  {
+    "title": "DTC Minutes (17.10.2024) PDF &rarr;",
+    "url": "http://192.168.101.75:3000/files/DTC_MINUTES_17.10.2024.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/DTC_MINUTES_17.10.2024.pdf",
+    "category": "Portal Resources",
+    "description": "DTC Minutes (17.10.2024) PDF &rarr; (Portal Resources)",
+    "badge": "Document",
+    "hubPage": "./index.html"
+  },
+  {
+    "title": "MMCM (23.10.2024) PDF &rarr;",
+    "url": "http://192.168.101.75:3000/files/MOM-23.10.24.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/MOM-23.10.24.pdf",
+    "category": "Portal Resources",
+    "description": "MMCM (23.10.2024) PDF &rarr; (Portal Resources)",
+    "badge": "Document",
+    "hubPage": "./index.html"
+  },
+  {
+    "title": "QC MOM (07.01.2025) PDF &rarr;",
+    "url": "http://192.168.101.75:3000/files/QC MOM-07.01.2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/QC MOM-07.01.2025.pdf",
+    "category": "Portal Resources",
+    "description": "QC MOM (07.01.2025) PDF &rarr; (Portal Resources)",
+    "badge": "Document",
+    "hubPage": "./index.html"
+  },
+  {
+    "title": "FMS MOM Mar - 2025 PDF &rarr;",
+    "url": "http://192.168.101.75:3000/files/FMS MOM Mar - 2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/FMS MOM Mar - 2025.pdf",
+    "category": "Portal Resources",
+    "description": "FMS MOM Mar - 2025 PDF &rarr; (Portal Resources)",
+    "badge": "Document",
+    "hubPage": "./index.html"
+  },
+  {
+    "title": "MRD MOM Apr - 2025 PDF &rarr;",
+    "url": "http://192.168.101.75:3000/files/MRD MOM Apr - 2025.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/MRD MOM Apr - 2025.pdf",
+    "category": "Portal Resources",
+    "description": "MRD MOM Apr - 2025 PDF &rarr; (Portal Resources)",
+    "badge": "Document",
+    "hubPage": "./index.html"
+  }
+]
