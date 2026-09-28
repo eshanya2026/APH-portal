@@ -51,7 +51,7 @@ SYNONYMS = {
     'counselling': 'counseling consult psych ஆலோசனை',
     'wifi': 'wi-fi wireless internet mac inaiyam இணையம்',
     'wi-fi': 'wifi wireless internet mac inaiyam இணையம்',
-    'leave': 'holiday attendance absence vacation permission vidumurai leavu விடுமுறை',
+    'leave': 'pruworks hrms holiday attendance absence vacation permission vidumurai leavu விடுமுறை',
     'holiday': 'leave calendar festival dates vidumurai pandigai விடுமுறை',
     'salary': 'hrms pruworks payslip payroll wages attendance biometrics sambalam sampalam சம்பளம்',
     'payslip': 'salary hrms pruworks wages attendance sambalam sampalam சம்பளம்',
@@ -132,7 +132,11 @@ SYNONYMS = {
     'appraisal': 'performance pms faculty teaching non teaching promotion evaluation review hr',
     'promotion': 'pathavi non teaching elevation seniority recommendation appraisal hr',
     'sambalam': 'salary payslip payroll hrms wages attendance pruworks சம்பளம் hr',
+    'sambala': 'salary payslip payroll hrms wages attendance pruworks சம்பளம் hr',
     'sampalam': 'salary payslip payroll hrms wages attendance pruworks சம்பளம் hr',
+    'raseedhu': 'payslip receipt slip statement billing bill ரசீது',
+    'raseedu': 'payslip receipt slip statement billing bill ரசீது',
+    'rasidu': 'payslip receipt slip statement billing bill ரசீது',
     'varugai': 'attendance biometric shift hrms punch biometrics வருகை hr',
     'velai': 'application recruitment teaching non teaching appraisal biodata வேலை hr',
     'vinnappam': 'application form appraisal requisition biodata விண்ணப்பம் hr',
@@ -240,8 +244,11 @@ SYNONYMS = {
     'இரத்தம்': 'blood transfusion component prbc ffp reaction stock bank iratham',
     'ரத்த': 'blood transfusion component bank stock rattha',
     'வங்கி': 'bank stock storage repository details blood vangi',
-    'விடுமுறை': 'holiday holidays calendar leave 2026 dates festival vidumurai',
-    'சம்பளம்': 'salary payslip payroll hrms wages attendance sambalam',
+    'விடுமுறை': 'leave pruworks hrms holiday attendance permission vidumurai leavu விடுப்பு',
+    'விடுப்பு': 'leave pruworks hrms holiday attendance permission vidumurai leavu விடுமுறை',
+    'சம்பளம்': 'salary payslip payroll hrms pruworks wages attendance sambalam sambala சம்பள',
+    'சம்பள': 'salary payslip payroll hrms pruworks wages attendance sambalam sambala சம்பளம்',
+    'ரசீது': 'payslip receipt slip statement billing bill',
     'வருகை': 'attendance biometric shift hrms punch varugai',
     'பயிற்சி': 'training feedback induction payirchi',
     'விண்ணப்பம்': 'application form biodata teaching non teaching vinnappam',
@@ -949,18 +956,25 @@ def search_catalog_candidates(query, limit=6):
     informative_tokens = q_tokens - GENERIC_STOP_WORDS
 
     # Domain Intent Classifications
+    is_apply_leave_query = (
+        any(k in q_raw for k in ['leave', 'leavu', 'vidumurai', 'viduppu', 'விடுமுறை', 'விடுப்பு', 'permission', 'vacation']) and
+        not any(k in q_raw for k in ['list of holidays', 'holiday calendar', 'holidays'])
+    )
+    is_leave_query = any(k in q_raw for k in ['vidumurai', 'viduppu', 'விடுமுறை', 'விடுப்பு', 'leavu', 'pandigai', 'holiday', 'leave'])
+
     is_hr_query = (
+        is_apply_leave_query or
         is_word_match('hr', q_raw) or
         is_word_match('hrm', q_raw) or
         is_word_match('hrms', q_raw) or
         any(k in q_raw for k in [
             'human resource', 'human resources', 'pruworks', 'payroll', 'payslip',
-            'attendance', 'teaching faculty', 'non-teaching', 'non teaching',
-            'faculty application', 'promotion', 'appraisal', 'sambalam', 'சம்பளம்',
+            'attendance', 'teaching', 'faculty', 'non-teaching', 'non teaching',
+            'faculty application', 'promotion', 'appraisal', 'sambalam', 'சம்பளம்', 'சம்பள', 'ரசீது',
             'velai', 'வேலை', 'vinnappam', 'விண்ணப்பம்', 'pathavi', 'பதவி',
             'varugai', 'வருகை', 'pms policy', 'staff form', 'employee'
         ]) or
-        bool({'hr', 'hrm', 'hrms', 'payroll', 'payslip', 'attendance', 'pruworks', 'sambalam'} & q_tokens)
+        bool({'hr', 'hrm', 'hrms', 'payroll', 'payslip', 'attendance', 'pruworks', 'sambalam', 'teaching', 'faculty'} & q_tokens)
     )
 
     is_blood_query = (
@@ -972,8 +986,6 @@ def search_catalog_candidates(query, limit=6):
         any(k in q_raw for k in ['marunthu', 'drug', 'drugs', 'pharmacy', 'medicine', 'formulary', 'மருந்து', 'மருந்தகம்', 'mathirai']) and
         not is_blood_query
     )
-
-    is_leave_query = any(k in q_raw for k in ['vidumurai', 'விடுமுறை', 'leavu', 'pandigai', 'holiday', 'leave'])
 
     is_telecom_query = is_telephony_query(q_raw)
 
@@ -988,6 +1000,40 @@ def search_catalog_candidates(query, limit=6):
     is_store_query = (
         any(k in q_raw for k in ['indent', 'indents', 'store', 'stores', 'purchase', 'procurement', 'requisition', 'kolmuthal', 'கொள்முதல்']) and
         not is_hr_query and not is_blood_query and not is_it_query
+    )
+
+    is_consent_query = (
+        any(k in q_raw for k in ['consent', 'oputhal', 'opputhal', 'sammatham', 'samatham', 'ஒப்புதல்', 'சம்மதம்', 'paedconsent']) or
+        bool({'consent', 'oputhal', 'opputhal', 'sammatham'} & q_tokens)
+    )
+
+    is_pediatric_query = (
+        any(k in q_raw for k in [
+            'pediatric', 'paediatric', 'pediatrics', 'paediatrics',
+            'child', 'children', 'infant', 'infants', 'baby', 'babies', 'newborn', 'neonatal', 'neo-natal',
+            'kuzhanthai', 'kulandhai', 'kulanthaigal', 'kulandhaigal', 'pillai',
+            'குழந்தை', 'குழந்தைகள்', 'பிள்ளை', 'மழலை'
+        ]) or
+        bool({'pediatric', 'paediatric', 'pediatrics', 'paediatrics', 'child', 'children', 'infant', 'infants', 'baby', 'newborn', 'neonatal', 'kuzhanthai', 'kulandhai', 'pillai'} & q_tokens)
+    )
+
+    is_surgery_query = (
+        any(k in q_raw for k in ['surgery', 'surgical', 'operation', 'procedure', 'procedures', 'aruvai', 'sikitsai', 'sigichai', 'அறுவை', 'சிகிச்சை']) or
+        bool({'surgery', 'surgical', 'operation', 'procedure', 'procedures', 'aruvai', 'sikitsai'} & q_tokens)
+    )
+
+    is_dama_query = (
+        any(k in q_raw for k in ['dama', 'discharge against medical advice', 'lama', 'left against medical advice']) or
+        'dama' in q_tokens
+    )
+
+    is_admission_query = (
+        any(k in q_raw for k in ['admission', 'admit', 'serkkai', 'சேர்க்கை']) or
+        bool({'admission', 'admit', 'serkkai'} & q_tokens)
+    )
+
+    is_not_willing_query = (
+        any(k in q_raw for k in ['not willing', 'refusal', 'maruppu', 'மறுப்பு'])
     )
 
     scored = []
@@ -1055,6 +1101,33 @@ def search_catalog_candidates(query, limit=6):
             if doc_domain in ['CONSENT', 'HR', 'BLOOD_BANK']:
                 continue
 
+        # 8. Pediatric Query: STRICTLY PRUNE non-pediatric consent forms & unrelated clinical manuals
+        if is_pediatric_query:
+            is_ped_doc = any(k in title_lower or k in desc_lower or k in url.lower() for k in ['paediatric', 'pediatric', 'child', 'infant', 'neonatal', 'newborn'])
+            if cat == 'Consent Forms' and not is_ped_doc:
+                continue
+            if is_consent_query and doc_domain == 'MANUALS' and not is_ped_doc:
+                continue
+
+        # 9. Consent Specialty Isolation Guardrails:
+        # If user queries a specific procedure/type of consent, prune unrelated consent forms
+        if is_consent_query:
+            if is_blood_query and not is_pediatric_query:
+                if cat == 'Consent Forms' and not any(k in title_lower for k in ['blood', 'transfusion', 'ரத்த']):
+                    continue
+            elif is_surgery_query and not is_pediatric_query and not is_blood_query:
+                if cat == 'Consent Forms' and not any(k in title_lower for k in ['surgery', 'procedure', 'procedures', 'அறுவை']):
+                    continue
+            elif is_dama_query:
+                if cat == 'Consent Forms' and 'dama' not in title_lower:
+                    continue
+            elif is_admission_query and not is_pediatric_query:
+                if cat == 'Consent Forms' and 'admission' not in title_lower:
+                    continue
+            elif is_not_willing_query:
+                if cat == 'Consent Forms' and 'not willing' not in title_lower:
+                    continue
+
         score = 0
         has_hit = False
 
@@ -1121,14 +1194,91 @@ def search_catalog_candidates(query, limit=6):
             if doc_domain == 'HR':
                 score += 180
                 has_hit = True
-                if 'hr forms hub' in title_lower or title == 'APH HR Forms Hub':
-                    score += 40
+                if is_apply_leave_query:
+                    if 'pruworks' in title_lower or 'hrms' in title_lower:
+                        score += 480
+                    elif 'hr forms hub' in title_lower or title == 'APH HR Forms Hub' or 'hrm' in title_lower:
+                        score += 200
+                    elif 'holiday' in title_lower:
+                        score += 30
+                elif is_leave_query:
+                    if any(k in q_raw for k in ['calendar', 'list of holidays', 'pandigai', 'festival']) and 'holiday' in title_lower:
+                        score += 300
+                    elif 'holiday' in title_lower:
+                        score += 180
+                    elif 'pruworks' in title_lower or 'hrms' in title_lower:
+                        score += 80
+                elif any(k in q_raw for k in ['salary', 'payslip', 'payroll', 'wages', 'sambalam', 'sampalam', 'சம்பளம்']):
+                    if 'pruworks' in title_lower or 'hrms' in title_lower:
+                        score += 340
+                    elif 'hrm' in title_lower:
+                        score += 80
+                elif any(k in q_raw for k in ['attendance', 'biometric', 'punch', 'shift', 'roster']):
+                    if 'pruworks' in title_lower or 'hrms' in title_lower:
+                        score += 340
+                elif 'hr forms hub' in title_lower or title == 'APH HR Forms Hub':
+                    score += 60
                 elif 'pruworks' in title_lower or 'hrms' in title_lower or 'hrm' in title_lower:
-                    score += 30
-                elif any(k in title_lower for k in ['teaching', 'non-teaching', 'promotion', 'holiday']):
+                    score += 40
+                is_non_teaching_query = 'non teaching' in q_raw or 'non-teaching' in q_raw
+                is_teaching_query = 'teaching' in q_raw or 'faculty' in q_raw
+
+                if is_non_teaching_query:
+                    if 'non-teaching' in title_lower or 'non teaching' in title_lower:
+                        score += 320
+                        has_hit = True
+                    elif 'teaching' in title_lower:
+                        score -= 100
+                elif is_teaching_query:
+                    if 'non-teaching' in title_lower or 'non teaching' in title_lower:
+                        score -= 200
+                    elif 'teaching' in title_lower or 'faculty' in title_lower:
+                        score += 320
+                        has_hit = True
+                elif any(k in title_lower for k in ['teaching', 'non-teaching', 'promotion']):
                     score += 20
 
-        # 2. Surgery & Consent intent
+        # 2. Pediatric & Child intent boosts
+        if is_pediatric_query:
+            if any(k in title_lower for k in ['paediatric', 'pediatric', 'child']):
+                if is_consent_query and 'consent' in title_lower:
+                    score += 480
+                    has_hit = True
+                elif is_consent_query:
+                    score += 150
+                    has_hit = True
+                else:
+                    score += 260
+                    has_hit = True
+
+        # 3. Specialty Consent Form intent boosts
+        if is_consent_query:
+            if is_pediatric_query:
+                if 'paediatric consent' in title_lower:
+                    score += 480
+                    has_hit = True
+            elif is_blood_query:
+                if 'blood component transfusion' in title_lower or 'transfusion' in title_lower:
+                    score += 420
+                    has_hit = True
+            elif is_surgery_query:
+                if 'surgery or procedures' in title_lower or 'அறுவை' in desc_lower:
+                    score += 420
+                    has_hit = True
+            elif is_dama_query:
+                if 'dama consent' in title_lower:
+                    score += 420
+                    has_hit = True
+            elif is_admission_query and not is_pediatric_query:
+                if 'admission consent' in title_lower:
+                    score += 420
+                    has_hit = True
+            elif is_not_willing_query:
+                if 'not willing' in title_lower:
+                    score += 420
+                    has_hit = True
+
+        # 4. Surgery & Consent intent
         if any(k in q_raw for k in ['aruvai', 'sikitsai', 'sigichai', 'oputhal', 'opputhal', 'அறுவை', 'சிகிச்சை', 'ஒப்புதல்']):
             if 'tamil' in title_lower or 'அறுவை' in desc_lower:
                 score += 70
@@ -1137,7 +1287,7 @@ def search_catalog_candidates(query, limit=6):
                 score += 55
                 has_hit = True
                 
-        # 3. Blood Bank intent
+        # 5. Blood Bank intent
         if is_blood_query:
             if doc_domain == 'BLOOD_BANK':
                 score += 150
@@ -1152,7 +1302,7 @@ def search_catalog_candidates(query, limit=6):
                 score += 65
                 has_hit = True
                 
-        # 4. Holiday / Leave intent
+        # 6. Holiday / Leave intent
         if is_leave_query:
             if 'holiday' in title_lower or 'holidays' in title_lower:
                 score += 120
@@ -1395,9 +1545,12 @@ If the user uses ANY telephony words in English, Tamil, or Tanglish:
 - 'tholaipesi', 'tholaipasi', 'inaippu', 'inaippugal', 'azhaippu', 'alaippu', 'koopidu', 'pesa', 'en', 'yenn'
 - 'தொலைபேசி', 'இணைப்பு', 'இணைப்புகள்', 'அழைப்பு', 'அழைப்புகள்', 'எண்', 'எண்கள்', 'போன்', 'கால்', 'கூப்பிடு', 'பேசு', 'தொடர்பு', 'இன்டர்காம்', 'எக்ஸ்டென்ஷன்'
 1. This is STRICTLY a hospital telephony and intercom extension query.
-2. If a hospital department or service is mentioned in English, Tamil, or Tanglish (e.g. 'call billing', 'கட்டணம் தொலைபேசி எண்', 'inercom for hr', 'மனிதவளம் போன்', 'phone it', 'கணினி எண்', 'ortho extension', 'எலும்பு பிரிவு கால்', 'dialysis call', 'டயாலிசிஸ் இணைப்பு'):
+2. If a hospital department or service is mentioned in English, Tamil, or Tanglish (e.g. 'call billing', 'கட்டணம் தொலைபேசி எண்', 'inercom for hr', 'மனிதவளம் போன்', 'phone it', 'கணினி எண்', 'ortho extension', 'எலும்பு பிரிவு கால்', 'dialysis call', 'டயாலிசிஸ் இணைப்பு', 'pediatric intercom'):
    - In the "answer" field, you MUST explicitly provide the verified extension numbers for that department. If the question is in Tamil or Tanglish, provide the department name and extension numbers in Tamil/Tanglish.
-   - In the "links" array, you MUST provide '{dept_label} Department Intercom Directory' with URL '{dept_url}' as the primary link (category: 'Staff Directory', badge: '{dept_label} Directory'). Do NOT label single-department links as 'PDF'. Single department links open the dedicated department directory with 1-click print-to-PDF.
+   - In the "links" array, you MUST provide EXACTLY TWO links:
+     1. '{dept_label} Department Intercom Directory' with URL '{dept_url}' (category: 'Staff Directory', badge: '{dept_label} Directory'). Single department links open the dedicated department directory with 1-click print-to-PDF.
+     2. 'Official Campus Intercom Directory PDF (Full Hospital)' with URL 'http://192.168.101.75:3000/files/Intercom Directory.pdf' (category: 'Staff Directory', badge: 'Full PDF').
+     Do NOT include the searchable list or any third link when a specific department is queried.
 3. If NO department is specified (e.g. 'inercom', 'call', 'phone', 'extension', 'intercom', 'தொலைபேசி', 'tholaipesi', 'இணைப்பு எண்', 'inaippu en'):
    - In the "answer" field, provide the hospital emergency & critical hotlines: Emergency Reception (2001, 2002), Blood Bank (2131), ICU (2156), Main Gate (2800), and IT Support (2226).
    - In the "links" array, you MUST provide:
@@ -1415,8 +1568,22 @@ If the user asks about hospital store indents, procurement, requisitions, or sto
 3. NEVER mention, link, or suggest PaperZero (it is hidden/deprecated and must not be shown).
 4. NEVER return unrelated imaging clinical policies (e.g. 'Imaging Results are Available Within a Defined Time Frame'), IT desktop forms, or telephony directories for general store queries unless explicitly requested.
 
-
-
+STRICT CONSENT FORMS & PROCEDURE SPECIALTY ISOLATION RULE:
+1. Paediatric / Child Consent (e.g., 'pediatric consent', 'paediatric consent', 'child consent', 'kuzhanthai oputhal', 'குழந்தை ஒப்புதல்'):
+   - Recommend ONLY the 'Paediatric Consent Form' (URL: http://192.168.101.75:3000/files/paedconsent.pdf) and the general 'Consent Forms Vault' (URL: ./consent.html).
+   - In the "answer", explain that the official Paediatric Consent Form is legally mandatory to obtain informed parental or legal guardian consent for all medical, surgical, and diagnostic procedures on neonates, infants, and children.
+   - Suggestions MUST be strictly pediatric / consent vault related, e.g. ["Paediatric Consent Form", "Consent Forms Vault", "Paediatrics Intercom Ext: 2030"].
+   - NEVER suggest, link, or mention adult surgical consent, blood component transfusion consent, DAMA consent, or general admission consent.
+2. Blood Transfusion Consent ('blood transfusion consent', 'blood consent', 'raththa oputhal', 'ரத்த ஒப்புதல்'):
+   - Recommend ONLY 'CONSENT FOR BLOOD COMPONENT TRANSFUSIONS' (URL: http://192.168.101.75:3000/files/Blood%20Transfusion%20Reaction%20Form%20version%202.pdf) and 'Consent Forms Vault' (URL: ./consent.html).
+   - NEVER suggest surgical, dama, or pediatric consent.
+3. Surgery / Procedure Consent ('surgery consent', 'surgical consent', 'aruvai oputhal', 'அறுவை சிகிச்சை ஒப்புதல்'):
+   - Recommend 'Informed Consent Form For Surgery or Procedures' (English & Tamil) and 'Consent Forms Vault'.
+   - NEVER suggest blood transfusion, dama, or pediatric consent.
+4. DAMA Consent ('dama consent', 'dama form'):
+   - Recommend ONLY 'Dama Consent Form' and 'Consent Forms Vault'.
+5. General Admission Consent ('admission consent'):
+   - Recommend ONLY 'General Patient Admission Consent' and 'Consent Forms Vault'.
 
 ON-PAGE SECTIONS ON INTRANET HOMEPAGE (index.html):
 - Common Forms: Located in Forms section (#forms) under the "Common Forms" tab (44 approved ICU checklists, SBAR handover, narcotic indents & infection control protocols).
@@ -1434,10 +1601,17 @@ BILINGUAL & TANGLISH UNDERSTANDING:
 User Question: {user_query}
 
 Instructions for output:
-1. Answer the user's question directly, clearly, and authoritatively in 2-3 concise sentences.
-2. Recommend the best matching forms, documents, systems, or contacts.
-3. Every link URL must match an exact verified URL from the list above.
-4. Output MUST be valid JSON with this exact schema:
+1. CRITICAL: NEVER output robotic meta-text or inventory statistics like 'Found X verified documents matching...', 'Here are 6 documents...', or 'The primary resource is...'.
+2. ALWAYS provide a direct, practical, human-helpful answer in 2-3 concise sentences explaining the exact process, portal, or operational steps:
+   - For LEAVE queries (e.g. 'i need to apply leave', 'leave application', 'leave balance', 'விடுமுறை'): Direct the user to log in to **PruWorks HRMS** (https://mapims-hrms.tecvinesolutions.com) to submit leave requests and track approvals online, or visit the Admin HR office (Ext: 2173 / 2169). The #1 primary recommended link MUST be PruWorks HRMS (NOT holiday lists).
+   - For SALARY / PAYSLIP queries: Direct staff to download monthly pay slips via **PruWorks HRMS** or contact HR / Accounts (Ext: 2173 / 2175).
+   - For ATTENDANCE queries: Explain that biometric punches and shifts are tracked in **PruWorks HRMS**.
+   - For IT TICKETS & FAULTS: Direct staff to log a job order on the **Ticketing & Maintenance Desk** (http://www.mapimshis.com/mapims/) or call IT Support (Ext: 2226 / 2228).
+   - For HIS SOFTWARE queries: Direct to the **HIS Backbone System** (http://192.168.103.37/BB15SE/Backbone/admin/login.aspx) and New HIS User Request Form in IT Forms.
+   - For PACS queries: Direct to **M - PACS Medsynapse** (http://192.168.101.224/User_Login.asp).
+3. Recommend the best matching forms, documents, systems, or contacts.
+4. Every link URL must match an exact verified URL from the list above.
+5. Output MUST be valid JSON with this exact schema:
 {{
   "answer": "Clear, concise direct explanation and guidance",
   "links": [
@@ -1551,35 +1725,41 @@ def query_gemini_ai(user_query, api_key):
         # Prune false positive documents like 'Medication Recall'
         validated_links = [l for l in validated_links if not ('recall' in l.get('title', '').lower() and 'recall' not in q_lower)]
 
-        new_links = []
-        replaced = False
-        for l in validated_links:
-            u = l.get('url', '')
-            t = l.get('title', '')
-            if 'intercom' in u or 'intercom' in t.lower() or 'extension' in t.lower():
-                if not replaced:
-                    new_links.append({
-                        "title": dept_dir_title,
-                        "url": dept_url,
-                        "category": "Staff Directory",
-                        "badge": dept_dir_badge
-                    })
-                    replaced = True
+        if is_telecom_req:
+            validated_links = [
+                {
+                    "title": dept_dir_title,
+                    "url": dept_url,
+                    "category": "Staff Directory",
+                    "badge": dept_dir_badge
+                },
+                {
+                    "title": "Official Campus Intercom Directory PDF (Full Hospital)",
+                    "url": "http://192.168.101.75:3000/files/Intercom%20Directory.pdf",
+                    "category": "Staff Directory",
+                    "badge": "Full PDF"
+                }
+            ]
+        else:
+            new_links = []
+            replaced = False
+            for l in validated_links:
+                u = l.get('url', '')
+                t = l.get('title', '')
+                if 'intercom' in u or 'intercom' in t.lower() or 'extension' in t.lower():
+                    if not replaced:
+                        new_links.append({
+                            "title": dept_dir_title,
+                            "url": dept_url,
+                            "category": "Staff Directory",
+                            "badge": dept_dir_badge
+                        })
+                        replaced = True
+                    else:
+                        new_links.append(l)
                 else:
                     new_links.append(l)
-            else:
-                new_links.append(l)
-
-        if not replaced and is_telecom_req:
-            intercom_card = {
-                "title": dept_dir_title,
-                "url": dept_url,
-                "category": "Staff Directory",
-                "badge": dept_dir_badge
-            }
-            new_links.insert(0, intercom_card)
-
-        validated_links = new_links
+            validated_links = new_links
 
         # Ensure answer mentions the extension numbers if Gemini didn't mention them
         answer_text = ai_result.get('answer', '')
@@ -1622,6 +1802,67 @@ def query_gemini_ai(user_query, api_key):
         if not any(ext in answer_text for ext in ['2001', '2131', '2800', '2226']):
             if is_tamil_query(user_query):
                 ai_result['answer'] = "மருத்துவமனை அவசர உதவி மற்றும் முக்கிய துறை தொலைபேசி எண்கள்: அவசர சிகிச்சை (Casualty): 2001 / 2002, ரத்த வங்கி (24/7): 2131, தீவிர சிகிச்சை (ICU): 2156, மெயின் கேட்: 2800, கணினி உதவி மையம் (IT): 2226 / 2228. முழுமையான தொடர்பு பட்டியலை கீழே உள்ள PDF மூலம் பார்க்கலாம்."
+
+    # Sanitize consent queries: enforce strict procedure & specialty isolation
+    is_pediatric_req = any(k in q_lower for k in [
+        'pediatric', 'paediatric', 'pediatrics', 'paediatrics',
+        'child', 'children', 'infant', 'infants', 'baby', 'babies', 'newborn', 'neonatal',
+        'kuzhanthai', 'kulandhai', 'pillai', 'குழந்தை', 'பிள்ளை'
+    ])
+    is_consent_req = any(k in q_lower for k in ['consent', 'oputhal', 'opputhal', 'sammatham', 'ஒப்புதல்', 'சம்மதம்', 'paedconsent'])
+    is_blood_req = any(k in q_lower for k in ['blood', 'transfusion', 'ratha', 'radha', 'raththa', 'ரத்த'])
+    is_surgery_req = any(k in q_lower for k in ['surgery', 'surgical', 'operation', 'procedure', 'aruvai', 'sikitsai', 'அறுவை'])
+
+    if is_pediatric_req and is_consent_req:
+        # Strictly prune non-pediatric consent forms from links
+        validated_links = [
+            l for l in validated_links
+            if not (l.get('category') == 'Consent Forms' and not any(k in l.get('title', '').lower() for k in ['paediatric', 'pediatric', 'child']))
+        ]
+        # Ensure Paediatric Consent Form is present
+        if not any('paediatric' in l.get('title', '').lower() or 'paedconsent' in l.get('url', '').lower() for l in validated_links):
+            validated_links.insert(0, {
+                "title": "Paediatric Consent Form",
+                "url": "http://192.168.101.75:3000/files/paedconsent.pdf",
+                "category": "Consent Forms",
+                "badge": "Medicolegal"
+            })
+        # Ensure Consent Forms Vault is present
+        if not any('./consent.html' in l.get('url', '') for l in validated_links):
+            validated_links.append({
+                "title": "Consent Forms Vault",
+                "url": "./consent.html",
+                "category": "Forms Vault",
+                "badge": "Forms Vault"
+            })
+        # Strictly prune unrelated suggestions
+        ai_result['suggestions'] = [
+            s for s in ai_result.get('suggestions', [])
+            if not any(k in s.lower() for k in ['surgery', 'procedure', 'transfusion', 'blood component', 'admission consent', 'dama', 'not willing'])
+        ]
+        if len(ai_result['suggestions']) < 2:
+            ai_result['suggestions'] = ["Paediatric Consent Form", "Consent Forms Vault", "Paediatrics Intercom Ext: 2030"]
+
+    elif is_blood_req and is_consent_req:
+        validated_links = [
+            l for l in validated_links
+            if not (l.get('category') == 'Consent Forms' and not any(k in l.get('title', '').lower() for k in ['blood', 'transfusion', 'ரத்த']))
+        ]
+        ai_result['suggestions'] = [
+            s for s in ai_result.get('suggestions', [])
+            if not any(k in s.lower() for k in ['surgery', 'paediatric', 'pediatric', 'admission consent', 'dama', 'not willing'])
+        ]
+
+    elif is_surgery_req and is_consent_req and not is_pediatric_req and not is_blood_req:
+        validated_links = [
+            l for l in validated_links
+            if not (l.get('category') == 'Consent Forms' and not any(k in l.get('title', '').lower() for k in ['surgery', 'procedure', 'procedures', 'அறுவை']))
+        ]
+        ai_result['suggestions'] = [
+            s for s in ai_result.get('suggestions', [])
+            if not any(k in s.lower() for k in ['blood transfusion', 'paediatric', 'pediatric', 'dama', 'admission consent'])
+        ]
+
     # Sanitize answer & suggestions to ensure PaperZero is never shown
     final_answer = ai_result.get('answer', '')
     if 'paperzero' in final_answer.lower():
@@ -1649,6 +1890,15 @@ def generate_catalog_fallback_result(query, candidates=None):
     is_telecom_query = is_telephony_query(query)
     is_tamil = is_tamil_query(query)
 
+    is_pediatric_query = any(k in q_lower for k in [
+        'pediatric', 'paediatric', 'pediatrics', 'paediatrics',
+        'child', 'children', 'infant', 'infants', 'baby', 'babies', 'newborn', 'neonatal',
+        'kuzhanthai', 'kulandhai', 'pillai', 'குழந்தை', 'பிள்ளை'
+    ])
+    is_consent_query = any(k in q_lower for k in ['consent', 'oputhal', 'opputhal', 'sammatham', 'ஒப்புதல்', 'சம்மதம்', 'paedconsent'])
+    is_blood_consent_query = any(k in q_lower for k in ['blood', 'transfusion', 'ratha', 'radha', 'raththa', 'ரத்த']) and is_consent_query
+    is_surgery_consent_query = any(k in q_lower for k in ['surgery', 'surgical', 'operation', 'procedure', 'aruvai', 'sikitsai', 'அறுவை']) and is_consent_query
+
     # 1. Check if query matches any hospital department from intercom directory
     matched_dept = find_intercom_department(query)
     dept_label = (matched_dept.get('dept_label') or matched_dept['dept']) if matched_dept else ""
@@ -1668,7 +1918,6 @@ def generate_catalog_fallback_result(query, candidates=None):
 
         links = [
             {"title": f"{dept_label} Department Intercom Directory", "url": dept_url, "category": "Staff Directory", "badge": f"{dept_label} Directory"},
-            {"title": "Campus Intercom & Extension Directory (Searchable List)", "url": "./intercom.html", "category": "Staff Directory", "badge": "All Departments"},
             {"title": "Official Campus Intercom Directory PDF (Full Hospital)", "url": "http://192.168.101.75:3000/files/Intercom%20Directory.pdf", "category": "Staff Directory", "badge": "Full PDF"}
         ]
         return {"answer": answer, "links": links, "suggestions": suggestions}
@@ -1684,6 +1933,50 @@ def generate_catalog_fallback_result(query, candidates=None):
             {"title": "Campus Intercom & Extension Directory (Searchable List)", "url": "./intercom.html", "category": "Staff Directory", "badge": "Directory"},
             {"title": "Official Campus Intercom Directory PDF (Full Hospital)", "url": "http://192.168.101.75:3000/files/Intercom%20Directory.pdf", "category": "Staff Directory", "badge": "Full PDF"}
         ]
+        return {"answer": answer, "links": links, "suggestions": suggestions}
+
+    # Explicit handling for Pediatric Consent
+    if is_pediatric_query and is_consent_query:
+        if is_tamil:
+            answer = "குழந்தைகளுக்கான அனைத்து அறுவை மற்றும் மருத்துவ சிகிச்சைகளுக்கும் பெற்றோரின் அல்லது பாதுகாவலரின் சட்டபூர்வ ஒப்புதலைப் பெற **Paediatric Consent Form** பயன்படுத்தப்படுகிறது. அதிகாரப்பூர்வ படிவத்தை கீழே உள்ள இணைப்பில் பதிவிறக்கம் செய்யலாம். அனைத்து ஒப்புதல் படிவங்களுக்கும் **Consent Forms Vault** பார்க்கவும்."
+        else:
+            answer = "For all paediatric medical and surgical interventions involving neonates, infants, and children, use the official **Paediatric Consent Form** to obtain informed parental or legal guardian consent. Download the verified form below or explore the **Consent Forms Vault**."
+        links = [
+            {"title": "Paediatric Consent Form", "url": "http://192.168.101.75:3000/files/paedconsent.pdf", "category": "Consent Forms", "badge": "Medicolegal"},
+            {"title": "Consent Forms Vault", "url": "./consent.html", "category": "Forms Vault", "badge": "Forms Vault"},
+            {"title": "PAEDIATRIC DEPT (NABH 6th Edition)", "url": "http://192.168.101.75:3000/files/nabh/Paediatric%20Dept.pdf", "category": "Manuals & SOPs", "badge": "Manual"}
+        ]
+        suggestions = ["Paediatric Consent Form", "Consent Forms Vault", "Paediatrics Intercom Ext: 2030"]
+        if matched_dept:
+            ext_summary = ", ".join([f"{e['desc']}: {e['ext']}" for e in matched_dept['extensions'][:4]])
+            answer += f"\n\n📞 **{dept_label} Intercom Extensions**: {ext_summary}."
+        return {"answer": answer, "links": links, "suggestions": suggestions}
+
+    # Explicit handling for Blood Transfusion Consent
+    if is_blood_consent_query and not is_pediatric_query:
+        if is_tamil:
+            answer = "ரத்தம் மற்றும் ரத்த கூறுகள் ஏற்றுவதற்கான (Blood Component Transfusions) ஒப்புதலைப் பெற **Consent for Blood Component Transfusions** படிவம் பயன்படுத்தப்படுகிறது. கீழே உள்ள இணைப்பில் பதிவிறக்கம் செய்யலாம்."
+        else:
+            answer = "For administering whole blood, PRBC, FFP, platelets, and other blood products, use the official **Consent for Blood Component Transfusions** form. Download the form below or access the Consent Forms Vault."
+        links = [
+            {"title": "CONSENT FOR BLOOD COMPONENT TRANSFUSIONS", "url": "http://192.168.101.75:3000/files/Blood%20Transfusion%20Reaction%20Form%20version%202.pdf", "category": "Consent Forms", "badge": "Medicolegal"},
+            {"title": "Consent Forms Vault", "url": "./consent.html", "category": "Forms Vault", "badge": "Forms Vault"}
+        ]
+        suggestions = ["Blood Transfusion Consent Form", "Consent Forms Vault", "Blood Bank Ext: 2131"]
+        return {"answer": answer, "links": links, "suggestions": suggestions}
+
+    # Explicit handling for Surgical / Procedure Consent
+    if is_surgery_consent_query and not is_pediatric_query and not is_blood_consent_query:
+        if is_tamil:
+            answer = "அறுவை சிகிச்சை மற்றும் மருத்துவ நடைமுறைகளுக்கான அதிகாரப்பூர்வ ஒப்புதல் படிவம் (தமிழ் மற்றும் ஆங்கில வடிவம்) கீழே கிடைக்கிறது. நோயாளியிடம் விளக்கமளித்து கையொப்பம் பெறவும்."
+        else:
+            answer = "For invasive surgeries and clinical procedures, obtain patient or next-of-kin informed authorization using the **Informed Consent Form for Surgery or Procedures** (available in English and Tamil)."
+        links = [
+            {"title": "Informed Consent Form For Surgery or Procedures -English", "url": "http://192.168.101.75:3000/files/INFORMED%20CONSENT%20FORM%20FOR%20SURGERY%20OR%20PROCEDURES%20-English.pdf", "category": "Consent Forms", "badge": "Medicolegal"},
+            {"title": "Informed Consent Form For Surgery or Procedures-Tamil", "url": "http://192.168.101.75:3000/files/INFORMED%20CONSENT%20FORM%20FOR%20SURGERY%20OR%20PROCEDURES-Tamil.pdf", "category": "Consent Forms", "badge": "Medicolegal"},
+            {"title": "Consent Forms Vault", "url": "./consent.html", "category": "Forms Vault", "badge": "Forms Vault"}
+        ]
+        suggestions = ["Informed Consent Form - English", "Informed Consent Form - Tamil", "Consent Forms Vault"]
         return {"answer": answer, "links": links, "suggestions": suggestions}
 
     if not candidates:
@@ -1724,7 +2017,17 @@ def generate_catalog_fallback_result(query, candidates=None):
         suggestions = ["IT Intercom: 2226 / 2228", "Emergency Casualty: 2001 / 2800", "Blood Bank Ext: 2131"]
         return {"answer": answer, "links": links, "suggestions": suggestions}
 
+    is_apply_leave_intent = any(k in q_lower for k in ['leave', 'leavu', 'vidumurai', 'viduppu', 'விடுமுறை', 'விடுப்பு', 'permission', 'vacation']) and not any(k in q_lower for k in ['list of holidays', 'holiday calendar'])
+    is_salary_intent = any(k in q_lower for k in ['salary', 'payslip', 'pay slip', 'payroll', 'wages', 'sambalam', 'sampalam', 'sambala', 'சம்பளம்', 'சம்பள', 'ரசீது'])
+    is_attendance_intent = any(k in q_lower for k in ['attendance', 'biometric', 'punch', 'punching', 'varugai', 'வருகை']) and not is_apply_leave_intent
+    is_ticket_intent = any(k in q_lower for k in ['ticket', 'ticketing', 'job order', 'breakdown', 'complaint', 'repair', 'not working', 'fault', 'bug', 'பழுது'])
+    is_his_intent = any(k in q_lower for k in ['his', 'aosta', 'backbone', 'his user', 'user creation'])
+    is_pacs_intent = any(k in q_lower for k in ['pacs', 'medsynapse', 'xray', 'x-ray', 'ct scan', 'mri', 'ultrasound', 'scan viewer'])
+    is_wifi_intent = any(k in q_lower for k in ['wifi', 'wi-fi', 'wireless', 'internet'])
+    is_where_form_intent = any(k in q_lower for k in ['where is', 'where are', 'how to find', 'where can i find']) and any(k in q_lower for k in ['form', 'forms', 'vault', 'document'])
+
     is_hr_intent = (
+        is_apply_leave_intent or is_salary_intent or is_attendance_intent or
         is_word_match('hr', q_lower) or is_word_match('hrm', q_lower) or is_word_match('hrms', q_lower) or
         any(k in q_lower for k in ['human resource', 'pruworks', 'payroll', 'payslip', 'attendance', 'teaching', 'non-teaching', 'appraisal', 'promotion', 'sambalam', 'சம்பளம்', 'velai', 'vinnappam'])
     )
@@ -1734,40 +2037,110 @@ def generate_catalog_fallback_result(query, candidates=None):
         not is_hr_intent and not is_it_query
     )
 
-    if is_hr_intent:
+    if is_apply_leave_intent:
         if is_tamil:
-            answer = f"'{query}' (மனிதவளத் துறை / HR) தொடர்பான {len(candidates)} அதிகாரப்பூர்வ படிவங்கள் மற்றும் தளங்கள் கண்டறியப்பட்டுள்ளன. முதன்மை தளம்: '{top_item['title']}'."
+            answer = "விடுமுறை விண்ணப்பிக்க (Apply Leave) அல்லது உங்கள் விடுப்பு நிலவரத்தைப் பார்க்க **PruWorks HRMS** போர்ட்டலில் (https://mapims-hrms.tecvinesolutions.com) உள்நுழையவும். பணியாளர் வருகை, விடுமுறை விண்ணப்பம் மற்றும் ஒப்புதல் அனைத்தும் PruWorks மூலமாக செய்யப்படுகிறது. நேரடி படிவங்களுக்கு மனிதவளத் துறையை (Admin Office, Ext: 2173 / 2169) தொடர்பு கொள்ளலாம்."
         else:
-            answer = f"Found {len(candidates)} verified hospital Human Resources (HR) portals and official documents matching '{query}'. Primary resource is '{top_item['title']}'."
-        suggestions = ["PruWorks HRMS Staff Login", "Teaching & Non-Teaching Forms", "Human Resources Manual 2025"]
+            answer = "To apply for leave or check your leave balance, log in to the **PruWorks HRMS Portal** (https://mapims-hrms.tecvinesolutions.com) using your employee login. Staff attendance, duty schedules, and leave approvals are managed in PruWorks. For manual leave slips, visit the HR Department in the Admin Office (Ext: 2173 / 2169) or refer to the **Human Resources Manual (HRM 2025)**."
+        suggestions = ["PruWorks HRMS Staff Login", "APH HR Forms Hub", "List of Holidays - 2026"]
+
+    elif is_salary_intent:
+        if is_tamil:
+            answer = "மாத சம்பள ரசீதுகள் (Monthly Payslips) மற்றும் ஊதிய விவரங்களை **PruWorks HRMS** போர்ட்டலில் (https://mapims-hrms.tecvinesolutions.com) பதிவிறக்கம் செய்யலாம். கூடுதல் விவரங்களுக்கு மனிதவளத் துறை (Ext: 2173) அல்லது கணக்கு பிரிவை (Ext: 2175) தொடர்பு கொள்ளவும்."
+        else:
+            answer = "Monthly salary slips and payroll statements are available online in the **PruWorks HRMS Portal** (https://mapims-hrms.tecvinesolutions.com). Log in with your employee credentials to download your pay slips or contact the HR Department (Ext: 2173 / 2169) or Accounts (Ext: 2175)."
+        suggestions = ["PruWorks HRMS Portal", "HRMS Staff Login", "Human Resources Manual 2025"]
+
+    elif is_attendance_intent:
+        if is_tamil:
+            answer = "தினசரி வருகை பதிவு மற்றும் பணி அட்டவணை **PruWorks HRMS** (https://mapims-hrms.tecvinesolutions.com) போர்ட்டலில் கண்காணிக்கப்படுகிறது. கூடுதல் விவரங்களுக்கு HR துறையை (Ext: 2173 / 2169) தொடர்பு கொள்ளவும்."
+        else:
+            answer = "Daily biometric attendance punch records, work hours, and shift duty schedules are managed via the **PruWorks HRMS Portal** (https://mapims-hrms.tecvinesolutions.com). Department duty rosters are also published under **Recent Circulars**. For attendance regularization, contact HR (Ext: 2173 / 2169)."
+        suggestions = ["PruWorks HRMS Portal", "Recent Circulars & Duty Rosters", "APH HR Forms Hub"]
+
+    elif is_ticket_intent:
+        if is_tamil:
+            answer = "கணினி, இணையம் மற்றும் மருத்துவமனை பழுது குறித்த புகார்களைப் பதிவு செய்ய **Ticketing & Maintenance Desk** (http://www.mapimshis.com/mapims/) தளத்தைப் பயன்படுத்தவும். அவசர கணினி உதவிக்கு IT பிரிவை (Ext: 2226 / 2228) அழைக்கவும்."
+        else:
+            answer = "To report computer hardware breakdowns, network faults, HIS software bugs, or facilities maintenance issues, raise a job order on the **Ticketing & Maintenance Desk** (http://www.mapimshis.com/mapims/). For urgent IT support, call the IT Help Desk at Ext: 2226 (Hardware) or 2228 (Software)."
+        suggestions = ["Ticketing & Maintenance Desk", "System Request Form", "IT Intercom: 2226 / 2228"]
+
+    elif is_his_intent:
+        if is_tamil:
+            answer = "மருத்துவமனை HIS மென்பொருள் (Backbone / AOSTA) முகவரி: http://192.168.103.37/BB15SE/Backbone/admin/login.aspx. புதிய பயனர் கணக்கு உருவாக்க **New HIS User Request Form** படிவத்தை IT பிரிவில் (Ext: 2228) சமர்ப்பிக்கவும்."
+        else:
+            answer = "The hospital information system (HIS - Backbone / AOSTA) is accessible at http://192.168.103.37/BB15SE/Backbone/admin/login.aspx. To create a new HIS user account or modify module access permissions, download the **New HIS User Request Form** from IT Forms and submit it to the IT department (Ext: 2228)."
+        suggestions = ["New HIS User Request Form", "HIS System Login", "IT Intercom: 2228"]
+
+    elif is_pacs_intent:
+        answer = "Diagnostic radiology scans (X-Ray, CT, MRI, Ultrasound) are accessed through the **M - PACS (Medsynapse)** viewer at http://192.168.101.224/User_Login.asp. For urgent scan availability or radiologist consultation, contact the Radiology Department at Ext: 2700 / 2699."
+        suggestions = ["M - PACS Medsynapse Login", "Radiology Intercom: 2700", "Imaging Services Policy"]
+
+    elif is_wifi_intent:
+        answer = "To connect work laptops or authorized mobile devices to the hospital campus wireless network, download the **Employee WIFI Request Form** from IT Forms. Fill in your department details and device MAC address, then submit it to the IT Department (Ext: 2226)."
+        suggestions = ["Employee WIFI Request Form", "System Request Form", "IT Intercom: 2226"]
+
+    elif is_where_form_intent:
+        answer = "All hospital forms are hosted directly on this Intranet Homepage in the **Forms Vault** (#forms). You can click the category cards to view **Common Forms** (Infection control & clinical checklists), **Consent Forms** (Surgical & blood transfusion), **HR Forms** (Staff applications & promotions), and **IT Forms** (Hardware & WIFI requests)."
+        suggestions = ["Common Forms Hub", "APH HR Forms Hub", "Consent Forms Vault"]
+
     elif is_store_intent:
         if is_tamil:
             answer = "மருத்துவமனை ஸ்டோர்ஸ் இந்தென்ட் (Store Indent) மற்றும் கொள்முதல் நடைமுறைகளுக்கு **Purchase Process** வழிகாட்டுதல் (Instruments & Equipment APR 2025) பார்க்கவும். இருப்பு நிலவரத்திற்கு **General Store Inventory Stock Details** மற்றும் **Drug Stores Stock Details** பார்க்கவும்."
         else:
             answer = "For hospital store indents and equipment procurement, departments use the **Purchase Process** workflow (Instruments & Equipment APR 2025). For active inventory and pharmacy stocks, refer to **General Store Inventory Stock Details** and **Drug Stores Stock Details**."
         suggestions = ["Purchase Process PDF", "Inventory Stock Details 2024", "Drug Stores Stock Details", "Purchase Stores Ext: 2701"]
+
+    elif is_hr_intent:
+        if is_tamil:
+            answer = f"மருத்துவமனை மனிதவளத் துறை (HR) தளங்கள் மற்றும் ஆவணங்கள்: பணியாளர் வருகை மற்றும் சம்பள விவரங்களுக்கு **PruWorks HRMS** (https://mapims-hrms.tecvinesolutions.com), படிவங்களுக்கு **APH HR Forms Hub** (#forms), மற்றும் விதிமுறைகளுக்கு **Human Resources Manual (HRM 2025)** பார்க்கவும். HR தொடர்பு: Ext 2173 / 2169."
+        else:
+            answer = f"Official hospital Human Resources services and staff resources: Use **PruWorks HRMS** (https://mapims-hrms.tecvinesolutions.com) for attendance & payslips, access official staff forms in the **APH HR Forms Hub** (#forms), and review institutional guidelines in the **Human Resources Manual (HRM 2025)**. The HR Department is in the Admin Office (Ext: 2173 / 2169)."
+        suggestions = ["PruWorks HRMS Staff Login", "Teaching & Non-Teaching Forms", "Human Resources Manual 2025"]
+
     elif is_tamil:
-        answer = f"'{query}' தொடர்பான {len(candidates)} மருத்துவ ஆவணங்கள் மற்றும் படிவங்கள் கண்டறியப்பட்டுள்ளன. முதன்மையான ஆவணம்: '{top_item['title']}' ({top_item['category']})."
+        answer = f"'{query}' தொடர்பான அதிகாரப்பூர்வ மருத்துவ ஆவணங்கள் மற்றும் பயன்பாடுகள்: முதன்மை பரிந்துரை: **{top_item['title']}** ({top_item['description']}). கீழே உள்ள இணைப்பை கிளிக் செய்து திறக்கவும்."
+        suggestions = [f"{top_item['title']}", "Hospital Forms Vault", "Clinical SOPs"]
+
     else:
-        answer = f"Found {len(candidates)} verified hospital documents matching '{query}'. The primary resource is '{top_item['title']}' located in {top_item['category']}."
+        answer = f"Here are the verified hospital resources and official documents for '{query}'. Primary recommendation: **{top_item['title']}** ({top_item['description']}). Access the official file or portal via the links below."
+        clean_sug_query = re.sub(r'\b(details|detail|forms|form|pdf|portal|available|what|is|for)\b', '', query, flags=re.I).strip()
+        clean_sug_query = re.sub(r'\s+', ' ', clean_sug_query)
+        if clean_sug_query:
+            suggestions = [f"{clean_sug_query.title()} Form", "Hospital Forms Vault", "NABH SOPs"]
+        else:
+            suggestions = ["Hospital Forms Vault", "Clinical SOPs", "Campus Directory"]
 
     # If matched a department in a telephony query, append department intercom contact & PDF link
     if matched_dept and is_telecom_query:
-        dept_intercom_link = {
-            "title": f"{dept_label} Intercom Directory PDF",
-            "url": dept_url,
-            "category": "Staff Directory",
-            "badge": "Directory PDF"
-        }
-        if not any(l.get('url') == dept_url for l in links):
-            links.append(dept_intercom_link)
+        links = [
+            {
+                "title": f"{dept_label} Department Intercom Directory",
+                "url": dept_url,
+                "category": "Staff Directory",
+                "badge": f"{dept_label} Directory"
+            },
+            {
+                "title": "Official Campus Intercom Directory PDF (Full Hospital)",
+                "url": "http://192.168.101.75:3000/files/Intercom%20Directory.pdf",
+                "category": "Staff Directory",
+                "badge": "Full PDF"
+            }
+        ]
         ext_summary = ", ".join([f"{e['desc']}: {e['ext']}" for e in matched_dept['extensions'][:4]])
-        answer += f"\n\n📞 **{dept_label} Intercom Extensions**: {ext_summary}."
+        if f"{dept_label} Intercom Extensions" not in answer and f"**{dept_label}**" not in answer:
+            answer += f"\n\n📞 **{dept_label} Intercom Extensions**: {ext_summary}."
     elif matched_dept and is_store_intent:
         ext_summary = ", ".join([f"{e['desc']}: {e['ext']}" for e in matched_dept['extensions'][:3]])
         answer += f"\n\n📞 **{dept_label} Intercom Extensions**: {ext_summary}."
 
-    if is_hr_intent:
+    if is_pediatric_query and is_consent_query:
+        suggestions = ["Paediatric Consent Form", "Consent Forms Vault", "Paediatrics Intercom Ext: 2030"]
+    elif is_blood_consent_query and not is_pediatric_query:
+        suggestions = ["Blood Transfusion Consent Form", "Consent Forms Vault", "Blood Bank Ext: 2131"]
+    elif is_surgery_consent_query and not is_pediatric_query and not is_blood_consent_query:
+        suggestions = ["Informed Consent Form - English", "Informed Consent Form - Tamil", "Consent Forms Vault"]
+    elif is_hr_intent:
         suggestions = ["PruWorks HRMS Staff Login", "Teaching & Non-Teaching Forms", "Human Resources Manual 2025"]
     elif is_store_intent:
         suggestions = ["Purchase Process PDF", "Inventory Stock Details 2024", "Drug Stores Stock Details", "Purchase Stores Ext: 2701"]

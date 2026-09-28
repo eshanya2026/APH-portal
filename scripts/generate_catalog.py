@@ -190,10 +190,10 @@ systems = [
         "hub_page": "./index.html#applications"
     },
     {
-        "title": "PruWorks HRMS Staff Attendance & Payroll",
+        "title": "PruWorks HRMS (Staff Attendance, Leave & Payroll)",
         "url": "https://mapims-hrms.tecvinesolutions.com",
         "category": "Core Systems",
-        "description": "Employee biometric attendance, pay slips, salary and shift schedule portal",
+        "description": "Employee biometric attendance, leave applications, pay slips, salary and shift schedule portal",
         "badge": "HRMS",
         "hub_page": "./index.html#applications"
     },
@@ -516,10 +516,10 @@ portal_docs = [
         "hub_page": "./intercom.html"
     },
     {
-        "title": "PruWorks HRMS Staff Attendance & Payroll",
+        "title": "PruWorks HRMS (Staff Attendance, Leave & Payroll)",
         "url": "https://mapims-hrms.tecvinesolutions.com",
         "category": "HR Forms",
-        "description": "Official PruWorks HRMS portal for staff biometric attendance, leaves, shift duty, and monthly payslips",
+        "description": "Official PruWorks HRMS portal for staff biometric attendance, leave applications & balance, shift duty, and monthly payslips",
         "badge": "HRMS",
         "hub_page": "./hrforms.html"
     },

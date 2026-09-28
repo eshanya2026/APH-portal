@@ -3139,7 +3139,11 @@
       'appraisal': 'performance pms faculty teaching non teaching promotion evaluation review hr',
       'promotion': 'pathavi non teaching elevation seniority recommendation appraisal hr',
       'sambalam': 'salary payslip payroll hrms wages attendance pruworks சம்பளம் hr',
+      'sambala': 'salary payslip payroll hrms wages attendance pruworks சம்பளம் hr',
       'sampalam': 'salary payslip payroll hrms wages attendance pruworks சம்பளம் hr',
+      'raseedhu': 'payslip receipt slip statement billing bill ரசீது',
+      'raseedu': 'payslip receipt slip statement billing bill ரசீது',
+      'rasidu': 'payslip receipt slip statement billing bill ரசீது',
       'varugai': 'attendance biometric shift hrms punch biometrics வருகை hr',
       'velai': 'application recruitment teaching non teaching appraisal biodata வேலை hr',
       'vinnappam': 'application form appraisal requisition biodata விண்ணப்பம் hr',
@@ -3189,6 +3193,8 @@
       // Clinical Demographics & Emergency
       'avacharam': 'emergency casualty 2800 code blue triage er ambulance அவசரம்',
       'avasaram': 'emergency casualty 2800 code blue triage er ambulance அவசரம்',
+      'pediatric': 'paediatric child children newborn infant neo kuzhanthai kulandhai பிள்ளை குழந்தை',
+      'paediatric': 'pediatric child children infant kuzhanthai kulandhai பிள்ளை குழந்தை',
       'kuzhanthai': 'paediatric pediatric child infant newborn guardian paed குழந்தை',
       'kulandhai': 'paediatric pediatric child infant newborn guardian paed குழந்தை',
       'pillai': 'paediatric pediatric child infant newborn பிள்ளை',
@@ -3229,8 +3235,11 @@
       'இரத்தம்': 'blood transfusion component prbc ffp reaction stock bank iratham',
       'ரத்த': 'blood transfusion component bank stock rattha',
       'வங்கி': 'bank stock storage repository details blood vangi',
-      'விடுமுறை': 'holiday holidays calendar leave 2026 dates festival vidumurai',
-      'சம்பளம்': 'salary payslip payroll hrms wages attendance sambalam',
+      'விடுமுறை': 'leave pruworks hrms holiday attendance permission vidumurai leavu விடுப்பு',
+      'விடுப்பு': 'leave pruworks hrms holiday attendance permission vidumurai leavu விடுமுறை',
+      'சம்பளம்': 'salary payslip payroll hrms pruworks wages attendance sambalam sambala சம்பள',
+      'சம்பள': 'salary payslip payroll hrms pruworks wages attendance sambalam sambala சம்பளம்',
+      'ரசீது': 'payslip receipt slip statement billing bill',
       'வருகை': 'attendance biometric shift hrms punch varugai',
       'பயிற்சி': 'training feedback induction payirchi',
       'விண்ணப்பம்': 'application form biodata teaching non teaching vinnappam',
@@ -3801,6 +3810,24 @@
         qLower.includes('கொள்முதல்')
       ) && !isHrQuery && !isBloodQuery && !isItQuery;
 
+      const isConsentQuery = qLower.includes('consent') || qLower.includes('oputhal') || qLower.includes('opputhal') ||
+        qLower.includes('sammatham') || qLower.includes('samatham') || qLower.includes('ஒப்புதல்') || qLower.includes('சம்மதம்') || qLower.includes('paedconsent');
+
+      const isPediatricQuery = qLower.includes('pediatric') || qLower.includes('paediatric') || qLower.includes('pediatrics') ||
+        qLower.includes('paediatrics') || qLower.includes('child') || qLower.includes('children') || qLower.includes('infant') ||
+        qLower.includes('newborn') || qLower.includes('neonatal') || qLower.includes('kuzhanthai') || qLower.includes('kulandhai') ||
+        qLower.includes('pillai') || qLower.includes('குழந்தை') || qLower.includes('பிள்ளை');
+
+      const isSurgeryQuery = qLower.includes('surgery') || qLower.includes('surgical') || qLower.includes('operation') ||
+        qLower.includes('procedure') || qLower.includes('aruvai') || qLower.includes('sikitsai') || qLower.includes('sigichai') ||
+        qLower.includes('அறுவை') || qLower.includes('சிகிச்சை');
+
+      const isDamaQuery = qLower.includes('dama') || qLower.includes('discharge against medical advice') || qLower.includes('lama');
+
+      const isAdmissionQuery = qLower.includes('admission') || qLower.includes('admit') || qLower.includes('serkkai') || qLower.includes('சேர்க்கை');
+
+      const isNotWillingQuery = qLower.includes('not willing') || qLower.includes('refusal') || qLower.includes('maruppu') || qLower.includes('மறுப்பு');
+
       const scoredMatches = searchIndex.map(item => {
         const titleLower = item.title.toLowerCase();
         const catLower = item.category.toLowerCase();
@@ -3846,6 +3873,42 @@
           }
         }
 
+        // 5. Pediatric query guardrail: strictly reject non-pediatric consent forms & non-pediatric manuals
+        if (isPediatricQuery) {
+          const isPedDoc = titleLower.includes('paediatric') || titleLower.includes('pediatric') || titleLower.includes('child') || titleLower.includes('infant') || titleLower.includes('neonatal') || titleLower.includes('newborn') || (item.url && item.url.includes('paedconsent'));
+          if (catLower.includes('consent') && !isPedDoc) {
+            return { item, score: -1 };
+          }
+          if (isConsentQuery && catLower.includes('manual') && !isPedDoc) {
+            return { item, score: -1 };
+          }
+        }
+
+        // 6. Consent specialty isolation guardrail:
+        if (isConsentQuery) {
+          if (isBloodQuery && !isPediatricQuery) {
+            if (catLower.includes('consent') && !titleLower.includes('blood') && !titleLower.includes('transfusion') && !titleLower.includes('ரத்த')) {
+              return { item, score: -1 };
+            }
+          } else if (isSurgeryQuery && !isPediatricQuery && !isBloodQuery) {
+            if (catLower.includes('consent') && !titleLower.includes('surgery') && !titleLower.includes('procedure') && !titleLower.includes('அறுவை')) {
+              return { item, score: -1 };
+            }
+          } else if (isDamaQuery) {
+            if (catLower.includes('consent') && !titleLower.includes('dama')) {
+              return { item, score: -1 };
+            }
+          } else if (isAdmissionQuery && !isPediatricQuery) {
+            if (catLower.includes('consent') && !titleLower.includes('admission')) {
+              return { item, score: -1 };
+            }
+          } else if (isNotWillingQuery) {
+            if (catLower.includes('consent') && !titleLower.includes('not willing')) {
+              return { item, score: -1 };
+            }
+          }
+        }
+
         // Direct query match (word boundary for short tokens <= 3 chars)
         if (qLower.length <= 3) {
           if (isWordMatch(qLower, titleLower)) { score += 90; hasHit = true; }
@@ -3878,13 +3941,38 @@
           }
         }
 
-        // 2. Consent intent
+        // 2. Pediatric & Consent intent boosts
+        if (isPediatricQuery) {
+          if (titleLower.includes('paediatric') || titleLower.includes('pediatric') || titleLower.includes('child')) {
+            if (isConsentQuery && titleLower.includes('consent')) { score += 480; hasHit = true; }
+            else if (isConsentQuery) { score += 150; hasHit = true; }
+            else { score += 260; hasHit = true; }
+          }
+        }
+
+        if (isConsentQuery) {
+          if (isPediatricQuery) {
+            if (titleLower.includes('paediatric consent')) { score += 480; hasHit = true; }
+          } else if (isBloodQuery) {
+            if (titleLower.includes('blood component transfusion') || titleLower.includes('transfusion')) { score += 420; hasHit = true; }
+          } else if (isSurgeryQuery) {
+            if (titleLower.includes('surgery or procedures') || titleLower.includes('அறுவை')) { score += 420; hasHit = true; }
+          } else if (isDamaQuery) {
+            if (titleLower.includes('dama consent')) { score += 420; hasHit = true; }
+          } else if (isAdmissionQuery && !isPediatricQuery) {
+            if (titleLower.includes('admission consent')) { score += 420; hasHit = true; }
+          } else if (isNotWillingQuery) {
+            if (titleLower.includes('not willing')) { score += 420; hasHit = true; }
+          }
+        }
+
+        // 3. Consent intent
         if (qLower.includes('aruvai') || qLower.includes('அறுவை') || qLower.includes('oputhal') || qLower.includes('opputhal') || qLower.includes('ஒப்புதல்')) {
           if (titleLower.includes('tamil') || titleLower.includes('தமிழ்')) { score += 60; hasHit = true; }
           if (titleLower.includes('informed consent form for surgery')) { score += 45; hasHit = true; }
         }
 
-        // 3. Blood Bank intent
+        // 4. Blood Bank intent
         if (isBloodQuery) {
           if (titleLower.includes('blood bank stock')) { score += 95; hasHit = true; }
           if (titleLower.includes('blood component transfusion')) { score += 65; hasHit = true; }
@@ -4236,11 +4324,29 @@ Respond strictly in JSON format:
       const informativeKeywords = expandedKeywords.filter(kw => !GENERIC_STOP_WORDS.has(kw));
 
       // Domain Intent Classifications
-      const isHrQuery = isWordMatch('hr', qLower) || isWordMatch('hrm', qLower) || isWordMatch('hrms', qLower) ||
+      const isApplyLeaveIntent = (qLower.includes('leave') || qLower.includes('leavu') || qLower.includes('vidumurai') || qLower.includes('viduppu') || qLower.includes('விடுமுறை') || qLower.includes('விடுப்பு') || qLower.includes('permission') || qLower.includes('vacation')) &&
+        !qLower.includes('list of holidays') && !qLower.includes('holiday calendar') && !qLower.includes('holidays');
+
+      const isSalaryIntent = (qLower.includes('salary') || qLower.includes('payslip') || qLower.includes('pay slip') || qLower.includes('payroll') || qLower.includes('wages') || qLower.includes('sambalam') || qLower.includes('sampalam') || qLower.includes('sambala') || qLower.includes('சம்பளம்') || qLower.includes('சம்பள') || qLower.includes('ரசீது'));
+
+      const isAttendanceIntent = (qLower.includes('attendance') || qLower.includes('biometric') || qLower.includes('punch') || qLower.includes('punching') || qLower.includes('varugai') || qLower.includes('வருகை')) && !isApplyLeaveIntent;
+
+      const isTicketIntent = (qLower.includes('ticket') || qLower.includes('ticketing') || qLower.includes('job order') || qLower.includes('breakdown') || qLower.includes('complaint') || qLower.includes('repair') || qLower.includes('not working') || qLower.includes('fault') || qLower.includes('bug') || qLower.includes('பழுது'));
+
+      const isHisIntent = (qLower.includes('his') || qLower.includes('aosta') || qLower.includes('backbone') || qLower.includes('his user') || qLower.includes('user creation'));
+
+      const isPacsIntent = (qLower.includes('pacs') || qLower.includes('medsynapse') || qLower.includes('xray') || qLower.includes('x-ray') || qLower.includes('ct scan') || qLower.includes('mri') || qLower.includes('scan viewer'));
+
+      const isWifiIntent = (qLower.includes('wifi') || qLower.includes('wi-fi') || qLower.includes('wireless') || qLower.includes('internet'));
+
+      const isWhereFormIntent = (qLower.includes('where is') || qLower.includes('where are') || qLower.includes('how to find') || qLower.includes('where can i find')) && (qLower.includes('form') || qLower.includes('forms') || qLower.includes('vault') || qLower.includes('document'));
+
+      const isHrQuery = isApplyLeaveIntent || isSalaryIntent || isAttendanceIntent ||
+        isWordMatch('hr', qLower) || isWordMatch('hrm', qLower) || isWordMatch('hrms', qLower) ||
         qLower.includes('human resource') || qLower.includes('pruworks') || qLower.includes('payroll') ||
         qLower.includes('payslip') || qLower.includes('attendance') || qLower.includes('teaching') ||
         qLower.includes('non-teaching') || qLower.includes('appraisal') || qLower.includes('promotion') ||
-        qLower.includes('sambalam') || qLower.includes('சம்பளம்') || qLower.includes('velai') ||
+        qLower.includes('sambalam') || qLower.includes('சம்பளம்') || qLower.includes('சம்பள') || qLower.includes('ரசீது') || qLower.includes('velai') ||
         qLower.includes('வேலை') || qLower.includes('vinnappam') || qLower.includes('விண்ணப்பம்') ||
         qLower.includes('pathavi') || qLower.includes('varugai') || qLower.includes('pms');
 
@@ -4253,7 +4359,7 @@ Respond strictly in JSON format:
         qLower.includes('marunthu') || qLower.includes('மருந்து') || qLower.includes('pharmacy') || qLower.includes('drug')
       ) && !isHrQuery;
 
-      const isLeaveQuery = qLower.includes('vidumurai') || qLower.includes('விடுமுறை') || qLower.includes('holiday') || qLower.includes('leave');
+      const isLeaveQuery = qLower.includes('vidumurai') || qLower.includes('viduppu') || qLower.includes('விடுமுறை') || qLower.includes('விடுப்பு') || qLower.includes('holiday') || qLower.includes('leave') || qLower.includes('leavu');
 
       const isTelecomQuery = /\b(intercom|inercom|intercoms|extension|extensions|ext|exts|call|calling|calls|phone|phones|telephone|telephones|telephony|tholaipesi|tholaipasi|inaippu|inaippugal|azhaippu|alaippu|koopidu|pesa|en|yenn|hotline|hotlines|dial|dialing)\b/i.test(qLower) ||
         /(தொலைபேசி|இணைப்பு|இணைப்புகள்|அழைப்பு|அழைப்புகள்|எண்|எண்கள்|போன்|கால்|கூப்பிடு|பேசு|தொடர்பு|இன்டர்காம்|எக்ஸ்டென்ஷன்)/.test(qLower);
@@ -4267,6 +4373,24 @@ Respond strictly in JSON format:
         qLower.includes('procurement') || qLower.includes('requisition') || qLower.includes('kolmuthal') ||
         qLower.includes('கொள்முதல்')
       ) && !isHrQuery && !isBloodQuery && !isItQuery;
+
+      const isConsentQuery = qLower.includes('consent') || qLower.includes('oputhal') || qLower.includes('opputhal') ||
+        qLower.includes('sammatham') || qLower.includes('samatham') || qLower.includes('ஒப்புதல்') || qLower.includes('சம்மதம்') || qLower.includes('paedconsent');
+
+      const isPediatricQuery = qLower.includes('pediatric') || qLower.includes('paediatric') || qLower.includes('pediatrics') ||
+        qLower.includes('paediatrics') || qLower.includes('child') || qLower.includes('children') || qLower.includes('infant') ||
+        qLower.includes('newborn') || qLower.includes('neonatal') || qLower.includes('kuzhanthai') || qLower.includes('kulandhai') ||
+        qLower.includes('pillai') || qLower.includes('குழந்தை') || qLower.includes('பிள்ளை');
+
+      const isSurgeryQuery = qLower.includes('surgery') || qLower.includes('surgical') || qLower.includes('operation') ||
+        qLower.includes('procedure') || qLower.includes('aruvai') || qLower.includes('sikitsai') || qLower.includes('sigichai') ||
+        qLower.includes('அறுவை') || qLower.includes('சிகிச்சை');
+
+      const isDamaQuery = qLower.includes('dama') || qLower.includes('discharge against medical advice') || qLower.includes('lama');
+
+      const isAdmissionQuery = qLower.includes('admission') || qLower.includes('admit') || qLower.includes('serkkai') || qLower.includes('சேர்க்கை');
+
+      const isNotWillingQuery = qLower.includes('not willing') || qLower.includes('refusal') || qLower.includes('maruppu') || qLower.includes('மறுப்பு');
 
       const scoredMatches = searchIndex.map(item => {
         const titleLower = item.title.toLowerCase();
@@ -4318,6 +4442,42 @@ Respond strictly in JSON format:
           }
         }
 
+        // 6. Pediatric query guardrail: strictly reject non-pediatric consent forms & non-pediatric manuals
+        if (isPediatricQuery) {
+          const isPedDoc = titleLower.includes('paediatric') || titleLower.includes('pediatric') || titleLower.includes('child') || titleLower.includes('infant') || titleLower.includes('neonatal') || titleLower.includes('newborn') || (item.url && item.url.includes('paedconsent'));
+          if (catLower.includes('consent') && !isPedDoc) {
+            return { item, score: -1 };
+          }
+          if (isConsentQuery && catLower.includes('manual') && !isPedDoc) {
+            return { item, score: -1 };
+          }
+        }
+
+        // 7. Consent specialty isolation guardrail:
+        if (isConsentQuery) {
+          if (isBloodQuery && !isPediatricQuery) {
+            if (catLower.includes('consent') && !titleLower.includes('blood') && !titleLower.includes('transfusion') && !titleLower.includes('ரத்த')) {
+              return { item, score: -1 };
+            }
+          } else if (isSurgeryQuery && !isPediatricQuery && !isBloodQuery) {
+            if (catLower.includes('consent') && !titleLower.includes('surgery') && !titleLower.includes('procedure') && !titleLower.includes('அறுவை')) {
+              return { item, score: -1 };
+            }
+          } else if (isDamaQuery) {
+            if (catLower.includes('consent') && !titleLower.includes('dama')) {
+              return { item, score: -1 };
+            }
+          } else if (isAdmissionQuery && !isPediatricQuery) {
+            if (catLower.includes('consent') && !titleLower.includes('admission')) {
+              return { item, score: -1 };
+            }
+          } else if (isNotWillingQuery) {
+            if (catLower.includes('consent') && !titleLower.includes('not willing')) {
+              return { item, score: -1 };
+            }
+          }
+        }
+
         if (qLower.length <= 4) {
           if (isWordMatch(qLower, titleLower)) { score += 90; hasHit = true; }
           if (isWordMatch(qLower, catLower)) { score += 55; hasHit = true; }
@@ -4342,19 +4502,56 @@ Respond strictly in JSON format:
         // Intent priority rules
         // 1. HR Domain intent
         if (isHrQuery) {
-          if (catLower.includes('hr') || titleLower.includes('hr forms hub') || titleLower.includes('human resources manual') || titleLower.includes('pruworks') || titleLower.includes('hrms') || titleLower.includes('teaching') || titleLower.includes('non-teaching') || titleLower.includes('promotion') || titleLower.includes('holiday')) {
+          if (titleLower.includes('pruworks') || titleLower.includes('hrms')) { score += 220; hasHit = true; }
+          else if (catLower.includes('hr') || titleLower.includes('hr forms hub') || titleLower.includes('human resources manual') || titleLower.includes('teaching') || titleLower.includes('non-teaching') || titleLower.includes('promotion')) {
             score += 160;
             hasHit = true;
           }
+
+          const isNonTeachingQuery = qLower.includes('non teaching') || qLower.includes('non-teaching');
+          const isTeachingQuery = qLower.includes('teaching') || qLower.includes('faculty');
+
+          if (isNonTeachingQuery) {
+            if (titleLower.includes('non-teaching') || titleLower.includes('non teaching')) { score += 320; hasHit = true; }
+            else if (titleLower.includes('teaching')) { score -= 100; }
+          } else if (isTeachingQuery) {
+            if (titleLower.includes('non-teaching') || titleLower.includes('non teaching')) { score -= 200; }
+            else if (titleLower.includes('teaching') || titleLower.includes('faculty')) { score += 320; hasHit = true; }
+          }
         }
 
-        // 2. Consent intent
+        // 2. Pediatric & Consent intent boosts
+        if (isPediatricQuery) {
+          if (titleLower.includes('paediatric') || titleLower.includes('pediatric') || titleLower.includes('child')) {
+            if (isConsentQuery && titleLower.includes('consent')) { score += 480; hasHit = true; }
+            else if (isConsentQuery) { score += 150; hasHit = true; }
+            else { score += 260; hasHit = true; }
+          }
+        }
+
+        if (isConsentQuery) {
+          if (isPediatricQuery) {
+            if (titleLower.includes('paediatric consent')) { score += 480; hasHit = true; }
+          } else if (isBloodQuery) {
+            if (titleLower.includes('blood component transfusion') || titleLower.includes('transfusion')) { score += 420; hasHit = true; }
+          } else if (isSurgeryQuery) {
+            if (titleLower.includes('surgery or procedures') || titleLower.includes('அறுவை')) { score += 420; hasHit = true; }
+          } else if (isDamaQuery) {
+            if (titleLower.includes('dama consent')) { score += 420; hasHit = true; }
+          } else if (isAdmissionQuery && !isPediatricQuery) {
+            if (titleLower.includes('admission consent')) { score += 420; hasHit = true; }
+          } else if (isNotWillingQuery) {
+            if (titleLower.includes('not willing')) { score += 420; hasHit = true; }
+          }
+        }
+
+        // 3. Consent intent
         if (qLower.includes('aruvai') || qLower.includes('அறுவை') || qLower.includes('oputhal') || qLower.includes('opputhal') || qLower.includes('ஒப்புதல்')) {
           if (titleLower.includes('tamil') || titleLower.includes('தமிழ்')) { score += 60; hasHit = true; }
           if (titleLower.includes('informed consent form for surgery')) { score += 45; hasHit = true; }
         }
 
-        // 3. Blood Bank intent
+        // 4. Blood Bank intent
         if (isBloodQuery) {
           if (titleLower.includes('blood bank stock')) { score += 95; hasHit = true; }
           if (titleLower.includes('blood component transfusion')) { score += 65; hasHit = true; }
@@ -4363,8 +4560,14 @@ Respond strictly in JSON format:
 
         // 4. Leave & Holiday intent
         if (isLeaveQuery) {
-          if (titleLower.includes('holiday')) { score += 95; hasHit = true; }
-          if (titleLower.includes('hrms')) { score += 45; hasHit = true; }
+          if (isApplyLeaveIntent) {
+            if (titleLower.includes('pruworks') || titleLower.includes('hrms')) { score += 340; hasHit = true; }
+            else if (titleLower.includes('hr forms') || titleLower.includes('hrm') || titleLower.includes('manual')) { score += 180; hasHit = true; }
+            else if (titleLower.includes('holiday')) { score += 40; hasHit = true; }
+          } else {
+            if (titleLower.includes('holiday')) { score += 180; hasHit = true; }
+            if (titleLower.includes('hrms') || titleLower.includes('pruworks')) { score += 60; hasHit = true; }
+          }
         }
 
         // 5. Tariff intent
@@ -4372,7 +4575,23 @@ Respond strictly in JSON format:
           if (catLower.includes('tariff') || titleLower.includes('tariff')) { score += 60; hasHit = true; }
         }
 
-        // 6. IT / Computer Department intent
+        // 6. IT / Computer Department & Tickets intent
+        if (isTicketIntent) {
+          if (titleLower.includes('ticketing') || (item.url && item.url.includes('mapims/'))) { score += 360; hasHit = true; }
+          else if (titleLower.includes('system request')) { score += 180; hasHit = true; }
+        }
+        if (isHisIntent) {
+          if (titleLower.includes('his system') || (item.url && item.url.includes('192.168.103.37'))) { score += 360; hasHit = true; }
+          else if (titleLower.includes('his user') || titleLower.includes('doctor name and id') || titleLower.includes('item creation')) { score += 260; hasHit = true; }
+        }
+        if (isPacsIntent) {
+          if (titleLower.includes('pacs') || (item.url && item.url.includes('192.168.101.224'))) { score += 360; hasHit = true; }
+          else if (titleLower.includes('imaging results')) { score += 180; hasHit = true; }
+        }
+        if (isWifiIntent) {
+          if (titleLower.includes('wifi request') || titleLower.includes('wireless')) { score += 360; hasHit = true; }
+        }
+
         if (isItQuery) {
           if (qLower.includes('hardware') || qLower.includes('system request') || qLower.includes('pc') || qLower.includes('desktop')) {
             if (titleLower.includes('system request')) { score += 320; hasHit = true; }
@@ -4489,7 +4708,15 @@ Respond strictly in JSON format:
         'கண்': { dept: 'Ophthalmology', exts: 'Ophthalmology Reception: 2050, Eye Ward: 2051' },
         'kan': { dept: 'Ophthalmology', exts: 'Ophthalmology Reception: 2050, Eye Ward: 2051' },
         'தோல்': { dept: 'Dermatology', exts: 'Dermatology OP: 2070' },
-        'thol': { dept: 'Dermatology', exts: 'Dermatology OP: 2070' }
+        'thol': { dept: 'Dermatology', exts: 'Dermatology OP: 2070' },
+
+        'pediatric': { dept: 'Paediatrics', exts: 'Paediatrics HOD: 2030, Paediatric OP: 2031, Consultation Room 2: 2032, Consultation Room 1: 2033, Feeding Room: 2038, Paediatric HOD: 2230' },
+        'paediatric': { dept: 'Paediatrics', exts: 'Paediatrics HOD: 2030, Paediatric OP: 2031, Consultation Room 2: 2032, Consultation Room 1: 2033, Feeding Room: 2038, Paediatric HOD: 2230' },
+        'paediatrics': { dept: 'Paediatrics', exts: 'Paediatrics HOD: 2030, Paediatric OP: 2031, Consultation Room 2: 2032, Consultation Room 1: 2033, Feeding Room: 2038, Paediatric HOD: 2230' },
+        'pediatrics': { dept: 'Paediatrics', exts: 'Paediatrics HOD: 2030, Paediatric OP: 2031, Consultation Room 2: 2032, Consultation Room 1: 2033, Feeding Room: 2038, Paediatric HOD: 2230' },
+        'child': { dept: 'Paediatrics', exts: 'Paediatrics HOD: 2030, Paediatric OP: 2031, Consultation Room 2: 2032, Consultation Room 1: 2033, Feeding Room: 2038, Paediatric HOD: 2230' },
+        'குழந்தை': { dept: 'Paediatrics', exts: 'Paediatrics HOD: 2030, Paediatric OP: 2031, Consultation Room 2: 2032, Consultation Room 1: 2033, Feeding Room: 2038, Paediatric HOD: 2230' },
+        'kuzhanthai': { dept: 'Paediatrics', exts: 'Paediatrics HOD: 2030, Paediatric OP: 2031, Consultation Room 2: 2032, Consultation Room 1: 2033, Feeding Room: 2038, Paediatric HOD: 2230' }
       };
 
       let matchedClientIntercom = null;
@@ -4509,18 +4736,56 @@ Respond strictly in JSON format:
         answerText = isBilingual
           ? `மருத்துவமனை அவசர உதவி மற்றும் முக்கிய துறை தொலைபேசி எண்கள்: அவசர சிகிச்சை (Casualty): 2001 / 2002, ரத்த வங்கி (24/7): 2131, தீவிர சிகிச்சை (ICU): 2156, மெயின் கேட்: 2800, கணினி உதவி மையம் (IT): 2226 / 2228. அனைத்து துறை எண்களையும் அதிகாரப்பூர்வ PDF அல்லது தேடல் பட்டியலில் பார்க்கலாம்.`
           : `Find hospital intercom extension numbers in the official Campus Intercom & Extension Directory PDF or searchable online list.`;
-      } else if (isHrQuery) {
+      } else if (isApplyLeaveIntent) {
         answerText = isBilingual
-          ? `'${query}' (மனிதவளத் துறை / HR) தொடர்பான அதிகாரப்பூர்வ படிவங்கள் மற்றும் போர்ட்டல்கள் கண்டறியப்பட்டுள்ளன. முதன்மை தளம்: '${scoredMatches[0]?.title || 'HR Hub'}'.`
-          : `Found verified hospital Human Resources (HR) portals and official documents matching "${query}". Primary resource is "${scoredMatches[0]?.title || 'APH HR Forms Hub'}".`;
+          ? `விடுமுறை விண்ணப்பிக்க (Apply Leave) அல்லது உங்கள் விடுப்பு நிலவரத்தைப் பார்க்க **PruWorks HRMS** போர்ட்டலில் (https://mapims-hrms.tecvinesolutions.com) உள்நுழையவும். பணியாளர் வருகை, விடுமுறை விண்ணப்பம் மற்றும் ஒப்புதல் அனைத்தும் PruWorks மூலமாக செய்யப்படுகிறது. நேரடி படிவங்களுக்கு மனிதவளத் துறையை (Admin Office, Ext: 2173 / 2169) தொடர்பு கொள்ளலாம்.`
+          : `To apply for leave or check your leave balance, log in to the **PruWorks HRMS Portal** (https://mapims-hrms.tecvinesolutions.com) using your employee login. Staff attendance, duty schedules, and leave approvals are managed in PruWorks. For manual leave slips, visit the HR Department in the Admin Office (Ext: 2173 / 2169) or refer to the **Human Resources Manual (HRM 2025)**.`;
+      } else if (isSalaryIntent) {
+        answerText = isBilingual
+          ? `மாத சம்பள ரசீதுகள் (Monthly Payslips) மற்றும் ஊதிய விவரங்களை **PruWorks HRMS** போர்ட்டலில் (https://mapims-hrms.tecvinesolutions.com) பதிவிறக்கம் செய்யலாம். கூடுதல் விவரங்களுக்கு மனிதவளத் துறை (Ext: 2173) அல்லது கணக்கு பிரிவை (Ext: 2175) தொடர்பு கொள்ளவும்.`
+          : `Monthly salary slips and payroll statements are available online in the **PruWorks HRMS Portal** (https://mapims-hrms.tecvinesolutions.com). Log in with your employee credentials to download your pay slips or contact the HR Department (Ext: 2173 / 2169) or Accounts (Ext: 2175).`;
+      } else if (isAttendanceIntent) {
+        answerText = isBilingual
+          ? `தினசரி வருகை பதிவு மற்றும் பணி அட்டவணை **PruWorks HRMS** (https://mapims-hrms.tecvinesolutions.com) போர்ட்டலில் கண்காணிக்கப்படுகிறது. கூடுதல் விவரங்களுக்கு HR துறையை (Ext: 2173 / 2169) தொடர்பு கொள்ளவும்.`
+          : `Daily biometric attendance punch records, work hours, and shift duty schedules are managed via the **PruWorks HRMS Portal** (https://mapims-hrms.tecvinesolutions.com). Department duty rosters are also published under **Recent Circulars**. For attendance regularization, contact HR (Ext: 2173 / 2169).`;
+      } else if (isTicketIntent) {
+        answerText = isBilingual
+          ? `கணினி, இணையம் மற்றும் மருத்துவமனை பழுது குறித்த புகார்களைப் பதிவு செய்ய **Ticketing & Maintenance Desk** (http://www.mapimshis.com/mapims/) தளத்தைப் பயன்படுத்தவும். அவசர கணினி உதவிக்கு IT பிரிவை (Ext: 2226 / 2228) அழைக்கவும்.`
+          : `To report computer hardware breakdowns, network faults, HIS software bugs, or facilities maintenance issues, raise a job order on the **Ticketing & Maintenance Desk** (http://www.mapimshis.com/mapims/). For urgent IT support, call the IT Help Desk at Ext: 2226 (Hardware) or 2228 (Software).`;
+      } else if (isHisIntent) {
+        answerText = isBilingual
+          ? `மருத்துவமனை HIS மென்பொருள் (Backbone / AOSTA) முகவரி: http://192.168.103.37/BB15SE/Backbone/admin/login.aspx. புதிய பயனர் கணக்கு உருவாக்க **New HIS User Request Form** படிவத்தை IT பிரிவில் (Ext: 2228) சமர்ப்பிக்கவும்.`
+          : `The hospital information system (HIS - Backbone / AOSTA) is accessible at http://192.168.103.37/BB15SE/Backbone/admin/login.aspx. To create a new HIS user account or modify module access permissions, download the **New HIS User Request Form** from IT Forms and submit it to the IT department (Ext: 2228).`;
+      } else if (isPacsIntent) {
+        answerText = `Diagnostic radiology scans (X-Ray, CT, MRI, Ultrasound) are accessed through the **M - PACS (Medsynapse)** viewer at http://192.168.101.224/User_Login.asp. For urgent scan availability or radiologist consultation, contact the Radiology Department at Ext: 2700 / 2699.`;
+      } else if (isWifiIntent) {
+        answerText = `To connect work laptops or authorized mobile devices to the hospital campus wireless network, download the **Employee WIFI Request Form** from IT Forms. Fill in your department details and device MAC address, then submit it to the IT Department (Ext: 2226).`;
+      } else if (isWhereFormIntent) {
+        answerText = `All hospital forms are hosted directly on this Intranet Homepage in the **Forms Vault** (#forms). You can click the category cards to view **Common Forms** (Infection control & clinical checklists), **Consent Forms** (Surgical & blood transfusion), **HR Forms** (Staff applications & promotions), and **IT Forms** (Hardware & WIFI requests).`;
+      } else if (isPediatricQuery && isConsentQuery) {
+        answerText = isBilingual
+          ? `குழந்தைகளுக்கான அனைத்து அறுவை மற்றும் மருத்துவ சிகிச்சைகளுக்கும் பெற்றோரின் அல்லது பாதுகாவலரின் சட்டபூர்வ ஒப்புதலைப் பெற **Paediatric Consent Form** பயன்படுத்தப்படுகிறது. அதிகாரப்பூர்வ படிவத்தை கீழே உள்ள இணைப்பில் பதிவிறக்கம் செய்யலாம். அனைத்து ஒப்புதல் படிவங்களுக்கும் **Consent Forms Vault** பார்க்கவும்.`
+          : `For all paediatric medical and surgical interventions involving neonates, infants, and children, use the official **Paediatric Consent Form** to obtain informed parental or legal guardian consent. Download the verified form below or explore the **Consent Forms Vault**.`;
+      } else if (isBloodQuery && isConsentQuery) {
+        answerText = isBilingual
+          ? `ரத்தம் மற்றும் ரத்த கூறுகள் ஏற்றுவதற்கான (Blood Component Transfusions) ஒப்புதலைப் பெற **Consent for Blood Component Transfusions** படிவம் பயன்படுத்தப்படுகிறது. கீழே உள்ள இணைப்பில் பதிவிறக்கம் செய்யலாம்.`
+          : `For administering whole blood, PRBC, FFP, platelets, and other blood products, use the official **Consent for Blood Component Transfusions** form. Download the form below or access the Consent Forms Vault.`;
+      } else if (isSurgeryQuery && isConsentQuery) {
+        answerText = isBilingual
+          ? `அறுவை சிகிச்சை மற்றும் மருத்துவ நடைமுறைகளுக்கான அதிகாரப்பூர்வ ஒப்புதல் படிவம் (தமிழ் மற்றும் ஆங்கில வடிவம்) கீழே கிடைக்கிறது. நோயாளியிடம் விளக்கமளித்து கையொப்பம் பெறவும்.`
+          : `For invasive surgeries and clinical procedures, obtain patient or next-of-kin informed authorization using the **Informed Consent Form for Surgery or Procedures** (available in English and Tamil).`;
       } else if (isStoreQuery) {
         answerText = isBilingual
           ? `மருத்துவமனை ஸ்டோர்ஸ் இந்தென்ட் (Store Indent) மற்றும் கொள்முதல் நடைமுறைகளுக்கு **Purchase Process** வழிகாட்டுதல் (Instruments & Equipment APR 2025) பார்க்கவும். இருப்பு நிலவரத்திற்கு **General Store Inventory Stock Details** மற்றும் **Drug Stores Stock Details** ஆவணங்களைப் பார்க்கவும்.`
           : `For hospital store indents and equipment procurement, departments use the **Purchase Process** workflow (Instruments & Equipment APR 2025). For active inventory and pharmaceutical stocks, refer to **General Store Inventory Stock Details** and **Drug Stores Stock Details**.`;
+      } else if (isHrQuery) {
+        answerText = isBilingual
+          ? `மருத்துவமனை மனிதவளத் துறை (HR) தளங்கள் மற்றும் ஆவணங்கள்: பணியாளர் வருகை மற்றும் சம்பள விவரங்களுக்கு **PruWorks HRMS** (https://mapims-hrms.tecvinesolutions.com), படிவங்களுக்கு **APH HR Forms Hub** (#forms), மற்றும் விதிமுறைகளுக்கு **Human Resources Manual (HRM 2025)** பார்க்கவும். HR தொடர்பு: Ext 2173 / 2169.`
+          : `Official hospital Human Resources services and staff resources: Use **PruWorks HRMS** (https://mapims-hrms.tecvinesolutions.com) for attendance & payslips, access official staff forms in the **APH HR Forms Hub** (#forms), and review institutional guidelines in the **Human Resources Manual (HRM 2025)**. The HR Department is in the Admin Office (Ext: 2173 / 2169).`;
       } else if (isBilingual) {
-        answerText = `'${query}' (தமிழ் / Tanglish: "${tanglishInfo.matchedLabel}") தொடர்பான மருத்துவ ஆவணங்கள் கண்டறியப்பட்டுள்ளன. கீழே உள்ள இணைப்புகளை கிளிக் செய்து ஆவணங்களைத் திறக்கலாம்.`;
+        answerText = `'${query}' (தமிழ் / Tanglish: "${tanglishInfo.matchedLabel}") தொடர்பான அதிகாரப்பூர்வ மருத்துவ ஆவணங்கள் மற்றும் பயன்பாடுகள்: முதன்மை பரிந்துரை: **${scoredMatches[0]?.title || 'ஆவணம்'}**. கீழே உள்ள இணைப்பை கிளிக் செய்து திறக்கவும்.`;
       } else {
-        answerText = `Direct search results matching "${query}" from the hospital portal directory. Click any resource below to open immediately.`;
+        answerText = `Here are the verified hospital resources and official documents for '${query}'. Primary recommendation: **${scoredMatches[0]?.title || 'Official Document'}**. Access the official file or portal via the links below.`;
       }
 
       if (matchedClientIntercom && isStoreQuery) {
@@ -4534,14 +4799,59 @@ Respond strictly in JSON format:
         badge: m.category.includes('Form') ? 'Form' : (m.category.includes('PDF') || m.url.endsWith('.pdf') ? 'PDF' : 'Portal')
       }));
 
-      if (matchedClientIntercom && isTelecomQuery) {
-        const deptLink = {
-          title: `${matchedClientIntercom.dept} Department Intercom Directory`,
-          url: `./intercom.html?dept=${encodeURIComponent(matchedClientIntercom.dept)}`,
-          category: 'Staff Directory',
-          badge: `${matchedClientIntercom.dept} Directory`
-        };
-        finalLinks.unshift(deptLink);
+      if (isPediatricQuery && isConsentQuery) {
+        finalLinks = finalLinks.filter(l => !(l.category.toLowerCase().includes('consent') && !l.title.toLowerCase().includes('paediatric') && !l.title.toLowerCase().includes('pediatric')));
+        if (!finalLinks.some(l => l.title.toLowerCase().includes('paediatric') || l.url.includes('paedconsent'))) {
+          finalLinks.unshift({
+            title: 'Paediatric Consent Form',
+            url: 'http://192.168.101.75:3000/files/paedconsent.pdf',
+            category: 'Consent Forms',
+            badge: 'Medicolegal'
+          });
+        }
+        if (!finalLinks.some(l => l.url.includes('consent.html'))) {
+          finalLinks.push({
+            title: 'Consent Forms Vault',
+            url: './consent.html',
+            category: 'Forms Vault',
+            badge: 'Forms Vault'
+          });
+        }
+      } else if (isBloodQuery && isConsentQuery) {
+        finalLinks = finalLinks.filter(l => !(l.category.toLowerCase().includes('consent') && !l.title.toLowerCase().includes('blood') && !l.title.toLowerCase().includes('transfusion')));
+        if (!finalLinks.some(l => l.url.includes('consent.html'))) {
+          finalLinks.push({
+            title: 'Consent Forms Vault',
+            url: './consent.html',
+            category: 'Forms Vault',
+            badge: 'Forms Vault'
+          });
+        }
+      } else if (isSurgeryQuery && isConsentQuery) {
+        finalLinks = finalLinks.filter(l => !(l.category.toLowerCase().includes('consent') && !l.title.toLowerCase().includes('surgery') && !l.title.toLowerCase().includes('procedure')));
+        if (!finalLinks.some(l => l.url.includes('consent.html'))) {
+          finalLinks.push({
+            title: 'Consent Forms Vault',
+            url: './consent.html',
+            category: 'Forms Vault',
+            badge: 'Forms Vault'
+          });
+        }
+      } else if (matchedClientIntercom && isTelecomQuery) {
+        finalLinks = [
+          {
+            title: `${matchedClientIntercom.dept} Department Intercom Directory`,
+            url: `./intercom.html?dept=${encodeURIComponent(matchedClientIntercom.dept)}`,
+            category: 'Staff Directory',
+            badge: `${matchedClientIntercom.dept} Directory`
+          },
+          {
+            title: 'Official Campus Intercom Directory PDF (Full Hospital)',
+            url: 'http://192.168.101.75:3000/files/Intercom%20Directory.pdf',
+            category: 'Staff Directory',
+            badge: 'Full PDF'
+          }
+        ];
       } else if (isTelecomQuery) {
         finalLinks = [
           {
@@ -4560,7 +4870,13 @@ Respond strictly in JSON format:
       }
 
       let suggestions = [];
-      if (isStoreQuery) {
+      if (isPediatricQuery && isConsentQuery) {
+        suggestions = ['Paediatric Consent Form', 'Consent Forms Vault', 'Paediatrics Intercom Ext: 2030'];
+      } else if (isBloodQuery && isConsentQuery) {
+        suggestions = ['Blood Transfusion Consent Form', 'Consent Forms Vault', 'Blood Bank Ext: 2131'];
+      } else if (isSurgeryQuery && isConsentQuery) {
+        suggestions = ['Informed Consent Form - English', 'Informed Consent Form - Tamil', 'Consent Forms Vault'];
+      } else if (isStoreQuery) {
         suggestions = ['Purchase Process PDF', 'Inventory Stock Details 2024', 'Drug Stores Stock Details', 'Purchase Stores Ext: 2701'];
       } else if (matchedClientIntercom && isTelecomQuery) {
         suggestions = [`${matchedClientIntercom.dept} Directory PDF`, `${matchedClientIntercom.dept} Extensions`, 'Campus Directory PDF'];

@@ -3600,11 +3600,11 @@
     "hubPage": "./index.html#applications"
   },
   {
-    "title": "PruWorks HRMS Staff Attendance & Payroll",
+    "title": "PruWorks HRMS (Staff Attendance, Leave & Payroll)",
     "url": "https://mapims-hrms.tecvinesolutions.com",
     "canonicalUrl": "https://mapims-hrms.tecvinesolutions.com",
     "category": "Core Systems",
-    "description": "Employee biometric attendance, pay slips, salary and shift schedule portal",
+    "description": "Employee biometric attendance, leave applications, pay slips, salary and shift schedule portal",
     "badge": "HRMS",
     "hubPage": "./index.html#applications"
   },
