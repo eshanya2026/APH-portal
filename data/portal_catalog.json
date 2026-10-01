@@ -2322,24 +2322,6 @@
     "hubPage": "./manuals.html"
   },
   {
-    "title": "GEN SURGERY (NABH 6th Edition)",
-    "url": "http://192.168.101.75:3000/files/nabh/General surgery.pdf",
-    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/General surgery.pdf",
-    "category": "Manuals & SOPs",
-    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
-    "badge": "Manual",
-    "hubPage": "./manuals.html"
-  },
-  {
-    "title": "GENERAL MEDICINE (NABH 6th Edition)",
-    "url": "http://192.168.101.75:3000/files/nabh/General Medicine.pdf",
-    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/General Medicine.pdf",
-    "category": "Manuals & SOPs",
-    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
-    "badge": "Manual",
-    "hubPage": "./manuals.html"
-  },
-  {
     "title": "HEPATOLOGY (NABH 6th Edition)",
     "url": "http://192.168.101.75:3000/files/nabh/Hepatology.pdf",
     "canonicalUrl": "http://192.168.101.75:3000/files/nabh/Hepatology.pdf",
@@ -2556,15 +2538,6 @@
     "hubPage": "./manuals.html"
   },
   {
-    "title": "AAC 7 E LAB SAFETY MANUAL (NABH 6th Edition)",
-    "url": "http://192.168.101.75:3000/files/AAC 7 E LAB SAFETY MANUAL.pdf",
-    "canonicalUrl": "http://192.168.101.75:3000/files/AAC 7 E LAB SAFETY MANUAL.pdf",
-    "category": "Manuals & SOPs",
-    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
-    "badge": "Manual",
-    "hubPage": "./manuals.html"
-  },
-  {
     "title": "HAZARD IDENTIFICATION AND RISK ASSESSMENT (HIRA) (NABH 6th Edition)",
     "url": "http://192.168.101.75:3000/files/HAZARD IDENTIFICATION AND RISK ASSESSMENT (HIRA).pdf",
     "canonicalUrl": "http://192.168.101.75:3000/files/HAZARD IDENTIFICATION AND RISK ASSESSMENT (HIRA).pdf",
@@ -2622,15 +2595,6 @@
     "title": "FMS - Laundry Manual (NABH 6th Edition)",
     "url": "http://192.168.101.75:3000/files/nabh/FMS - Laundry Manual New.pdf",
     "canonicalUrl": "http://192.168.101.75:3000/files/nabh/FMS - Laundry Manual New.pdf",
-    "category": "Manuals & SOPs",
-    "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
-    "badge": "Manual",
-    "hubPage": "./manuals.html"
-  },
-  {
-    "title": "FMS - Safety manual (NABH 6th Edition)",
-    "url": "http://192.168.101.75:3000/files/nabh/FMS - Safety Manual New.pdf",
-    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/FMS - Safety Manual New.pdf",
     "category": "Manuals & SOPs",
     "description": "NABH 6th Edition Clinical SOP departmental standard operating procedure",
     "badge": "Manual",
@@ -2775,15 +2739,6 @@
     "title": "FMS - Security SOP FINAL (NABH 6th Edition)",
     "url": "http://192.168.101.75:3000/files/nabh/FMS -  Security SOP FINAL 07.03.2026.pdf",
     "canonicalUrl": "http://192.168.101.75:3000/files/nabh/FMS -  Security SOP FINAL 07.03.2026.pdf",
-    "category": "Manuals & SOPs",
-    "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
-    "badge": "Manual",
-    "hubPage": "./manuals.html"
-  },
-  {
-    "title": "Approved abbreviation July 2025 -2026 (NABH 6th Edition)",
-    "url": "http://192.168.101.75:3000/files/nabh/Approved abbreviation July 2025 -2026.pdf",
-    "canonicalUrl": "http://192.168.101.75:3000/files/nabh/Approved abbreviation July 2025 -2026.pdf",
     "category": "Manuals & SOPs",
     "description": "NABH 6th Edition Policy Manual departmental standard operating procedure",
     "badge": "Manual",
@@ -3906,13 +3861,13 @@
     "hubPage": "./index.html#resources"
   },
   {
-    "title": "Campus Intercom & Extension Directory PDF",
-    "url": "http://192.168.101.75:3000/files/Intercom Directory.pdf",
-    "canonicalUrl": "http://192.168.101.75:3000/files/Intercom Directory.pdf",
+    "title": "Campus Intercom & Extension Directory",
+    "url": "http://192.168.101.75/assets/sub%20files/intercom.html",
+    "canonicalUrl": "http://192.168.101.75/assets/sub files/intercom.html",
     "category": "Staff Directory",
-    "description": "Official campus telephone extension directory PDF with internal department lines",
-    "badge": "Directory PDF",
-    "hubPage": "./intercom.html"
+    "description": "Official campus telephone extension directory with all internal department lines and hotlines",
+    "badge": "Directory",
+    "hubPage": "http://192.168.101.75/assets/sub%20files/intercom.html"
   },
   {
     "title": "Campus Intercom & Extension Directory (Searchable List)",

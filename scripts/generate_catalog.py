@@ -14,6 +14,8 @@ DATA_DIR = os.path.join(BASE_DIR, 'data')
 
 catalog = []
 seen_canonical_urls = set()
+seen_pdf_filenames = set()
+seen_normalized_titles = set()
 
 def canonicalize_url(u):
     """Normalize URL by stripping spaces, unquoting, and lowercasing for de-duplication."""
@@ -44,7 +46,22 @@ def add_entry(title, url, category, description='', badge='PDF', hub_page=''):
     
     if canon in seen_canonical_urls:
         return
+
+    # Normalized title and PDF filename deduplication
+    norm_title = re.sub(r'[^a-z0-9]', '', title.lower())
+    fname = os.path.basename(canon).lower() if canon.lower().endswith('.pdf') else None
+
+    # Check if exact title or PDF filename has already been indexed
+    if norm_title in seen_normalized_titles:
+        return
+    if fname and fname in seen_pdf_filenames:
+        return
+
     seen_canonical_urls.add(canon)
+    if norm_title:
+        seen_normalized_titles.add(norm_title)
+    if fname:
+        seen_pdf_filenames.add(fname)
     
     catalog.append({
         "title": title,
@@ -468,12 +485,12 @@ portal_docs = [
         "hub_page": "./index.html#resources"
     },
     {
-        "title": "Campus Intercom & Extension Directory PDF",
-        "url": "http://192.168.101.75:3000/files/Intercom Directory.pdf",
+        "title": "Campus Intercom & Extension Directory",
+        "url": "http://192.168.101.75/assets/sub%20files/intercom.html",
         "category": "Staff Directory",
-        "description": "Official campus telephone extension directory PDF with internal department lines",
-        "badge": "Directory PDF",
-        "hub_page": "./intercom.html"
+        "description": "Official campus telephone extension directory with all internal department lines and hotlines",
+        "badge": "Directory",
+        "hub_page": "http://192.168.101.75/assets/sub%20files/intercom.html"
     },
     {
         "title": "Campus Intercom & Extension Directory (Searchable List)",

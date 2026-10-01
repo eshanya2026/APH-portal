@@ -351,6 +351,20 @@ def load_catalog():
                 if base_no_ext:
                     FILENAME_MAP[base_no_ext] = item
 
+                if fname == 'intercom.pdf' or 'sub files/intercom.html' in urllib.parse.unquote(url).lower():
+                    FILENAME_MAP['intercom.pdf'] = item
+                    FILENAME_MAP['intercom'] = item
+                    FILENAME_MAP['intercom directory.pdf'] = item
+                    FILENAME_MAP['intercom directory'] = item
+                    FILENAME_MAP['intercom_directory.pdf'] = item
+                    FILENAME_MAP['intercom_directory'] = item
+                    URL_MAP['http://192.168.101.75:3000/files/Intercom.pdf'] = item
+                    URL_MAP['http://192.168.101.75:3000/files/Intercom Directory.pdf'] = item
+                    URL_MAP['http://192.168.101.75:3000/files/Intercom%20Directory.pdf'] = item
+                    URL_MAP['http://localhost:3000/files/Intercom.pdf'] = item
+                    URL_MAP['./Intercom Directory.pdf'] = item
+                    URL_MAP['./Intercom.pdf'] = item
+
             # Index by title
             clean_title = re.sub(r'[^a-zA-Z0-9\u0B80-\u0BFF\s]', '', title.lower()).strip()
             TITLE_MAP[clean_title] = item
@@ -941,6 +955,48 @@ def classify_doc_domain(item):
 
     return 'GENERAL'
 
+def get_semantic_doc_key(title, url):
+    """
+    Computes a canonical semantic document key to prevent duplicate versions of the same
+    institutional manual, policy, or form from appearing twice in search results.
+    E.g.:
+      - 'Human Resources Manual (HRM - 2025)' and 'HUMAN RESOURCE MANAGEMENT (HRM) (NABH 6th Edition)' -> 'doc_human_resources_manual'
+      - 'Performance Management System Policy' and 'Performance Management System (PMS) Policy' -> 'doc_pms_policy'
+      - 'Orthopaedics (NABH 5th Edition)' and 'ORTHOPAEDICS (NABH 6th Edition)' -> 'dept_manual_orthopaedics'
+    """
+    if not title and not url:
+        return ""
+    t_lower = (title or "").lower()
+    u_lower = urllib.parse.unquote(url or "").lower().split('?')[0].strip()
+    fname = os.path.basename(u_lower) if u_lower.endswith('.pdf') else ""
+
+    # 1. HR Manual / HRM
+    if any(k in t_lower for k in ['human resource manual', 'human resources manual', 'human resource management', '(hrm)']) or re.search(r'\bhrm\b', fname):
+        return 'doc_human_resources_manual'
+
+    # 2. PMS / Performance Management Policy
+    if any(k in t_lower for k in ['performance management system', 'pms policy', 'pms document']) or re.search(r'\bpms\b', fname):
+        return 'doc_pms_policy'
+
+    # 3. Paediatric Consent
+    if 'paedconsent' in u_lower or ('paediatric' in t_lower and 'consent' in t_lower) or ('pediatric' in t_lower and 'consent' in t_lower):
+        return 'doc_paediatric_consent'
+
+    # 4. Blood Transfusion Consent
+    if ('blood' in t_lower or 'transfusion' in t_lower) and 'consent' in t_lower:
+        return 'doc_blood_transfusion_consent'
+
+    # 5. Departmental Manuals & Policies (e.g. 5th edition vs 6th edition)
+    cleaned_t = re.sub(r'\(.*?\)', ' ', t_lower)
+    cleaned_t = re.sub(r'\b(nabh|5th|6th|edition|version|final|manual|sops|sop|dept|department|policy|pdf|new)\b', ' ', cleaned_t)
+    cleaned_t = cleaned_t.replace('gen surgery', 'general surgery').replace('gensurgery', 'generalsurgery')
+    cleaned_t = re.sub(r'[^a-z0-9]', '', cleaned_t).strip()
+
+    if ('nabh' in u_lower or 'manual' in u_lower or 'sop' in u_lower) and cleaned_t:
+        return f'dept_manual_{cleaned_t}'
+
+    return ''
+
 def search_catalog_candidates(query, limit=6):
     """
     RAG Retrieval: Ranks catalog entries against user query using domain classification,
@@ -1361,7 +1417,7 @@ def search_catalog_candidates(query, limit=6):
 
         # 8. Intercom, Extension & Telephony intent
         if is_telecom_query:
-            if 'intercom directory.pdf' in url_tokens or 'intercom directory pdf' in title_lower:
+            if any(k in url_tokens for k in ['intercom.html', 'sub files', 'sub%20files', 'intercom.pdf', 'intercom directory.pdf']) or 'intercom' in title_lower:
                 score += 260
                 has_hit = True
             elif is_it_query and 'it department intercom' in title_lower:
@@ -1373,6 +1429,9 @@ def search_catalog_candidates(query, limit=6):
             elif 'email.pdf' in url:
                 score += 70
                 has_hit = True
+            # Dampen non-telecom documents so policies or manuals don't dominate telephony queries
+            elif not any(k in title_lower or k in url for k in ['intercom', 'extension', 'directory', 'phone', 'telephony', 'staff']):
+                score -= 150
 
         # 9. Store / Indent / Procurement intent
         if is_store_query:
@@ -1402,7 +1461,41 @@ def search_catalog_candidates(query, limit=6):
             scored.append((score, item))
 
     scored.sort(key=lambda x: x[0], reverse=True)
-    return [item for _, item in scored[:limit]]
+    deduped_candidates = []
+    seen_cand_urls = set()
+    seen_cand_fnames = set()
+    seen_cand_titles = set()
+    seen_cand_sem_keys = set()
+
+    for _, item in scored:
+        u_raw = item.get('url', '').strip()
+        u_clean = urllib.parse.unquote(u_raw.split('?')[0]).lower().strip()
+        t_clean = re.sub(r'[^a-z0-9]', '', item.get('title', '').lower())
+        fname = os.path.basename(u_clean) if u_clean.endswith('.pdf') else None
+        sem_key = get_semantic_doc_key(item.get('title', ''), u_raw)
+
+        if u_clean in seen_cand_urls:
+            continue
+        if fname and fname in seen_cand_fnames:
+            continue
+        if t_clean and t_clean in seen_cand_titles:
+            continue
+        if sem_key and sem_key in seen_cand_sem_keys:
+            continue
+
+        seen_cand_urls.add(u_clean)
+        if fname:
+            seen_cand_fnames.add(fname)
+        if t_clean:
+            seen_cand_titles.add(t_clean)
+        if sem_key:
+            seen_cand_sem_keys.add(sem_key)
+
+        deduped_candidates.append(item)
+        if len(deduped_candidates) >= limit:
+            break
+
+    return deduped_candidates
 
 def snap_to_catalog_url(raw_url, title=""):
     """
@@ -1420,6 +1513,15 @@ def snap_to_catalog_url(raw_url, title=""):
         base_part, query_part = cleaned_url.split('?', 1)
         query_param = "?" + query_part
         cleaned_url = base_part
+
+    # Official Campus Intercom normalization:
+    # The actual live path for the campus intercom directory is http://192.168.101.75/assets/sub%20files/intercom.html
+    # Snap any old intercom PDF references or general intercom directory links to this official path
+    lower_u = urllib.parse.unquote(cleaned_url).lower()
+    if 'intercom' in lower_u and ('pdf' in lower_u or 'sub files' in lower_u or 'sub%20files' in lower_u or 'directory' in lower_u):
+        if './intercom.html' in cleaned_url and '?' in cleaned_url:
+            return cleaned_url  # Keep department filters like ./intercom.html?dept=Ortho
+        return "http://192.168.101.75/assets/sub%20files/intercom.html"
 
     # 1. Direct match in URL_MAP
     if cleaned_url in URL_MAP:
@@ -1536,7 +1638,7 @@ OFFICIAL CAMPUS TELEPHONE & INTERCOM EXTENSION DIRECTORY:
   • ICU / Critical Care: 2156, 2160, 2163
   • Main Gate / Security: 2800
 - Official Directory Documents:
-  • Printable PDF: Campus Intercom & Extension Directory PDF (URL: http://192.168.101.75:3000/files/Intercom Directory.pdf)
+  • Official Campus Directory: Campus Intercom & Extension Directory (URL: http://192.168.101.75/assets/sub%20files/intercom.html)
   • Searchable Online List: Campus Intercom & Extension Directory (Searchable List) (URL: ./intercom.html)
 
 STRICT TELEPHONY & INTERCOM SEARCH RULE:
@@ -1549,12 +1651,12 @@ If the user uses ANY telephony words in English, Tamil, or Tanglish:
    - In the "answer" field, you MUST explicitly provide the verified extension numbers for that department. If the question is in Tamil or Tanglish, provide the department name and extension numbers in Tamil/Tanglish.
    - In the "links" array, you MUST provide EXACTLY TWO links:
      1. '{dept_label} Department Intercom Directory' with URL '{dept_url}' (category: 'Staff Directory', badge: '{dept_label} Directory'). Single department links open the dedicated department directory with 1-click print-to-PDF.
-     2. 'Official Campus Intercom Directory PDF (Full Hospital)' with URL 'http://192.168.101.75:3000/files/Intercom Directory.pdf' (category: 'Staff Directory', badge: 'Full PDF').
+     2. 'Official Campus Intercom Directory (Full Hospital)' with URL 'http://192.168.101.75/assets/sub%20files/intercom.html' (category: 'Staff Directory', badge: 'Full Directory').
      Do NOT include the searchable list or any third link when a specific department is queried.
 3. If NO department is specified (e.g. 'inercom', 'call', 'phone', 'extension', 'intercom', 'தொலைபேசி', 'tholaipesi', 'இணைப்பு எண்', 'inaippu en'):
    - In the "answer" field, provide the hospital emergency & critical hotlines: Emergency Reception (2001, 2002), Blood Bank (2131), ICU (2156), Main Gate (2800), and IT Support (2226).
    - In the "links" array, you MUST provide:
-     • Campus Intercom & Extension Directory PDF (http://192.168.101.75:3000/files/Intercom Directory.pdf)
+     • Campus Intercom & Extension Directory (http://192.168.101.75/assets/sub%20files/intercom.html)
      • Campus Intercom & Extension Directory (Searchable List) (./intercom.html)
 4. NEVER return unrelated policies, circulars, or forms like 'Medication Recall' or clinical documents for telephony queries.
 
@@ -1675,6 +1777,9 @@ def query_gemini_ai(user_query, api_key):
     # =========================================================================
     validated_links = []
     seen_urls = set()
+    seen_fnames = set()
+    seen_titles = set()
+    seen_sem_keys = set()
 
     raw_links = ai_result.get('links', [])
     for link in raw_links:
@@ -1690,9 +1795,27 @@ def query_gemini_ai(user_query, api_key):
         if not snapped_url:
             snapped_url = raw_url
 
-        if snapped_url in seen_urls:
+        u_clean = urllib.parse.unquote(snapped_url.split('?')[0]).lower().strip()
+        fname = os.path.basename(u_clean) if u_clean.endswith('.pdf') else None
+        t_clean = re.sub(r'[^a-z0-9]', '', title.lower())
+        sem_key = get_semantic_doc_key(title, snapped_url)
+
+        if u_clean in seen_urls:
             continue
-        seen_urls.add(snapped_url)
+        if fname and fname in seen_fnames:
+            continue
+        if t_clean and t_clean in seen_titles:
+            continue
+        if sem_key and sem_key in seen_sem_keys:
+            continue
+
+        seen_urls.add(u_clean)
+        if fname:
+            seen_fnames.add(fname)
+        if t_clean:
+            seen_titles.add(t_clean)
+        if sem_key:
+            seen_sem_keys.add(sem_key)
 
         # Retrieve verified catalog metadata if available
         if snapped_url in URL_MAP:
@@ -1734,10 +1857,10 @@ def query_gemini_ai(user_query, api_key):
                     "badge": dept_dir_badge
                 },
                 {
-                    "title": "Official Campus Intercom Directory PDF (Full Hospital)",
-                    "url": "http://192.168.101.75:3000/files/Intercom%20Directory.pdf",
+                    "title": "Official Campus Intercom Directory (Full Hospital)",
+                    "url": "http://192.168.101.75/assets/sub%20files/intercom.html",
                     "category": "Staff Directory",
-                    "badge": "Full PDF"
+                    "badge": "Full Directory"
                 }
             ]
         else:
@@ -1761,17 +1884,23 @@ def query_gemini_ai(user_query, api_key):
                     new_links.append(l)
             validated_links = new_links
 
-        # Ensure answer mentions the extension numbers if Gemini didn't mention them
-        answer_text = ai_result.get('answer', '')
-        ext_list_str = ", ".join([f"{e['desc']}: {e['ext']}" for e in matched_intercom['extensions'][:4]])
+        # Format clean, authoritative extensions
+        ext_list_str = ", ".join([f"**{e['desc']}**: **{e['ext']}**" for e in matched_intercom['extensions'][:5]])
         is_tamil = is_tamil_query(user_query)
-        if not any(e['ext'] in answer_text for e in matched_intercom['extensions'][:4]):
-            if is_telecom_req:
-                if is_tamil:
-                    ai_result['answer'] = f"**{dept_label}** துறையின் தொலைபேசி / இன்டர்காம் இணைப்பு எண்கள்: **{ext_list_str}**. {answer_text}"
-                else:
-                    ai_result['answer'] = f"The intercom extension numbers for **{dept_label}** are: **{ext_list_str}**. {answer_text}"
+        if is_telecom_req:
+            if is_tamil:
+                ai_result['answer'] = f"**{dept_label}** துறையின் அதிகாரப்பூர்வ தொலைபேசி / இன்டர்காம் இணைப்பு எண்கள்: {ext_list_str}. முழுமையான துறை தொடர்பு பட்டியலை கீழே உள்ள இணைப்பில் பார்க்கலாம்."
             else:
+                ai_result['answer'] = f"The official intercom extension numbers for **{dept_label}** are: {ext_list_str}. You can open the dedicated {dept_label} directory below to filter and print extensions, or access the full campus directory."
+            top_exts = [e['ext'] for e in matched_intercom['extensions'][:2]]
+            ai_result['suggestions'] = [
+                f"{dept_label} Ext: {' / '.join(top_exts)}",
+                f"{dept_label} Intercom Directory",
+                "Official Campus Intercom Directory"
+            ]
+        else:
+            answer_text = ai_result.get('answer', '')
+            if not any(e['ext'] in answer_text for e in matched_intercom['extensions'][:4]):
                 if is_tamil:
                     ai_result['answer'] = f"{answer_text}\n\n📞 **{dept_label} தொலைபேசி எண்கள்**: {ext_list_str}."
                 else:
@@ -1779,24 +1908,37 @@ def query_gemini_ai(user_query, api_key):
 
     elif is_telecom_req:
         # Telephony request without department (e.g. "inercom", "call", "extension", "phone", "dial")
-        campus_pdf_url = "http://192.168.101.75:3000/files/Intercom Directory.pdf"
+        campus_full_url = "http://192.168.101.75/assets/sub%20files/intercom.html"
         campus_web_url = "./intercom.html"
 
         telecom_links = [
-            {"title": "Campus Intercom & Extension Directory PDF", "url": campus_pdf_url, "category": "Staff Directory", "badge": "Directory PDF"},
-            {"title": "Campus Intercom & Extension Directory (Searchable List)", "url": campus_web_url, "category": "Staff Directory", "badge": "Directory"}
+            {"title": "Campus Intercom & Extension Directory", "url": campus_full_url, "category": "Staff Directory", "badge": "Official Directory"},
+            {"title": "Interactive Department Intercom List", "url": campus_web_url, "category": "Staff Directory", "badge": "Directory"}
         ]
 
         # Prune non-telecom links (like Medication Recall)
         pruned_links = [l for l in validated_links if any(k in l.get('title', '').lower() or k in l.get('url', '').lower() for k in ['intercom', 'extension', 'directory', 'staff']) and not ('recall' in l.get('title', '').lower() and 'recall' not in q_lower)]
-        if not pruned_links:
-            validated_links = telecom_links
-        else:
-            if not any(l.get('url') == campus_pdf_url for l in pruned_links):
-                pruned_links.insert(0, telecom_links[0])
-            if not any(l.get('url') == campus_web_url for l in pruned_links):
-                pruned_links.append(telecom_links[1])
-            validated_links = pruned_links
+        # Normalize and deduplicate intercom links to ensure only ONE full directory link is ever shown
+        clean_telecom = []
+        has_full_dir = False
+        has_searchable = False
+        for l in (pruned_links if pruned_links else telecom_links):
+            u = l.get('url', '')
+            if any(k in u.lower() for k in ['sub files', 'sub%20files', 'intercom.pdf', 'directory.pdf']):
+                if not has_full_dir:
+                    clean_telecom.append(telecom_links[0])
+                    has_full_dir = True
+            elif 'intercom.html' in u.lower() and not ('sub%20files' in u.lower() or 'sub files' in u.lower()):
+                if not has_searchable:
+                    clean_telecom.append(telecom_links[1])
+                    has_searchable = True
+            else:
+                clean_telecom.append(l)
+        if not has_full_dir:
+            clean_telecom.insert(0, telecom_links[0])
+        if not has_searchable:
+            clean_telecom.append(telecom_links[1])
+        validated_links = clean_telecom
 
         answer_text = ai_result.get('answer', '')
         if not any(ext in answer_text for ext in ['2001', '2131', '2800', '2226']):
@@ -1814,10 +1956,11 @@ def query_gemini_ai(user_query, api_key):
     is_surgery_req = any(k in q_lower for k in ['surgery', 'surgical', 'operation', 'procedure', 'aruvai', 'sikitsai', 'அறுவை'])
 
     if is_pediatric_req and is_consent_req:
-        # Strictly prune non-pediatric consent forms from links
+        # Strictly prune non-pediatric consent forms and unrelated documents from links
         validated_links = [
             l for l in validated_links
-            if not (l.get('category') == 'Consent Forms' and not any(k in l.get('title', '').lower() for k in ['paediatric', 'pediatric', 'child']))
+            if not (any(k in l.get('title', '').lower() for k in ['surgery', 'procedure', 'blood', 'transfusion', 'dama', 'not willing', 'admission'])
+                    or ('consent' in (l.get('category', '') + l.get('title', '')).lower() and not any(k in l.get('title', '').lower() or k in l.get('url', '').lower() for k in ['paediatric', 'pediatric', 'child', 'consent.html', 'consent forms vault'])))
         ]
         # Ensure Paediatric Consent Form is present
         if not any('paediatric' in l.get('title', '').lower() or 'paedconsent' in l.get('url', '').lower() for l in validated_links):
@@ -1875,10 +2018,43 @@ def query_gemini_ai(user_query, api_key):
         s for s in ai_result.get('suggestions', [])
         if 'paperzero' not in s.lower() and 'paper.mapims' not in s.lower()
     ]
-    ai_result['links'] = [
-        l for l in validated_links
-        if 'paperzero' not in l.get('title', '').lower() and 'paper.mapims' not in l.get('url', '').lower()
-    ]
+    final_unique_links = []
+    seen_final_urls = set()
+    seen_final_fnames = set()
+    seen_final_titles = set()
+    seen_final_sem_keys = set()
+
+    for l in validated_links:
+        if 'paperzero' in l.get('title', '').lower() or 'paper.mapims' in l.get('url', '').lower():
+            continue
+        u = l.get('url', '').strip()
+        if not u:
+            continue
+        u_clean = urllib.parse.unquote(u.split('?')[0]).lower().strip()
+        fname = os.path.basename(u_clean) if u_clean.endswith('.pdf') else None
+        t_clean = re.sub(r'[^a-z0-9]', '', l.get('title', '').lower())
+        sem_key = get_semantic_doc_key(l.get('title', ''), u)
+
+        if u_clean in seen_final_urls:
+            continue
+        if fname and fname in seen_final_fnames:
+            continue
+        if t_clean and t_clean in seen_final_titles:
+            continue
+        if sem_key and sem_key in seen_final_sem_keys:
+            continue
+
+        seen_final_urls.add(u_clean)
+        if fname:
+            seen_final_fnames.add(fname)
+        if t_clean:
+            seen_final_titles.add(t_clean)
+        if sem_key:
+            seen_final_sem_keys.add(sem_key)
+
+        final_unique_links.append(l)
+
+    ai_result['links'] = final_unique_links
     return ai_result
 
 def generate_catalog_fallback_result(query, candidates=None):
@@ -1914,24 +2090,24 @@ def generate_catalog_fallback_result(query, candidates=None):
             suggestions = [f"{dept_label} Ext: {matched_dept['extensions'][0]['ext']}", f"{dept_label} Intercom Directory", "அவசர பிரிவு: 2001 / 2800"]
         else:
             answer = f"The intercom extension numbers for **{dept_label}**{floor_info} are: {', '.join(ext_strs)}. You can access the department directory below."
-            suggestions = [f"{dept_label} Ext: {matched_dept['extensions'][0]['ext']}", f"{dept_label} Intercom Directory", "Campus Directory PDF"]
+            suggestions = [f"{dept_label} Ext: {matched_dept['extensions'][0]['ext']}", f"{dept_label} Intercom Directory", "Campus Directory"]
 
         links = [
             {"title": f"{dept_label} Department Intercom Directory", "url": dept_url, "category": "Staff Directory", "badge": f"{dept_label} Directory"},
-            {"title": "Official Campus Intercom Directory PDF (Full Hospital)", "url": "http://192.168.101.75:3000/files/Intercom%20Directory.pdf", "category": "Staff Directory", "badge": "Full PDF"}
+            {"title": "Official Campus Intercom Directory (Full Hospital)", "url": "http://192.168.101.75/assets/sub%20files/intercom.html", "category": "Staff Directory", "badge": "Full Directory"}
         ]
         return {"answer": answer, "links": links, "suggestions": suggestions}
 
     if is_telecom_query and not matched_dept:
         if is_tamil:
-            answer = "மருத்துவமனை அவசர உதவி மற்றும் முக்கிய துறை தொலைபேசி எண்கள்: அவசர சிகிச்சை (Casualty): 2001 / 2002, ரத்த வங்கி (24/7): 2131, தீவிர சிகிச்சை (ICU): 2156, மெயின் கேட்: 2800, கணினி உதவி மையம் (IT): 2226 / 2228. அனைத்து துறை எண்களையும் அதிகாரப்பூர்வ PDF அல்லது தேடல் பட்டியலில் பார்க்கலாம்."
+            answer = "மருத்துவமனை அவசர உதவி மற்றும் முக்கிய துறை தொலைபேசி எண்கள்: அவசர சிகிச்சை (Casualty): 2001 / 2002, ரத்த வங்கி (24/7): 2131, தீவிர சிகிச்சை (ICU): 2156, மெயின் கேட்: 2800, கணினி உதவி மையம் (IT): 2226 / 2228. அனைத்து துறை எண்களையும் அதிகாரப்பூர்வ தொலைபேசி பட்டியல் அல்லது தேடல் பட்டியலில் பார்க்கலாம்."
             suggestions = ["கணினி IT பிரிவு: 2226 / 2228", "அவசர சிகிச்சை: 2001 / 2800", "ரத்த வங்கி Ext: 2131"]
         else:
-            answer = "Hospital emergency hotlines and departmental lines: Emergency Reception: 2001 / 2002, Blood Bank: 2131, ICU: 2156, Main Gate: 2800, IT Support: 2226 / 2228. Find all department extension numbers in the official Campus Intercom & Extension Directory PDF or searchable online list."
+            answer = "Hospital emergency hotlines and departmental lines: Emergency Reception: 2001 / 2002, Blood Bank: 2131, ICU: 2156, Main Gate: 2800, IT Support: 2226 / 2228. Find all department extension numbers in the official Campus Intercom & Extension Directory or searchable online list."
             suggestions = ["IT Intercom: 2226 / 2228", "Emergency Casualty: 2001 / 2800", "Blood Bank Ext: 2131"]
         links = [
-            {"title": "Campus Intercom & Extension Directory (Searchable List)", "url": "./intercom.html", "category": "Staff Directory", "badge": "Directory"},
-            {"title": "Official Campus Intercom Directory PDF (Full Hospital)", "url": "http://192.168.101.75:3000/files/Intercom%20Directory.pdf", "category": "Staff Directory", "badge": "Full PDF"}
+            {"title": "Campus Intercom & Extension Directory", "url": "http://192.168.101.75/assets/sub%20files/intercom.html", "category": "Staff Directory", "badge": "Official Directory"},
+            {"title": "Interactive Department Intercom List", "url": "./intercom.html", "category": "Staff Directory", "badge": "Directory"}
         ]
         return {"answer": answer, "links": links, "suggestions": suggestions}
 
@@ -1992,13 +2168,45 @@ def generate_catalog_fallback_result(query, candidates=None):
 
     top_item = candidates[0]
     links = []
-    for c in candidates[:4]:
+    seen_fb_urls = set()
+    seen_fb_fnames = set()
+    seen_fb_titles = set()
+    seen_fb_sem_keys = set()
+
+    for c in candidates:
+        u = c.get('url', '').strip()
+        if not u:
+            continue
+        u_clean = urllib.parse.unquote(u.split('?')[0]).lower().strip()
+        fname = os.path.basename(u_clean) if u_clean.endswith('.pdf') else None
+        t_clean = re.sub(r'[^a-z0-9]', '', c.get('title', '').lower())
+        sem_key = get_semantic_doc_key(c.get('title', ''), u)
+
+        if u_clean in seen_fb_urls:
+            continue
+        if fname and fname in seen_fb_fnames:
+            continue
+        if t_clean and t_clean in seen_fb_titles:
+            continue
+        if sem_key and sem_key in seen_fb_sem_keys:
+            continue
+
+        seen_fb_urls.add(u_clean)
+        if fname:
+            seen_fb_fnames.add(fname)
+        if t_clean:
+            seen_fb_titles.add(t_clean)
+        if sem_key:
+            seen_fb_sem_keys.add(sem_key)
+
         links.append({
             "title": c['title'],
             "url": c['url'],
             "category": c['category'],
             "badge": c.get('badge', 'PDF')
         })
+        if len(links) >= 4:
+            break
 
     is_tamil = any(ord(ch) >= 0x0B80 and ord(ch) <= 0x0BFF for ch in query) or any(
         k in query.lower() for k in ['aruvai', 'sikitsai', 'sigichai', 'oputhal', 'raththa', 'vidumurai', 'kattanam', 'sambalam', 'marunthu', 'kanini']
@@ -2009,10 +2217,10 @@ def generate_catalog_fallback_result(query, candidates=None):
     )
 
     if is_telecom_query:
-        answer = "Find hospital intercom extension numbers in the official Campus Intercom & Extension Directory PDF or searchable online list."
+        answer = "Find hospital intercom extension numbers in the official Campus Intercom & Extension Directory or searchable online list."
         links = [
-            {"title": "Campus Intercom & Extension Directory PDF", "url": "http://192.168.101.75:3000/files/Intercom Directory.pdf", "category": "Staff Directory", "badge": "Directory PDF"},
-            {"title": "Campus Intercom & Extension Directory (Searchable List)", "url": "./intercom.html", "category": "Staff Directory", "badge": "Directory"}
+            {"title": "Campus Intercom & Extension Directory", "url": "http://192.168.101.75/assets/sub%20files/intercom.html", "category": "Staff Directory", "badge": "Official Directory"},
+            {"title": "Interactive Department Intercom List", "url": "./intercom.html", "category": "Staff Directory", "badge": "Directory"}
         ]
         suggestions = ["IT Intercom: 2226 / 2228", "Emergency Casualty: 2001 / 2800", "Blood Bank Ext: 2131"]
         return {"answer": answer, "links": links, "suggestions": suggestions}
@@ -2121,10 +2329,10 @@ def generate_catalog_fallback_result(query, candidates=None):
                 "badge": f"{dept_label} Directory"
             },
             {
-                "title": "Official Campus Intercom Directory PDF (Full Hospital)",
-                "url": "http://192.168.101.75:3000/files/Intercom%20Directory.pdf",
+                "title": "Official Campus Intercom Directory (Full Hospital)",
+                "url": "http://192.168.101.75/assets/sub%20files/intercom.html",
                 "category": "Staff Directory",
-                "badge": "Full PDF"
+                "badge": "Full Directory"
             }
         ]
         ext_summary = ", ".join([f"{e['desc']}: {e['ext']}" for e in matched_dept['extensions'][:4]])
@@ -2166,9 +2374,45 @@ def generate_catalog_fallback_result(query, candidates=None):
         else:
             suggestions = ["Hospital Forms Vault", "Clinical SOPs", "Campus Directory"]
 
+    final_unique_links = []
+    seen_final_urls = set()
+    seen_final_fnames = set()
+    seen_final_titles = set()
+    seen_final_sem_keys = set()
+
+    for l in links:
+        if 'paperzero' in l.get('title', '').lower() or 'paper.mapims' in l.get('url', '').lower():
+            continue
+        u = l.get('url', '').strip()
+        if not u:
+            continue
+        u_clean = urllib.parse.unquote(u.split('?')[0]).lower().strip()
+        fname = os.path.basename(u_clean) if u_clean.endswith('.pdf') else None
+        t_clean = re.sub(r'[^a-z0-9]', '', l.get('title', '').lower())
+        sem_key = get_semantic_doc_key(l.get('title', ''), u)
+
+        if u_clean in seen_final_urls:
+            continue
+        if fname and fname in seen_final_fnames:
+            continue
+        if t_clean and t_clean in seen_final_titles:
+            continue
+        if sem_key and sem_key in seen_final_sem_keys:
+            continue
+
+        seen_final_urls.add(u_clean)
+        if fname:
+            seen_final_fnames.add(fname)
+        if t_clean:
+            seen_final_titles.add(t_clean)
+        if sem_key:
+            seen_final_sem_keys.add(sem_key)
+
+        final_unique_links.append(l)
+
     return {
         "answer": answer,
-        "links": links,
+        "links": final_unique_links,
         "suggestions": suggestions
     }
 

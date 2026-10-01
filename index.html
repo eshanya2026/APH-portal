@@ -3029,7 +3029,7 @@
       { title: 'Nursing Manual PDF', category: 'Manual', url: 'http://192.168.101.75:3000/files/nursingmanual.pdf', external: true },
       { title: 'Official Email & Staff Directory PDF', category: 'Directory', url: 'http://192.168.101.75:3000/files/email.pdf', external: true },
       { title: 'Campus Intercom & Extension Directory (Searchable List)', category: 'Directory', url: './intercom.html', external: true },
-      { title: 'Campus Intercom & Extension Directory PDF', category: 'Directory', url: './Intercom%20Directory.pdf', external: true },
+      { title: 'Campus Intercom & Extension Directory', category: 'Directory', url: 'http://192.168.101.75/assets/sub%20files/intercom.html', external: true },
       { title: 'Emergency & Casualty Intercom Extensions (2001 / 2002 / 2800)', category: 'Emergency Telephony', url: './intercom.html', external: true },
       { title: 'Blood Bank 24/7 Intercom Extensions (2131 / 2132)', category: 'Emergency Telephony', url: './intercom.html', external: true },
       { title: 'ICU & Critical Care Intercom Extensions (2156 / 2163 / 2160)', category: 'Emergency Telephony', url: './intercom.html', external: true },
@@ -3742,6 +3742,50 @@
       return { isSection: false };
     }
 
+    function getSemanticDocKey(title, url) {
+      if (!title && !url) return '';
+      const tLower = (title || '').toLowerCase();
+      let uLower = '';
+      try {
+        uLower = decodeURIComponent(url || '').toLowerCase().split('?')[0].split('#')[0].trim();
+      } catch (e) {
+        uLower = (url || '').toLowerCase().split('?')[0].split('#')[0].trim();
+      }
+      const fname = uLower.endsWith('.pdf') ? uLower.split('/').pop() : '';
+
+      // 1. HR Manual / HRM
+      if (tLower.includes('human resource manual') || tLower.includes('human resources manual') || tLower.includes('human resource management') || tLower.includes('(hrm)') || /\bhrm\b/.test(fname)) {
+        return 'doc_human_resources_manual';
+      }
+
+      // 2. PMS / Performance Management Policy
+      if (tLower.includes('performance management system') || tLower.includes('pms policy') || tLower.includes('pms document') || /\bpms\b/.test(fname)) {
+        return 'doc_pms_policy';
+      }
+
+      // 3. Paediatric Consent
+      if (uLower.includes('paedconsent') || ((tLower.includes('paediatric') || tLower.includes('pediatric')) && tLower.includes('consent'))) {
+        return 'doc_paediatric_consent';
+      }
+
+      // 4. Blood Transfusion Consent
+      if ((tLower.includes('blood') || tLower.includes('transfusion')) && tLower.includes('consent')) {
+        return 'doc_blood_transfusion_consent';
+      }
+
+      // 5. Departmental Manuals & Policies (e.g. 5th edition vs 6th edition)
+      let cleanedT = tLower.replace(/\(.*?\)/g, ' ');
+      cleanedT = cleanedT.replace(/\b(nabh|5th|6th|edition|version|final|manual|sops|sop|dept|department|policy|pdf|new)\b/g, ' ');
+      cleanedT = cleanedT.replace(/\bgen surgery\b/g, 'general surgery').replace(/\bgensurgery\b/g, 'generalsurgery');
+      cleanedT = cleanedT.replace(/[^a-z0-9]/g, '').trim();
+
+      if ((uLower.includes('nabh') || uLower.includes('manual') || uLower.includes('sop')) && cleanedT) {
+        return 'dept_manual_' + cleanedT;
+      }
+
+      return '';
+    }
+
     // Live search input handler with Tanglish / Tamil Bilingual support
     function handleSearchInput(e) {
       const query = e.target.value.trim();
@@ -3828,7 +3872,7 @@
 
       const isNotWillingQuery = qLower.includes('not willing') || qLower.includes('refusal') || qLower.includes('maruppu') || qLower.includes('மறுப்பு');
 
-      const scoredMatches = searchIndex.map(item => {
+      const rawMatches = searchIndex.map(item => {
         const titleLower = item.title.toLowerCase();
         const catLower = item.category.toLowerCase();
 
@@ -4042,9 +4086,34 @@
         return { item, score: hasHit ? score : -1 };
       })
       .filter(entry => entry.score > 0)
-      .sort((a, b) => b.score - a.score)
-      .slice(0, 6)
-      .map(entry => entry.item);
+      .sort((a, b) => b.score - a.score);
+
+      const scoredMatches = [];
+      const seenDdUrls = new Set();
+      const seenDdFnames = new Set();
+      const seenDdTitles = new Set();
+      const seenDdSemKeys = new Set();
+
+      for (const entry of rawMatches) {
+        const item = entry.item;
+        const u = (item.url || '').split('?')[0].trim().toLowerCase();
+        const fname = u.endsWith('.pdf') ? u.split('/').pop().toLowerCase() : null;
+        const t = (item.title || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+        const semKey = getSemanticDocKey(item.title, item.url);
+
+        if (seenDdUrls.has(u)) continue;
+        if (fname && seenDdFnames.has(fname)) continue;
+        if (t && seenDdTitles.has(t)) continue;
+        if (semKey && seenDdSemKeys.has(semKey)) continue;
+
+        seenDdUrls.add(u);
+        if (fname) seenDdFnames.add(fname);
+        if (t) seenDdTitles.add(t);
+        if (semKey) seenDdSemKeys.add(semKey);
+
+        scoredMatches.push(item);
+        if (scoredMatches.length >= 6) break;
+      }
 
       let html = '';
 
@@ -4256,7 +4325,7 @@
             const models = ['gemini-2.5-flash-lite', 'gemini-flash-latest', 'gemini-3.6-flash'];
             const systemPrompt = `You are the AI Search Assistant for Adhiparasakthi Hospitals & Research Institute (APH) Intranet Portal.
 Answer concisely in 2-3 sentences. Recommend matching hospital systems (AOSTA HIS, PruWorks HRMS, Medsynapse PACS, MRD Portal, Ticketing Desk), forms (Surgery Consent English/Tamil, Pediatric Consent, ICU Checklist, SBAR Handover, ADR form, Narcotic Indent), tariffs, and emergency extensions (Emergency Reception 2001, Main Gate 2800, ICU 2156, Blood Bank 2131).
-CRITICAL: When asked for IT department intercom or extension numbers, you MUST state the numbers: IT Hardware Support (2226), IT Software Support (2228), IT Manager (2227), and DGM & IT Head (2225), and recommend the Campus Intercom & Extension Directory PDF (http://192.168.101.75:3000/files/Intercom Directory.pdf).
+CRITICAL: When asked for IT department intercom or extension numbers, you MUST state the numbers: IT Hardware Support (2226), IT Software Support (2228), IT Manager (2227), and DGM & IT Head (2225), and recommend the Campus Intercom & Extension Directory (http://192.168.101.75/assets/sub%20files/intercom.html).
 CRITICAL: All hospital document PDFs are hosted strictly at http://192.168.101.75:3000/files/ - NEVER use mapimshis.com for PDF files.
 Respond strictly in JSON format:
 {
@@ -4392,7 +4461,7 @@ Respond strictly in JSON format:
 
       const isNotWillingQuery = qLower.includes('not willing') || qLower.includes('refusal') || qLower.includes('maruppu') || qLower.includes('மறுப்பு');
 
-      const scoredMatches = searchIndex.map(item => {
+      const rawMatches = searchIndex.map(item => {
         const titleLower = item.title.toLowerCase();
         const catLower = item.category.toLowerCase();
 
@@ -4643,9 +4712,34 @@ Respond strictly in JSON format:
         return { item, score: hasHit ? score : -1 };
       })
       .filter(entry => entry.score > 0)
-      .sort((a, b) => b.score - a.score)
-      .slice(0, 6)
-      .map(entry => entry.item);
+      .sort((a, b) => b.score - a.score);
+
+      const scoredMatches = [];
+      const seenFbUrls = new Set();
+      const seenFbFnames = new Set();
+      const seenFbTitles = new Set();
+      const seenFbSemKeys = new Set();
+
+      for (const entry of rawMatches) {
+        const item = entry.item;
+        const u = (item.url || '').split('?')[0].trim().toLowerCase();
+        const fname = u.endsWith('.pdf') ? u.split('/').pop().toLowerCase() : null;
+        const t = (item.title || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+        const semKey = getSemanticDocKey(item.title, item.url);
+
+        if (seenFbUrls.has(u)) continue;
+        if (fname && seenFbFnames.has(fname)) continue;
+        if (t && seenFbTitles.has(t)) continue;
+        if (semKey && seenFbSemKeys.has(semKey)) continue;
+
+        seenFbUrls.add(u);
+        if (fname) seenFbFnames.add(fname);
+        if (t) seenFbTitles.add(t);
+        if (semKey) seenFbSemKeys.add(semKey);
+
+        scoredMatches.push(item);
+        if (scoredMatches.length >= 6) break;
+      }
 
       const CLIENT_DEPT_INTERCOM = {
         'billing': { dept: 'Billing', exts: 'Billing Manager: 2610, IP Billing: 2611, 2612, 2613' },
@@ -4730,12 +4824,12 @@ Respond strictly in JSON format:
       let answerText = '';
       if (matchedClientIntercom && isTelecomQuery) {
         answerText = isBilingual
-          ? `**${matchedClientIntercom.dept}** துறையின் அதிகாரப்பூர்வ தொலைபேசி / இன்டர்காம் இணைப்பு எண்கள்: **${matchedClientIntercom.exts}**. முழுமையான துறை தொடர்பு பட்டியலை கீழே உள்ள PDF மூலம் பார்க்கலாம்.`
-          : `The intercom extension numbers for **${matchedClientIntercom.dept}** are: **${matchedClientIntercom.exts}**. You can download the filtered department directory PDF below.`;
+          ? `**${matchedClientIntercom.dept}** துறையின் அதிகாரப்பூர்வ தொலைபேசி / இன்டர்காம் இணைப்பு எண்கள்: **${matchedClientIntercom.exts}**. முழுமையான துறை தொடர்பு பட்டியலை கீழே உள்ள இணைப்பில் பார்க்கலாம்.`
+          : `The intercom extension numbers for **${matchedClientIntercom.dept}** are: **${matchedClientIntercom.exts}**. You can access the dedicated department directory or full campus directory below.`;
       } else if (isTelecomQuery) {
         answerText = isBilingual
-          ? `மருத்துவமனை அவசர உதவி மற்றும் முக்கிய துறை தொலைபேசி எண்கள்: அவசர சிகிச்சை (Casualty): 2001 / 2002, ரத்த வங்கி (24/7): 2131, தீவிர சிகிச்சை (ICU): 2156, மெயின் கேட்: 2800, கணினி உதவி மையம் (IT): 2226 / 2228. அனைத்து துறை எண்களையும் அதிகாரப்பூர்வ PDF அல்லது தேடல் பட்டியலில் பார்க்கலாம்.`
-          : `Find hospital intercom extension numbers in the official Campus Intercom & Extension Directory PDF or searchable online list.`;
+          ? `மருத்துவமனை அவசர உதவி மற்றும் முக்கிய துறை தொலைபேசி எண்கள்: அவசர சிகிச்சை (Casualty): 2001 / 2002, ரத்த வங்கி (24/7): 2131, தீவிர சிகிச்சை (ICU): 2156, மெயின் கேட்: 2800, கணினி உதவி மையம் (IT): 2226 / 2228. அனைத்து துறை எண்களையும் அதிகாரப்பூர்வ தொடர்பு பட்டியல் அல்லது தேடல் பட்டியலில் பார்க்கலாம்.`
+          : `Find hospital intercom extension numbers in the official Campus Intercom & Extension Directory or searchable online list.`;
       } else if (isApplyLeaveIntent) {
         answerText = isBilingual
           ? `விடுமுறை விண்ணப்பிக்க (Apply Leave) அல்லது உங்கள் விடுப்பு நிலவரத்தைப் பார்க்க **PruWorks HRMS** போர்ட்டலில் (https://mapims-hrms.tecvinesolutions.com) உள்நுழையவும். பணியாளர் வருகை, விடுமுறை விண்ணப்பம் மற்றும் ஒப்புதல் அனைத்தும் PruWorks மூலமாக செய்யப்படுகிறது. நேரடி படிவங்களுக்கு மனிதவளத் துறையை (Admin Office, Ext: 2173 / 2169) தொடர்பு கொள்ளலாம்.`
@@ -4846,10 +4940,10 @@ Respond strictly in JSON format:
             badge: `${matchedClientIntercom.dept} Directory`
           },
           {
-            title: 'Official Campus Intercom Directory PDF (Full Hospital)',
-            url: 'http://192.168.101.75:3000/files/Intercom%20Directory.pdf',
+            title: 'Official Campus Intercom Directory (Full Hospital)',
+            url: 'http://192.168.101.75/assets/sub%20files/intercom.html',
             category: 'Staff Directory',
-            badge: 'Full PDF'
+            badge: 'Full Directory'
           }
         ];
       } else if (isTelecomQuery) {
@@ -4861,10 +4955,10 @@ Respond strictly in JSON format:
             badge: 'Directory'
           },
           {
-            title: 'Official Campus Intercom Directory PDF (Full Hospital)',
-            url: 'http://192.168.101.75:3000/files/Intercom%20Directory.pdf',
+            title: 'Official Campus Intercom Directory (Full Hospital)',
+            url: 'http://192.168.101.75/assets/sub%20files/intercom.html',
             category: 'Staff Directory',
-            badge: 'Full PDF'
+            badge: 'Full Directory'
           }
         ];
       }
@@ -4879,7 +4973,7 @@ Respond strictly in JSON format:
       } else if (isStoreQuery) {
         suggestions = ['Purchase Process PDF', 'Inventory Stock Details 2024', 'Drug Stores Stock Details', 'Purchase Stores Ext: 2701'];
       } else if (matchedClientIntercom && isTelecomQuery) {
-        suggestions = [`${matchedClientIntercom.dept} Directory PDF`, `${matchedClientIntercom.dept} Extensions`, 'Campus Directory PDF'];
+        suggestions = [`${matchedClientIntercom.dept} Intercom Directory`, `${matchedClientIntercom.dept} Extensions`, 'Official Campus Intercom Directory'];
       } else if (isTelecomQuery) {
         suggestions = ['IT Intercom: 2226 / 2228', 'Emergency Casualty: 2001 / 2800', 'Blood Bank Ext: 2131'];
       } else if (isHrQuery) {
@@ -4893,9 +4987,36 @@ Respond strictly in JSON format:
         }
       }
 
+      // Deduplicate finalLinks to guarantee zero repetition
+      const dedupedFinalLinks = [];
+      const seenFinalUrls = new Set();
+      const seenFinalFnames = new Set();
+      const seenFinalTitles = new Set();
+      const seenFinalSemKeys = new Set();
+
+      for (const l of finalLinks) {
+        if (!l || !l.url) continue;
+        const u = (l.url || '').split('?')[0].trim().toLowerCase();
+        const fname = u.endsWith('.pdf') ? u.split('/').pop().toLowerCase() : null;
+        const t = (l.title || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+        const semKey = getSemanticDocKey(l.title, l.url);
+
+        if (seenFinalUrls.has(u)) continue;
+        if (fname && seenFinalFnames.has(fname)) continue;
+        if (t && seenFinalTitles.has(t)) continue;
+        if (semKey && seenFinalSemKeys.has(semKey)) continue;
+
+        seenFinalUrls.add(u);
+        if (fname) seenFinalFnames.add(fname);
+        if (t) seenFinalTitles.add(t);
+        if (semKey) seenFinalSemKeys.add(semKey);
+
+        dedupedFinalLinks.push(l);
+      }
+
       return {
         answer: answerText,
-        links: finalLinks,
+        links: dedupedFinalLinks,
         suggestions: suggestions
       };
     }
@@ -4971,8 +5092,46 @@ Respond strictly in JSON format:
         </div>
       `;
 
+      // Multi-attribute deduplication: eliminate repeated PDF files, canonical URLs, and duplicate titles
+      const uniqueLinks = [];
+      const seenRenderUrls = new Set();
+      const seenRenderFnames = new Set();
+      const seenRenderTitles = new Set();
+      const seenRenderSemKeys = new Set();
+
+      links.forEach(link => {
+        if (!link || !link.url) return;
+        let targetUrl = (link.url || '#').trim();
+        // Sanitize any hallucinated domain: Hospital files are strictly on 192.168.101.75:3000/files/
+        if (targetUrl.includes('mapimshis.com') && (targetUrl.includes('files/') || targetUrl.endsWith('.pdf'))) {
+          const fname = targetUrl.split('/').pop();
+          targetUrl = `http://192.168.101.75:3000/files/${fname}`;
+        }
+
+        const cleanUrl = decodeURIComponent(targetUrl).split('?')[0].split('#')[0].trim().toLowerCase();
+        const isPdf = cleanUrl.endsWith('.pdf') || (link.title && link.title.includes('PDF'));
+        const pdfFname = isPdf ? cleanUrl.split('/').pop().toLowerCase() : null;
+        const cleanTitle = (link.title || '').toLowerCase().replace(/[^a-z0-9]/g, '').trim();
+        const semKey = getSemanticDocKey(link.title, targetUrl);
+
+        if (seenRenderUrls.has(cleanUrl)) return;
+        if (pdfFname && seenRenderFnames.has(pdfFname)) return;
+        if (cleanTitle && seenRenderTitles.has(cleanTitle)) return;
+        if (semKey && seenRenderSemKeys.has(semKey)) return;
+
+        seenRenderUrls.add(cleanUrl);
+        if (pdfFname) seenRenderFnames.add(pdfFname);
+        if (cleanTitle) seenRenderTitles.add(cleanTitle);
+        if (semKey) seenRenderSemKeys.add(semKey);
+
+        uniqueLinks.push({
+          ...link,
+          url: targetUrl
+        });
+      });
+
       // Matching Recommended Links
-      if (links.length > 0) {
+      if (uniqueLinks.length > 0) {
         html += `
           <div>
             <div class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400 mb-2 flex items-center gap-1.5">
@@ -4982,13 +5141,8 @@ Respond strictly in JSON format:
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
         `;
 
-        links.forEach(link => {
-          let targetUrl = (link.url || '#').trim();
-          // Sanitize any hallucinated domain: Hospital files are strictly on 192.168.101.75:3000/files/
-          if (targetUrl.includes('mapimshis.com') && (targetUrl.includes('files/') || targetUrl.endsWith('.pdf'))) {
-            const fname = targetUrl.split('/').pop();
-            targetUrl = `http://192.168.101.75:3000/files/${fname}`;
-          }
+        uniqueLinks.forEach(link => {
+          let targetUrl = link.url;
           const badgeText = link.badge || link.category || 'Portal';
           const isPdf = targetUrl && (targetUrl.endsWith('.pdf') || (link.title && link.title.includes('PDF')));
           const onPage = getOnPageAction(targetUrl, link.title);
