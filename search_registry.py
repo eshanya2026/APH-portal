@@ -306,6 +306,129 @@ RESOURCE_REGISTRY = {
         ],
         "negative_aliases": ["ticketing", "job orders"]
     },
+    "FORM_ITEM_CREATION": {
+        "id": "FORM_ITEM_CREATION",
+        "title": "Item Creation in HIS",
+        "url": "http://192.168.101.75:3000/files/Item%20Creation.pdf",
+        "category": "IT Forms",
+        "badge": "IT Form",
+        "intent_type": SearchIntent.OPEN_FORM,
+        "description": "Master catalogue addition form for pharmacy drugs, lab tests, and hospital billing tariffs in HIS.",
+        "description_ta": "HIS அமைப்பில் புதிய மருந்துகள் மற்றும் பரிசோதனை கட்டண விவரங்களை சேர்க்கும் படிவம்.",
+        "aliases": [
+            "item creation", "item creation in his", "pharmacy item addition", "item creation form",
+            "marunthu porul his addition", "பொருள் உருவாக்கம்", "மருந்து சேர்ப்பு படிவம்"
+        ],
+        "negative_aliases": []
+    },
+    "FORM_FOOD_TOKEN": {
+        "id": "FORM_FOOD_TOKEN",
+        "title": "Food Token Requisition Form",
+        "url": "http://192.168.101.75:3000/files/FOOD%20TOKEN%20REQUISITION%20FORM.pdf",
+        "category": "Common Forms",
+        "badge": "Common Form",
+        "intent_type": SearchIntent.OPEN_FORM,
+        "description": "Official requisition for hospital staff, duty doctors, and inpatient attender food tokens.",
+        "description_ta": "பணியாளர்கள் மற்றும் மருத்துவர்களுக்கான உணவு டோக்கன் கோரிக்கை படிவம்.",
+        "aliases": ["food token", "food token requisition form", "food token form", "diet token", "unavu token", "சாப்பாடு டோக்கன்", "உணவு டோக்கன்"],
+        "negative_aliases": []
+    },
+    "FORM_SBAR": {
+        "id": "FORM_SBAR",
+        "title": "Handing Over SBAR Record",
+        "url": "http://192.168.101.75:3000/files/HANDING%20OVER%20SBAR.pdf",
+        "category": "Common Forms",
+        "badge": "Clinical Form",
+        "intent_type": SearchIntent.OPEN_FORM,
+        "description": "Structured Situation-Background-Assessment-Recommendation (SBAR) clinical handover protocol sheet.",
+        "description_ta": "நர்சிங் மற்றும் மருத்துவ ஷிப்ட் மாற்றத்திற்கான SBAR நோயாளி ஒப்படைப்பு படிவம்.",
+        "aliases": ["handing over sbar record", "sbar sheet", "sbar record", "handing over sbar", "sbar"],
+        "negative_aliases": []
+    },
+    "FORM_WARD_SHIFTING": {
+        "id": "FORM_WARD_SHIFTING",
+        "title": "ICU Checklist - Ward Shifting",
+        "url": "http://192.168.101.75:3000/files/ICU%20CHECKLIST%20-%20WARD%20SHIFTING.pdf",
+        "category": "Common Forms",
+        "badge": "Clinical Form",
+        "intent_type": SearchIntent.OPEN_FORM,
+        "description": "Patient safety checklist for shifting patients between intensive care units and general wards.",
+        "description_ta": "தீவிர சிகிச்சை பிரிவிலிருந்து வார்டுக்கு நோயாளியை மாற்றும் சரிபார்ப்பு பட்டியல்.",
+        "aliases": ["icu checklist ward shifting", "ward shifting form", "ward shifting", "patient transfer ward", "வார்டு மாற்றம்"],
+        "negative_aliases": []
+    },
+    "FORM_ICU_CASESHEET": {
+        "id": "FORM_ICU_CASESHEET",
+        "title": "ICU Casesheet Checklist",
+        "url": "http://192.168.101.75:3000/files/ICU%20Casesheet%20Checklist.pdf",
+        "category": "Common Forms",
+        "badge": "Clinical Form",
+        "intent_type": SearchIntent.OPEN_FORM,
+        "description": "Comprehensive clinical casesheet audit checklist for intensive care units and NABH compliance.",
+        "description_ta": "தீவிர சிகிச்சை பிரிவு கேஸ் ஷீட் தணிக்கை சரிபார்ப்பு பட்டியல்.",
+        "aliases": ["icu casesheet checklist", "icu casesheet", "icu audit checklist"],
+        "negative_aliases": ["ward shifting"]
+    },
+    "FORM_MEWS": {
+        "id": "FORM_MEWS",
+        "title": "MEWS Score Sheet",
+        "url": "http://192.168.101.75:3000/files/MEWS%20SCORE%20SHEET.pdf",
+        "category": "Common Forms",
+        "badge": "Clinical Form",
+        "intent_type": SearchIntent.OPEN_FORM,
+        "description": "Modified Early Warning Score (MEWS) clinical monitoring chart for early detection of patient deterioration.",
+        "description_ta": "நோயாளி உடல்நிலை கண்காணிப்பு MEWS மதிப்பீட்டு தாள்.",
+        "aliases": ["mews score sheet", "mews score", "mews sheet", "mews"],
+        "negative_aliases": []
+    },
+    "FORM_EMERGENCY_TRANSFER": {
+        "id": "FORM_EMERGENCY_TRANSFER",
+        "title": "Emergency Patient Transfer Record",
+        "url": "http://192.168.101.75:3000/files/EMERGENCY%20PATIENT%20TRANSFER%20RECORD.pdf",
+        "category": "Common Forms",
+        "badge": "Clinical Form",
+        "intent_type": SearchIntent.OPEN_FORM,
+        "description": "Documentation record for urgent clinical transfers, ambulance transport, and inter-facility referrals.",
+        "description_ta": "அவசர நோயாளி இடமாற்ற ஆவணப் பதிவு படிவம்.",
+        "aliases": ["emergency patient transfer record", "patient transfer record", "emergency transfer"],
+        "negative_aliases": []
+    },
+    "DOC_HOLIDAYS_2026": {
+        "id": "DOC_HOLIDAYS_2026",
+        "title": "List of Holidays for the Year 2026",
+        "url": "http://192.168.101.75:3000/files/LIST%20OF%20HOLIDAYS%20FOR%20THE%20YEAR%202026.pdf",
+        "category": "HR Circulars",
+        "badge": "Circular",
+        "intent_type": SearchIntent.FIND_DOCUMENT,
+        "description": "Official institutional approved holiday calendar for the academic and hospital calendar year 2026.",
+        "description_ta": "2026 ஆம் ஆண்டிற்கான அதிகாரப்பூர்வ மருத்துவமனை மற்றும் கல்லூரி விடுமுறை நாட்கள் பட்டியல்.",
+        "aliases": ["list of holidays 2026", "holidays 2026", "holiday calendar 2026", "hospital holidays 2026", "விடுமுறை பட்டியல் 2026"],
+        "negative_aliases": []
+    },
+    "DIR_CIRCULARS": {
+        "id": "DIR_CIRCULARS",
+        "title": "APH Recent Circulars & Office Orders",
+        "url": "./recent circular.html",
+        "category": "Circulars",
+        "badge": "Notice Hub",
+        "intent_type": SearchIntent.FIND_DIRECTORY,
+        "description": "Latest institutional office orders, administration circulars, and official memos.",
+        "description_ta": "மருத்துவமனை நிர்வாகத்தின் சமீபத்திய சுற்றறிக்கைகள் மற்றும் அறிவிப்புகள்.",
+        "aliases": ["recent circulars", "recent circular", "circulars", "office orders", "latest notices", "சுற்றறிக்கை"],
+        "negative_aliases": []
+    },
+    "DIR_FORMS_HUB": {
+        "id": "DIR_FORMS_HUB",
+        "title": "Hospital Forms Vault",
+        "url": "./commonforms.html",
+        "category": "Forms Vault",
+        "badge": "Portal Hub",
+        "intent_type": SearchIntent.NAVIGATE_SECTION,
+        "description": "Complete digital repository of all departmental, clinical, and administrative forms.",
+        "description_ta": "மருத்துவமனை அனைத்து படிவங்களின் மையக் களஞ்சியம்.",
+        "aliases": ["where is the forms section", "forms hub", "hospital forms vault", "forms vault", "forms section", "all forms"],
+        "negative_aliases": []
+    },
 
     # Verified Clinical Governance & Committee Directory
     "DIR_COMMITTEES": {
@@ -450,11 +573,24 @@ MULTILINGUAL_SYNONYMS = {
 # =========================================================================
 # 2. INTENT CLASSIFIER & QUERY NORMALIZER
 # =========================================================================
+TYPO_FIXES = {
+    'opn': 'open',
+    'hiss': 'his',
+    'foam': 'form',
+    'foarm': 'form',
+    'inercom': 'intercom',
+    'leavu': 'leave',
+    'vinnapam': 'vinnappam',
+    'vidumura': 'vidumurai',
+    'rajinamaa': 'rajinama',
+}
+
 def clean_and_tokenize(text):
     if not text:
         return set()
     cleaned = re.sub(r'[^\w\s\u0B80-\u0BFF]', ' ', text.lower())
-    return set(cleaned.split())
+    raw_tokens = cleaned.split()
+    return {TYPO_FIXES.get(t, t) for t in raw_tokens}
 
 def expand_query_tokens(tokens, raw_text=""):
     expanded = set(tokens)
@@ -479,17 +615,18 @@ def classify_search_intent(query):
     FIND_COMMITTEE, FIND_DIRECTORY, NAVIGATE_SECTION, UNKNOWN.
     """
     q_lower = query.lower().strip()
+    q_norm = " ".join([TYPO_FIXES.get(w, w) for w in q_lower.replace("-", " ").split()])
     tokens = clean_and_tokenize(q_lower)
 
     # 1. Committee Search
-    if any(k in q_lower for k in [
+    if any(k in q_norm for k in [
         "committee", "committees", "charter", "charters", "mom", "minutes of meeting",
         "governance", "குழு", "கூட்ட அறிக்கை", "meeting minutes"
     ]):
         return SearchIntent.FIND_COMMITTEE
 
     # 2. Telephony / Intercom Directory
-    if any(k in q_lower for k in [
+    if any(k in q_norm for k in [
         "intercom", "inercom", "extension", "ext", "exts", "phone", "telephone",
         "call", "calling", "dial", "hotline", "tholaipesi", "தொலைபேசி", "இன்டர்காம்",
         "எக்ஸ்டென்ஷன்", "இணைப்பு"
@@ -497,7 +634,7 @@ def classify_search_intent(query):
         return SearchIntent.FIND_DIRECTORY
 
     # 3. Resignation / Relieving Intent
-    if any(k in q_lower for k in [
+    if any(k in q_norm for k in [
         "resignation", "resign", "relieving", "notice period", "exit clearance",
         "no dues", "nodues", "rajinama", "raajinaama", "பணி விலகல்", "ராஜினாமா"
     ]):
@@ -505,34 +642,32 @@ def classify_search_intent(query):
 
     # 4. Form Requisition Intent (Explicit request for PDF / form to fill)
     is_form_word = bool(tokens & {"form", "forms", "padivam", "படிவம்", "vinnappam", "விண்ணப்பம்", "requisition"})
-    is_creation_intent = any(k in q_lower for k in [
+    is_creation_intent = any(k in q_norm for k in [
         "user creation", "doctor id", "item creation", "id creation", "account creation",
         "access venum", "access vendum", "creation in his"
     ])
-    if (is_form_word or is_creation_intent) and not any(k in q_lower for k in ["open pacs", "open mrd", "open hrms"]):
-        # Check if user specifically requested an app vs form
-        if q_lower in ["open his form", "his form", "wifi form", "printer request form", "system request form"] or is_creation_intent:
+    if (is_form_word or is_creation_intent) and not any(k in q_norm for k in ["open pacs", "open mrd", "open hrms"]):
+        if q_norm in ["open his form", "his form", "wifi form", "printer request form", "system request form"] or is_creation_intent:
             return SearchIntent.OPEN_FORM
 
     # 5. Core Application Launch Intent
-    # e.g., "open his", "his login enga", "ஹெச்ஐஎஸ் திற", "open hrms", "open pacs", "open mrd"
-    is_app_keyword = any(k in q_lower for k in [
+    is_app_keyword = any(k in q_norm for k in [
         "his", "aosta", "backbone", "hrms", "pruworks", "pacs", "medsynapse",
         "mrd", "mhc", "master health", "lineloom", "barcode", "counselling",
         "ஹெச்ஐஎஸ்", "ஹிஸ்"
-    ])
-    is_launch_action = any(k in q_lower for k in [
+    ]) or bool(tokens & {"his", "hrms", "pacs", "mrd", "mhc", "lineloom"})
+    is_launch_action = any(k in q_norm for k in [
         "open", "launch", "login", "portal", "workstation", "viewer", "software",
         "app", "enga", "yenga", "thira", "திற", "திறக்கவும்", "உள்நுழைவு", "லாகின்",
         "paakanum", "பார்க்க"
-    ]) or "apply leave" in q_lower or "leave apply" in q_lower
+    ]) or "apply leave" in q_norm or "leave apply" in q_norm
 
-    if is_app_keyword and (is_launch_action or q_lower in ["his", "hrms", "pacs", "mrd", "mhc", "lineloom"]):
+    if is_app_keyword and (is_launch_action or q_norm in ["his", "hrms", "pacs", "mrd", "mhc", "lineloom"]):
         if not is_form_word and not is_creation_intent:
             return SearchIntent.OPEN_APPLICATION
 
     # 6. Clinical Manual / SOP / Guideline Search
-    if any(k in q_lower for k in [
+    if any(k in q_norm for k in [
         "manual", "sop", "sops", "guideline", "guidelines", "protocol", "policy", "policies",
         "infection control", "nabh", "hand hygiene", "sterilization", "sbar"
     ]):
@@ -549,74 +684,128 @@ def resolve_exact_registered_resource(query, intent):
     Returns matched resource dict or None.
     """
     q_lower = query.lower().strip()
+    q_norm = " ".join([TYPO_FIXES.get(w, w) for w in q_lower.replace("-", " ").split()])
     tokens = clean_and_tokenize(q_lower)
 
-    # 1. HIS Application vs HIS Form Disambiguation
+    # 1. Wi-Fi Form & Network (Check BEFORE generic HIS access)
+    if any(k in q_norm for k in ["wifi", "wi fi", "wireless", "வைஃபை", "internet connection", "laptop wifi"]):
+        if any(k in q_norm for k in ["form", "foam", "request", "venum", "vendum", "permission", "application", "படிவம்", "கோரிக்கை"]) or intent == SearchIntent.OPEN_FORM:
+            return RESOURCE_REGISTRY["FORM_WIFI"]
+
+    # 2. Item Creation in HIS (Check BEFORE generic HIS)
+    if any(k in q_norm for k in ["item creation", "pharmacy item addition", "marunthu porul his", "மருந்து சேர்ப்பு", "பொருள் உருவாக்கம்"]):
+        return RESOURCE_REGISTRY["FORM_ITEM_CREATION"]
+
+    # 3. Doctor ID Creation in HIS (Check BEFORE generic HIS)
+    if any(k in q_norm for k in ["doctor id", "doctor name", "maruthuvar id", "மருத்துவர் ஐடி", "மருத்துவர் பெயர்"]):
+        return RESOURCE_REGISTRY["FORM_DOCTOR_ID"]
+
+    # 4. HIS Application vs HIS Form Disambiguation
     if (
-        "his" in tokens or "aosta" in q_lower or "backbone" in q_lower or
-        "ஹெச்ஐஎஸ்" in tokens or "ஹிஸ்" in tokens or "ஹெச்ஐஎஸ் திற" in q_lower
+        "his" in tokens or "aosta" in q_norm or "backbone" in q_norm or
+        "ஹெச்ஐஎஸ்" in tokens or "ஹிஸ்" in tokens or "ஹெச்ஐஎஸ் திற" in q_norm or
+        q_norm.startswith("his ") or q_norm.endswith(" his") or q_norm == "his"
     ):
         # Explicit Form Requisition
-        if any(k in q_lower for k in [
+        if any(k in q_norm for k in [
             "his form", "his forms", "user creation", "his user", "new his user",
             "access venum", "access vendum", "his account", "open his form",
-            "padivam", "படிவம்", "creation form"
-        ]) or (intent == SearchIntent.OPEN_FORM and "doctor" not in q_lower and "item" not in q_lower):
+            "padivam", "படிவம்", "creation form", "username form", "user request", "his id venum"
+        ]) or (intent == SearchIntent.OPEN_FORM and "doctor" not in q_norm and "item" not in q_norm):
             return RESOURCE_REGISTRY["FORM_HIS_USER"]
 
-        # Explicit Doctor ID Form
-        if any(k in q_lower for k in ["doctor id", "doctor name", "maruthuvar id", "மருத்துவர்"]):
-            return RESOURCE_REGISTRY["FORM_DOCTOR_ID"]
-
         # Explicit Application Launch
-        if intent == SearchIntent.OPEN_APPLICATION or any(k in q_lower for k in [
+        if intent == SearchIntent.OPEN_APPLICATION or any(k in q_norm for k in [
             "open his", "his open", "login", "workstation", "portal", "software",
-            "enga", "திற", "திறக்கவும்", "ஹெச்ஐஎஸ் திற"
-        ]):
+            "enga", "திற", "திறக்கவும்", "ஹெச்ஐஎஸ் திற", "open panna", "where is his", "his login"
+        ]) or q_norm in ["open his", "his", "his login", "his login enga", "opn his", "hiss login"]:
             return RESOURCE_REGISTRY["APP_HIS"]
 
-    # 2. HRMS Portal vs Leave
-    if "hrms" in tokens or "pruworks" in q_lower or any(k in q_lower for k in ["open hrms", "hrms portal", "hrms login"]):
+    # 5. HRMS Portal vs Leave, Attendance & Payslips
+    if "hrms" in tokens or "pruworks" in q_norm or any(k in q_norm for k in ["open hrms", "hrms portal", "hrms login"]):
         return RESOURCE_REGISTRY["APP_HRMS"]
 
-    if any(k in q_lower for k in ["apply leave", "leave apply", "vidumurai", "viduppu", "leavu", "விடுமுறை"]) and not any(k in q_lower for k in ["calendar", "holiday"]):
+    if any(k in q_norm for k in [
+        "apply leave", "leave apply", "vidumurai", "viduppu", "leavu", "விடுமுறை",
+        "payslip", "pay slip", "salary slip", "sambalam", "சம்பள", "சம்பள ரசீது",
+        "biometric punch", "attendance portal", "varugai", "வருகை"
+    ]) and not any(k in q_norm for k in ["calendar", "holiday", "holidays 2026"]):
         return RESOURCE_REGISTRY["APP_HRMS"]
 
-    # 3. Resignation & Job Forms
-    if any(k in q_lower for k in [
+    # 6. Resignation & Job Protocols (HRM Manual)
+    if any(k in q_norm for k in [
         "resignation", "resign", "relieving", "notice period", "exit clearance",
-        "rajinama", "raajinaama", "பணி விலகல்", "ராஜினாமா", "procedure resignation job form"
+        "rajinama", "raajinaama", "பணி விலகல்", "ராஜினாமா", "procedure resignation job form",
+        "no dues", "nodues"
     ]):
         return RESOURCE_REGISTRY["FORM_RESIGNATION_HRM"]
 
-    # 4. Wi-Fi Form
-    if any(k in q_lower for k in ["wifi form", "wi-fi form", "internet connection request", "wifi request", "wifi venum", "வைஃபை"]):
-        return RESOURCE_REGISTRY["FORM_WIFI"]
+    # 7. Staff & Faculty Applications
+    if any(k in q_norm for k in ["non teaching", "non-teaching", "staff recruitment", "job application form for staff"]):
+        return RESOURCE_REGISTRY["FORM_NON_TEACHING"]
+    if any(k in q_norm for k in ["teaching faculty", "teaching application", "faculty appraisal"]):
+        return RESOURCE_REGISTRY["FORM_TEACHING"]
 
-    # 5. System & Printer Request Forms
-    if any(k in q_lower for k in ["system request", "kanini", "கணினி கோரிக்கை", "கணினி படிவம்"]):
+    # 8. IT Hardware & Telecom Forms
+    if any(k in q_norm for k in ["system request", "new computer request", "kanini request", "கணினி கோரிக்கை", "கணினி படிவம்", "desktop system form"]):
         return RESOURCE_REGISTRY["FORM_SYSTEM"]
 
-    if any(k in q_lower for k in ["printer request", "printer form", "acchaagam", "அச்சக படிவம்"]):
+    if any(k in q_norm for k in ["printer request", "printer form", "toner replacement", "acchaagam padivam", "அச்சக படிவம்", "பிரிண்டர் படிவம்"]):
         return RESOURCE_REGISTRY["FORM_PRINTER"]
 
-    # 6. Core Clinical Apps
-    if "pacs" in tokens or "medsynapse" in q_lower or "xray scan paakanum" in q_lower:
+    if any(k in q_norm for k in ["official email", "email form", "email id request", "மின்னஞ்சல் படிவம்"]):
+        return RESOURCE_REGISTRY["FORM_EMAIL_ID"]
+
+    if any(k in q_norm for k in ["sim cug", "cug sim", "sim request", "cug form", "cug sim padivam"]):
+        return RESOURCE_REGISTRY["FORM_SIM_CUG"]
+
+    # 9. Core Clinical Apps
+    if "pacs" in tokens or "medsynapse" in q_norm or any(k in q_norm for k in ["xray scan", "scan paakanum", "ct scan viewer"]):
         return RESOURCE_REGISTRY["APP_PACS"]
 
-    if "mrd" in tokens or "discharge summary archive" in q_lower:
+    if "mrd" in tokens or any(k in q_norm for k in ["discharge summary archive", "mrd records", "case sheet archive"]):
         return RESOURCE_REGISTRY["APP_MRD"]
 
-    if "mhc" in tokens or any(k in q_lower for k in ["master health", "மாஸ்டர் ஹெல்த் செக்கப்"]):
+    if "mhc" in tokens or any(k in q_norm for k in ["master health", "மாஸ்டர் ஹெல்த் செக்கப்"]):
         return RESOURCE_REGISTRY["APP_MHC"]
 
-    if "lineloom" in tokens or "opd token" in q_lower or "opd queue display" in q_lower:
+    if "lineloom" in tokens or any(k in q_norm for k in ["opd token", "opd queue display", "opd token machine", "token machine"]):
         return RESOURCE_REGISTRY["APP_LINELOOM"]
 
-    # 7. Committee Searches
+    # 10. Clinical Checklists & Forms
+    if any(k in q_norm for k in ["handing over sbar", "sbar sheet", "sbar record", "sbar"]):
+        return RESOURCE_REGISTRY["FORM_SBAR"]
+
+    if any(k in q_norm for k in ["ward shifting", "ward shift"]):
+        return RESOURCE_REGISTRY["FORM_WARD_SHIFTING"]
+
+    if any(k in q_norm for k in ["icu casesheet checklist", "icu checklist"]):
+        return RESOURCE_REGISTRY["FORM_ICU_CASESHEET"]
+
+    if any(k in q_norm for k in ["mews score", "mews"]):
+        return RESOURCE_REGISTRY["FORM_MEWS"]
+
+    if any(k in q_norm for k in ["emergency patient transfer", "patient transfer record"]):
+        return RESOURCE_REGISTRY["FORM_EMERGENCY_TRANSFER"]
+
+    if any(k in q_norm for k in ["food token", "unavu token", "சாப்பாடு டோக்கன்"]):
+        return RESOURCE_REGISTRY["FORM_FOOD_TOKEN"]
+
+    # 11. Circulars & Holidays
+    if any(k in q_norm for k in ["holidays 2026", "holiday calendar 2026", "list of holidays 2026", "விடுமுறை பட்டியல் 2026"]):
+        return RESOURCE_REGISTRY["DOC_HOLIDAYS_2026"]
+
+    if any(k in q_norm for k in ["recent circulars", "recent circular", "circulars", "சுற்றறிக்கை"]):
+        return RESOURCE_REGISTRY["DIR_CIRCULARS"]
+
+    if any(k in q_norm for k in ["where is the forms section", "forms section", "forms vault", "forms hub"]):
+        return RESOURCE_REGISTRY["DIR_FORMS_HUB"]
+
+    # 12. Committee Searches
     if intent == SearchIntent.FIND_COMMITTEE:
-        if "infection control" in q_lower or "hicc" in q_lower:
+        if "infection control" in q_norm or "hicc" in q_norm:
             return RESOURCE_REGISTRY["DOC_HICC_CHARTER"]
         return RESOURCE_REGISTRY["DIR_COMMITTEES"]
 
     return None
+
