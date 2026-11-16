@@ -567,7 +567,31 @@ MULTILINGUAL_SYNONYMS = {
     "tholaipesi": "intercom telephone phone extension call",
     "தொலைபேசி": "intercom telephone phone extension call",
     "இன்டர்காம்": "intercom telephone phone extension call",
-    "இணைப்பு": "extension intercom call phone"
+    "இணைப்பு": "extension intercom call phone",
+
+    # Clinical Procedures & Knowledge
+    "needle stick": "needle stick injury protocol sharps ipc",
+    "needle stick injury": "needle stick injury protocol sharps ipc",
+    "oosi kuthu": "needle stick injury protocol sharps",
+    "oosi": "needle injection stick",
+    "kuthu": "puncture prick stick injury",
+    "ஊசி குத்து": "needle stick injury protocol sharps",
+    "ஊசி": "needle injection stick",
+    "காயம்": "injury wound protocol",
+    "sharps injury": "needle stick injury protocol",
+    "hand hygiene": "hand hygiene moments wash rub nabh cop",
+    "kai sugatharam": "hand hygiene moments wash rub",
+    "கை சுகாதாரம்": "hand hygiene moments wash rub",
+    "transfusion reaction": "blood transfusion reaction adverse cop",
+    "ரத்த மாற்று எதிர்வினை": "blood transfusion reaction adverse",
+    "ரத்த மாற்று": "blood transfusion component",
+    "எதிர்வினை": "reaction adverse complication",
+    "waste segregation": "biomedical waste segregation colour coding",
+    "biomedical waste": "biomedical waste segregation colour coding",
+    "கழிவு மேலாண்மை": "biomedical waste segregation colour coding",
+    "நோட்டீஸ் காலம்": "resignation notice period relieving",
+    "நோட்டீஸ் பீரியட்": "resignation notice period relieving",
+    "ராஜினாமா நோட்டீஸ்": "resignation notice period relieving"
 }
 
 # =========================================================================
@@ -620,9 +644,9 @@ def classify_search_intent(query):
 
     # 1. Committee Search
     if any(k in q_norm for k in [
-        "committee", "committees", "charter", "charters", "mom", "minutes of meeting",
+        "committee", "committees", "charter", "charters", "minutes of meeting",
         "governance", "குழு", "கூட்ட அறிக்கை", "meeting minutes"
-    ]):
+    ]) or bool(tokens & {"mom", "moms"}):
         return SearchIntent.FIND_COMMITTEE
 
     # 2. Telephony / Intercom Directory
@@ -773,7 +797,7 @@ def resolve_exact_registered_resource(query, intent):
         return RESOURCE_REGISTRY["APP_LINELOOM"]
 
     # 10. Clinical Checklists & Forms
-    if any(k in q_norm for k in ["handing over sbar", "sbar sheet", "sbar record", "sbar"]):
+    if any(k in q_norm for k in ["handing over sbar", "sbar sheet", "sbar record", "sbar"]) and not any(k in q_norm for k in ["protocol", "policy", "manual", "sop", "guideline"]):
         return RESOURCE_REGISTRY["FORM_SBAR"]
 
     if any(k in q_norm for k in ["ward shifting", "ward shift"]):
@@ -782,7 +806,7 @@ def resolve_exact_registered_resource(query, intent):
     if any(k in q_norm for k in ["icu casesheet checklist", "icu checklist"]):
         return RESOURCE_REGISTRY["FORM_ICU_CASESHEET"]
 
-    if any(k in q_norm for k in ["mews score", "mews"]):
+    if any(k in q_norm for k in ["mews score", "mews"]) and not any(k in q_norm for k in ["protocol", "policy", "manual", "sop", "guideline"]):
         return RESOURCE_REGISTRY["FORM_MEWS"]
 
     if any(k in q_norm for k in ["emergency patient transfer", "patient transfer record"]):

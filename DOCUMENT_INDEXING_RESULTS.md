@@ -141,3 +141,4 @@ Of 14,713 extracted pages, **608 pages (4.1%)** contained fewer than 50 characte
 - Blank separator and cover divider pages in multi-volume accreditation binders.
 
 Each of these pages is tagged with `is_scanned = 1` in `document_pages` to allow optional offline OCR (Tesseract / OCRmyPDF) during Phase 4 without re-parsing the rest of the database.
+

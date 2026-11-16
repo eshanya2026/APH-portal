@@ -20,6 +20,13 @@ from search_registry import (
     resolve_exact_registered_resource, clean_and_tokenize, expand_query_tokens,
     GENERIC_STOP_WORDS as REGISTRY_STOP_WORDS, MULTILINGUAL_SYNONYMS
 )
+from search_index.database import (
+    search_passages,
+    ACCESS_PUBLIC,
+    ACCESS_STAFF,
+    ACCESS_CLINICAL,
+    ACCESS_MANAGEMENT
+)
 
 PORT = 3000
 if len(sys.argv) > 1:
@@ -115,6 +122,32 @@ SYNONYMS = {
     'rattha vangi': 'blood bank stock details transfusion reaction ரத்த வங்கி',
     'iratha vangi': 'blood bank stock details transfusion reaction இரத்த வங்கி',
     'raththa thaanam': 'blood donation transfusion reaction ரத்த தானம்',
+
+    # Clinical Protocols & Safety (Needle stick, Waste, Transfusion, Hand Hygiene)
+    'needle stick': 'needle stick injury protocol sharps ipc',
+    'needlestick': 'needle stick injury protocol sharps ipc',
+    'oosi kuthu': 'needle stick injury protocol sharps oosi kuthu',
+    'oosi': 'needle injection stick',
+    'kuthu': 'puncture prick stick injury',
+    'ஊசி குத்து': 'needle stick injury protocol sharps',
+    'ஊசி': 'needle injection stick',
+    'காயம்': 'injury wound protocol',
+    'sharps': 'needle stick sharps injury protocol',
+    'hand hygiene': 'hand hygiene moments wash rub nabh cop',
+    'kai sugatharam': 'hand hygiene moments wash rub',
+    'கை சுகாதாரம்': 'hand hygiene moments wash rub',
+    'transfusion reaction': 'blood transfusion reaction adverse cop',
+    'ரத்த மாற்று எதிர்வினை': 'blood transfusion reaction adverse',
+    'ரத்த மாற்று': 'blood transfusion component',
+    'எதிர்வினை': 'reaction adverse complication',
+    'waste': 'biomedical waste segregation colour coding',
+    'waste segregation': 'biomedical waste segregation colour coding',
+    'biomedical waste': 'biomedical waste segregation colour coding',
+    'கழிவு மேலாண்மை': 'biomedical waste segregation colour coding',
+    'notice period': 'resignation notice period relieving',
+    'நோட்டீஸ் காலம்': 'resignation notice period relieving',
+    'நோட்டீஸ் பீரியட்': 'resignation notice period relieving',
+    'ராஜினாமா நோட்டீஸ்': 'resignation notice period relieving',
 
     # Leaves, Holidays & Calendar
     'vidumurai': 'holiday holidays calendar leave 2026 dates festival விடுமுறை',
@@ -2089,6 +2122,235 @@ def build_canonical_response_for_resource(query, res, intent):
     ]
     return {"answer": answer, "links": links, "suggestions": [res['title'], "Hospital Forms Vault", "Core Applications"]}
 
+# =========================================================================
+# PHASE 3.3: FULL-TEXT KNOWLEDGE RETRIEVAL & ACCESS CONTROL
+# =========================================================================
+ROLE_PERMISSIONS = {
+    ACCESS_PUBLIC: [ACCESS_PUBLIC],
+    ACCESS_STAFF: [ACCESS_PUBLIC, ACCESS_STAFF],
+    ACCESS_CLINICAL: [ACCESS_PUBLIC, ACCESS_STAFF, ACCESS_CLINICAL],
+    ACCESS_MANAGEMENT: [ACCESS_PUBLIC, ACCESS_STAFF, ACCESS_CLINICAL, ACCESS_MANAGEMENT],
+}
+
+QUESTION_STARTER_PREFIXES = (
+    'what is the', 'what is', 'what are the', 'what are', 'how to handle', 'how to',
+    'how do i', 'how do', 'how can i', 'how can', 'explain', 'describe', 'tell me about',
+    'tell me', 'protocol for', 'criteria for', 'guidelines for', 'sop for', 'policy on',
+    'policy for', 'procedure for', 'rules for', 'why', 'when', 'who is', 'what should i do',
+    'what should', 'can you explain', 'definition of', 'details of', 'does the hospital'
+)
+
+TAMIL_QUESTION_MARKERS = [
+    'என்ன', 'எப்படி', 'விளக்கு', 'விளக்கவும்', 'செய்ய வேண்டும்', 'செய்யவேண்டும்',
+    'செய்வது', 'செய்வது எப்படி', 'முறை', 'விதிமுறை', 'வழிமுறை', 'கொள்கை',
+    'எவ்வளவு', 'எப்போது', 'எங்கே', 'யார்', 'உண்டா',
+    'enna seiyanum', 'eppadi', 'sollinga', 'sollunga', 'panrathu', 'seivathu', 'evvalavu'
+]
+
+EXPLICIT_QUESTION_STARTERS = (
+    'what is the', 'what is', 'what are the', 'what are', 'how to handle', 'how to',
+    'how do i', 'how do', 'how can i', 'how can', 'explain', 'describe', 'tell me about',
+    'tell me', 'protocol for', 'criteria for', 'guidelines for', 'sop for', 'policy on',
+    'policy for', 'rules for', 'why', 'when', 'who is', 'what should i do',
+    'what should', 'can you explain', 'definition of', 'does the hospital'
+)
+
+EXPLICIT_TAMIL_QUESTION_PHRASES = [
+    'என்ன செய்ய வேண்டும்', 'என்ன செய்யவேண்டும்', 'என்ன செய்யனும்',
+    'செய்வது எப்படி', 'எப்படி செய்ய வேண்டும்', 'விளக்கவும்', 'விளக்கு',
+    'எவ்வளவு', 'enna seiyanum', 'eppadi', 'sollinga', 'sollunga', 'panrathu', 'evvalavu'
+]
+
+CLINICAL_PROTOCOL_TOPICS = [
+    'needle stick', 'needlestick', 'oosi kuthu', 'ஊசி குத்து', 'sharps injury',
+    'transfusion reaction', 'ரத்த மாற்று எதிர்வினை',
+    'cauti', 'clabsi', 'vae', 'ventilator associated', 'mews', 'sbar',
+    'hand hygiene moments', '5 moments', 'kai sugatharam', 'கை சுகாதாரம்',
+    'biomedical waste', 'waste segregation', 'waste management', 'colour code', 'color code', 'கழிவு மேலாண்மை',
+    'code blue protocol', 'cardiac arrest protocol'
+]
+
+def should_route_to_knowledge_retrieval(query: str, intent: Any, registered: Optional[Dict[str, Any]]) -> bool:
+    """Determines whether query is asking a document content/knowledge question."""
+    q = query.lower().strip()
+
+    # 1. Core Applications & Exact Forms are deterministic Stage 0
+    if registered and registered.get('intent_type') in [SearchIntent.OPEN_APPLICATION, SearchIntent.OPEN_FORM]:
+        return False
+
+    # 2. Resignation HRM: route to knowledge only if explanatory / question query
+    if registered and registered.get('id') == 'FORM_RESIGNATION_HRM':
+        is_expl = any(q.startswith(w) for w in ['explain', 'what is', 'how long', 'details of']) or any(k in q for k in ['evvalavu', 'எவ்வளவு', 'காலம் எவ்வளவு']) or '?' in query
+        return is_expl
+
+    # 3. Explicit question starters or question mark
+    if any(q.startswith(w) for w in EXPLICIT_QUESTION_STARTERS) or '?' in query:
+        return True
+
+    # 4. Explicit Tamil/Tanglish question phrases
+    if any(k in q for k in EXPLICIT_TAMIL_QUESTION_PHRASES):
+        return True
+
+    # 5. Clinical protocol topics
+    if any(k in q for k in CLINICAL_PROTOCOL_TOPICS):
+        return True
+
+    return False
+
+def clean_question_for_search(query: str) -> str:
+    """Strips conversational question wrappers to formulate targeted FTS5 queries."""
+    cleaned = query.strip()
+    cleaned = re.sub(r'[?!.,;:]+$', '', cleaned)
+
+    pattern = r'^(' + '|'.join(re.escape(p) for p in EXPLICIT_QUESTION_STARTERS) + r')\s+'
+    cleaned = re.sub(pattern, '', cleaned, flags=re.IGNORECASE).strip()
+
+    for tw in EXPLICIT_TAMIL_QUESTION_PHRASES:
+        cleaned = re.sub(rf'\b{re.escape(tw)}\b', ' ', cleaned, flags=re.IGNORECASE)
+
+    cleaned = re.sub(r'\s+', ' ', cleaned).strip()
+    return cleaned if cleaned else query.strip()
+
+def build_knowledge_passage_response(query: str, passages: List[Dict[str, Any]], user_role: str) -> Dict[str, Any]:
+    """
+    Constructs a verified grounded knowledge response from SQLite FTS5 passages.
+    Enforces role-based access control. Fails closed if unauthorized.
+    """
+    is_tamil = is_tamil_query(query)
+    top_match = passages[0]
+    required_level = top_match.get('access_level', ACCESS_STAFF)
+
+    allowed_levels = ROLE_PERMISSIONS.get(user_role, [ACCESS_PUBLIC])
+    if required_level not in allowed_levels:
+        # FAIL CLOSED: Redact excerpt and report security restriction
+        if is_tamil:
+            answer = (
+                f"🔒 **அணுகல் கட்டுப்பாடு (Access Level: {required_level})**: "
+                f"'{top_match['title']}' ஆவணம் மருத்துவமனை உள் செயல்பாட்டு பாதுகாப்பு கட்டுப்பாட்டில் உள்ளது. "
+                f"இதன் முழு விவரங்கள் மற்றும் வழிமுறைகளைப் பார்க்க ஊழியர் அல்லது மருத்துவப் பிரிவு ({required_level}) உள்நுழைவு அவசியம். "
+                f"உதவிக்கு Admin IT (Ext: 2226 / 2228) தொடர்பு கொள்ளவும்."
+            )
+        else:
+            answer = (
+                f"🔒 **Access Restricted (Access Level: {required_level})**: "
+                f"The document '**{top_match['title']}**' contains restricted internal hospital operational guidelines. "
+                f"Full text passages, protocols, and page excerpts are restricted to authorized {required_level} staff. "
+                f"Please authenticate with your staff credentials or contact Admin IT (Ext: 2226 / 2228) for authorized access."
+            )
+        links = [{
+            "title": f"{top_match['title']} (Restricted: {required_level})",
+            "url": "./index.html#restricted",
+            "category": top_match.get('category', 'Restricted'),
+            "badge": f"🔒 {required_level} Required",
+            "access_level": required_level,
+            "page_number": top_match.get('page_number', 1)
+        }]
+        suggestions = ["Staff Portal Login", "IT Helpdesk Ext: 2226", "Hospital Forms Vault"]
+        return {
+            "answer": answer,
+            "links": links,
+            "suggestions": suggestions,
+            "access_status": "BLOCKED_RESTRICTED"
+        }
+
+    # Authorized: Format grounded citation with highlighted passage
+    raw_snippet = top_match['snippet_text']
+    clean_snippet = re.sub(r'\s+', ' ', raw_snippet).strip()
+    clean_snippet_display = clean_snippet.replace('<mark>', '**').replace('</mark>', '**')
+    page_num = top_match['page_number']
+
+    if is_tamil:
+        answer = (
+            f"அதிகாரப்பூர்வ **{top_match['title']}** (பக்கம் {page_num}) ஆவணத்தின் படி:\n\n"
+            f"> {clean_snippet_display}\n\n"
+            f"முழுமையான மருத்துவமனை வழிகாட்டுதல்கள் மற்றும் நெறிமுறைகளைப் பார்க்க கீழே உள்ள இணைப்பில் பக்கத்தை நேரடியாக திறக்கவும்."
+        )
+    else:
+        answer = (
+            f"According to the official **{top_match['title']}** (Page {page_num}):\n\n"
+            f"> {clean_snippet_display}\n\n"
+            f"For full verified protocols, click the direct link below to jump straight to Page {page_num}."
+        )
+
+    links = []
+    seen_urls = set()
+    for p in passages:
+        p_url = p['page_url']
+        if p_url not in seen_urls and p.get('access_level', ACCESS_STAFF) in allowed_levels:
+            seen_urls.add(p_url)
+            links.append({
+                "title": f"{p['title']} (Page {p['page_number']})",
+                "url": p_url,
+                "category": p.get('category', 'Document'),
+                "badge": f"Page {p['page_number']}",
+                "access_level": p.get('access_level', ACCESS_STAFF),
+                "page_number": p['page_number']
+            })
+            if len(links) >= 3:
+                break
+
+    suggestions = [
+        f"{top_match['title']} (p. {page_num})",
+        "Hospital Manuals Hub",
+        "Clinical Forms Vault"
+    ]
+    return {
+        "answer": answer,
+        "links": links,
+        "suggestions": suggestions,
+        "access_status": "AUTHORIZED"
+    }
+
+def execute_search_pipeline(query: str, user_role: str = ACCESS_PUBLIC) -> Dict[str, Any]:
+    """
+    Unified multi-stage search pipeline for APH SmartSearch AI (Phase 3.3):
+    Stage 0: Deterministic Canonical Resource Resolution (Exact Applications & Forms)
+    Stage 1: Intercom & Department Telephony Resolution
+    Stage 2: Knowledge Retrieval (SQLite FTS5 Full-Text Index with RBAC)
+    Stage 3: Catalog Fallback (Semantic keyword scoring & disambiguation)
+    """
+    # 0. Canonical Resource Registry & Explicit Intent Resolution FIRST
+    intent = classify_search_intent(query)
+    registered = resolve_exact_registered_resource(query, intent)
+
+    if registered and not should_route_to_knowledge_retrieval(query, intent, registered):
+        return build_canonical_response_for_resource(query, registered, intent)
+
+    # 1. Telephony and Department Intercom Directory Lookups resolve deterministically
+    matched_dept = find_intercom_department(query)
+    if (matched_dept or is_telephony_query(query)) and not should_route_to_knowledge_retrieval(query, intent, registered):
+        return generate_catalog_fallback_result(query)
+
+    # 2. Document Knowledge Retrieval (SQLite FTS5)
+    if should_route_to_knowledge_retrieval(query, intent, registered):
+        cleaned_search = clean_question_for_search(query)
+        tokens = clean_and_tokenize(cleaned_search)
+        expanded = expand_tokens(tokens, cleaned_search)
+        english_tokens = [t for t in expanded if all(ord(c) < 128 for c in t) and len(t) > 2]
+
+        passages = []
+        # If query is in Tamil or Tanglish, prioritize expanded English clinical terms for English manuals
+        if is_tamil_query(query) and english_tokens:
+            expanded_query_str = " ".join(english_tokens[:6])
+            passages = search_passages(expanded_query_str, limit=5)
+
+        if not passages:
+            passages = search_passages(cleaned_search, limit=5)
+
+        if not passages and english_tokens:
+            expanded_query_str = " ".join(english_tokens[:6])
+            passages = search_passages(expanded_query_str, limit=5)
+
+        if passages:
+            return build_knowledge_passage_response(query, passages, user_role)
+
+    # If Stage 0 had a match and FTS5 didn't find specific passages, return canonical resource
+    if registered:
+        return build_canonical_response_for_resource(query, registered, intent)
+
+    # 3. Fallback to Catalog Search
+    return generate_catalog_fallback_result(query)
+
 def query_gemini_ai(user_query, api_key):
     # 0. Canonical Resource Registry & Explicit Intent Resolution FIRST
     intent = classify_search_intent(user_query)
@@ -3512,12 +3774,40 @@ class APHPortalRequestHandler(SimpleHTTPRequestHandler):
             self.send_header('Access-Control-Allow-Origin', origin)
             self.send_header('Vary', 'Origin')
             self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
-            self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+            self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Staff-Role, X-User-Role')
         super().end_headers()
 
     def do_OPTIONS(self):
         self.send_response(204)
         self.end_headers()
+
+    def extract_user_role(self, post_data_dict):
+        """Extracts and validates staff role from request headers or payload."""
+        # 1. Custom headers
+        role_hdr = self.headers.get('X-Staff-Role') or self.headers.get('X-User-Role')
+        if role_hdr:
+            role_candidate = role_hdr.strip().upper()
+            if role_candidate in ROLE_PERMISSIONS:
+                return role_candidate
+
+        # 2. Authorization header: Bearer <ROLE>
+        auth_hdr = self.headers.get('Authorization', '')
+        if auth_hdr:
+            parts = auth_hdr.split()
+            if len(parts) == 2 and parts[0].lower() in ['bearer', 'role']:
+                role_candidate = parts[1].strip().upper()
+                if role_candidate in ROLE_PERMISSIONS:
+                    return role_candidate
+
+        # 3. Payload JSON body
+        if isinstance(post_data_dict, dict):
+            role_body = post_data_dict.get('role') or post_data_dict.get('user_role')
+            if role_body and isinstance(role_body, str):
+                role_candidate = role_body.strip().upper()
+                if role_candidate in ROLE_PERMISSIONS:
+                    return role_candidate
+
+        return ACCESS_PUBLIC
 
     def do_POST(self):
         if self.path in ['/api/ai-search', '/api/search']:
@@ -3531,14 +3821,9 @@ class APHPortalRequestHandler(SimpleHTTPRequestHandler):
                     self.send_json_response(400, {'error': 'Search query is required.'})
                     return
 
-                api_key = load_gemini_api_key()
-                if not api_key:
-                    fallback = generate_catalog_fallback_result(query)
-                    self.send_json_response(200, fallback)
-                    return
-
-                ai_result = query_gemini_ai(query, api_key)
-                self.send_json_response(200, ai_result)
+                user_role = self.extract_user_role(data)
+                search_result = execute_search_pipeline(query, user_role)
+                self.send_json_response(200, search_result)
             except Exception as e:
                 fallback = generate_catalog_fallback_result(query if 'query' in locals() else '')
                 self.send_json_response(200, fallback)
