@@ -15,6 +15,11 @@ import urllib.error
 import urllib.parse
 import html
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
+from search_registry import (
+    SearchIntent, RESOURCE_REGISTRY, classify_search_intent,
+    resolve_exact_registered_resource, clean_and_tokenize, expand_query_tokens,
+    GENERIC_STOP_WORDS as REGISTRY_STOP_WORDS, MULTILINGUAL_SYNONYMS
+)
 
 PORT = 3000
 if len(sys.argv) > 1:
@@ -834,15 +839,18 @@ def expand_tokens(tokens, raw_text=''):
     expanded = set(tokens)
     raw_lower = raw_text.lower() if raw_text else ' '.join(tokens)
     
+    combined_synonyms = dict(SYNONYMS)
+    combined_synonyms.update(MULTILINGUAL_SYNONYMS)
+
     # 1. Match multi-word Tanglish & Tamil phrases first
-    for phrase, mapped_words in SYNONYMS.items():
+    for phrase, mapped_words in combined_synonyms.items():
         if ' ' in phrase and phrase in raw_lower:
             expanded.update(mapped_words.split())
             
     # 2. Match individual tokens
     for t in tokens:
-        if t in SYNONYMS:
-            expanded.update(SYNONYMS[t].split())
+        if t in combined_synonyms:
+            expanded.update(combined_synonyms[t].split())
             
     return expanded
 
@@ -1062,18 +1070,21 @@ def search_catalog_candidates(query, limit=6):
     is_resignation_query = (
         any(k in q_raw for k in [
             'resignation', 'resign', 'relieving', 'relieve', 'notice period', 'exit clearance',
-            'no dues', 'nodues', 'resigning', 'resigned', 'பணி விலகல்', 'ராஜினாமா'
+            'no dues', 'nodues', 'resigning', 'resigned', 'rajinama', 'raajinaama', 'பணி விலகல்', 'ராஜினாமா',
+            'pathavi vilagal', 'velai viduthal', 'procedure resignation'
         ]) or
-        bool({'resignation', 'resign', 'relieving', 'relieve', 'nodues'} & q_tokens)
+        bool({'resignation', 'resign', 'relieving', 'relieve', 'nodues', 'rajinama', 'raajinaama'} & q_tokens)
     )
 
     is_job_application_query = (
-        any(k in q_raw for k in [
-            'job form', 'job application', 'job forms', 'job vacancy', 'job apply',
-            'recruitment', 'employment form', 'faculty application', 'staff application',
-            'வேலை விண்ணப்பம்', 'velai vinnappam'
-        ]) or
-        ('job' in q_tokens and any(k in q_raw for k in ['form', 'forms', 'apply', 'application', 'procedure', 'vacancy', 'portal']))
+        (
+            any(k in q_raw for k in [
+                'job form', 'job application', 'job forms', 'job vacancy', 'job apply',
+                'recruitment', 'employment form', 'faculty application', 'staff application',
+                'வேலை விண்ணப்பம்', 'velai vinnappam'
+            ]) or
+            ('job' in q_tokens and any(k in q_raw for k in ['form', 'forms', 'apply', 'application', 'procedure', 'vacancy', 'portal']))
+        ) and not any(k in q_raw for k in ['ticketing', 'ticket', 'repair', 'breakdown', 'maintenance', 'job order'])
     )
 
     is_hr_query = (
@@ -1117,8 +1128,9 @@ def search_catalog_candidates(query, limit=6):
         not any(k in q_raw for k in ['mhc', 'master health', 'healthcheck', 'checkup app', 'pruworks', 'pacs', 'ticketing', 'barcode', 'lineloom']) and
         (
             any(k in q_raw for k in ['his form', 'his forms', 'his user', 'his creation', 'his account', 'his login form', 'his credential', 'new his user']) or
-            (is_word_match('his', q_raw) and any(k in q_raw for k in ['form', 'forms', 'fill', 'open', 'enga', 'trla', 'therila', 'theriyala', 'venum', 'vendum', 'where', 'find', 'vinnappam', 'access', 'creation', 'account', 'padivam', 'படிவ']))
-        )
+            (is_word_match('his', q_raw) and any(k in q_raw for k in ['form', 'forms', 'fill', 'vinnappam', 'access venum', 'access vendum', 'creation', 'account', 'padivam', 'படிவ']))
+        ) and
+        not any(k in q_raw for k in ['open his', 'his open', 'his login', 'login his', 'his workstation', 'his portal', 'his software'])
     )
 
     is_pure_telecom = is_telecom_query and not find_intercom_department(q_raw)
@@ -1312,7 +1324,12 @@ def search_catalog_candidates(query, limit=6):
                 has_hit = True
 
         # Direct word match against informative tokens (prevents generic filler words like 'details' from creating false positive hits)
-        active_tokens = informative_tokens if informative_tokens else q_tokens
+        if informative_tokens:
+            active_tokens = informative_tokens
+        else:
+            # If all tokens were stopwords, avoid matching random forms
+            active_tokens = set()
+
         exact_title_hits = len(active_tokens & title_tokens)
         if exact_title_hits:
             score += exact_title_hits * 40
@@ -1910,7 +1927,180 @@ Instructions for output:
 }}"""
     return prompt
 
+def build_canonical_response_for_resource(query, res, intent):
+    is_tamil = is_tamil_query(query)
+    res_id = res['id']
+
+    if res_id == 'APP_HIS':
+        if is_tamil:
+            answer = "மருத்துவமனை தகவல் அமைப்பு (HIS - Backbone / AOSTA) முதன்மை உள்நுழைவு தளம்: http://192.168.103.37/BB15SE/Backbone/admin/login.aspx. நோயாளி பதிவு, மருத்துவர் ஆலோசனை, மற்றும் பில்லிங் பணிகளுக்கு நேரடியாக திறக்கலாம்."
+        else:
+            answer = "The hospital information system (HIS - Backbone / AOSTA) clinical workstation login is available at http://192.168.103.37/BB15SE/Backbone/admin/login.aspx. Launch the system directly below."
+        links = [
+            {"title": "Hospital Information System (HIS Backbone Login)", "url": "http://192.168.103.37/BB15SE/Backbone/admin/login.aspx", "category": "Core Systems", "badge": "System"},
+            {"title": "New HIS User Request Form", "url": "http://192.168.101.75:3000/files/His%20User%20Creation.pdf", "category": "IT Forms", "badge": "IT Form"},
+            {"title": "IT Forms Vault", "url": "./itforms.html", "category": "Forms Vault", "badge": "IT Vault"}
+        ]
+        suggestions = ["HIS Backbone Login", "New HIS User Request Form", "IT Software Support Ext: 2228"]
+        return {"answer": answer, "links": links, "suggestions": suggestions}
+
+    if res_id == 'FORM_HIS_USER':
+        if is_tamil:
+            answer = "மருத்துவமனை தகவல் அமைப்பு (HIS) புதிய பயனர் கணக்கு உருவாக்குவதற்கான அதிகாரப்பூர்வ படிவம்: **New HIS User Request Form**. இந்த படிவத்தைப் பூர்த்தி செய்து ஐடி பிரிவில் சமர்ப்பிக்கவும். படிவத்தை நேரடியாக திறக்க அல்லது பதிவிறக்கம் செய்ய கீழே உள்ள இணைப்பை கிளிக் செய்யவும்."
+        else:
+            answer = "To request or create a Hospital Information System (HIS) user account, please use the official **New HIS User Request Form**. Click the link below to open and print the PDF form directly."
+        links = [
+            {"title": "New HIS User Request Form", "url": "http://192.168.101.75:3000/files/His%20User%20Creation.pdf", "category": "IT Forms", "badge": "IT Form"},
+            {"title": "New Doctor Name and ID Creation in HIS", "url": "http://192.168.101.75:3000/files/Doctor%20Name%20and%20ID%20Creation.pdf", "category": "IT Forms", "badge": "IT Form"},
+            {"title": "IT Forms Vault", "url": "./itforms.html", "category": "Forms Vault", "badge": "IT Vault"}
+        ]
+        suggestions = ["New HIS User Request Form", "Doctor ID Creation in HIS", "IT Helpdesk Ext: 2226 / 2228"]
+        return {"answer": answer, "links": links, "suggestions": suggestions}
+
+    if res_id == 'APP_HRMS':
+        if is_tamil:
+            answer = "பணியாளர் வருகை பதிவு (Attendance), சம்பள ரசீதுகள் (Payslips), மற்றும் விடுமுறை விண்ணப்பிக்க (Apply Leave) **PruWorks HRMS Portal** (https://mapims-hrms.tecvinesolutions.com) பயன்படுத்தவும். உங்கள் பணியாளர் எண் மூலம் உள்நுழையலாம். கூடுதல் உதவிக்கு மனிதவளத் துறையை (Admin HR, Ext: 2173 / 2169) தொடர்பு கொள்ளவும்."
+        else:
+            answer = "To apply for leave, track biometric attendance, or download monthly salary pay slips, log in to the official **PruWorks HRMS Portal** (https://mapims-hrms.tecvinesolutions.com). For manual leave slips or HR inquiries, contact the HR Department in the Admin Office (Ext: 2173 / 2169)."
+        links = [
+            {"title": "PruWorks HRMS Portal", "url": "https://mapims-hrms.tecvinesolutions.com", "category": "HR & Payroll", "badge": "System"},
+            {"title": "List of Holidays for the Year 2026", "url": "http://192.168.101.75:3000/files/LIST%20OF%20HOLIDAYS%20FOR%20THE%20YEAR%202026.pdf", "category": "HR Forms", "badge": "Holiday Calendar"},
+            {"title": "Human Resource Manual (HRM) 2025", "url": "http://192.168.101.75:3000/files/HUMAN%20RESOURCE%20MANUAL(HRM)%202025.pdf", "category": "Manuals & SOPs", "badge": "HR Manual"}
+        ]
+        suggestions = ["PruWorks HRMS Staff Login", "List of Holidays 2026", "Admin HR Ext: 2173 / 2169"]
+        return {"answer": answer, "links": links, "suggestions": suggestions}
+
+    if res_id == 'FORM_WIFI':
+        if is_tamil:
+            answer = "மருத்துவமனை வளாக வைஃபை (Wi-Fi) மற்றும் இணைய அனுமதி கோரும் அதிகாரப்பூர்வ படிவம்: **Employee WIFI Request Form**. இந்த படிவத்தைப் பூர்த்தி செய்து உங்கள் சாதனத்தின் MAC முகவரியுடன் IT பிரிவில் சமர்ப்பிக்கவும்."
+        else:
+            answer = "To connect work laptops or authorized mobile devices to the hospital campus wireless network, download the **Employee WIFI Request Form** from IT Forms. Fill in your department details and device MAC address, then submit it to the IT Department (Ext: 2226)."
+        links = [
+            {"title": "Employee WIFI Request Form", "url": "http://192.168.101.75:3000/files/EMPLOYEE%20WIFI%20REQUEST%20FORM.pdf", "category": "IT Forms", "badge": "IT Form"},
+            {"title": "System Request Form", "url": "http://192.168.101.75:3000/files/SYSTEM%20REQUEST%20FORM.pdf", "category": "IT Forms", "badge": "IT Form"},
+            {"title": "IT Forms Vault", "url": "./itforms.html", "category": "Forms Vault", "badge": "IT Vault"}
+        ]
+        suggestions = ["Employee WIFI Request Form", "System Request Form", "IT Intercom: 2226"]
+        return {"answer": answer, "links": links, "suggestions": suggestions}
+
+    if res_id == 'FORM_SYSTEM':
+        if is_tamil:
+            answer = "புதிய கணினி சாதனங்கள் (Desktop, CPU, Monitor) அல்லது மென்பொருள் கோரிக்கைக்கு **System Request Form** படிவத்தைப் பயன்படுத்தவும்."
+        else:
+            answer = "To request new computer desktop hardware, monitors, peripherals, or software setup, submit the official **System Request Form**."
+        links = [
+            {"title": "System Request Form", "url": "http://192.168.101.75:3000/files/SYSTEM%20REQUEST%20FORM.pdf", "category": "IT Forms", "badge": "IT Form"},
+            {"title": "IT Forms Vault", "url": "./itforms.html", "category": "Forms Vault", "badge": "IT Vault"}
+        ]
+        suggestions = ["System Request Form", "Employee WIFI Request Form", "IT Intercom: 2226"]
+        return {"answer": answer, "links": links, "suggestions": suggestions}
+
+    if res_id == 'FORM_PRINTER':
+        if is_tamil:
+            answer = "துறை பயன்பாட்டிற்கான புதிய பிரிண்டர் அல்லது டோனர் கார்ட்ரிட்ஜ் கோர **Printer Request Form** படிவத்தைப் பயன்படுத்தவும்."
+        else:
+            answer = "To request departmental printing hardware, barcode label printers, or replacement toner cartridges, submit the official **Printer Request Form**."
+        links = [
+            {"title": "Printer Request Form", "url": "http://192.168.101.75:3000/files/PRINTER%20REQUEST%20FORM.pdf", "category": "IT Forms", "badge": "IT Form"},
+            {"title": "IT Forms Vault", "url": "./itforms.html", "category": "Forms Vault", "badge": "IT Vault"}
+        ]
+        suggestions = ["Printer Request Form", "System Request Form", "IT Helpdesk Ext: 2226"]
+        return {"answer": answer, "links": links, "suggestions": suggestions}
+
+    if res_id == 'FORM_RESIGNATION_HRM':
+        if is_tamil:
+            answer = "பணியாளர் பணி விலகல் நடைமுறை (Resignation / Relieving Procedure) மற்றும் வேலை விண்ணப்பங்கள்: பணி விலகல் செய்யும் ஊழியர்கள் துறைத் தலைவர் (HOD) மற்றும் மனிதவளத் துறைக்கு (Admin HR) கடிதம் அளிக்க வேண்டும். நோட்டீஸ் காலம், பணி ஒப்படைப்பு, மற்றும் என்ஓசி (No Dues Clearance) விதிமுறைகள் **Human Resources Manual (HRM - 2025)** கையேட்டில் உள்ளன. மருத்துவமனை ஆசிரியர் மற்றும் பணியாளர் விண்ணப்பப் படிவங்களை கீழே பதிவிறக்கம் செய்யலாம். உதவிக்கு Admin HR (Ext: 2173 / 2169) தொடர்பு கொள்ளவும்."
+        else:
+            answer = "Official guidelines for Employee Resignation, Relieving Procedures, and Job Applications: Staff tendering resignation must submit a formal resignation letter to their HOD and the Admin HR Office. Notice period requirements, departmental handovers, No Dues Clearance, and relieving order protocols are governed by the **Human Resources Manual (HRM - 2025)**. Hospital job application forms and HR links are available below. For HR assistance, contact Admin HR at Ext: 2173 / 2169."
+        links = [
+            {"title": "Human Resources Manual (HRM - 2025)", "url": "http://192.168.101.75:3000/files/HRM%202025.pdf", "category": "HR Forms", "badge": "HR Manual"},
+            {"title": "Non-Teaching Staff Application Form", "url": "http://192.168.101.75:3000/files/Non%20Teaching.pdf", "category": "HR Forms", "badge": "HR Form"},
+            {"title": "Teaching Faculty Application & Appraisal Form", "url": "http://192.168.101.75:3000/files/Teaching.pdf", "category": "HR Forms", "badge": "HR Form"},
+            {"title": "APH HR Forms Hub", "url": "./index.html#forms", "category": "Forms Vault", "badge": "HR Hub"}
+        ]
+        suggestions = ["Human Resources Manual 2025", "Non-Teaching Staff Application", "Teaching Faculty Application", "Admin HR Ext: 2173 / 2169"]
+        return {"answer": answer, "links": links, "suggestions": suggestions}
+
+    if res_id in ['DIR_COMMITTEES', 'DOC_HICC_CHARTER']:
+        if is_tamil:
+            answer = "மருத்துவமனை சட்டப்பூர்வ நிர்வாக குழுக்கள், தரக் குழு (Quality Committee), தொற்று கட்டுப்பாட்டுக் குழு (HICC) மற்றும் கூட்ட அறிக்கைகள் (MOM) அனைத்தும் **Committees Directory** தளத்தில் கிடைக்கின்றன."
+        else:
+            answer = "Hospital governance charters, statutory committee constitutions, Quality Committee (QC), Hospital Infection Control Committee (HICC), and Minutes of Meeting (MOM) records are archived in the **Committees Directory**."
+        links = [
+            {"title": "APH Hospital Committees & MOM Directory", "url": "./comitee.html", "category": "Committees & MOM", "badge": "Governance Hub"},
+            {"title": "Hospital Infection Control Committee (NABH 5th Edition)", "url": "http://192.168.101.75:3000/files/Qc/HOSPITAL%20INFECTION%20CONTROL%20COMMITTEE.pdf", "category": "Committees & MOM", "badge": "Committee Charter"},
+            {"title": "COMMITTEE’S SCHEDULED CALENDAR-2026", "url": "http://192.168.101.75:3000/files/Committee’s%20Scheduled%20Calendar-2026.pdf", "category": "Committees & MOM", "badge": "Calendar"}
+        ]
+        suggestions = ["Hospital Committees Directory", "HICC Committee Charter", "Committee Scheduled Calendar 2026"]
+        return {"answer": answer, "links": links, "suggestions": suggestions}
+
+    if res_id == 'APP_PACS':
+        if is_tamil:
+            answer = "கதிரியக்க பரிசோதனை படங்கள் (X-Ray, CT, MRI, Ultrasound) பார்க்க **M - PACS (Medsynapse)** கதிரியக்க காட்சி தளத்தை (http://192.168.101.224/User_Login.asp) திறக்கவும்."
+        else:
+            answer = "Diagnostic radiology scans and imaging studies (Digital X-Ray, CT Scan, MRI, Ultrasound) are accessed through the **M - PACS (Medsynapse)** viewer at http://192.168.101.224/User_Login.asp."
+        links = [
+            {"title": "M - PACS (Medsynapse Radiology Viewer)", "url": "http://192.168.101.224/User_Login.asp", "category": "Core Systems", "badge": "System"},
+            {"title": "Core Applications Hub", "url": "./index.html#core-systems", "category": "Core Systems", "badge": "Hub"}
+        ]
+        suggestions = ["M - PACS Medsynapse Login", "Radiology Intercom: 2700", "Core Applications"]
+        return {"answer": answer, "links": links, "suggestions": suggestions}
+
+    if res_id == 'APP_MRD':
+        if is_tamil:
+            answer = "மருத்துவ ஆவணக் காப்பகம் மற்றும் நோயாளியின் பழைய டிஸ்சார்ஜ் சம்மரிகளைப் பார்க்க **MRD Medical Records Portal** (http://www.mapimsmrd.com/mapimsmrd/) பயன்படுத்தவும்."
+        else:
+            answer = "The **MRD Medical Records Portal** (http://www.mapimsmrd.com/mapimsmrd/) manages patient case sheets, discharge summaries, and historical medical archives."
+        links = [
+            {"title": "MRD Medical Records Portal", "url": "http://www.mapimsmrd.com/mapimsmrd/", "category": "Core Systems", "badge": "System"},
+            {"title": "Core Applications Hub", "url": "./index.html#core-systems", "category": "Core Systems", "badge": "Hub"}
+        ]
+        suggestions = ["MRD Medical Records Login", "MRD Extension: 2014", "Core Applications Hub"]
+        return {"answer": answer, "links": links, "suggestions": suggestions}
+
+    if res_id == 'APP_MHC':
+        if is_tamil:
+            answer = "மாஸ்டர் ஹெல்த் செக்கப் (Master Health Checkup - MHC) மற்றும் செயற்கை நுண்ணறிவு சுகாதார மதிப்பீட்டுத் தளம்: **MAPIMS AI Health Assessment** (https://mh.mapims.edu.in/)."
+        else:
+            answer = "The official Master Health Checkup (MHC) and clinical triage application is the **MAPIMS AI Health Assessment (Master Health Checkup / MHC)** at https://mh.mapims.edu.in/."
+        links = [
+            {"title": "MAPIMS AI Health Assessment (Master Health Checkup / MHC)", "url": "https://mh.mapims.edu.in/", "category": "In-House Developed", "badge": "System"},
+            {"title": "In-House Developed Applications Hub", "url": "./index.html#in-house-apps", "category": "Core Systems", "badge": "Hub"}
+        ]
+        suggestions = ["MAPIMS AI Health Assessment (MHC)", "MHC Reception Ext: 2011", "In-House Applications"]
+        return {"answer": answer, "links": links, "suggestions": suggestions}
+
+    if res_id == 'APP_LINELOOM':
+        if is_tamil:
+            answer = "புறநோயாளி பிரிவு வரிசை மேலாண்மை மற்றும் நேரலை நோயாளி டோக்கன் திரை: **LineLoom OPD Token Display** (http://192.168.103.158:8086)."
+        else:
+            answer = "For outpatient department queue management and real-time patient queue visualization, open the **LineLoom OPD Token Display System** at http://192.168.103.158:8086."
+        links = [
+            {"title": "LineLoom OPD Token Display System", "url": "http://192.168.103.158:8086", "category": "Core Systems", "badge": "System"},
+            {"title": "Core Applications Hub", "url": "./index.html#core-systems", "category": "Core Systems", "badge": "Hub"}
+        ]
+        suggestions = ["LineLoom OPD Token Display", "OPD Queue Display", "Core Applications Hub"]
+        return {"answer": answer, "links": links, "suggestions": suggestions}
+
+    desc = res.get('description_ta' if is_tamil else 'description', res.get('description', ''))
+    answer = f"{res['title']}: {desc}"
+    links = [
+        {"title": res['title'], "url": res['url'], "category": res.get('category', 'Document'), "badge": res.get('badge', 'Resource')}
+    ]
+    return {"answer": answer, "links": links, "suggestions": [res['title'], "Hospital Forms Vault", "Core Applications"]}
+
 def query_gemini_ai(user_query, api_key):
+    # 0. Canonical Resource Registry & Explicit Intent Resolution FIRST
+    intent = classify_search_intent(user_query)
+    registered = resolve_exact_registered_resource(user_query, intent)
+    if registered:
+        return build_canonical_response_for_resource(user_query, registered, intent)
+
+    # Telephony and Department Intercom Directory Lookups resolve deterministically
+    matched_dept = find_intercom_department(user_query)
+    if matched_dept or is_telephony_query(user_query):
+        return generate_catalog_fallback_result(user_query)
+
     # 1. Retrieve top matching catalog candidates
     candidates = search_catalog_candidates(user_query, limit=6)
     grounded_prompt = build_grounded_prompt(user_query, candidates)
@@ -2298,6 +2488,12 @@ def query_gemini_ai(user_query, api_key):
 
 def generate_catalog_fallback_result(query, candidates=None):
     """Produces a clean grounded response directly from the catalog or intercom directory."""
+    # 0. Canonical Resource Registry & Explicit Intent Resolution FIRST
+    intent = classify_search_intent(query)
+    registered = resolve_exact_registered_resource(query, intent)
+    if registered:
+        return build_canonical_response_for_resource(query, registered, intent)
+
     if candidates is None:
         candidates = search_catalog_candidates(query, limit=5)
 
@@ -3248,14 +3444,58 @@ def generate_catalog_fallback_result(query, candidates=None):
 # 5. HTTP REQUEST HANDLER
 # =========================================================================
 class APHPortalRequestHandler(SimpleHTTPRequestHandler):
+    def is_trusted_origin(self, origin):
+        if not origin:
+            return False
+        parsed = urllib.parse.urlparse(origin)
+        host = (parsed.hostname or '').lower()
+        if host in ['localhost', '127.0.0.1']:
+            return True
+        if host.startswith('192.168.') or host.startswith('10.') or host.startswith('172.'):
+            return True
+        if host.endswith('.mapims.edu.in') or host.endswith('.mapimshis.com'):
+            return True
+        return False
+
+    def is_blocked_path(self, path):
+        clean = urllib.parse.unquote(urllib.parse.urlparse(path).path).lower().strip()
+        norm = os.path.normpath(clean)
+        if norm.startswith('..') or '/..' in norm or norm.startswith('/..'):
+            return True
+        parts = [p for p in norm.split('/') if p]
+        for p in parts:
+            if p.startswith('.'):
+                return True
+            if p in ['server.py', 'requirements.txt', '__pycache__']:
+                return True
+            if p.endswith('.py') or p.endswith('.pyc') or p.endswith('.sh') or p.endswith('.key') or p.endswith('.env'):
+                return True
+        return False
+
+    def do_HEAD(self):
+        if self.is_blocked_path(self.path):
+            self.send_error(403, "Access to sensitive file or configuration is strictly prohibited.")
+            return
+        super().do_HEAD()
+
+    def do_GET(self):
+        if self.is_blocked_path(self.path):
+            self.send_error(403, "Access to sensitive file or configuration is strictly prohibited.")
+            return
+        super().do_GET()
+
     def translate_path(self, path):
-        # Cleanly resolve /files/... paths without requiring any circular symlinks
         orig_path = super().translate_path(path)
+        try:
+            common = os.path.commonpath([os.path.abspath(orig_path), os.path.abspath(BASE_DIR)])
+            if common != os.path.abspath(BASE_DIR):
+                return os.path.join(BASE_DIR, '404_not_found')
+        except (ValueError, Exception):
+            return os.path.join(BASE_DIR, '404_not_found')
+
         if path.startswith('/files/'):
-            # If files/ folder exists and contains the file, serve it
             if os.path.exists(orig_path):
                 return orig_path
-            # Otherwise, fallback to the root directory
             rel_file = path[len('/files/'):]
             root_path = super().translate_path('/' + rel_file)
             if os.path.exists(root_path):
@@ -3263,9 +3503,16 @@ class APHPortalRequestHandler(SimpleHTTPRequestHandler):
         return orig_path
 
     def end_headers(self):
-        self.send_header('Access-Control-Allow-Origin', '*')
-        self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
-        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+        self.send_header('X-Content-Type-Options', 'nosniff')
+        self.send_header('X-Frame-Options', 'SAMEORIGIN')
+        self.send_header('Referrer-Policy', 'strict-origin-when-cross-origin')
+
+        origin = self.headers.get('Origin')
+        if origin and self.is_trusted_origin(origin):
+            self.send_header('Access-Control-Allow-Origin', origin)
+            self.send_header('Vary', 'Origin')
+            self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+            self.send_header('Access-Control-Allow-Headers', 'Content-Type')
         super().end_headers()
 
     def do_OPTIONS(self):
@@ -3286,7 +3533,6 @@ class APHPortalRequestHandler(SimpleHTTPRequestHandler):
 
                 api_key = load_gemini_api_key()
                 if not api_key:
-                    # Serve directly from catalog if no key
                     fallback = generate_catalog_fallback_result(query)
                     self.send_json_response(200, fallback)
                     return
@@ -3294,7 +3540,6 @@ class APHPortalRequestHandler(SimpleHTTPRequestHandler):
                 ai_result = query_gemini_ai(query, api_key)
                 self.send_json_response(200, ai_result)
             except Exception as e:
-                # Always deliver working catalog fallback instead of 500 error
                 fallback = generate_catalog_fallback_result(query if 'query' in locals() else '')
                 self.send_json_response(200, fallback)
             return
