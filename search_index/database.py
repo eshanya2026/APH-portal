@@ -355,7 +355,8 @@ def search_passages(
             params.extend(access_levels)
 
         sql += " ORDER BY bm25_score ASC LIMIT ?;"
-        params.append(limit)
+        fetch_limit = max(limit * 4, 25)
+        params.append(fetch_limit)
 
         with get_connection(db_path) as con:
             try:
@@ -393,7 +394,58 @@ def search_passages(
                 if len(results) >= limit:
                     break
 
+    # 3. Domain-aware clinical and protocol re-ranking
+    results = rerank_passages(results, query)
+
     return results[:limit]
+
+def rerank_passages(passages: List[Dict[str, Any]], query: str) -> List[Dict[str, Any]]:
+    """
+    Applies domain-aware ranking boosts:
+    1. Penalizes meeting minutes, calendars, and drill schedules when user asks for clinical protocols.
+    2. Boosts official clinical manuals, guidelines, SOPs, and policies.
+    """
+    if not passages or not query:
+        return passages
+
+    q_lower = query.lower()
+    is_protocol_query = any(k in q_lower for k in [
+        'protocol', 'policy', 'guideline', 'sop', 'procedure', 'cpr', 'code blue',
+        'infection control', 'transfusion', 'needle stick', 'cauti', 'clabsi', 'vae', 'mews'
+    ])
+    if not is_protocol_query:
+        return passages
+
+    def _rank_key(item):
+        score = float(item.get('bm25_score', 0.0))
+        title_lower = item.get('title', '').lower()
+        cat = item.get('category', '')
+
+        # Heavily penalize meeting minutes and drill calendars when asking for policy/protocol
+        if cat == 'Committees & MOM' or any(k in title_lower for k in ['calender', 'calendar', 'mom ', 'mom-', 'minutes of meeting', 'drill']):
+            score += 30.0
+
+        if 'transport' in title_lower or 'checklist' in title_lower:
+            score += 15.0
+
+        # When asking for transfusion/blood clinical protocol, penalize HR manuals and boost COP/Care of Patient
+        if any(k in q_lower for k in ['transfusion', 'blood reaction', 'reaction']) and any(k in title_lower for k in ['human resource', 'hrm', 'recruitment']):
+            score += 35.0
+
+        if any(k in q_lower for k in ['transfusion', 'blood reaction']) and any(k in title_lower for k in ['cop', 'care of patient', 'blood bank']):
+            score -= 20.0
+
+        # Boost actual manuals, SOPs, and guidelines
+        if cat in ['Manuals & SOPs', 'Clinical Forms']:
+            score -= 5.0
+        if any(k in title_lower for k in ['cpr', 'code blue', 'guideline for cpr']):
+            score -= 15.0
+        elif any(k in title_lower for k in ['guideline', 'manual', 'sop', 'policy']):
+            score -= 8.0
+
+        return score
+
+    return sorted(passages, key=_rank_key)
 
 def get_indexing_stats(db_path: str = DEFAULT_DB_PATH) -> Dict[str, Any]:
     """Computes comprehensive indexing statistics."""

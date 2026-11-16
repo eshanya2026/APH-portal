@@ -4,4 +4,6 @@ data/pdf_cache/
 data/*.db
 data/*.db-shm
 data/*.db-wal
+data/.session_secret
+*.key
 *.pyc
