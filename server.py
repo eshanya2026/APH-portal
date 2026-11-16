@@ -3970,6 +3970,12 @@ class APHPortalRequestHandler(SimpleHTTPRequestHandler):
         norm = os.path.normpath(clean)
         if norm.startswith('..') or '/..' in norm or norm.startswith('/..'):
             return True
+        if '/data/pdf_cache' in norm or norm.startswith('/data/pdf_cache'):
+            return True
+        if norm.endswith('.db') or norm.endswith('.db-shm') or norm.endswith('.db-wal'):
+            return True
+        if '.session_secret' in norm:
+            return True
         parts = [p for p in norm.split('/') if p]
         for p in parts:
             if p.startswith('.'):
@@ -4051,18 +4057,22 @@ class APHPortalRequestHandler(SimpleHTTPRequestHandler):
 
     def do_POST(self):
         # 1. Staff Authentication / Session Token Endpoint
-        if self.path in ['/api/auth/token', '/api/auth/session']:
+        if self.path in ['/api/auth/token', '/api/auth/session', '/api/auth/login']:
             content_length = int(self.headers.get('Content-Length', 0))
             post_data = self.rfile.read(content_length)
             try:
                 data = json.loads(post_data.decode('utf-8')) if post_data else {}
                 staff_id = data.get('staff_id', '').strip()
+                password = data.get('password', '').strip()
+                service_key = data.get('service_key', '').strip() or self.headers.get('X-Auth-Service-Key', '').strip()
                 if not staff_id:
                     self.send_json_response(400, {'error': 'Staff ID is required.'})
                     return
 
-                # Strict server-side verification: never permit self-selected roles
-                is_auth, token_or_err, assigned_role, staff_name = authenticate_and_issue_staff_token(staff_id)
+                # Strict server-side verification: knowing staff ID alone CANNOT issue token
+                is_auth, token_or_err, assigned_role, staff_name = authenticate_and_issue_staff_token(
+                    staff_id, password=password, service_key=service_key
+                )
                 if not is_auth:
                     self.send_json_response(401, {'error': token_or_err})
                     return
@@ -4072,13 +4082,18 @@ class APHPortalRequestHandler(SimpleHTTPRequestHandler):
                 if requested_role and requested_role.upper().strip() != assigned_role:
                     print(f"🛡️ [SECURITY AUDIT] Staff '{staff_id}' requested '{requested_role}' but was enforced as '{assigned_role}'.")
 
+                # Set HttpOnly SameSite cookie so browser PDF link clicks work seamlessly
+                # without exposing bearer tokens in URLs or query parameters!
+                cookie_val = f"aph_session={token_or_err}; Path=/; SameSite=Strict; HttpOnly"
+                extra_headers = [('Set-Cookie', cookie_val)]
+
                 self.send_json_response(200, {
                     'token': token_or_err,
                     'staff_id': staff_id,
                     'staff_name': staff_name,
                     'role': assigned_role,
                     'expires_in': 3600
-                })
+                }, extra_headers=extra_headers)
             except Exception as e:
                 self.send_json_response(400, {'error': str(e)})
             return
@@ -4106,11 +4121,14 @@ class APHPortalRequestHandler(SimpleHTTPRequestHandler):
 
         self.send_error(404, "Endpoint not found")
 
-    def send_json_response(self, status_code, data):
+    def send_json_response(self, status_code, data, extra_headers=None):
         body = json.dumps(data, ensure_ascii=False).encode('utf-8')
         self.send_response(status_code)
         self.send_header('Content-Type', 'application/json; charset=utf-8')
         self.send_header('Content-Length', str(len(body)))
+        if extra_headers:
+            for k, v in extra_headers:
+                self.send_header(k, v)
         self.end_headers()
         self.wfile.write(body)
 

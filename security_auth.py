@@ -58,45 +58,152 @@ if not SESSION_SECRET:
 # Server-Side Session Store (for stateful session verification)
 ACTIVE_SERVER_SESSIONS: Dict[str, Dict[str, Any]] = {}
 
+# Cryptographic password hashing and verification helpers
+def hash_password(password: str, salt_hex: Optional[str] = None) -> str:
+    """Generates a PBKDF2-HMAC-SHA256 salted password hash."""
+    if salt_hex:
+        salt = bytes.fromhex(salt_hex)
+    else:
+        salt = secrets.token_bytes(16)
+    derived = hashlib.pbkdf2_hmac("sha256", password.encode("utf-8"), salt, 100_000)
+    return f"{salt.hex()}:{derived.hex()}"
+
+
+def verify_password(password: str, stored_hash: str) -> bool:
+    """Constant-time verification of password against stored PBKDF2 hash."""
+    if not password or not stored_hash or ":" not in stored_hash:
+        return False
+    try:
+        salt_hex, key_hex = stored_hash.split(":", 1)
+        salt = bytes.fromhex(salt_hex)
+        expected = bytes.fromhex(key_hex)
+        actual = hashlib.pbkdf2_hmac("sha256", password.encode("utf-8"), salt, 100_000)
+        return hmac.compare_digest(actual, expected)
+    except Exception:
+        return False
+
+
 # Authorized Staff Directory & Role Registry (Server-Side Identity Verification)
-# Eliminates self-selected roles: roles are derived strictly from verified hospital identity
+# STRICT SECURITY REQUIREMENT:
+# Knowing a valid staff ID alone CANNOT issue an authentication token.
+# Every staff account requires a verified password or institutional auth credential.
+# Roles are derived strictly from this internal registry; client-supplied roles are ignored.
 STAFF_DIRECTORY: Dict[str, Dict[str, Any]] = {
-    # Clinical Staff
-    "dr_clinical_101": {"role": ACCESS_CLINICAL, "dept": "Emergency Medicine", "name": "Dr. S. K. Narayanan"},
-    "dr_emergency": {"role": ACCESS_CLINICAL, "dept": "Emergency Medicine", "name": "Dr. R. Kavitha"},
-    "dr_shreya": {"role": ACCESS_CLINICAL, "dept": "Cardiology", "name": "Dr. Shreya M."},
-    "nurse_icu": {"role": ACCESS_CLINICAL, "dept": "ICU", "name": "Staff Nurse Priya"},
-    "dr_tamil": {"role": ACCESS_CLINICAL, "dept": "General Medicine", "name": "Dr. Tamilselvan"},
+    # Clinical Staff (Doctors & ICU/ER Nurses)
+    "dr_clinical_101": {
+        "role": ACCESS_CLINICAL,
+        "dept": "Emergency Medicine",
+        "name": "Dr. S. K. Narayanan",
+        "password_hash": "0123456789abcdef0123456789abcdef:a6e98aa6c169bdbccfedd2f63fa154379f9fce9445ae3175ee650b1573c7ca6c"  # Clinical#2026!
+    },
+    "dr_emergency": {
+        "role": ACCESS_CLINICAL,
+        "dept": "Emergency Medicine",
+        "name": "Dr. R. Kavitha",
+        "password_hash": "0123456789abcdef0123456789abcdef:da3288936fa873a72a2396c0a2cf67cdc4ef94dff63bbe206f2abcd2f9b79d8c"  # Emergency#2026!
+    },
+    "dr_shreya": {
+        "role": ACCESS_CLINICAL,
+        "dept": "Cardiology",
+        "name": "Dr. Shreya M.",
+        "password_hash": "0123456789abcdef0123456789abcdef:d23dc9bd8452aa2aa730f8a76d6e1e12d9c992986e184d1afbb6aee40162cb50"  # ShreyaMed#2026!
+    },
+    "nurse_icu": {
+        "role": ACCESS_CLINICAL,
+        "dept": "ICU",
+        "name": "Staff Nurse Priya",
+        "password_hash": "0123456789abcdef0123456789abcdef:29c4865b2eb38ce113bd113e8196000b260e6a47ac0a0efdff3ce979b50172d2"  # IcuNurse#2026!
+    },
+    "dr_tamil": {
+        "role": ACCESS_CLINICAL,
+        "dept": "General Medicine",
+        "name": "Dr. Tamilselvan",
+        "password_hash": "0123456789abcdef0123456789abcdef:0396c06d893241ae98c3fc7c004a63765a4684979183fda45eaa50f36633dad2"  # TamilDoc#2026!
+    },
 
-    # General Hospital Staff
-    "staff_user": {"role": ACCESS_STAFF, "dept": "Administration", "name": "A. Murugan"},
-    "nurse_john": {"role": ACCESS_STAFF, "dept": "Ward 3", "name": "John Doe"},
-    "nurse_staff_202": {"role": ACCESS_STAFF, "dept": "Nursing", "name": "Staff Nurse Anitha"},
-    "nurse_tanglish": {"role": ACCESS_STAFF, "dept": "OPD", "name": "Staff Nurse Deepa"},
-    "test_staff": {"role": ACCESS_STAFF, "dept": "Testing", "name": "Test Staff Account"},
+    # General Hospital Staff (Administrative, Nursing, Technicians)
+    "staff_user": {
+        "role": ACCESS_STAFF,
+        "dept": "Administration",
+        "name": "A. Murugan",
+        "password_hash": "0123456789abcdef0123456789abcdef:4dd7b82fbc0b6961df14e545c46849bd743c91a16c2e6d48dd16c2fa9bda1e4d"  # StaffUser#2026!
+    },
+    "nurse_john": {
+        "role": ACCESS_STAFF,
+        "dept": "Ward 3",
+        "name": "John Doe",
+        "password_hash": "0123456789abcdef0123456789abcdef:0549041c427b80226f250f76fcb1817201fbfab1c725b5428a731d244d15a5b9"  # NurseJohn#2026!
+    },
+    "nurse_staff_202": {
+        "role": ACCESS_STAFF,
+        "dept": "Nursing",
+        "name": "Staff Nurse Anitha",
+        "password_hash": "0123456789abcdef0123456789abcdef:bad7eb4a246bdb207c61a1bea5ff80b450084738769685ae03b83a1720761d3c"  # Nurse202#2026!
+    },
+    "nurse_tanglish": {
+        "role": ACCESS_STAFF,
+        "dept": "OPD",
+        "name": "Staff Nurse Deepa",
+        "password_hash": "0123456789abcdef0123456789abcdef:8b9b2f3aa0866208363f1ff06c267fbd8726e6521586eac0856b25cfd256d0ca"  # TanglishNurse#2026!
+    },
+    "test_staff": {
+        "role": ACCESS_STAFF,
+        "dept": "Testing",
+        "name": "Test Staff Account",
+        "password_hash": "0123456789abcdef0123456789abcdef:8c48aa444a884a795b92a556427d8f065df3cc5beec08916c015725af835c01e"  # TestStaff#2026!
+    },
 
-    # Executive Management
-    "admin_mgmt_303": {"role": ACCESS_MANAGEMENT, "dept": "Hospital Administration", "name": "Medical Superintendent"},
-    "admin_director": {"role": ACCESS_MANAGEMENT, "dept": "Executive Office", "name": "Managing Director"}
+    # Executive Management (Hospital Board & Administration)
+    "admin_mgmt_303": {
+        "role": ACCESS_MANAGEMENT,
+        "dept": "Hospital Administration",
+        "name": "Medical Superintendent",
+        "password_hash": "0123456789abcdef0123456789abcdef:777054fd574605fc2b1077cb1740c08bdd953794b98f5d7df8e8b9fdca8b9866"  # HospitalAdmin#2026!
+    },
+    "admin_director": {
+        "role": ACCESS_MANAGEMENT,
+        "dept": "Executive Office",
+        "name": "Managing Director",
+        "password_hash": "0123456789abcdef0123456789abcdef:ec69621be96a53dceb95ef86ac08fcb952e76bb0fd5be06c04ce8a6b2f78c1d1"  # DirectorMgmt#2026!
+    }
 }
 
 
 def authenticate_and_issue_staff_token(
     staff_id: str,
-    secret_key: Optional[str] = None
+    password: Optional[str] = None,
+    service_key: Optional[str] = None
 ) -> Tuple[bool, Optional[str], Optional[str], Optional[str]]:
     """
-    Verifies staff identity server-side before issuing signed session tokens.
-    STRICT AUDIT RULE: Never permits client-selected roles.
+    Verifies staff identity and credentials server-side before issuing signed session tokens.
+    STRICT SECURITY RULES:
+    1. Knowing a valid staff ID alone CANNOT issue an authentication token.
+    2. Requires valid verified password or trusted internal service key.
+    3. Never permits client-selected roles; roles are derived strictly from internal registry.
     Returns: (is_authenticated, token_or_error_msg, assigned_role, staff_name)
     """
     clean_id = staff_id.strip() if staff_id else ""
     if not clean_id:
-        return False, "Staff ID is required.", None, None
+        return False, "Authentication failed: Staff ID is required.", None, None
 
     staff_entry = STAFF_DIRECTORY.get(clean_id)
     if not staff_entry:
-        return False, f"Unauthorized: Staff ID '{clean_id}' is not recognized in hospital staff directory.", None, None
+        return False, f"Authentication failed: Staff ID '{clean_id}' is not recognized in hospital staff directory.", None, None
+
+    # Check for trusted machine-to-machine internal service key
+    is_trusted_service = False
+    if service_key and isinstance(service_key, str) and SESSION_SECRET:
+        if hmac.compare_digest(service_key.strip(), SESSION_SECRET):
+            is_trusted_service = True
+
+    if not is_trusted_service:
+        clean_pw = password.strip() if password else ""
+        if not clean_pw:
+            return False, "Authentication failed: Password is required. Knowing a staff ID alone cannot issue an authentication token.", None, None
+
+        stored_hash = staff_entry.get("password_hash", "")
+        if not stored_hash or not verify_password(clean_pw, stored_hash):
+            return False, "Authentication failed: Invalid staff password or unauthorized credentials.", None, None
 
     assigned_role = staff_entry["role"]
     staff_name = staff_entry.get("name", "Hospital Staff")

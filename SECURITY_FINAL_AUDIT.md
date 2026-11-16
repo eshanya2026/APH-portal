@@ -184,3 +184,4 @@ Penetration testing with synthetic injection payloads confirmed that neither loc
 | **Prompt Injection Resilience** | **VERIFIED** | None. Untrusted boundary delimiters active. |
 | **Gemini API Key Rotation** | **PENDING** | **BLOCKER**: Institutional administrators must rotate and configure the new key in the production environment. |
 | **Institutional DPA Agreement** | **PENDING** | **OPERATIONAL**: Sign institutional business associate agreement (BAA/DPA) with Google Cloud before setting `APH_GEMINI_DPA_APPROVED=true`. |
+

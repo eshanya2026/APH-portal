@@ -82,3 +82,4 @@
 | **Missing PDFs & Scanned OCR** | **OPERATIONAL** | No (Non-blocking content enhancement) |
 
 **Recommendation:** The system is **100% ready for Staging / Internal Hospital Staff UAT** using local grounded search. Production deployment must remain paused until hospital administration rotates the Gemini API key and executes the DPA.
+

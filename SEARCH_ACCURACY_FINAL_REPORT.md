@@ -150,3 +150,4 @@ Stage 3 Fallback:      ██████████████████ 17
 
 * **Peak Memory Usage:** Under 45 MB RSS for the Python daemon.
 * **Throughput Capacity:** Capable of sustaining $> 250\text{ requests/sec}$ without thread degradation.
+

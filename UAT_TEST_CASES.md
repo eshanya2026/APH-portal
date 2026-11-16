@@ -108,3 +108,4 @@
 * **Average Application Launch Latency:** 1.3 ms
 * **Average FTS5 Knowledge Retrieval Latency:** 11.4 ms
 * **Security & Fail-Closed Accuracy:** 100.0%
+
