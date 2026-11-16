@@ -639,6 +639,78 @@
     "hubPage": "./comitee.html"
   },
   {
+    "title": "HR MOM NOV - 2026",
+    "url": "http://192.168.101.75:3000/files/HR MOM- 11.11.2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/HR MOM- 11.11.2026.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "CPC MOM NOV - 2026",
+    "url": "http://192.168.101.75:3000/files/CPC MOM- 10.11.2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/CPC MOM- 10.11.2026.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "BMW MOM OCT - 2026",
+    "url": "http://192.168.101.75:3000/files/BMW MOM -26.10.2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/BMW MOM -26.10.2026.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "CAC MOM OCT - 2026",
+    "url": "http://192.168.101.75:3000/files/CAC MOM -22.10.2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/CAC MOM -22.10.2026.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "QC MOM OCT - 2026",
+    "url": "http://192.168.101.75:3000/files/QC MOM  29.09.2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/QC MOM  29.09.2026.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "FMS MOM SEP - 2026",
+    "url": "http://192.168.101.75:3000/files/SAFETY MOM- 29.09.2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/SAFETY MOM- 29.09.2026.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "BTC MOM SEP - 2026",
+    "url": "http://192.168.101.75:3000/files/BTC MOM - 22.09.2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/BTC MOM - 22.09.2026.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
+    "title": "MRD MOM AUG - 2026",
+    "url": "http://192.168.101.75:3000/files/MRD MOM -25.08.2026.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/MRD MOM -25.08.2026.pdf",
+    "category": "Committees & MOM",
+    "description": "Statutory hospital committee meeting minutes, audit calendar, or clinical governance record",
+    "badge": "Committee",
+    "hubPage": "./comitee.html"
+  },
+  {
     "title": "CPR MOM AUG - 2026",
     "url": "http://192.168.101.75:3000/files/CPR MOM 25.08.2026.pdf",
     "canonicalUrl": "http://192.168.101.75:3000/files/CPR MOM 25.08.2026.pdf",
@@ -3564,24 +3636,6 @@
     "hubPage": "./index.html#applications"
   },
   {
-    "title": "HRMS Staff Self-Service Login",
-    "url": "http://www.mapims.online/staff",
-    "canonicalUrl": "http://www.mapims.online/staff",
-    "category": "Core Systems",
-    "description": "Hospital employee self-service login portal",
-    "badge": "HRMS",
-    "hubPage": "./index.html#applications"
-  },
-  {
-    "title": "HRMS Admin Management Portal",
-    "url": "http://www.mapims.online/",
-    "canonicalUrl": "http://www.mapims.online/",
-    "category": "Core Systems",
-    "description": "Administration portal for HR management, recruitment and employee records",
-    "badge": "HRMS",
-    "hubPage": "./index.html#applications"
-  },
-  {
     "title": "Campus Ticketing & Maintenance Desk (Job Orders)",
     "url": "http://www.mapimshis.com/mapims/",
     "canonicalUrl": "http://www.mapimshis.com/mapims/",
@@ -3636,13 +3690,13 @@
     "hubPage": "./index.html#applications"
   },
   {
-    "title": "MAPIMS AI Health Assessment",
+    "title": "MAPIMS AI Health Assessment (Master Health Checkup / MHC)",
     "url": "https://mh.mapims.edu.in/",
     "canonicalUrl": "https://mh.mapims.edu.in/",
-    "category": "Clinical Apps",
-    "description": "Health assessment and digital clinical screening application",
-    "badge": "Clinical App",
-    "hubPage": "./index.html#applications"
+    "category": "In-House Developed Applications",
+    "description": "Master Health Checkup (MHC), clinical screening, AI health assessment and preventive triage platform",
+    "badge": "In-House App",
+    "hubPage": "./index.html#in-house-apps"
   },
   {
     "title": "Clinical Checklist App",

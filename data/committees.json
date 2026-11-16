@@ -10,19 +10,59 @@
     "isNew": false
   },
   {
+    "title": "HR MOM NOV - 2026",
+    "url": "http://192.168.101.75:3000/files/HR MOM- 11.11.2026.pdf",
+    "isNew": true
+  },
+  {
+    "title": "CPC MOM NOV - 2026",
+    "url": "http://192.168.101.75:3000/files/CPC MOM- 10.11.2026.pdf",
+    "isNew": true
+  },
+  {
+    "title": "BMW MOM OCT - 2026",
+    "url": "http://192.168.101.75:3000/files/BMW MOM -26.10.2026.pdf",
+    "isNew": true
+  },
+  {
+    "title": "CAC MOM OCT - 2026",
+    "url": "http://192.168.101.75:3000/files/CAC MOM -22.10.2026.pdf",
+    "isNew": false
+  },
+  {
+    "title": "QC MOM OCT - 2026",
+    "url": "http://192.168.101.75:3000/files/QC MOM  29.09.2026.pdf",
+    "isNew": false
+  },
+  {
+    "title": "FMS MOM SEP - 2026",
+    "url": "http://192.168.101.75:3000/files/SAFETY MOM- 29.09.2026.pdf",
+    "isNew": false
+  },
+  {
+    "title": "BTC MOM SEP - 2026",
+    "url": "http://192.168.101.75:3000/files/BTC MOM - 22.09.2026.pdf",
+    "isNew": false
+  },
+  {
+    "title": "MRD MOM AUG - 2026",
+    "url": "http://192.168.101.75:3000/files/MRD MOM -25.08.2026.pdf",
+    "isNew": false
+  },
+  {
     "title": "CPR MOM AUG - 2026",
     "url": "http://192.168.101.75:3000/files/CPR MOM 25.08.2026.pdf",
-    "isNew": true
+    "isNew": false
   },
   {
     "title": "IPC MOM JULY- 2026",
     "url": "http://192.168.101.75:3000/files/IPC MOM - 23.07.2026.pdf",
-    "isNew": true
+    "isNew": false
   },
   {
     "title": "CAC MOM JULY - 2026",
     "url": "http://192.168.101.75:3000/files/CAC-MOM--21.07.2026.pdf",
-    "isNew": true
+    "isNew": false
   },
   {
     "title": "FMS MOM JUNE - 2026",

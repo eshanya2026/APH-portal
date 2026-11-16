@@ -215,22 +215,6 @@ systems = [
         "hub_page": "./index.html#applications"
     },
     {
-        "title": "HRMS Staff Self-Service Login",
-        "url": "http://www.mapims.online/staff",
-        "category": "Core Systems",
-        "description": "Hospital employee self-service login portal",
-        "badge": "HRMS",
-        "hub_page": "./index.html#applications"
-    },
-    {
-        "title": "HRMS Admin Management Portal",
-        "url": "http://www.mapims.online/",
-        "category": "Core Systems",
-        "description": "Administration portal for HR management, recruitment and employee records",
-        "badge": "HRMS",
-        "hub_page": "./index.html#applications"
-    },
-    {
         "title": "Campus Ticketing & Maintenance Desk (Job Orders)",
         "url": "http://www.mapimshis.com/mapims/",
         "category": "Core Systems",
@@ -279,12 +263,12 @@ systems = [
         "hub_page": "./index.html#applications"
     },
     {
-        "title": "MAPIMS AI Health Assessment",
+        "title": "MAPIMS AI Health Assessment (Master Health Checkup / MHC)",
         "url": "https://mh.mapims.edu.in/",
-        "category": "Clinical Apps",
-        "description": "Health assessment and digital clinical screening application",
-        "badge": "Clinical App",
-        "hub_page": "./index.html#applications"
+        "category": "In-House Developed Applications",
+        "description": "Master Health Checkup (MHC), clinical screening, AI health assessment and preventive triage platform",
+        "badge": "In-House App",
+        "hub_page": "./index.html#in-house-apps"
     },
     {
         "title": "Clinical Checklist App",
@@ -538,22 +522,6 @@ portal_docs = [
         "category": "HR Forms",
         "description": "Official PruWorks HRMS portal for staff biometric attendance, leave applications & balance, shift duty, and monthly payslips",
         "badge": "HRMS",
-        "hub_page": "./hrforms.html"
-    },
-    {
-        "title": "HRMS Staff Self-Service Login",
-        "url": "http://www.mapims.online/staff",
-        "category": "HR Forms",
-        "description": "Employee self-service login for attendance regularisation, profile, and HR circulars",
-        "badge": "Staff Portal",
-        "hub_page": "./hrforms.html"
-    },
-    {
-        "title": "HRMS Admin Management Portal",
-        "url": "http://www.mapims.online/",
-        "category": "HR Forms",
-        "description": "Institutional Human Resources administration and staff records management",
-        "badge": "Admin Portal",
         "hub_page": "./hrforms.html"
     },
     {

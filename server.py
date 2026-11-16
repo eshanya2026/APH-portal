@@ -14,7 +14,7 @@ import urllib.request
 import urllib.error
 import urllib.parse
 import html
-from http.server import HTTPServer, SimpleHTTPRequestHandler
+from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 
 PORT = 3000
 if len(sys.argv) > 1:
@@ -149,6 +149,11 @@ SYNONYMS = {
     # IT, Hardware, Computer & Telecom
     'it': 'information technology computer system workstation pc hardware software network wifi printer email mail cug his kanini itforms',
     'it forms': 'system request form printer request wifi mail email his user creation cug workstation desktop pc itforms',
+    'his form': 'his user creation new his user request form credentials login hospital information system',
+    'his forms': 'his user creation new his user request form credentials login hospital information system',
+    'his user': 'his user creation new his user request form credentials login hospital information system',
+    'his creation': 'his user creation new his user request form credentials login hospital information system',
+    'his account': 'his user creation new his user request form credentials login hospital information system',
     'information technology': 'it forms system printer wifi mail email his cug workstation computer hardware software',
     'kanini': 'system pc computer workstation desktop request hardware cpu கணினி it',
     'kanipori': 'system pc computer workstation hardware கணினி it',
@@ -156,6 +161,19 @@ SYNONYMS = {
     'achagam': 'printer toner cartridge printing request label barcode அச்சகம் it',
     'inaiyam': 'wifi wireless network internet mac binding router இணையம் it',
     'minnanjal': 'official email request mail domain mapims மின்னஞ்சல் it',
+    'enga': 'where find location eppo yenga',
+    'yenga': 'where find location eppo enga',
+    'eruku': 'located where find iruku erukunu',
+    'erukunu': 'located where find iruku irukunu',
+    'iruku': 'located where find eruku erukunu',
+    'irukunu': 'located where find eruku erukunu',
+    'trla': 'unknown where find location therila theriyala trla',
+    'therila': 'unknown where find location trla theriyala',
+    'theriyala': 'unknown where find location trla therila',
+    'venum': 'need want request form vinnappam',
+    'vendum': 'need want request form vinnappam',
+    'fill': 'form fill request submit vinnappam application',
+    'open': 'open view download access form',
     'tholaipesi': 'intercom telephony extension phone contact directory தொலைபேசி அழைப்பு எண்',
     'tholaipasi': 'intercom telephony extension phone contact directory தொலைபேசி அழைப்பு எண்',
     'inaippu': 'extension intercom direct hotline இணைப்பு எண்கள்',
@@ -205,7 +223,7 @@ SYNONYMS = {
     'kuzhanthai': 'paediatric pediatric child infant newborn guardian paed குழந்தை',
     'kulandhai': 'paediatric pediatric child infant newborn guardian paed குழந்தை',
     'pillai': 'paediatric pediatric child infant newborn பிள்ளை',
-    'kan': 'eye ophthalmology vision screening camp கண்',
+    'kan': 'eye ophthalmology vision screening camp kan கண்',
     'thol': 'dermatology skin தோல்',
     'elumbu': 'orthopaedics bone fracture plaster எலும்பு',
     'theevira': 'intensive icu critical care emergency ventilator தீவிர',
@@ -220,6 +238,26 @@ SYNONYMS = {
     'thotru': 'infection control hic bundle cauti clabsi ssi vae தொற்று',
     'aavanam': 'medical records fit mrd discharge summary archive ஆவணம்',
     'kuraigal': 'ticketing maintenance job orders complaint bugs குறைகள்',
+    'pazhuthu': 'ticketing maintenance breakdown repair job order complaint பழுது',
+
+    # In-House Applications & Core Systems
+    'pruworks': 'pruworks hrms mapims leave attendance payslip sambalam salary human resources',
+    'lineloom': 'lineloom token display opd queue token machine appointment வரிசை டோக்கன்',
+    'token': 'lineloom token display opd queue token machine food token உணவு டோக்கன்',
+    'pacs': 'medsynapse pacs xray ct mri ultrasound scan viewer radiology',
+    'medsynapse': 'pacs medsynapse xray ct mri scan viewer radiology',
+    'mrd': 'mrd portal medical records discharge archive summary aavanam ஆவணம்',
+    'ticketing': 'ticketing maintenance desk job order breakdown fault bug complaint குறைகள்',
+    'barcode': 'pathology barcode lab sample tube barcode generator',
+    'eyecamp': 'eye camp screening ophthalmology vision camp',
+    'counselling': 'counselling patient icu counselling app',
+    'ai health': 'mapims ai health checkup screening master health mhc mh மாஸ்டர் ஹெல்த்',
+    'mhc': 'master health checkup screening mapims ai health assessment application mh மாஸ்டர் ஹெல்த் செக்கப்',
+    'master health': 'master health checkup mhc screening mapims ai health assessment application mh மாஸ்டர் ஹெல்த் செக்கப்',
+    'master health checkup': 'mhc master health checkup screening mapims ai health assessment application mh மாஸ்டர் ஹெல்த் செக்கப்',
+    'healthcheck': 'master health checkup mhc ai health assessment screening mh mapims',
+    'health checkup': 'master health checkup mhc ai health assessment screening mh mapims',
+    'scan': 'pacs medsynapse xray ct mri scan viewer radiology',
 
     # Stores, Purchase, Indents & Requisitions
     'indent': 'stores store purchase procurement requisition material stock கொள்முதல்',
@@ -866,7 +904,10 @@ def is_tamil_query(text):
         'avasaram', 'avacharam', 'unavu', 'sapadu', 'sambalam', 'sampalam', 'velai', 'aruvai',
         'sigichai', 'vangi', 'siruneer', 'theevira', 'thol', 'kan', 'en', 'yenn',
         'koopidu', 'pesa', 'pesanum', 'vendum', 'thaanga', 'thanga', 'kudunga', 'sollunga',
-        'manithavalam', 'paniyaalar', 'paathukaapu', 'vaayil'
+        'manithavalam', 'paniyaalar', 'paathukaapu', 'vaayil',
+        'enga', 'yenga', 'eruku', 'iruku', 'erukunu', 'irukunu', 'trla', 'therila', 'theriyala',
+        'venum', 'paakanum', 'pannanum', 'pannu', 'vinnappam', 'opputhal', 'oputhal',
+        'sammatham', 'vidumurai', 'viduppu', 'pazhuthu', 'kuraigal', 'padivam'
     ]
     return any(re.search(r'\b' + re.escape(m) + r'\b', t_lower) for m in tanglish_markers)
 
@@ -1018,8 +1059,27 @@ def search_catalog_candidates(query, limit=6):
     )
     is_leave_query = any(k in q_raw for k in ['vidumurai', 'viduppu', 'விடுமுறை', 'விடுப்பு', 'leavu', 'pandigai', 'holiday', 'leave'])
 
+    is_resignation_query = (
+        any(k in q_raw for k in [
+            'resignation', 'resign', 'relieving', 'relieve', 'notice period', 'exit clearance',
+            'no dues', 'nodues', 'resigning', 'resigned', 'பணி விலகல்', 'ராஜினாமா'
+        ]) or
+        bool({'resignation', 'resign', 'relieving', 'relieve', 'nodues'} & q_tokens)
+    )
+
+    is_job_application_query = (
+        any(k in q_raw for k in [
+            'job form', 'job application', 'job forms', 'job vacancy', 'job apply',
+            'recruitment', 'employment form', 'faculty application', 'staff application',
+            'வேலை விண்ணப்பம்', 'velai vinnappam'
+        ]) or
+        ('job' in q_tokens and any(k in q_raw for k in ['form', 'forms', 'apply', 'application', 'procedure', 'vacancy', 'portal']))
+    )
+
     is_hr_query = (
         is_apply_leave_query or
+        is_resignation_query or
+        is_job_application_query or
         is_word_match('hr', q_raw) or
         is_word_match('hrm', q_raw) or
         is_word_match('hrms', q_raw) or
@@ -1028,9 +1088,11 @@ def search_catalog_candidates(query, limit=6):
             'attendance', 'teaching', 'faculty', 'non-teaching', 'non teaching',
             'faculty application', 'promotion', 'appraisal', 'sambalam', 'சம்பளம்', 'சம்பள', 'ரசீது',
             'velai', 'வேலை', 'vinnappam', 'விண்ணப்பம்', 'pathavi', 'பதவி',
-            'varugai', 'வருகை', 'pms policy', 'staff form', 'employee'
+            'varugai', 'வருகை', 'pms policy', 'staff form', 'employee',
+            'resignation', 'relieving', 'job form', 'job application', 'notice period',
+            'பணி விலகல்', 'ராஜினாமா'
         ]) or
-        bool({'hr', 'hrm', 'hrms', 'payroll', 'payslip', 'attendance', 'pruworks', 'sambalam', 'teaching', 'faculty'} & q_tokens)
+        bool({'hr', 'hrm', 'hrms', 'payroll', 'payslip', 'attendance', 'pruworks', 'sambalam', 'teaching', 'faculty', 'resignation', 'relieving', 'resign'} & q_tokens)
     )
 
     is_blood_query = (
@@ -1049,6 +1111,14 @@ def search_catalog_candidates(query, limit=6):
         (is_word_match('it', q_raw) and not any(k in q_raw for k in ['fit', 'credit', 'audit'])) or
         any(k in q_raw for k in ['it forms', 'kanini', 'கணினி', 'hardware', 'software', 'workstation', 'kanipori']) or
         bool({'kanini', 'hardware', 'software', 'workstation'} & q_tokens)
+    )
+
+    is_his_form_query = (
+        not any(k in q_raw for k in ['mhc', 'master health', 'healthcheck', 'checkup app', 'pruworks', 'pacs', 'ticketing', 'barcode', 'lineloom']) and
+        (
+            any(k in q_raw for k in ['his form', 'his forms', 'his user', 'his creation', 'his account', 'his login form', 'his credential', 'new his user']) or
+            (is_word_match('his', q_raw) and any(k in q_raw for k in ['form', 'forms', 'fill', 'open', 'enga', 'trla', 'therila', 'theriyala', 'venum', 'vendum', 'where', 'find', 'vinnappam', 'access', 'creation', 'account', 'padivam', 'படிவ']))
+        )
     )
 
     is_pure_telecom = is_telecom_query and not find_intercom_department(q_raw)
@@ -1074,8 +1144,8 @@ def search_catalog_candidates(query, limit=6):
     )
 
     is_surgery_query = (
-        any(k in q_raw for k in ['surgery', 'surgical', 'operation', 'procedure', 'procedures', 'aruvai', 'sikitsai', 'sigichai', 'அறுவை', 'சிகிச்சை']) or
-        bool({'surgery', 'surgical', 'operation', 'procedure', 'procedures', 'aruvai', 'sikitsai'} & q_tokens)
+        any(k in q_raw for k in ['surgery', 'surgical', 'operation', 'surgical procedure', 'operative procedure', 'invasive procedure', 'aruvai', 'sikitsai', 'sigichai', 'அறுவை', 'சிகிச்சை']) or
+        bool({'surgery', 'surgical', 'operation', 'aruvai', 'sikitsai'} & q_tokens)
     )
 
     is_dama_query = (
@@ -1091,6 +1161,35 @@ def search_catalog_candidates(query, limit=6):
     is_not_willing_query = (
         any(k in q_raw for k in ['not willing', 'refusal', 'maruppu', 'மறுப்பு'])
     )
+
+    is_lineloom_query = (
+        any(k in q_raw for k in ['lineloom', 'token display', 'opd token', 'opd queue', 'token machine', 'வரிசை']) or
+        ('token' in q_raw and not any(k in q_raw for k in ['food', 'unavu', 'sapadu', 'உணவு']))
+    )
+    is_ticketing_query = (
+        not is_resignation_query and
+        not is_job_application_query and
+        not any(k in q_raw for k in ['resignation', 'resign', 'relieving', 'job form', 'job application', 'leave', 'salary', 'payslip', 'vacancy', 'recruitment', 'பணி விலகல்', 'ராஜினாமா']) and
+        (
+            any(k in q_raw for k in ['ticketing', 'ticket desk', 'maintenance desk', 'job order', 'complaint', 'breakdown', 'pazhuthu', 'kuraigal', 'பழுது', 'புகார்']) or
+            ('ticket' in q_raw and not any(k in q_raw for k in ['food', 'unavu', 'sapadu', 'உணவு']))
+        )
+    )
+    is_pacs_query = any(k in q_raw for k in ['pacs', 'medsynapse', 'xray', 'x-ray', 'ct scan', 'mri', 'scan viewer', 'scan paakanum', 'scan pakanum', 'scan enga', 'radiology scan', 'ஸ்கேன்'])
+    is_mrd_query = any(k in q_raw for k in ['mrd portal', 'mapimsmrd', 'medical records department', 'discharge summary archive', 'case sheet archive']) or ('mrd' in q_raw and not any(k in q_raw for k in ['card', 'word', 'board']))
+    is_ai_health_query = (
+        any(k in q_raw for k in [
+            'mhc', 'master health', 'master health checkup', 'master health check',
+            'ai health', 'mapims ai', 'health checkup', 'health check', 'healthcheck',
+            'ai assessment', 'ai screening', 'mh.mapims', 'mh mapims',
+            'மாஸ்டர் ஹெல்த்', 'ஹெல்த் செக்கப்', 'ஹெல்த் செக்'
+        ]) or
+        'mhc' in q_tokens or
+        bool(re.search(r'\bmhc\b', q_raw))
+    )
+    is_barcode_query = any(k in q_raw for k in ['pathology barcode', 'lab barcode', 'sample barcode', 'barcode generator', 'barcode printer', 'பார்கோடு'])
+    is_eyecamp_query = any(k in q_raw for k in ['eye camp', 'ophthalmology camp', 'vision camp', 'eye screening', 'கண் முகாம்'])
+    is_counselling_query = any(k in q_raw for k in ['counselling', 'counseling', 'patient counselling', 'icu app', 'icu counselling']) and not any(k in q_raw for k in ['checklist', 'casesheet', 'ward shifting'])
 
     scored = []
     for item in PORTAL_CATALOG:
@@ -1115,6 +1214,15 @@ def search_catalog_candidates(query, limit=6):
         doc_domain = classify_doc_domain(item)
 
         # STRICT DOMAIN ISOLATION & PRUNING GUARDRAILS:
+        # 0. Resignation & Job Application Query: STRICTLY PRUNE Ticketing, clinical procedure manuals, and consent
+        if is_resignation_query or is_job_application_query or any(k in q_raw for k in ['resignation', 'resign', 'relieving', 'job form', 'job application', 'பணி விலகல்', 'ராஜினாமா']):
+            if 'ticketing' in title_lower or 'maintenance desk' in title_lower or 'job orders' in title_lower or 'mapimshis.com' in url.lower():
+                continue
+            if doc_domain in ['PHARMACY', 'BLOOD_BANK', 'CONSENT']:
+                continue
+            if any(k in title_lower for k in ['sedation', 'near expiry', 'narcotic', 'adverse event', 'near miss', 'spill', 'blood transfusion', 'needle stick', 'investigation or procedure']):
+                continue
+
         # 1. HR Query: STRICTLY PRUNE Pharmacy, Blood Bank, and Consent documents
         if is_hr_query:
             if doc_domain in ['PHARMACY', 'BLOOD_BANK', 'CONSENT']:
@@ -1250,7 +1358,23 @@ def search_catalog_candidates(query, limit=6):
             if doc_domain == 'HR':
                 score += 180
                 has_hit = True
-                if is_apply_leave_query:
+                if is_resignation_query or is_job_application_query:
+                    if 'human resources manual (hrm - 2025)' in title_lower or 'hrm 2025' in url.lower() or 'human resource manual' in title_lower:
+                        score += 550
+                        has_hit = True
+                    elif 'non-teaching staff application' in title_lower or 'non teaching.pdf' in url.lower():
+                        score += 500
+                        has_hit = True
+                    elif 'teaching faculty application' in title_lower or 'teaching.pdf' in url.lower():
+                        score += 480
+                        has_hit = True
+                    elif 'hr forms hub' in title_lower or title == 'APH HR Forms Hub' or 'hrforms' in url.lower():
+                        score += 400
+                        has_hit = True
+                    elif 'for promotion - non teaching' in title_lower:
+                        score += 150
+                        has_hit = True
+                elif is_apply_leave_query:
                     if 'pruworks' in title_lower or 'hrms' in title_lower:
                         score += 480
                     elif 'hr forms hub' in title_lower or title == 'APH HR Forms Hub' or 'hrm' in title_lower:
@@ -1367,7 +1491,55 @@ def search_catalog_candidates(query, limit=6):
                 score += 50
                 has_hit = True
 
+        # Core Applications & In-House Systems intent
+        if is_lineloom_query:
+            if 'lineloom' in title_lower or '103.158:8086' in url.lower():
+                score += 850
+                has_hit = True
+        if is_ticketing_query:
+            if 'ticketing' in title_lower or 'mapimshis.com' in url.lower():
+                score += 850
+                has_hit = True
+        if is_pacs_query:
+            if 'pacs' in title_lower or 'medsynapse' in title_lower or '101.224' in url.lower():
+                score += 850
+                has_hit = True
+        if is_mrd_query:
+            if 'mrd' in title_lower or 'mapimsmrd' in url.lower():
+                score += 850
+                has_hit = True
+        if is_ai_health_query:
+            if 'ai health' in title_lower or 'mh.mapims.edu.in' in url.lower() or 'mhc' in title_lower or 'master health' in title_lower:
+                score += 850
+                has_hit = True
+        if is_barcode_query:
+            if 'pathology barcode' in title_lower or '103.158:8081' in url.lower():
+                score += 850
+                has_hit = True
+        if is_eyecamp_query:
+            if 'eye camp' in title_lower or '103.158:8082' in url.lower():
+                score += 850
+                has_hit = True
+        if is_counselling_query:
+            if 'counselling' in title_lower or '103.158:8083' in url.lower():
+                score += 850
+                has_hit = True
+
         # 5. IT / Hardware intent
+        if is_his_form_query:
+            if 'his user' in title_lower or 'his user creation' in url.lower():
+                score += 700
+                has_hit = True
+            elif 'doctor name and id' in title_lower:
+                score += 150
+                has_hit = True
+            elif 'item creation' in title_lower:
+                score += 120
+                has_hit = True
+            elif cat == 'IT Forms':
+                score += 100
+                has_hit = True
+
         if is_it_query and not any(k in q_raw for k in ['fit', 'credit', 'audit']):
             if any(k in q_raw for k in ['hardware', 'pc', 'desktop', 'computer', 'system', 'system request', 'hardware indent']):
                 if 'system request' in title_lower:
@@ -1615,8 +1787,12 @@ CORE PORTAL LOCATIONS:
 - M - PACS (Medsynapse): http://192.168.101.224/User_Login.asp
 - Ticketing & Maintenance Desk: http://www.mapimshis.com/mapims/
 - PruWorks HRMS: https://mapims-hrms.tecvinesolutions.com
-- HRMS Staff: http://www.mapimsmrd.com/staff
+- LineLoom OPD Token Display: http://192.168.103.158:8086
 - MRD Portal: http://www.mapimsmrd.com/mapimsmrd/
+- MAPIMS AI Health Checkup: https://mh.mapims.edu.in/
+- Pathology Barcode Generator: http://192.168.103.158:8081
+- Eye Camp Screening System: http://192.168.103.158:8082
+- Counselling & ICU Application: https://192.168.103.158:8083
 - Intercom Telephony Directory: ./intercom.html
 - Consent Forms Vault: ./consent.html
 - Clinical & Common Forms: ./commonforms.html
@@ -1709,8 +1885,19 @@ Instructions for output:
    - For SALARY / PAYSLIP queries: Direct staff to download monthly pay slips via **PruWorks HRMS** or contact HR / Accounts (Ext: 2173 / 2175).
    - For ATTENDANCE queries: Explain that biometric punches and shifts are tracked in **PruWorks HRMS**.
    - For IT TICKETS & FAULTS: Direct staff to log a job order on the **Ticketing & Maintenance Desk** (http://www.mapimshis.com/mapims/) or call IT Support (Ext: 2226 / 2228).
+   - For HIS FORM / HIS USER / FILL HIS FORM / ENGA ERUKU HIS FORM queries: The #1 primary recommended link MUST be **New HIS User Request Form** (http://192.168.101.75:3000/files/His%20User%20Creation.pdf). Direct staff to fill this requisition form for HIS user credentials and access permissions.
    - For HIS SOFTWARE queries: Direct to the **HIS Backbone System** (http://192.168.103.37/BB15SE/Backbone/admin/login.aspx) and New HIS User Request Form in IT Forms.
    - For PACS queries: Direct to **M - PACS Medsynapse** (http://192.168.101.224/User_Login.asp).
+   - For LINELOOM / TOKEN queries: Direct to **LineLoom OPD Token Display** (http://192.168.103.158:8086).
+   - For MRD queries: Direct to **MRD Portal** (http://www.mapimsmrd.com/mapimsmrd/).
+   - For MHC / MASTER HEALTH CHECKUP / AI HEALTH / HEALTHCHECK APP queries (e.g. 'mhc', 'open mhc', 'master health checkup', 'master health check', 'where is this application', 'enga eruku mhc', 'healthcheck app', 'ai health assessment', 'மாஸ்டர் ஹெல்த் செக்கப்'): The #1 primary recommended link MUST be **MAPIMS AI Health Assessment (Master Health Checkup / MHC)** (https://mh.mapims.edu.in/). Explain that it is located in the In-House Developed Applications section (#in-house-apps).
+   - For BARCODE queries: Direct to **Pathology Barcode Generator** (http://192.168.103.158:8081).
+   - For EYE CAMP queries: Direct to **Eye Camp Screening System** (http://192.168.103.158:8082).
+   - For COUNSELLING queries: Direct to **Patient Counselling & ICU Application** (https://192.168.103.158:8083).
+   - For ICU CHECKLIST queries: Direct to **ICU Casesheet Checklist** (http://192.168.101.75:3000/files/ICU%20Casesheet%20Checklist.pdf).
+   - For SBAR queries: Direct to **Handing Over SBAR Record** (http://192.168.101.75:3000/files/HANDING%20OVER%20SBAR.pdf).
+   - For RESIGNATION / RELIEVING / JOB APPLICATION / JOB FORM queries (e.g. 'Procedure Resignation Job Form', 'resignation procedure', 'job form', 'relieving', 'பணி விலகல்', 'ராஜினாமா'): The #1 primary recommended link MUST be **Human Resources Manual (HRM - 2025)** (http://192.168.101.75:3000/files/HRM%202025.pdf), followed by **Non-Teaching Staff Application Form** (http://192.168.101.75:3000/files/Non%20Teaching.pdf), **Teaching Faculty Application & Appraisal Form** (http://192.168.101.75:3000/files/Teaching.pdf), and **APH HR Forms Hub** (./index.html#forms). Explain the official resignation process: formal letter submission to HOD and Admin HR, notice period compliance under HRM 2025, and No-Dues clearance for final relieving certificate. Contact: Admin HR Ext: 2173 / 2169. NEVER recommend Ticketing Desk (Job Orders) or clinical procedure manuals for employment, resignation, or job forms!
+   - For TEACHING / NON-TEACHING jobs: Direct to **Teaching Faculty Application** (http://192.168.101.75:3000/files/Teaching.pdf) or **Non-Teaching Staff Application** (http://192.168.101.75:3000/files/Non%20Teaching.pdf).
 3. Recommend the best matching forms, documents, systems, or contacts.
 4. Every link URL must match an exact verified URL from the list above.
 5. Output MUST be valid JSON with this exact schema:
@@ -2006,6 +2193,58 @@ def query_gemini_ai(user_query, api_key):
             if not any(k in s.lower() for k in ['blood transfusion', 'paediatric', 'pediatric', 'dama', 'admission consent'])
         ]
 
+    # Sanitize resignation, relieving & job form queries: enforce strict exclusion of ticketing and clinical procedure manuals
+    is_resignation_req = any(k in q_lower for k in [
+        'resignation', 'resign', 'relieving', 'relieve', 'notice period', 'exit clearance',
+        'no dues', 'job form', 'job application', 'பணி விலகல்', 'ராஜினாமா'
+    ])
+    if is_resignation_req:
+        validated_links = [
+            l for l in validated_links
+            if not any(k in l.get('title', '').lower() or k in l.get('url', '').lower() for k in [
+                'ticketing', 'maintenance desk', 'mapimshis.com', 'sedation', 'near expiry', 'narcotic', 'near miss', 'spill', 'investigation or procedure'
+            ]) and l.get('category') != 'Consent Forms'
+        ]
+        if not any('hrm 2025' in l.get('url', '').lower() or 'human resource' in l.get('title', '').lower() for l in validated_links):
+            validated_links.insert(0, {
+                "title": "Human Resources Manual (HRM - 2025)",
+                "url": "http://192.168.101.75:3000/files/HRM%202025.pdf",
+                "category": "HR Forms",
+                "badge": "HR Manual"
+            })
+        if not any('non teaching.pdf' in l.get('url', '').lower() for l in validated_links):
+            validated_links.append({
+                "title": "Non-Teaching Staff Application Form",
+                "url": "http://192.168.101.75:3000/files/Non%20Teaching.pdf",
+                "category": "HR Forms",
+                "badge": "HR Form"
+            })
+        if not any('teaching.pdf' in l.get('url', '').lower() for l in validated_links):
+            validated_links.append({
+                "title": "Teaching Faculty Application & Appraisal Form",
+                "url": "http://192.168.101.75:3000/files/Teaching.pdf",
+                "category": "HR Forms",
+                "badge": "HR Form"
+            })
+        if not any('index.html#forms' in l.get('url', '') for l in validated_links):
+            validated_links.append({
+                "title": "APH HR Forms Hub",
+                "url": "./index.html#forms",
+                "category": "Forms Vault",
+                "badge": "HR Hub"
+            })
+        ai_result['suggestions'] = [
+            s for s in ai_result.get('suggestions', [])
+            if not any(k in s.lower() for k in ['ticketing', 'maintenance', 'sedation', 'near expiry', 'narcotic'])
+        ]
+        if len(ai_result['suggestions']) < 2:
+            ai_result['suggestions'] = [
+                "Human Resources Manual 2025",
+                "Non-Teaching Staff Application",
+                "Teaching Faculty Application",
+                "Admin HR Ext: 2173 / 2169"
+            ]
+
     # Sanitize answer & suggestions to ensure PaperZero is never shown
     final_answer = ai_result.get('answer', '')
     if 'paperzero' in final_answer.lower():
@@ -2154,6 +2393,595 @@ def generate_catalog_fallback_result(query, candidates=None):
         ]
         suggestions = ["Informed Consent Form - English", "Informed Consent Form - Tamil", "Consent Forms Vault"]
         return {"answer": answer, "links": links, "suggestions": suggestions}
+
+    # Explicit handling for HIS User Creation / HIS Forms
+    is_his_form_query = (
+        not any(k in q_lower for k in ['mhc', 'master health', 'healthcheck', 'checkup app', 'pruworks', 'pacs', 'ticketing', 'barcode', 'lineloom']) and
+        (
+            any(k in q_lower for k in ['his form', 'his forms', 'his user', 'his creation', 'his account', 'his login form', 'his credential', 'new his user']) or
+            (is_word_match('his', q_lower) and any(k in q_lower for k in ['form', 'forms', 'fill', 'open', 'enga', 'trla', 'therila', 'theriyala', 'venum', 'vendum', 'where', 'find', 'vinnappam', 'access', 'creation', 'account', 'padivam', 'படிவ']))
+        )
+    )
+    if is_his_form_query:
+        if is_tamil:
+            answer = "மருத்துவமனை தகவல் அமைப்பு (HIS) புதிய பயனர் கணக்கு உருவாக்குவதற்கான அதிகாரப்பூர்வ படிவம்: **New HIS User Request Form**. இந்த படிவத்தைப் பூர்த்தி செய்து ஐடி பிரிவில் சமர்ப்பிக்கவும். படிவத்தை நேரடியாக திறக்க அல்லது பதிவிறக்கம் செய்ய கீழே உள்ள இணைப்பை கிளிக் செய்யவும்."
+        else:
+            answer = "To request or create a Hospital Information System (HIS) user account, please use the official **New HIS User Request Form**. Click the link below to open and print the PDF form directly."
+        links = [
+            {"title": "New HIS User Request Form", "url": "http://192.168.101.75:3000/files/His%20User%20Creation.pdf", "category": "IT Forms", "badge": "IT Form"},
+            {"title": "New Doctor Name and ID Creation in HIS", "url": "http://192.168.101.75:3000/files/Doctor%20Name%20and%20ID%20Creation.pdf", "category": "IT Forms", "badge": "IT Form"},
+            {"title": "IT Forms Vault", "url": "./itforms.html", "category": "Forms Vault", "badge": "IT Vault"}
+        ]
+        suggestions = ["New HIS User Request Form", "Doctor ID Creation in HIS", "IT Helpdesk Ext: 2226 / 2228"]
+        return {"answer": answer, "links": links, "suggestions": suggestions}
+
+    # -------------------------------------------------------------
+    # CORE APPLICATIONS & IN-HOUSE SYSTEMS DIRECT RESOLVERS
+    # -------------------------------------------------------------
+    # 1. PruWorks HRMS
+    is_pruworks_query = (
+        'pruworks' in q_lower or
+        'hrms' in q_lower or
+        (any(k in q_lower for k in ['apply leave', 'leave apply', 'leave balance', 'leavu', 'viduppu', 'vidumurai', 'விடுமுறை', 'விடுப்பு']) and not any(k in q_lower for k in ['calendar', 'list of holidays', 'holiday 2026', 'holidays 2026', '2026 holidays'])) or
+        any(k in q_lower for k in ['payslip', 'pay slip', 'salary slip', 'sambalam', 'sampalam', 'சம்பளம்', 'சம்பள', 'ரசீது']) or
+        any(k in q_lower for k in ['biometric punch', 'attendance portal', 'varugai', 'வருகை'])
+    )
+    if is_pruworks_query:
+        if is_tamil:
+            answer = "பணியாளர் வருகை பதிவு (Attendance), சம்பள ரசீதுகள் (Payslips), மற்றும் விடுமுறை விண்ணப்பிக்க (Apply Leave) **PruWorks HRMS Portal** (https://mapims-hrms.tecvinesolutions.com) பயன்படுத்தவும். உங்கள் பணியாளர் எண் மூலம் உள்நுழையலாம். கூடுதல் உதவிக்கு மனிதவளத் துறையை (Admin HR, Ext: 2173 / 2169) தொடர்பு கொள்ளவும்."
+        else:
+            answer = "To apply for leave, track biometric attendance, or download monthly salary pay slips, log in to the official **PruWorks HRMS Portal** (https://mapims-hrms.tecvinesolutions.com). For manual leave slips or HR inquiries, contact the HR Department in the Admin Office (Ext: 2173 / 2169)."
+        links = [
+            {"title": "PruWorks HRMS Portal", "url": "https://mapims-hrms.tecvinesolutions.com", "category": "HR & Payroll", "badge": "System"},
+            {"title": "List of Holidays for the Year 2026", "url": "http://192.168.101.75:3000/files/LIST%20OF%20HOLIDAYS%20FOR%20THE%20YEAR%202026.pdf", "category": "HR Forms", "badge": "Holiday Calendar"},
+            {"title": "Human Resource Manual (HRM) 2025", "url": "http://192.168.101.75:3000/files/HUMAN%20RESOURCE%20MANUAL(HRM)%202025.pdf", "category": "Manuals & SOPs", "badge": "HR Manual"}
+        ]
+        suggestions = ["PruWorks HRMS Staff Login", "List of Holidays 2026", "Admin HR Ext: 2173 / 2169"]
+        return {"answer": answer, "links": links, "suggestions": suggestions}
+
+    # 2. LineLoom OPD Token Display
+    is_lineloom_query = (
+        any(k in q_lower for k in ['lineloom', 'token display', 'opd token', 'token machine', 'opd queue', 'வரிசை']) or
+        ('token' in q_lower and not any(k in q_lower for k in ['food', 'unavu', 'sapadu', 'உணவு']))
+    )
+    if is_lineloom_query:
+        if is_tamil:
+            answer = "புறநோயாளி பிரிவு வரிசை மேலாண்மை மற்றும் நேரலை டோக்கன் காட்சி அமைப்பு: **LineLoom Token Display**. தற்போதைய நோயாளி டோக்கன் எண்கள் மற்றும் அழைப்புகளை நேரடியாக திரையிட கீழே உள்ள இணைப்பைத் திறக்கவும்."
+        else:
+            answer = "For outpatient department queue management and real-time patient queue visualization, open the **LineLoom OPD Token Display System**. Access the live display terminal via the link below."
+        links = [
+            {"title": "LineLoom OPD Token Display System", "url": "http://192.168.103.158:8086", "category": "Clinical Systems", "badge": "System"},
+            {"title": "Core Applications Hub", "url": "./index.html#core-systems", "category": "Core Systems", "badge": "Hub"}
+        ]
+        suggestions = ["LineLoom Token Display", "Core Hospital Applications", "OPD Intercom: 2001"]
+        return {"answer": answer, "links": links, "suggestions": suggestions}
+
+    # 3. Ticketing & Maintenance Desk
+    is_ticketing_query = (
+        any(k in q_lower for k in ['ticketing', 'ticket desk', 'maintenance desk', 'job order', 'complaint', 'breakdown', 'pazhuthu', 'kuraigal', 'பழுது', 'புகார்']) or
+        ('ticket' in q_lower and not any(k in q_lower for k in ['food', 'unavu', 'sapadu', 'உணவு']))
+    )
+    if is_ticketing_query:
+        if is_tamil:
+            answer = "கணினி வன்பொருள், இணைய இணைப்பு, மென்பொருள் குறைபாடுகள் மற்றும் மருத்துவமனை பராமரிப்பு பணிகளுக்கான வேலை உத்தரவு (Job Order) அல்லது புகார்களைப் பதிவு செய்ய **Ticketing & Maintenance Desk** (http://www.mapimshis.com/mapims/) தளத்தைப் பயன்படுத்தவும். அவசர கணினி உதவிக்கு IT பிரிவை (Ext: 2226 / 2228) அழைக்கவும்."
+        else:
+            answer = "To report hardware breakdowns, network faults, HIS software issues, or hospital facility repairs, register a job order on the **Ticketing & Maintenance Desk** (http://www.mapimshis.com/mapims/). For urgent IT assistance, call the IT Help Desk at Ext: 2226 (Hardware) or 2228 (Software)."
+        links = [
+            {"title": "Ticketing & Maintenance Desk", "url": "http://www.mapimshis.com/mapims/", "category": "IT & Maintenance", "badge": "System"},
+            {"title": "System Request Form", "url": "http://192.168.101.75:3000/files/SYSTEM%20REQUEST%20FORM.pdf", "category": "IT Forms", "badge": "IT Form"},
+            {"title": "IT Forms Vault", "url": "./itforms.html", "category": "Forms Vault", "badge": "IT Vault"}
+        ]
+        suggestions = ["Ticketing & Maintenance Desk", "IT Hardware Support Ext: 2226", "IT Software Support Ext: 2228"]
+        return {"answer": answer, "links": links, "suggestions": suggestions}
+
+    # 4. M - PACS (Medsynapse)
+    is_pacs_query = any(k in q_lower for k in ['pacs', 'medsynapse', 'xray', 'x-ray', 'ct scan', 'mri', 'scan viewer', 'scan paakanum', 'scan pakanum', 'scan enga', 'radiology scan', 'ஸ்கேன்'])
+    if is_pacs_query:
+        if is_tamil:
+            answer = "கதிரியக்க பரிசோதனை படங்கள் (X-Ray, CT, MRI, Ultrasound) பார்க்க **M - PACS (Medsynapse)** கதிரியக்க காட்சி தளத்தை (http://192.168.101.224/User_Login.asp) பயன்படுத்தவும். உங்கள் உள்நுழைவு மூலம் ஸ்கேன்களை உடனுக்குடன் அணுகலாம். அவசர அறிக்கைகளுக்கு கதிரியக்கத் துறையை (Ext: 2700 / 2699) அழைக்கவும்."
+        else:
+            answer = "Diagnostic radiology scans and imaging studies (Digital X-Ray, CT Scan, MRI, Ultrasound) are accessed through the **M - PACS (Medsynapse)** viewer at http://192.168.101.224/User_Login.asp. For urgent scan availability or radiologist consultation, contact Radiology at Ext: 2700 / 2699."
+        links = [
+            {"title": "M - PACS (Medsynapse Radiology Viewer)", "url": "http://192.168.101.224/User_Login.asp", "category": "Clinical Systems", "badge": "System"},
+            {"title": "Core Applications Hub", "url": "./index.html#core-systems", "category": "Core Systems", "badge": "Hub"}
+        ]
+        suggestions = ["M - PACS Medsynapse Login", "Radiology Ext: 2700 / 2699", "Core Hospital Applications"]
+        return {"answer": answer, "links": links, "suggestions": suggestions}
+
+    # 5. MRD Portal
+    is_mrd_query = any(k in q_lower for k in ['mrd portal', 'mapimsmrd', 'medical records department', 'discharge summary archive', 'case sheet archive']) or ('mrd' in q_lower and not any(k in q_lower for k in ['card', 'word', 'board']))
+    if is_mrd_query:
+        if is_tamil:
+            answer = "மருத்துவ ஆவணக் காப்பகம், பழைய கேஸ் ஷீட்டுகள் மற்றும் டிஸ்சார்ஜ் சுருக்கங்களை அணுக **MRD Medical Records Portal** (http://www.mapimsmrd.com/mapimsmrd/) பயன்படுத்தவும். ஆவணத் துறை உதவிக்கு MRD பிரிவை (Ext: 2012) தொடர்பு கொள்ளவும்."
+        else:
+            answer = "The **MRD Medical Records Portal** (http://www.mapimsmrd.com/mapimsmrd/) manages patient case sheets, discharge summaries, and medical record archives. For medical record inquiries or physical file retrieval, contact the MRD Department at Ext: 2012."
+        links = [
+            {"title": "MRD Medical Records Portal", "url": "http://www.mapimsmrd.com/mapimsmrd/", "category": "Clinical Systems", "badge": "System"},
+            {"title": "Core Applications Hub", "url": "./index.html#core-systems", "category": "Core Systems", "badge": "Hub"}
+        ]
+        suggestions = ["MRD Medical Records Portal", "MRD Extension: 2012", "Core Systems Hub"]
+        return {"answer": answer, "links": links, "suggestions": suggestions}
+
+    # 6. MAPIMS AI Health Checkup / Master Health Checkup (MHC)
+    is_ai_health_query = (
+        any(k in q_lower for k in [
+            'mhc', 'master health', 'master health checkup', 'master health check',
+            'ai health', 'mapims ai', 'health checkup', 'health check', 'healthcheck',
+            'ai assessment', 'ai screening', 'mh.mapims', 'mh mapims',
+            'மாஸ்டர் ஹெல்த்', 'ஹெல்த் செக்கப்', 'ஹெல்த் செக்'
+        ]) or
+        'mhc' in q_lower.split() or
+        bool(re.search(r'\bmhc\b', q_lower))
+    )
+    if is_ai_health_query:
+        if is_tamil:
+            answer = "மாஸ்டர் ஹெல்த் செக்கப் (Master Health Checkup - MHC) மற்றும் செயற்கை நுண்ணறிவு சுகாதார மதிப்பீட்டுத் தளம்: **MAPIMS AI Health Assessment (Master Health Checkup / MHC)**. இணைய முகவரி: https://mh.mapims.edu.in/. நோயாளிகளின் விரிவான உடல் பரிசோதனை, ஆரம்பகால சுகாதார நிலை மற்றும் மருத்துவ அறிக்கைகளை ஆய்வு செய்ய கீழே உள்ள தளத்தை நேரடியாகத் திறக்கவும். இந்த செயலி போர்ட்டலின் In-House Developed Applications பகுதியில் உள்ளது."
+        else:
+            answer = "The official Master Health Checkup (MHC) and clinical triage application is the **MAPIMS AI Health Assessment (Master Health Checkup / MHC)** platform (https://mh.mapims.edu.in/). It is hosted in the **In-House Developed Applications** section (#in-house-apps). Click below to launch the web application directly in a new tab."
+        links = [
+            {"title": "MAPIMS AI Health Assessment (Master Health Checkup / MHC)", "url": "https://mh.mapims.edu.in/", "category": "In-House Developed Applications", "badge": "In-House App"},
+            {"title": "In-House Developed Applications Hub", "url": "./index.html#in-house-apps", "category": "Core Systems", "badge": "Hub"}
+        ]
+        suggestions = ["Open MHC (Master Health Checkup)", "MAPIMS AI Health Assessment", "Master Health Checkup Intercom: 2001"]
+        return {"answer": answer, "links": links, "suggestions": suggestions}
+
+    # 7. Pathology Barcode Generator
+    is_barcode_query = any(k in q_lower for k in ['pathology barcode', 'lab barcode', 'sample barcode', 'barcode generator', 'barcode printer', 'பார்கோடு'])
+    if is_barcode_query:
+        if is_tamil:
+            answer = "ஆய்வக ரத்த மற்றும் திசு மாதிரிகளுக்கான பார்கோடு உருவாக்கும் தளம்: **Pathology Barcode Generator** (http://192.168.103.158:8081). மாதிரி குழாய்களுக்கு பார்கோடு லேபிள்களை அச்சிட தளத்தை நேரடியாக திறக்கவும்."
+        else:
+            answer = "For laboratory specimen tracking, accessioning, and barcode tube label printing, launch the **Pathology Barcode Generator** at http://192.168.103.158:8081."
+        links = [
+            {"title": "Pathology Barcode Generator", "url": "http://192.168.103.158:8081", "category": "Laboratory", "badge": "System"},
+            {"title": "In-House Applications", "url": "./index.html#core-systems", "category": "Core Systems", "badge": "Hub"}
+        ]
+        suggestions = ["Pathology Barcode Generator", "Central Lab Ext: 2125", "In-House Hospital Applications"]
+        return {"answer": answer, "links": links, "suggestions": suggestions}
+
+    # 8. Eye Camp Screening System
+    is_eyecamp_query = any(k in q_lower for k in ['eye camp', 'ophthalmology camp', 'vision camp', 'eye screening', 'கண் முகாம்'])
+    if is_eyecamp_query:
+        if is_tamil:
+            answer = "கண் மருத்துவ முகாம் நோயாளி பதிவு மற்றும் பார்வை பரிசோதனை தளம்: **Eye Camp Screening System** (http://192.168.103.158:8082). முகாம் பதிவுகளை நிர்வகிக்க கீழே உள்ள இணைப்பைத் திறக்கவும்."
+        else:
+            answer = "Manage field outreach eye screening camps, patient vision examinations, and referral registrations via the **Eye Camp Screening System** at http://192.168.103.158:8082."
+        links = [
+            {"title": "Eye Camp Screening System", "url": "http://192.168.103.158:8082", "category": "Outreach", "badge": "System"},
+            {"title": "In-House Applications", "url": "./index.html#core-systems", "category": "Core Systems", "badge": "Hub"}
+        ]
+        suggestions = ["Eye Camp Screening System", "Ophthalmology OPD Ext: 2025", "In-House Hospital Applications"]
+        return {"answer": answer, "links": links, "suggestions": suggestions}
+
+    # 9. Counselling & ICU Application
+    is_counselling_query = any(k in q_lower for k in ['counselling', 'counseling', 'patient counselling', 'icu app', 'icu counselling']) and not any(k in q_lower for k in ['checklist', 'casesheet', 'ward shifting'])
+    if is_counselling_query:
+        if is_tamil:
+            answer = "நோயாளி மற்றும் குடும்பத்தினர் ஆலோசனை மற்றும் தீவிர சிகிச்சை பிரிவு மேலாண்மை தளம்: **Patient Counselling & ICU Application** (https://192.168.103.158:8083). தளத்தை நேரடியாக திறக்க கீழே உள்ள இணைப்பை கிளிக் செய்யவும்."
+        else:
+            answer = "For specialized critical care patient communication and clinical counseling documentation, access the **Patient Counselling & ICU Application** at https://192.168.103.158:8083."
+        links = [
+            {"title": "Patient Counselling & ICU Application", "url": "https://192.168.103.158:8083", "category": "Clinical Systems", "badge": "System"},
+            {"title": "In-House Applications", "url": "./index.html#core-systems", "category": "Core Systems", "badge": "Hub"}
+        ]
+        suggestions = ["Patient Counselling & ICU Application", "ICU Extension: 2156", "In-House Hospital Applications"]
+        return {"answer": answer, "links": links, "suggestions": suggestions}
+
+    # 10. HIS Login (Backbone / AOSTA Clinical Workstation)
+    is_his_system_query = (
+        not any(k in q_lower for k in ['mhc', 'master health', 'healthcheck', 'checkup app', 'pruworks', 'pacs', 'ticketing', 'barcode', 'lineloom']) and
+        (is_word_match('his', q_lower) or 'aosta' in q_lower or 'backbone' in q_lower) and
+        any(k in q_lower for k in ['login', 'portal', 'software', 'open his', 'his open', 'his system', 'access his']) and
+        not is_his_form_query
+    )
+    if is_his_system_query:
+        if is_tamil:
+            answer = "மருத்துவமனை தகவல் அமைப்பு (HIS - Backbone / AOSTA) முதன்மை உள்நுழைவு தளம்: http://192.168.103.37/BB15SE/Backbone/admin/login.aspx. நோயாளி பதிவு, மருத்துவர் ஆலோசனை, மற்றும் பில்லிங் பணிகளுக்கு நேரடியாக திறக்கலாம்."
+        else:
+            answer = "The hospital information system (HIS - Backbone / AOSTA) clinical workstation login is available at http://192.168.103.37/BB15SE/Backbone/admin/login.aspx. Launch the system directly below."
+        links = [
+            {"title": "Hospital Information System (HIS Backbone Login)", "url": "http://192.168.103.37/BB15SE/Backbone/admin/login.aspx", "category": "Core Systems", "badge": "System"},
+            {"title": "New HIS User Request Form", "url": "http://192.168.101.75:3000/files/His%20User%20Creation.pdf", "category": "IT Forms", "badge": "IT Form"},
+            {"title": "IT Forms Vault", "url": "./itforms.html", "category": "Forms Vault", "badge": "IT Vault"}
+        ]
+        suggestions = ["HIS Backbone Login", "New HIS User Request Form", "IT Software Support Ext: 2228"]
+        return {"answer": answer, "links": links, "suggestions": suggestions}
+
+    # -------------------------------------------------------------
+    # FORMS DIRECT RESOLVERS (IT, CLINICAL COMMON, HR, CONSENT)
+    # -------------------------------------------------------------
+    # IT Forms
+    if any(k in q_lower for k in ['doctor id', 'doctor creation', 'doctor name and id', 'maruthuvar id', 'maruthuvar peyar', 'மருத்துவர் பெயர்', 'மருத்துவர் ஐடி']):
+        if is_tamil:
+            answer = "HIS அமைப்பில் புதிய மருத்துவர் பெயர் மற்றும் பயனர் அடையாள எண் (Doctor ID) உருவாக்குவதற்கான அதிகாரப்பூர்வ படிவம்: **New Doctor Name and ID Creation in HIS**."
+        else:
+            answer = "To configure a new physician profile and allocate clinical ID credentials in HIS, use the official **New Doctor Name and ID Creation in HIS** form."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "New Doctor Name and ID Creation in HIS", "url": "http://192.168.101.75:3000/files/Doctor%20Name%20and%20ID%20Creation.pdf", "category": "IT Forms", "badge": "IT Form"},
+                {"title": "IT Forms Vault", "url": "./itforms.html", "category": "Forms Vault", "badge": "IT Vault"}
+            ],
+            "suggestions": ["Doctor Name and ID Creation", "New HIS User Request Form", "IT Helpdesk Ext: 2228"]
+        }
+
+    if any(k in q_lower for k in ['item creation', 'new item in his', 'item creation form', 'porul creation', 'மருந்து பொருள் சேர்ப்பு']):
+        if is_tamil:
+            answer = "HIS மற்றும் பார்மசி அமைப்பில் புதிய மருந்துகள் அல்லது மருத்துவப் பொருட்களைச் சேர்க்க **Item Creation in HIS Form** படிவத்தைப் பயன்படுத்தவும்."
+        else:
+            answer = "To introduce new pharmaceutical items or consumable catalog entries into the HIS master database, use the official **Item Creation in HIS Form**."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "Item Creation in HIS Form", "url": "http://192.168.101.75:3000/files/Item%20Creation%20Form.pdf", "category": "IT Forms", "badge": "IT Form"},
+                {"title": "IT Forms Vault", "url": "./itforms.html", "category": "Forms Vault", "badge": "IT Vault"}
+            ],
+            "suggestions": ["Item Creation in HIS Form", "IT Helpdesk Ext: 2228", "IT Forms Vault"]
+        }
+
+    if any(k in q_lower for k in ['wifi', 'wi-fi', 'wireless', 'inaiyam', 'இணையம்', 'mac address request']) and not is_telecom_query:
+        if is_tamil:
+            answer = "மருத்துவமனை வளாக வைஃபை (Campus Wi-Fi) இணைப்பைப் பெற பணியாளர்கள் **Employee WIFI Request Form** படிவத்தைப் பூர்த்தி செய்து IT பிரிவில் வழங்கவும்."
+        else:
+            answer = "To register laptops or mobile devices for hospital campus Wi-Fi connectivity, submit the official **Employee WIFI Request Form** to IT."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "Employee WIFI Request Form", "url": "http://192.168.101.75:3000/files/EMPLOYEE%20WIFI%20REQUEST%20FORM.pdf", "category": "IT Forms", "badge": "IT Form"},
+                {"title": "IT Forms Vault", "url": "./itforms.html", "category": "Forms Vault", "badge": "IT Vault"}
+            ],
+            "suggestions": ["Employee WIFI Request Form", "IT Hardware Support Ext: 2226", "IT Forms Vault"]
+        }
+
+    if any(k in q_lower for k in ['system request', 'desktop request', 'pc request', 'computer request', 'workstation request', 'hardware request', 'கணினி கோரிக்கை']):
+        if is_tamil:
+            answer = "துறைகளுக்கு புதிய கணினி, டெஸ்க்டாப் அல்லது வன்பொருள் உபகரணங்கள் கோர **System Request Form** படிவத்தைப் பயன்படுத்தவும்."
+        else:
+            answer = "To requisition desktop workstations, PC peripherals, or computer hardware for departmental use, fill out the official **System Request Form**."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "System Request Form", "url": "http://192.168.101.75:3000/files/SYSTEM%20REQUEST%20FORM.pdf", "category": "IT Forms", "badge": "IT Form"},
+                {"title": "IT Forms Vault", "url": "./itforms.html", "category": "Forms Vault", "badge": "IT Vault"}
+            ],
+            "suggestions": ["System Request Form", "Printer Request Form", "IT Hardware Support Ext: 2226"]
+        }
+
+    if any(k in q_lower for k in ['printer request', 'printer form', 'toner request', 'cartridge request', 'acchaagam', 'achagam', 'அச்சகம்']):
+        if is_tamil:
+            answer = "துறை பயன்பாட்டிற்கான புதிய பிரிண்டர் அல்லது டோனர் கார்ட்ரிட்ஜ் கோர **Printer Request Form** படிவத்தைப் பயன்படுத்தவும்."
+        else:
+            answer = "To request departmental printing hardware, barcode label printers, or replacement toner cartridges, submit the official **Printer Request Form**."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "Printer Request Form", "url": "http://192.168.101.75:3000/files/PRINTER%20REQUEST%20FORM.pdf", "category": "IT Forms", "badge": "IT Form"},
+                {"title": "IT Forms Vault", "url": "./itforms.html", "category": "Forms Vault", "badge": "IT Vault"}
+            ],
+            "suggestions": ["Printer Request Form", "System Request Form", "IT Hardware Support Ext: 2226"]
+        }
+
+    if any(k in q_lower for k in ['cug request', 'sim request', 'cug sim', 'mobile connection form', 'சிம்']):
+        if is_tamil:
+            answer = "அதிகாரப்பூர்வ CUG சிம் கார்டு மற்றும் மொபைல் இணைப்பு கோர **SIM CUG Request Form** படிவத்தைப் பயன்படுத்தவும்."
+        else:
+            answer = "To requisition official hospital Closed User Group (CUG) mobile SIM cards for clinical staff, use the **SIM CUG Request Form**."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "SIM CUG Request Form", "url": "http://192.168.101.75:3000/files/SIM%20CUG%20REQUEST%20FORM.pdf", "category": "IT Forms", "badge": "IT Form"},
+                {"title": "IT Forms Vault", "url": "./itforms.html", "category": "Forms Vault", "badge": "IT Vault"}
+            ],
+            "suggestions": ["SIM CUG Request Form", "Official Email ID Request Form", "IT Helpdesk Ext: 2226"]
+        }
+
+    if any(k in q_lower for k in ['official email', 'email id request', 'email request form', 'mail request', 'minnanjal', 'மின்னஞ்சல்']):
+        if is_tamil:
+            answer = "பணியாளர்களுக்கான அதிகாரப்பூர்வ MAPIMS மின்னஞ்சல் முகவரி பெற **Official Email ID Request Form** படிவத்தைப் பயன்படுத்தவும்."
+        else:
+            answer = "To request an official institutional email account on the MAPIMS domain, fill out the **Official Email ID Request Form**."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "Official Email ID Request Form", "url": "http://192.168.101.75:3000/files/OFFICIAL%20EMAIL%20ID%20REQUEST%20FORM.pdf", "category": "IT Forms", "badge": "IT Form"},
+                {"title": "IT Forms Vault", "url": "./itforms.html", "category": "Forms Vault", "badge": "IT Vault"}
+            ],
+            "suggestions": ["Official Email ID Request Form", "SIM CUG Request Form", "IT Helpdesk Ext: 2226"]
+        }
+
+    # Clinical & Common Forms
+    if any(k in q_lower for k in ['icu casesheet', 'icu checklist', 'theevira sigichai checklist', 'தீவிர சிகிச்சை சரிபார்ப்பு']) and not any(k in q_lower for k in ['shifting', 'ward shift']):
+        if is_tamil:
+            answer = "தீவிர சிகிச்சை பிரிவு (ICU) நோயாளிகளுக்கான விரிவான கேஸ் ஷீட் சரிபார்ப்புப் படிவம்: **ICU Casesheet Checklist**. கீழே உள்ள இணைப்பில் நேரடியாகத் திறக்கலாம்."
+        else:
+            answer = "For systematic clinical documentation and daily audit of critical care patients, use the official **ICU Casesheet Checklist**."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "ICU Casesheet Checklist", "url": "http://192.168.101.75:3000/files/ICU%20Casesheet%20Checklist.pdf", "category": "Common Forms", "badge": "Clinical Form"},
+                {"title": "Clinical & Common Forms", "url": "./commonforms.html", "category": "Forms Vault", "badge": "Hub"}
+            ],
+            "suggestions": ["ICU Casesheet Checklist", "ICU Checklist - Ward Shifting", "Common Forms Vault"]
+        }
+
+    if any(k in q_lower for k in ['ward shifting', 'shifting checklist', 'ward shift', 'icu shift']):
+        if is_tamil:
+            answer = "தீவிர சிகிச்சை பிரிவிலிருந்து வார்டுக்கு நோயாளியை இடமாற்றம் செய்யும் போது பயன்படுத்தப்படும் சரிபார்ப்புப் படிவம்: **ICU Checklist - Ward Shifting**."
+        else:
+            answer = "For safe clinical transition and handover when transferring patients from ICU to general wards, use the **ICU Checklist - Ward Shifting**."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "ICU Checklist - Ward Shifting", "url": "http://192.168.101.75:3000/files/ICU%20CHECKLIST%20-%20WARD%20SHIFTING.pdf", "category": "Common Forms", "badge": "Clinical Form"},
+                {"title": "Clinical & Common Forms", "url": "./commonforms.html", "category": "Forms Vault", "badge": "Hub"}
+            ],
+            "suggestions": ["ICU Checklist - Ward Shifting", "ICU Casesheet Checklist", "Handing Over SBAR Record"]
+        }
+
+    if any(k in q_lower for k in ['sbar', 'handing over', 'handover', 'shift handover', 'nursing handover', 'நோயாளி ஒப்படைப்பு']):
+        if is_tamil:
+            answer = "செவிலியர் மற்றும் மருத்துவ பணியாளர்கள் ஷிப்ட் மாற்றத்தின் போது நோயாளி விவரங்களை ஒப்படைக்க **Handing Over SBAR Record** படிவத்தைப் பயன்படுத்தவும்."
+        else:
+            answer = "For standardized structured clinical communication between shifts, utilize the **Handing Over SBAR Record** (Situation, Background, Assessment, Recommendation)."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "Handing Over SBAR Record", "url": "http://192.168.101.75:3000/files/HANDING%20OVER%20SBAR.pdf", "category": "Common Forms", "badge": "Clinical Form"},
+                {"title": "Clinical & Common Forms", "url": "./commonforms.html", "category": "Forms Vault", "badge": "Hub"}
+            ],
+            "suggestions": ["Handing Over SBAR Record", "ICU Checklist - Ward Shifting", "Common Forms Vault"]
+        }
+
+    if any(k in q_lower for k in ['narcotic', 'narcotics', 'போதை மருந்து']):
+        if is_tamil:
+            answer = "கட்டுப்படுத்தப்பட்ட போதை மருந்துகள் கோர மற்றும் விநியோகிக்க **Narcotic Drugs Form** படிவத்தைப் பயன்படுத்தவும்."
+        else:
+            answer = "For controlled substance dispensing and Schedule X medication accounting, use the official **Narcotic Drugs Form**."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "Narcotic Drugs Form", "url": "http://192.168.101.75:3000/files/NARCOTIC%20DRUGS%20FORM.pdf", "category": "Common Forms", "badge": "Pharmacy Form"},
+                {"title": "Clinical & Common Forms", "url": "./commonforms.html", "category": "Forms Vault", "badge": "Hub"}
+            ],
+            "suggestions": ["Narcotic Drugs Form", "Drug Stores Stock Details", "Hospital Formulary 2025"]
+        }
+
+    if any(k in q_lower for k in ['antibiotic review', 'antibiotics justification', 'antibiotic form', 'நுண்ணுயிர் எதிர்ப்பு']):
+        if is_tamil:
+            answer = "உயர்தர ஆன்டிபயாடிக் மருந்துகள் வழங்குவதற்கான மருத்துவ நியாயப்படுத்தல் படிவம்: **Antibiotics Justification Review Form**."
+        else:
+            answer = "In compliance with antimicrobial stewardship policies, submit the **Antibiotics Justification Review Form** for reserved antibiotics."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "Antibiotics Justification Review Form", "url": "http://192.168.101.75:3000/files/ANTIBIOTICS%20JUSTIFICATION%20REVIEW%20FORM.pdf", "category": "Common Forms", "badge": "Clinical Form"},
+                {"title": "Clinical & Common Forms", "url": "./commonforms.html", "category": "Forms Vault", "badge": "Hub"}
+            ],
+            "suggestions": ["Antibiotics Justification Review Form", "Hospital Formulary 2025", "Antibiogram 2024"]
+        }
+
+    if any(k in q_lower for k in ['adr form', 'adverse drug reaction', 'adr report', 'மருந்து பக்க விளைவு']):
+        if is_tamil:
+            answer = "மருந்துகளின் பாதகமான பக்கவிளைவுகளைப் பதிவு செய்ய **Adverse Drug Reaction (ADR) Form** படிவத்தைப் பயன்படுத்தவும்."
+        else:
+            answer = "For pharmacovigilance and adverse event surveillance, report suspected medication reactions using the **Adverse Drug Reaction (ADR) Form**."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "Adverse Drug Reaction (ADR) Form", "url": "http://192.168.101.75:3000/files/ADR%20Form.pdf", "category": "Common Forms", "badge": "Clinical Form"},
+                {"title": "Clinical & Common Forms", "url": "./commonforms.html", "category": "Forms Vault", "badge": "Hub"}
+            ],
+            "suggestions": ["Adverse Drug Reaction (ADR) Form", "Hospital Formulary 2025", "Common Forms Vault"]
+        }
+
+    if any(k in q_lower for k in ['code blue', 'cardiac arrest record', 'resuscitation record', 'கோட் ப்ளூ']):
+        if is_tamil:
+            answer = "கார்டியாக் அரெஸ்ட் மற்றும் அவசர உயிர்காக்கும் நடவடிக்கைகளின் மதிப்பீட்டுப் படிவம்: **Code Blue Evaluation Record**."
+        else:
+            answer = "To document cardiopulmonary resuscitation and emergency response audit details, use the official **Code Blue Evaluation Record**."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "Code Blue Evaluation Record", "url": "http://192.168.101.75:3000/files/CODE%20BLUE%20EVALUATION%20RECORD.pdf", "category": "Common Forms", "badge": "Emergency Form"},
+                {"title": "Clinical & Common Forms", "url": "./commonforms.html", "category": "Forms Vault", "badge": "Hub"}
+            ],
+            "suggestions": ["Code Blue Evaluation Record", "Emergency Reception Ext: 2001", "Common Forms Vault"]
+        }
+
+    if any(k in q_lower for k in ['food token', 'unavu token', 'sapadu token', 'diet token', 'உணவு டோக்கன்']):
+        if is_tamil:
+            answer = "நோயாளி உதவியாளர்கள் மற்றும் பணியாளர்களுக்கான உணவு டோக்கன் கோரிக்கை படிவம்: **Food Token Requisition Form**."
+        else:
+            answer = "For patient attender dietary passes and authorized meal requisitions, fill out the **Food Token Requisition Form**."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "Food Token Requisition Form", "url": "http://192.168.101.75:3000/files/FOOD%20TOKEN%20REQUISITION%20FORM.pdf", "category": "Common Forms", "badge": "Dietary Form"},
+                {"title": "Clinical & Common Forms", "url": "./commonforms.html", "category": "Forms Vault", "badge": "Hub"}
+            ],
+            "suggestions": ["Food Token Requisition Form", "Dietician Intercom Ext: 2023", "Common Forms Vault"]
+        }
+
+    if any(k in q_lower for k in ['mews', 'modified early warning', 'mews score']):
+        if is_tamil:
+            answer = "நோயாளிகளின் ஆரம்பகால தீவிர எச்சரிக்கை நிலையை மதிப்பிடுவதற்கான படிவம்: **MEWS Score Sheet**."
+        else:
+            answer = "For rapid bedside physiological assessment and early detection of clinical deterioration, use the **MEWS Score Sheet**."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "MEWS Score Sheet", "url": "http://192.168.101.75:3000/files/MEWS%20SCORE%20SHEET.pdf", "category": "Common Forms", "badge": "Clinical Form"},
+                {"title": "Clinical & Common Forms", "url": "./commonforms.html", "category": "Forms Vault", "badge": "Hub"}
+            ],
+            "suggestions": ["MEWS Score Sheet", "ICU Casesheet Checklist", "Common Forms Vault"]
+        }
+
+    if any(k in q_lower for k in ['emergency transfer', 'patient transfer record', 'ambulance transfer', 'நோயாளி இடமாற்றம்']):
+        if is_tamil:
+            answer = "அவசர சிகிச்சை நோயாளி இடமாற்ற ஆவணம்: **Emergency Patient Transfer Record**."
+        else:
+            answer = "For documenting ambulance dispatches, inter-hospital transfers, and critical care transport, use the **Emergency Patient Transfer Record**."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "Emergency Patient Transfer Record", "url": "http://192.168.101.75:3000/files/EMERGENCY%20PATIENT%20TRANSFER%20RECORD.pdf", "category": "Common Forms", "badge": "Emergency Form"},
+                {"title": "Clinical & Common Forms", "url": "./commonforms.html", "category": "Forms Vault", "badge": "Hub"}
+            ],
+            "suggestions": ["Emergency Patient Transfer Record", "Casualty Emergency: 2001", "Common Forms Vault"]
+        }
+
+    # HR Forms
+    # Resignation, Relieving, and Job Forms
+    is_resignation_fallback = (
+        any(k in q_lower for k in [
+            'resignation', 'resign', 'relieving', 'relieve', 'notice period', 'exit clearance',
+            'no dues', 'nodues', 'resigning', 'resigned', 'பணி விலகல்', 'ராஜினாமா'
+        ]) or
+        bool({'resignation', 'resign', 'relieving', 'relieve', 'nodues'} & set(tokenize(q_lower))) or
+        (any(k in q_lower for k in ['job form', 'job forms', 'job application', 'job apply']) and any(k in q_lower for k in ['procedure', 'resignation', 'relieving', 'form']))
+    )
+    if is_resignation_fallback:
+        if is_tamil:
+            answer = "பணியாளர் பணி விலகல் நடைமுறை (Resignation / Relieving Procedure) மற்றும் வேலை விண்ணப்பங்கள்: பணி விலகல் செய்யும் ஊழியர்கள் துறைத் தலைவர் (HOD) மற்றும் மனிதவளத் துறைக்கு (Admin HR) கடிதம் அளிக்க வேண்டும். நோட்டீஸ் காலம், பணி ஒப்படைப்பு, மற்றும் என்ஓசி (No Dues Clearance) விதிமுறைகள் **Human Resources Manual (HRM - 2025)** கையேட்டில் உள்ளன. மருத்துவமனை ஆசிரியர் மற்றும் பணியாளர் விண்ணப்பப் படிவங்களை கீழே பதிவிறக்கம் செய்யலாம். உதவிக்கு Admin HR (Ext: 2173 / 2169) தொடர்பு கொள்ளவும்."
+        else:
+            answer = "Official guidelines for Employee Resignation, Relieving Procedures, and Job Applications: Staff tendering resignation must submit a formal resignation letter to their HOD and the Admin HR Office. Notice period requirements, departmental handovers, No Dues Clearance, and relieving order protocols are governed by the **Human Resources Manual (HRM - 2025)**. Hospital job application forms and HR links are available below. For HR assistance, contact Admin HR at Ext: 2173 / 2169."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "Human Resources Manual (HRM - 2025)", "url": "http://192.168.101.75:3000/files/HRM%202025.pdf", "category": "HR Forms", "badge": "HR Manual"},
+                {"title": "Non-Teaching Staff Application Form", "url": "http://192.168.101.75:3000/files/Non%20Teaching.pdf", "category": "HR Forms", "badge": "HR Form"},
+                {"title": "Teaching Faculty Application & Appraisal Form", "url": "http://192.168.101.75:3000/files/Teaching.pdf", "category": "HR Forms", "badge": "HR Form"},
+                {"title": "APH HR Forms Hub", "url": "./index.html#forms", "category": "Forms Vault", "badge": "HR Hub"}
+            ],
+            "suggestions": ["Human Resources Manual 2025", "Non-Teaching Staff Application", "Teaching Faculty Application", "Admin HR Ext: 2173 / 2169"]
+        }
+
+    if any(k in q_lower for k in ['teaching faculty', 'faculty application', 'teaching application', 'teaching job', 'பேராசிரியர் விண்ணப்பம்']):
+        if is_tamil:
+            answer = "மருத்துவக் கல்லூரி ஆசிரியர் மற்றும் பேராசிரியர் பணிகளுக்கான அதிகாரப்பூர்வ விண்ணப்பப் படிவம்: **Teaching Faculty Application Form**."
+        else:
+            answer = "For medical college faculty recruitment and teaching appointments, download the official **Teaching Faculty Application Form**."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "Teaching Faculty Application Form", "url": "http://192.168.101.75:3000/files/Teaching.pdf", "category": "HR Forms", "badge": "HR Form"},
+                {"title": "APH HR Forms Hub", "url": "./index.html#forms", "category": "Forms Vault", "badge": "HR Hub"}
+            ],
+            "suggestions": ["Teaching Faculty Application", "Non-Teaching Staff Application", "Admin HR Ext: 2173 / 2169"]
+        }
+
+    if any(k in q_lower for k in ['non teaching', 'non-teaching', 'nonteaching', 'பணியாளர் விண்ணப்பம்']):
+        if is_tamil:
+            answer = "மருத்துவமனை நிர்வாகம், செவிலியர், மற்றும் தொழில்நுட்ப பணிகளுக்கான விண்ணப்பப் படிவம்: **Non-Teaching Staff Application Form**."
+        else:
+            answer = "For administrative, paramedical, nursing, and technical staff recruitment, download the **Non-Teaching Staff Application Form**."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "Non-Teaching Staff Application Form", "url": "http://192.168.101.75:3000/files/Non%20Teaching.pdf", "category": "HR Forms", "badge": "HR Form"},
+                {"title": "APH HR Forms Hub", "url": "./index.html#forms", "category": "Forms Vault", "badge": "HR Hub"}
+            ],
+            "suggestions": ["Non-Teaching Staff Application", "Promotion Form for Non-Teaching", "Admin HR Ext: 2173 / 2169"]
+        }
+
+    if any(k in q_lower for k in ['promotion form', 'promotion non teaching', 'pathavi uyartvu', 'பதவி உயர்வு']):
+        if is_tamil:
+            answer = "பணியாளர் பதவி உயர்வு மற்றும் மதிப்பீட்டிற்கான அதிகாரப்பூர்வ படிவம்: **Promotion Form for Non-Teaching Staff**."
+        else:
+            answer = "For non-teaching staff career elevation, seniority review, and departmental promotions, submit the **Promotion Form for Non-Teaching Staff**."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "Promotion Form for Non-Teaching Staff", "url": "http://192.168.101.75:3000/files/promotion%20form%20for%20non%20teaching.pdf", "category": "HR Forms", "badge": "HR Form"},
+                {"title": "APH HR Forms Hub", "url": "./index.html#forms", "category": "Forms Vault", "badge": "HR Hub"}
+            ],
+            "suggestions": ["Promotion Form for Non-Teaching", "Non-Teaching Staff Application", "Admin HR Ext: 2173 / 2169"]
+        }
+
+    if any(k in q_lower for k in ['training feedback', 'payirchi feedback', 'பயிற்சி பின்னூட்டம்']):
+        if is_tamil:
+            answer = "பணியாளர் பயிற்சி அமர்வுகள் குறித்த பின்னூட்டப் படிவம்: **Staff Training Feedback Form**."
+        else:
+            answer = "To evaluate hospital staff development programs and continuous training sessions, use the **Staff Training Feedback Form**."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "Staff Training Feedback Form", "url": "http://192.168.101.75:3000/files/Training%20Feedback%20Form.pdf", "category": "HR Forms", "badge": "HR Form"},
+                {"title": "APH HR Forms Hub", "url": "./index.html#forms", "category": "Forms Vault", "badge": "HR Hub"}
+            ],
+            "suggestions": ["Staff Training Feedback Form", "Human Resource Manual 2025", "HR Forms Vault"]
+        }
+
+    if any(k in q_lower for k in ['holiday list', 'holidays 2026', '2026 holiday', 'vidumurai pattiyal', 'விடுமுறை பட்டியல் 2026']):
+        if is_tamil:
+            answer = "2026 ஆம் ஆண்டிற்கான அதிகாரப்பூர்வ மருத்துவமனை பொது மற்றும் அரசு விடுமுறை பட்டியல்: **List of Holidays for the Year 2026**."
+        else:
+            answer = "The approved institutional and public holiday calendar is published in the **List of Holidays for the Year 2026**."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "List of Holidays for the Year 2026", "url": "http://192.168.101.75:3000/files/LIST%20OF%20HOLIDAYS%20FOR%20THE%20YEAR%202026.pdf", "category": "HR Forms", "badge": "Holiday Calendar"},
+                {"title": "APH HR Forms Hub", "url": "./index.html#forms", "category": "Forms Vault", "badge": "HR Hub"}
+            ],
+            "suggestions": ["List of Holidays 2026", "PruWorks HRMS Portal", "Admin HR Ext: 2173 / 2169"]
+        }
+
+    if any(k in q_lower for k in ['hrm manual', 'human resource manual', 'hr manual 2025', 'மனிதவள கையேடு']):
+        if is_tamil:
+            answer = "மருத்துவமனை மனிதவளக் கொள்கைகள் மற்றும் பணியாளர் விதிமுறைகள் கையேடு: **Human Resource Manual (HRM) 2025**."
+        else:
+            answer = "Review staff policies, employment terms, and accreditation guidelines in the **Human Resource Manual (HRM) 2025**."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "Human Resource Manual (HRM) 2025", "url": "http://192.168.101.75:3000/files/HUMAN%20RESOURCE%20MANUAL(HRM)%202025.pdf", "category": "Manuals & SOPs", "badge": "HR Manual"},
+                {"title": "Manuals & SOPs Hub", "url": "./manuals.html", "category": "Manuals Vault", "badge": "Hub"}
+            ],
+            "suggestions": ["Human Resource Manual 2025", "PruWorks HRMS Staff Login", "APH HR Forms Hub"]
+        }
+
+    # Additional Consent Forms
+    if any(k in q_lower for k in ['dama', 'discharge against medical advice', 'lama']):
+        if is_tamil:
+            answer = "மருத்துவ ஆலோசனையை மீறி வெளியேறும் நோயாளிகளுக்கான ஒப்புதல் படிவம்: **DAMA Consent Form**."
+        else:
+            answer = "When a patient or guardian insists on discharge against clinical recommendation, execute the **DAMA Consent Form**."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "DAMA (Discharge Against Medical Advice) Consent", "url": "http://192.168.101.75:3000/files/DAMA%20(Discharge%20Against%20Medical%20Advice)%20Consent.pdf", "category": "Consent Forms", "badge": "Medicolegal"},
+                {"title": "Consent Forms Vault", "url": "./consent.html", "category": "Forms Vault", "badge": "Forms Vault"}
+            ],
+            "suggestions": ["DAMA Consent Form", "General Consent for Admission", "Consent Forms Vault"]
+        }
+
+    if any(k in q_lower for k in ['not willing', 'refusal consent', 'maruppu oputhal', 'மறுப்பு ஒப்புதல்']):
+        if is_tamil:
+            answer = "பரிசோதனை அல்லது சிகிச்சையை மறுக்கும் நோயாளிகளுக்கான ஒப்புதல் படிவம்: **NOT WILLING FOR INVESTIGATION OR PROCEDURE CONSENT**."
+        else:
+            answer = "When an informed patient elects to decline a proposed diagnostic investigation or procedure, document refusal using the **Not Willing Consent Form**."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "NOT WILLING FOR INVESTIGATION OR PROCEDURE CONSENT", "url": "http://192.168.101.75:3000/files/NOT%20WILLING%20FOR%20INVESTIGATION%20OR%20PROCEDURE%20CONSENT.pdf", "category": "Consent Forms", "badge": "Medicolegal"},
+                {"title": "Consent Forms Vault", "url": "./consent.html", "category": "Forms Vault", "badge": "Forms Vault"}
+            ],
+            "suggestions": ["Not Willing Consent Form", "Informed Consent Form", "Consent Forms Vault"]
+        }
+
+    if any(k in q_lower for k in ['admission consent', 'general consent', 'serkkai oputhal', 'சேர்க்கை ஒப்புதல்']) and not is_pediatric_query:
+        if is_tamil:
+            answer = "மருத்துவமனையில் அனுமதிக்கப்படும் அனைத்து நோயாளிகளுக்கும் பொதுவான அனுமதி ஒப்புதல் படிவம்: **General Consent for Admission**."
+        else:
+            answer = "For inpatient admissions, bed allocation, and general care protocols, execute the **General Consent for Admission**."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "General Consent for Admission", "url": "http://192.168.101.75:3000/files/General%20Consent%20for%20Admission.pdf", "category": "Consent Forms", "badge": "Medicolegal"},
+                {"title": "Consent Forms Vault", "url": "./consent.html", "category": "Forms Vault", "badge": "Forms Vault"}
+            ],
+            "suggestions": ["General Consent for Admission", "Informed Consent Form", "Consent Forms Vault"]
+        }
 
     if not candidates:
         return {
@@ -2485,7 +3313,7 @@ if __name__ == '__main__':
     web_dir = os.path.dirname(os.path.abspath(__file__))
     os.chdir(web_dir)
     server_address = ('', PORT)
-    httpd = HTTPServer(server_address, APHPortalRequestHandler)
+    httpd = ThreadingHTTPServer(server_address, APHPortalRequestHandler)
     print(f"🚀 APH Hospital Intranet Server with Verified AI Search running on http://localhost:{PORT}")
     try:
         httpd.serve_forever()
