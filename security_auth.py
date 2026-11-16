@@ -58,6 +58,52 @@ if not SESSION_SECRET:
 # Server-Side Session Store (for stateful session verification)
 ACTIVE_SERVER_SESSIONS: Dict[str, Dict[str, Any]] = {}
 
+# Authorized Staff Directory & Role Registry (Server-Side Identity Verification)
+# Eliminates self-selected roles: roles are derived strictly from verified hospital identity
+STAFF_DIRECTORY: Dict[str, Dict[str, Any]] = {
+    # Clinical Staff
+    "dr_clinical_101": {"role": ACCESS_CLINICAL, "dept": "Emergency Medicine", "name": "Dr. S. K. Narayanan"},
+    "dr_emergency": {"role": ACCESS_CLINICAL, "dept": "Emergency Medicine", "name": "Dr. R. Kavitha"},
+    "dr_shreya": {"role": ACCESS_CLINICAL, "dept": "Cardiology", "name": "Dr. Shreya M."},
+    "nurse_icu": {"role": ACCESS_CLINICAL, "dept": "ICU", "name": "Staff Nurse Priya"},
+    "dr_tamil": {"role": ACCESS_CLINICAL, "dept": "General Medicine", "name": "Dr. Tamilselvan"},
+
+    # General Hospital Staff
+    "staff_user": {"role": ACCESS_STAFF, "dept": "Administration", "name": "A. Murugan"},
+    "nurse_john": {"role": ACCESS_STAFF, "dept": "Ward 3", "name": "John Doe"},
+    "nurse_staff_202": {"role": ACCESS_STAFF, "dept": "Nursing", "name": "Staff Nurse Anitha"},
+    "nurse_tanglish": {"role": ACCESS_STAFF, "dept": "OPD", "name": "Staff Nurse Deepa"},
+    "test_staff": {"role": ACCESS_STAFF, "dept": "Testing", "name": "Test Staff Account"},
+
+    # Executive Management
+    "admin_mgmt_303": {"role": ACCESS_MANAGEMENT, "dept": "Hospital Administration", "name": "Medical Superintendent"},
+    "admin_director": {"role": ACCESS_MANAGEMENT, "dept": "Executive Office", "name": "Managing Director"}
+}
+
+
+def authenticate_and_issue_staff_token(
+    staff_id: str,
+    secret_key: Optional[str] = None
+) -> Tuple[bool, Optional[str], Optional[str], Optional[str]]:
+    """
+    Verifies staff identity server-side before issuing signed session tokens.
+    STRICT AUDIT RULE: Never permits client-selected roles.
+    Returns: (is_authenticated, token_or_error_msg, assigned_role, staff_name)
+    """
+    clean_id = staff_id.strip() if staff_id else ""
+    if not clean_id:
+        return False, "Staff ID is required.", None, None
+
+    staff_entry = STAFF_DIRECTORY.get(clean_id)
+    if not staff_entry:
+        return False, f"Unauthorized: Staff ID '{clean_id}' is not recognized in hospital staff directory.", None, None
+
+    assigned_role = staff_entry["role"]
+    staff_name = staff_entry.get("name", "Hospital Staff")
+
+    token = create_signed_session_token(clean_id, assigned_role)
+    return True, token, assigned_role, staff_name
+
 
 def create_signed_session_token(
     staff_id: str,

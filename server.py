@@ -30,7 +30,9 @@ from security_auth import (
     ROLE_PERMISSIONS,
     extract_verified_role,
     create_signed_session_token,
-    create_server_session
+    create_server_session,
+    authenticate_and_issue_staff_token,
+    STAFF_DIRECTORY
 )
 
 PORT = 3000
@@ -475,6 +477,45 @@ def load_intercom():
             print(f"⚠️ Error loading intercom.json: {e}")
 
 load_intercom()
+
+# =========================================================================
+# FILE VAULT AUTHORIZATION RULES (DIRECT /files/ ACCESS ENFORCEMENT)
+# =========================================================================
+FILE_ACCESS_RULES: Dict[str, str] = {}
+
+def load_file_access_rules():
+    global FILE_ACCESS_RULES
+    db_path = os.path.join(BASE_DIR, 'data', 'aph_knowledge_index.db')
+    if os.path.exists(db_path):
+        try:
+            import sqlite3
+            con = sqlite3.connect(db_path)
+            cur = con.cursor()
+            cur.execute("SELECT url, access_level FROM documents;")
+            for url, level in cur.fetchall():
+                path = urllib.parse.urlparse(url).path
+                unquoted = urllib.parse.unquote(path).strip()
+                norm_key = unquoted.lower()
+                FILE_ACCESS_RULES[norm_key] = level
+                base_key = os.path.basename(unquoted).lower()
+                if base_key:
+                    FILE_ACCESS_RULES[base_key] = level
+            con.close()
+            print(f"🔒 Loaded {len(FILE_ACCESS_RULES)} file authorization access rules.")
+        except Exception as e:
+            print(f"⚠️ Error loading file authorization rules from db: {e}")
+
+load_file_access_rules()
+
+def get_file_required_access_level(path: str) -> str:
+    """Returns the required access level for a /files/ path (PUBLIC, STAFF, CLINICAL, MANAGEMENT)."""
+    clean = urllib.parse.unquote(urllib.parse.urlparse(path).path).lower().strip()
+    if clean in FILE_ACCESS_RULES:
+        return FILE_ACCESS_RULES[clean]
+    base = os.path.basename(clean)
+    if base in FILE_ACCESS_RULES:
+        return FILE_ACCESS_RULES[base]
+    return ACCESS_STAFF
 
 GENERIC_LOCATION_WORDS = {'ward', 'room', 'op', 'opd', 'office', 'desk', 'unit', 'hall', 'section', 'block', 'department'}
 
@@ -3943,12 +3984,28 @@ class APHPortalRequestHandler(SimpleHTTPRequestHandler):
         if self.is_blocked_path(self.path):
             self.send_error(403, "Access to sensitive file or configuration is strictly prohibited.")
             return
+        if self.path.startswith('/files/'):
+            req_level = get_file_required_access_level(self.path)
+            if req_level != ACCESS_PUBLIC:
+                role, _ = extract_verified_role(self.headers, {})
+                allowed = ROLE_PERMISSIONS.get(role, [ACCESS_PUBLIC])
+                if req_level not in allowed:
+                    self.send_error(403, f"Access Denied: The requested document requires {req_level} staff authorization.")
+                    return
         super().do_HEAD()
 
     def do_GET(self):
         if self.is_blocked_path(self.path):
             self.send_error(403, "Access to sensitive file or configuration is strictly prohibited.")
             return
+        if self.path.startswith('/files/'):
+            req_level = get_file_required_access_level(self.path)
+            if req_level != ACCESS_PUBLIC:
+                role, _ = extract_verified_role(self.headers, {})
+                allowed = ROLE_PERMISSIONS.get(role, [ACCESS_PUBLIC])
+                if req_level not in allowed:
+                    self.send_error(403, f"Access Denied: The requested document requires {req_level} staff authorization.")
+                    return
         super().do_GET()
 
     def translate_path(self, path):
@@ -3967,6 +4024,12 @@ class APHPortalRequestHandler(SimpleHTTPRequestHandler):
             root_path = super().translate_path('/' + rel_file)
             if os.path.exists(root_path):
                 return root_path
+
+            # Check local verified PDF cache
+            clean_name = re.sub(r'[^a-zA-Z0-9_\-\.]', '_', os.path.basename(orig_path))
+            cache_path = os.path.join(BASE_DIR, 'data', 'pdf_cache', clean_name)
+            if os.path.exists(cache_path):
+                return cache_path
         return orig_path
 
     def end_headers(self):
@@ -3993,17 +4056,27 @@ class APHPortalRequestHandler(SimpleHTTPRequestHandler):
             post_data = self.rfile.read(content_length)
             try:
                 data = json.loads(post_data.decode('utf-8')) if post_data else {}
-                staff_id = data.get('staff_id', 'staff_user').strip()
-                requested_role = data.get('role', ACCESS_STAFF).strip().upper()
-                if requested_role not in ROLE_PERMISSIONS:
-                    self.send_json_response(400, {'error': f'Invalid role: {requested_role}'})
+                staff_id = data.get('staff_id', '').strip()
+                if not staff_id:
+                    self.send_json_response(400, {'error': 'Staff ID is required.'})
                     return
-                # Generate verifiable HMAC-SHA256 session token
-                token = create_signed_session_token(staff_id, requested_role)
+
+                # Strict server-side verification: never permit self-selected roles
+                is_auth, token_or_err, assigned_role, staff_name = authenticate_and_issue_staff_token(staff_id)
+                if not is_auth:
+                    self.send_json_response(401, {'error': token_or_err})
+                    return
+
+                # If caller attempted role escalation, log security audit notice
+                requested_role = data.get('role')
+                if requested_role and requested_role.upper().strip() != assigned_role:
+                    print(f"🛡️ [SECURITY AUDIT] Staff '{staff_id}' requested '{requested_role}' but was enforced as '{assigned_role}'.")
+
                 self.send_json_response(200, {
-                    'token': token,
+                    'token': token_or_err,
                     'staff_id': staff_id,
-                    'role': requested_role,
+                    'staff_name': staff_name,
+                    'role': assigned_role,
                     'expires_in': 3600
                 })
             except Exception as e:

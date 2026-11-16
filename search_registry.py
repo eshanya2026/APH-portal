@@ -215,7 +215,8 @@ RESOURCE_REGISTRY = {
         "description": "Official requisition for new desktop computers, monitors, accessories, or software installations.",
         "description_ta": "புதிய கணினி, மவுஸ், கீபோர்டு, அல்லது மென்பொருள் கோரிக்கை படிவம்.",
         "aliases": [
-            "system request", "system request form", "computer request", "desktop request", "kanini request",
+            "system request", "system request form", "system requisition", "system requisition form",
+            "computer request", "desktop request", "kanini request",
             "கணினி கோரிக்கை", "கணினி படிவம்", "புதிய கணினி படிவம்"
         ],
         "negative_aliases": []
@@ -230,8 +231,22 @@ RESOURCE_REGISTRY = {
         "description": "Form to request departmental printing hardware, barcode label printers, or toner replacements.",
         "description_ta": "துறை பயன்பாட்டிற்கான புதிய பிரிண்டர் அல்லது டோனர் கோரிக்கை படிவம்.",
         "aliases": [
-            "printer request", "printer form", "printer request form", "toner request",
-            "acchaagam padivam", "பிரிண்டர் படிவம்", "அச்சக படிவம்"
+            "printer request", "printer form", "printer request form", "printer repair", "printer repair request",
+            "toner request", "acchaagam padivam", "பிரிண்டர் படிவம்", "அச்சக படிவம்"
+        ],
+        "negative_aliases": []
+    },
+    "FORM_VISITING_CONSULTANT": {
+        "id": "FORM_VISITING_CONSULTANT",
+        "title": "Visiting Consultant Requisition Form",
+        "url": "http://192.168.101.75:3000/files/Visiting%20Consultant%20Requisition%20letter.pdf",
+        "category": "Consent Forms",
+        "badge": "Medicolegal",
+        "intent_type": SearchIntent.OPEN_FORM,
+        "description": "Specialist consultation requisition protocol and requisition letter.",
+        "description_ta": "சிறப்பு மருத்துவர் ஆலோசனை மற்றும் வருகைக்கான கோரிக்கை கடிதம்.",
+        "aliases": [
+            "visiting consultant", "visiting consultant requisition", "visiting consultant letter", "consultant requisition form"
         ],
         "negative_aliases": []
     },
@@ -771,11 +786,14 @@ def resolve_exact_registered_resource(query, intent):
         return RESOURCE_REGISTRY["FORM_TEACHING"]
 
     # 8. IT Hardware & Telecom Forms
-    if any(k in q_norm for k in ["system request", "new computer request", "kanini request", "கணினி கோரிக்கை", "கணினி படிவம்", "desktop system form"]):
+    if any(k in q_norm for k in ["system request", "system requisition", "new computer request", "kanini request", "கணினி கோரிக்கை", "கணினி படிவம்", "desktop system form"]):
         return RESOURCE_REGISTRY["FORM_SYSTEM"]
 
-    if any(k in q_norm for k in ["printer request", "printer form", "toner replacement", "acchaagam padivam", "அச்சக படிவம்", "பிரிண்டர் படிவம்"]):
+    if any(k in q_norm for k in ["printer request", "printer repair", "printer form", "toner replacement", "acchaagam padivam", "அச்சக படிவம்", "பிரிண்டர் படிவம்"]):
         return RESOURCE_REGISTRY["FORM_PRINTER"]
+
+    if any(k in q_norm for k in ["visiting consultant", "visiting consultant requisition", "consultant requisition"]):
+        return RESOURCE_REGISTRY["FORM_VISITING_CONSULTANT"]
 
     if any(k in q_norm for k in ["official email", "email form", "email id request", "மின்னஞ்சல் படிவம்"]):
         return RESOURCE_REGISTRY["FORM_EMAIL_ID"]
