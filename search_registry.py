@@ -40,6 +40,7 @@ RESOURCE_REGISTRY = {
         "aliases": [
             "his", "aosta", "backbone", "his login", "his portal", "his software", "open his", "his open",
             "his system", "his workstation", "access his", "backbone login", "aosta his", "clinical workstation",
+            "his app", "his application", "his website", "his tool", "aosta app",
             "ஹெச்ஐஎஸ்", "ஹெச்ஐஎஸ் திற", "ஹெச் ஐ எஸ்", "ஹிஸ்", "ஹிஸ் லாகின்", "ஹிஸ் சாப்ட்வேர்"
         ],
         "negative_aliases": [
@@ -58,6 +59,7 @@ RESOURCE_REGISTRY = {
         "description_ta": "பணியாளர் வருகை பதிவு, சம்பள ரசீதுகள், மற்றும் விடுமுறை விண்ணப்பிக்க PruWorks HRMS போர்ட்டல்.",
         "aliases": [
             "hrms", "pruworks", "hrms portal", "hrms login", "open hrms", "pruworks hrms", "hrms staff",
+            "hrms app", "hrms application", "hrms software", "hrms website", "pruworks app", "pruworks application", "pruworks software",
             "apply leave", "leave apply", "leave balance", "payslip", "pay slip", "salary slip",
             "biometric punch", "attendance portal", "leavu", "vidumurai", "viduppu", "sambalam",
             "விடுமுறை", "விடுப்பு", "சம்பளம்", "சம்பள ரசீது", "வருகை"
@@ -75,6 +77,7 @@ RESOURCE_REGISTRY = {
         "description_ta": "கதிரியக்க பரிசோதனை படங்கள் (X-Ray, CT, MRI, Ultrasound) பார்க்க M - PACS (Medsynapse) தளம்.",
         "aliases": [
             "pacs", "medsynapse", "open pacs", "pacs login", "pacs viewer", "xray viewer", "scan viewer",
+            "pacs app", "pacs application", "pacs software", "pacs website", "medsynapse app", "medsynapse application", "medsynapse software",
             "xray scan", "x-ray", "ct scan", "mri scan", "ultrasound viewer", "radiology viewer",
             "xray scan paakanum", "பாக்ஸ்", "எக்ஸ்ரே", "ஸ்கேன் பார்க்க"
         ],
@@ -91,6 +94,7 @@ RESOURCE_REGISTRY = {
         "description_ta": "மருத்துவ ஆவணக் காப்பகம் (MRD) மற்றும் டிஸ்சார்ஜ் சம்மரி போர்ட்டல்.",
         "aliases": [
             "mrd", "open mrd", "mrd portal", "mrd login", "medical records", "discharge summary",
+            "mrd app", "mrd application", "mrd software", "mrd website",
             "discharge summary archive", "case sheet archive", "மருத்துவ ஆவண காப்பகம்"
         ],
         "negative_aliases": []
@@ -106,6 +110,7 @@ RESOURCE_REGISTRY = {
         "description_ta": "மாஸ்டர் ஹெல்த் செக்கப் (MHC) மற்றும் AI சுகாதார மதிப்பீட்டுத் தளம்.",
         "aliases": [
             "mhc", "open mhc", "master health", "master health checkup", "health checkup", "ai health",
+            "mhc app", "mhc application", "mhc software", "mhc website", "master health app", "master health checkup app", "ai health app",
             "ai health assessment", "healthcheck app", "மாஸ்டர் ஹெல்த் செக்கப்", "ஹெல்த் செக்கப்"
         ],
         "negative_aliases": []
@@ -121,6 +126,7 @@ RESOURCE_REGISTRY = {
         "description_ta": "புறநோயாளி பிரிவு நேரலை டோக்கன் மற்றும் வரிசை காட்சி அமைப்பு (LineLoom).",
         "aliases": [
             "lineloom", "token display", "opd token", "token machine", "opd queue", "queue display",
+            "lineloom app", "lineloom application", "lineloom software", "token app", "opd token app",
             "token screen", "வரிசை டோக்கன்", "டோக்கன் டிஸ்பிளே"
         ],
         "negative_aliases": ["food token", "unavu token"]
@@ -136,6 +142,7 @@ RESOURCE_REGISTRY = {
         "description_ta": "கணினி, இணையம், மற்றும் மருத்துவமனை பழுது புகார்களைப் பதிவு செய்ய Ticketing Desk.",
         "aliases": [
             "ticketing", "ticket", "ticketing desk", "lodge ticket", "it ticket", "maintenance desk",
+            "ticketing app", "ticketing application", "ticketing software", "ticket app", "maintenance app",
             "job order", "job orders", "breakdown", "hardware repair", "complaint", "fault", "bug", "பழுது"
         ],
         "negative_aliases": [
@@ -152,7 +159,71 @@ RESOURCE_REGISTRY = {
         "intent_type": SearchIntent.OPEN_APPLICATION,
         "description": "Laboratory specimen barcode label generation system for diagnostic blood and pathology tubes.",
         "description_ta": "பரிசோதனை குழாய்களுக்கான பார்கோடு லேபிள் உருவாக்கும் தளம்.",
-        "aliases": ["barcode", "barcode generator", "pathology barcode", "lab barcode", "sample barcode"],
+        "aliases": [
+            "barcode", "barcode generator", "pathology barcode", "lab barcode", "sample barcode",
+            "barcode app", "barcode application", "barcode software", "barcode tool", "pathology barcode app"
+        ],
+        "negative_aliases": []
+    },
+    "APP_EYECAMP": {
+        "id": "APP_EYECAMP",
+        "title": "Community Health Eye Camp-25 Outreach",
+        "url": "http://192.168.103.158:8082",
+        "category": "Community Health",
+        "badge": "System",
+        "intent_type": SearchIntent.OPEN_APPLICATION,
+        "description": "Ophthalmology community outreach, camp registration and patient screening.",
+        "description_ta": "கண் மருத்துவ முகாம் பதிவு மற்றும் நோயாளி பரிசோதனை தளம்.",
+        "aliases": [
+            "eye camp", "eye camp 25", "eyecamp", "ophthalmology camp", "community eye camp", "eye screening",
+            "eye camp app", "eye camp application", "eye camp software", "eyecamp app", "கண் முகாம்"
+        ],
+        "negative_aliases": []
+    },
+    "APP_COUNSELLING": {
+        "id": "APP_COUNSELLING",
+        "title": "Clinical Care Counselling & ICU App",
+        "url": "https://192.168.103.158:8083",
+        "category": "Clinical Care",
+        "badge": "System",
+        "intent_type": SearchIntent.OPEN_APPLICATION,
+        "description": "Critical care counselling notes, psychological consults and encrypted ICU log storage.",
+        "description_ta": "தீவிர சிகிச்சை ஆலோசனை மற்றும் உளவியல் ஆலோசனை குறிப்புகள் தளம்.",
+        "aliases": [
+            "counselling app", "counselling application", "counselling software", "icu app", "icu application",
+            "icu software", "counselling & icu", "counselling and icu", "patient counselling", "icu counselling"
+        ],
+        "negative_aliases": []
+    },
+    "APP_CLINICAL_CHECKLIST": {
+        "id": "APP_CLINICAL_CHECKLIST",
+        "title": "Clinical Checklist App",
+        "url": "https://checklist.mapims.edu.in/",
+        "category": "Quality & NABH",
+        "badge": "System",
+        "intent_type": SearchIntent.OPEN_APPLICATION,
+        "description": "Daily nursing checklists, patient safety rounds, and paperless clinical audit workflows.",
+        "description_ta": "தினசரி நர்சிங் சரிபார்ப்பு பட்டியல் மற்றும் நோயாளி பாதுகாப்பு தணிக்கை தளம்.",
+        "aliases": [
+            "clinical checklist", "clinical checklist app", "clinical checklist application", "clinical checklist software",
+            "checklist app", "checklist application", "checklist software", "patient safety rounds", "surgery checklist",
+            "clinical audit app", "audit app"
+        ],
+        "negative_aliases": ["non clinical", "gencl"]
+    },
+    "APP_NON_CLINICAL_CHECKLIST": {
+        "id": "APP_NON_CLINICAL_CHECKLIST",
+        "title": "Non-Clinical Checklist App",
+        "url": "https://gencl.mapims.edu.in/",
+        "category": "Quality & NABH",
+        "badge": "System",
+        "intent_type": SearchIntent.OPEN_APPLICATION,
+        "description": "Hospital sanitation, housekeeping, engineering, and general facilities audit checklist.",
+        "description_ta": "மருத்துவமனை சுகாதாரம் மற்றும் பராமரிப்பு வசதிகள் சரிபார்ப்பு பட்டியல் தளம்.",
+        "aliases": [
+            "non clinical checklist", "non clinical checklist app", "non clinical checklist application", "non clinical checklist software",
+            "non-clinical checklist", "non-clinical checklist app", "gencl", "gencl app", "general checklist app", "facility checklist app"
+        ],
         "negative_aliases": []
     },
 
@@ -693,11 +764,13 @@ def classify_search_intent(query):
     is_app_keyword = any(k in q_norm for k in [
         "his", "aosta", "backbone", "hrms", "pruworks", "pacs", "medsynapse",
         "mrd", "mhc", "master health", "lineloom", "barcode", "counselling",
+        "eye camp", "eyecamp", "checklist", "gencl", "ticketing",
         "ஹெச்ஐஎஸ்", "ஹிஸ்"
-    ]) or bool(tokens & {"his", "hrms", "pacs", "mrd", "mhc", "lineloom"})
+    ]) or bool(tokens & {"his", "hrms", "pacs", "mrd", "mhc", "lineloom", "barcode", "eyecamp", "checklist", "gencl", "ticketing"})
     is_launch_action = any(k in q_norm for k in [
         "open", "launch", "login", "portal", "workstation", "viewer", "software",
-        "app", "enga", "yenga", "thira", "திற", "திறக்கவும்", "உள்நுழைவு", "லாகின்",
+        "app", "application", "website", "tool", "enga", "yenga", "thira", "திற",
+        "திறக்கவும்", "உள்நுழைவு", "லாகின்",
         "paakanum", "பார்க்க"
     ]) or "apply leave" in q_norm or "leave apply" in q_norm
 
@@ -801,7 +874,7 @@ def resolve_exact_registered_resource(query, intent):
     if any(k in q_norm for k in ["sim cug", "cug sim", "sim request", "cug form", "cug sim padivam"]):
         return RESOURCE_REGISTRY["FORM_SIM_CUG"]
 
-    # 9. Core Clinical Apps
+    # 9. Core Clinical & Operational Apps
     if "pacs" in tokens or "medsynapse" in q_norm or any(k in q_norm for k in ["xray scan", "scan paakanum", "ct scan viewer"]):
         return RESOURCE_REGISTRY["APP_PACS"]
 
@@ -813,6 +886,28 @@ def resolve_exact_registered_resource(query, intent):
 
     if "lineloom" in tokens or any(k in q_norm for k in ["opd token", "opd queue display", "opd token machine", "token machine"]):
         return RESOURCE_REGISTRY["APP_LINELOOM"]
+
+    if any(k in q_norm for k in ["barcode", "pathology barcode", "lab barcode", "sample barcode"]):
+        return RESOURCE_REGISTRY["APP_BARCODE"]
+
+    if any(k in q_norm for k in ["eye camp", "eyecamp", "ophthalmology camp", "கண் முகாம்"]):
+        return RESOURCE_REGISTRY["APP_EYECAMP"]
+
+    if any(k in q_norm for k in ["counselling app", "counselling application", "counselling software", "counselling & icu", "counselling and icu", "icu app"]):
+        return RESOURCE_REGISTRY["APP_COUNSELLING"]
+
+    if any(k in q_norm for k in ["ticketing", "maintenance desk", "it breakdown", "lodge ticket", "it ticket", "breakdown ticket"]):
+        return RESOURCE_REGISTRY["APP_TICKETING"]
+
+    # Checklists (Apps vs Paper Forms)
+    if any(k in q_norm for k in ["non clinical checklist", "non-clinical checklist", "gencl"]):
+        return RESOURCE_REGISTRY["APP_NON_CLINICAL_CHECKLIST"]
+
+    if any(k in q_norm for k in [
+        "clinical checklist", "checklist app", "checklist application", "checklist software",
+        "clinical audit app", "audit app"
+    ]):
+        return RESOURCE_REGISTRY["APP_CLINICAL_CHECKLIST"]
 
     # 10. Clinical Checklists & Forms
     if any(k in q_norm for k in ["handing over sbar", "sbar sheet", "sbar record", "sbar"]) and not any(k in q_norm for k in ["protocol", "policy", "manual", "sop", "guideline"]):
