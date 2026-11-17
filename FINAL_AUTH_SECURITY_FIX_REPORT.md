@@ -175,3 +175,4 @@ The following two institutional items remain required before **cloud-based Gemin
 The authentication and document authorization security remediation is complete, robust, and fully verified. The codebase on branch `feature/phase3-document-indexing` is in a clean, stable, and secure state for hospital staff User Acceptance Testing.
 
 *(As instructed: No production deployment or merge to `main` has been performed).*
+

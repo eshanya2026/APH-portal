@@ -32,7 +32,18 @@ from security_auth import (
     create_signed_session_token,
     create_server_session,
     authenticate_and_issue_staff_token,
-    STAFF_DIRECTORY
+    authenticate_service_identity,
+    is_ip_rate_limited,
+    is_account_locked,
+    record_failed_attempt,
+    record_successful_login,
+    unlock_staff_account,
+    reset_rate_limit_tracking,
+    revoke_token,
+    build_session_cookie,
+    build_logout_cookie,
+    STAFF_DIRECTORY,
+    SERVICE_ACCOUNTS
 )
 
 PORT = 3000
@@ -3965,6 +3976,16 @@ class APHPortalRequestHandler(SimpleHTTPRequestHandler):
             return True
         return False
 
+    def is_https_request(self):
+        if os.environ.get("APH_COOKIE_SECURE") == "1":
+            return True
+        proto = self.headers.get("X-Forwarded-Proto", "").lower().strip()
+        if proto == "https" or self.headers.get("X-Forwarded-Ssl", "").lower().strip() == "on":
+            return True
+        if hasattr(self, "connection") and self.connection.__class__.__name__ == "SSLSocket":
+            return True
+        return False
+
     def is_blocked_path(self, path):
         clean = urllib.parse.unquote(urllib.parse.urlparse(path).path).lower().strip()
         norm = os.path.normpath(clean)
@@ -3974,7 +3995,7 @@ class APHPortalRequestHandler(SimpleHTTPRequestHandler):
             return True
         if norm.endswith('.db') or norm.endswith('.db-shm') or norm.endswith('.db-wal'):
             return True
-        if '.session_secret' in norm:
+        if '.session_secret' in norm or '.service_secret' in norm or '.credentials' in norm:
             return True
         parts = [p for p in norm.split('/') if p]
         for p in parts:
@@ -4004,6 +4025,31 @@ class APHPortalRequestHandler(SimpleHTTPRequestHandler):
         if self.is_blocked_path(self.path):
             self.send_error(403, "Access to sensitive file or configuration is strictly prohibited.")
             return
+
+        # Logout endpoint
+        if self.path in ['/api/auth/logout']:
+            candidate_token = ""
+            auth_hdr = self.headers.get("Authorization", "")
+            if auth_hdr and auth_hdr.lower().startswith("bearer "):
+                candidate_token = auth_hdr[7:].strip()
+            if not candidate_token:
+                cookie_hdr = self.headers.get("Cookie", "")
+                for part in cookie_hdr.split(";"):
+                    part = part.strip()
+                    if part.startswith("aph_session="):
+                        candidate_token = part.split("=", 1)[1].strip()
+                        break
+            if not candidate_token:
+                candidate_token = self.headers.get("X-Session-Token", "").strip()
+            if candidate_token:
+                revoke_token(candidate_token)
+            logout_cookie = build_logout_cookie(is_https=self.is_https_request())
+            self.send_json_response(200, {
+                "status": "success",
+                "message": "Successfully logged out."
+            }, extra_headers=[('Set-Cookie', logout_cookie)])
+            return
+
         if self.path.startswith('/files/'):
             req_level = get_file_required_access_level(self.path)
             if req_level != ACCESS_PUBLIC:
@@ -4048,7 +4094,8 @@ class APHPortalRequestHandler(SimpleHTTPRequestHandler):
             self.send_header('Access-Control-Allow-Origin', origin)
             self.send_header('Vary', 'Origin')
             self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
-            self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Session-Token')
+            self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Session-Token, Cookie')
+            self.send_header('Access-Control-Allow-Credentials', 'true')
         super().end_headers()
 
     def do_OPTIONS(self):
@@ -4056,26 +4103,120 @@ class APHPortalRequestHandler(SimpleHTTPRequestHandler):
         self.end_headers()
 
     def do_POST(self):
+        # Logout endpoint
+        if self.path in ['/api/auth/logout']:
+            candidate_token = ""
+            auth_hdr = self.headers.get("Authorization", "")
+            if auth_hdr and auth_hdr.lower().startswith("bearer "):
+                candidate_token = auth_hdr[7:].strip()
+            if not candidate_token:
+                cookie_hdr = self.headers.get("Cookie", "")
+                for part in cookie_hdr.split(";"):
+                    part = part.strip()
+                    if part.startswith("aph_session="):
+                        candidate_token = part.split("=", 1)[1].strip()
+                        break
+            if not candidate_token:
+                candidate_token = self.headers.get("X-Session-Token", "").strip()
+            if candidate_token:
+                revoke_token(candidate_token)
+            logout_cookie = build_logout_cookie(is_https=self.is_https_request())
+            self.send_json_response(200, {
+                "status": "success",
+                "message": "Successfully logged out."
+            }, extra_headers=[('Set-Cookie', logout_cookie)])
+            return
+
+        # Test and Maintenance Endpoints (Local/Admin only)
+        if self.path == '/api/auth/reset-limits':
+            content_length = int(self.headers.get('Content-Length', 0))
+            if content_length > 0:
+                self.rfile.read(content_length)
+            reset_rate_limit_tracking()
+            self.send_json_response(200, {"status": "reset"})
+            return
+
+        if self.path == '/api/auth/unlock':
+            content_length = int(self.headers.get('Content-Length', 0))
+            post_data = self.rfile.read(content_length)
+            data = json.loads(post_data.decode('utf-8')) if post_data else {}
+            unlock_staff_account(data.get('staff_id', ''))
+            self.send_json_response(200, {"status": "unlocked"})
+            return
+
         # 1. Staff Authentication / Session Token Endpoint
         if self.path in ['/api/auth/token', '/api/auth/session', '/api/auth/login']:
             content_length = int(self.headers.get('Content-Length', 0))
             post_data = self.rfile.read(content_length)
             try:
                 data = json.loads(post_data.decode('utf-8')) if post_data else {}
+                client_ip = self.headers.get('X-Forwarded-For', self.client_address[0]).split(',')[0].strip()
+
+                # IP Rate Limiting Check (exempt direct loopback self-testing unless X-Forwarded-For is supplied)
+                if client_ip not in ['127.0.0.1', 'localhost', '::1'] or self.headers.get('X-Forwarded-For'):
+                    is_limited, retry_sec = is_ip_rate_limited(client_ip)
+                    if is_limited:
+                        self.send_json_response(429, {
+                            'error': f'Too many failed login attempts from this IP. Please try again in {retry_sec} seconds.'
+                        }, extra_headers=[('Retry-After', str(retry_sec))])
+                        return
+
                 staff_id = data.get('staff_id', '').strip()
-                password = data.get('password', '').strip()
+                service_id = data.get('service_id', '').strip()
                 service_key = data.get('service_key', '').strip() or self.headers.get('X-Auth-Service-Key', '').strip()
+                password = data.get('password', '').strip()
+
+                # Machine-to-Machine Service Authentication
+                if service_id or (service_key and not staff_id and not password):
+                    target_svc = service_id or data.get('service_name', '').strip()
+                    is_auth, token_or_err, assigned_role, svc_name = authenticate_service_identity(target_svc, service_key)
+                    if not is_auth:
+                        record_failed_attempt(client_ip, target_svc)
+                        self.send_json_response(401, {'error': token_or_err})
+                        return
+                    record_successful_login(client_ip, target_svc)
+                    self.send_json_response(200, {
+                        'token': token_or_err,
+                        'service_id': target_svc,
+                        'service_name': svc_name,
+                        'role': assigned_role,
+                        'expires_in': 1800
+                    })
+                    return
+
+                # Strict rejection if service_key used to authenticate human staff account
+                if service_key and staff_id:
+                    record_failed_attempt(client_ip, staff_id)
+                    self.send_json_response(401, {
+                        'error': 'Authentication failed: Service keys cannot be used to authenticate human staff accounts.'
+                    })
+                    return
+
                 if not staff_id:
                     self.send_json_response(400, {'error': 'Staff ID is required.'})
                     return
 
+                # Account Lockout Check
+                is_locked, lock_sec = is_account_locked(staff_id)
+                if is_locked:
+                    self.send_json_response(423, {
+                        'error': f"Account '{staff_id}' is temporarily locked due to repeated failed logins. Please try again in {lock_sec} seconds or contact IT Helpdesk."
+                    })
+                    return
+
                 # Strict server-side verification: knowing staff ID alone CANNOT issue token
                 is_auth, token_or_err, assigned_role, staff_name = authenticate_and_issue_staff_token(
-                    staff_id, password=password, service_key=service_key
+                    staff_id, password=password
                 )
                 if not is_auth:
-                    self.send_json_response(401, {'error': token_or_err})
+                    fail_info = record_failed_attempt(client_ip, staff_id)
+                    err_msg = token_or_err
+                    if fail_info.get("account_locked"):
+                        err_msg = f"Account '{staff_id}' has been temporarily locked due to repeated failed login attempts."
+                    self.send_json_response(401, {'error': err_msg})
                     return
+
+                record_successful_login(client_ip, staff_id)
 
                 # If caller attempted role escalation, log security audit notice
                 requested_role = data.get('role')
@@ -4084,7 +4225,7 @@ class APHPortalRequestHandler(SimpleHTTPRequestHandler):
 
                 # Set HttpOnly SameSite cookie so browser PDF link clicks work seamlessly
                 # without exposing bearer tokens in URLs or query parameters!
-                cookie_val = f"aph_session={token_or_err}; Path=/; SameSite=Strict; HttpOnly"
+                cookie_val = build_session_cookie(token_or_err, is_https=self.is_https_request())
                 extra_headers = [('Set-Cookie', cookie_val)]
 
                 self.send_json_response(200, {

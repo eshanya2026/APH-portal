@@ -5,5 +5,9 @@ data/*.db
 data/*.db-shm
 data/*.db-wal
 data/.session_secret
+data/.service_secret
+data/.*_secret
+data/.*tokens*
+data/.*credentials*
 *.key
 *.pyc
