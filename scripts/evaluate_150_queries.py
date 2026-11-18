@@ -160,7 +160,7 @@ QUERIES = [
     ("hospital committees list", "Committees Directory", ["comitee.html"]),
     ("safety committee mom", "Committees Directory", ["SAFETY MOM", "comitee.html"]),
     ("bmw mom", "Committees Directory", ["BMW MOM", "comitee.html"]),
-    ("guideline for infection control practices icu", "ICU Infection Control", ["Guideline for Infection Control Practices ICU.pdf"]),
+    ("guideline for infection control practices icu", "ICU Infection Control", ["Guideline for Infection Control Practices ICU.pdf", "Guideline for Infection Control Practices ICU"]),
     ("blood bank stock details", "Blood Bank Stock", ["Blood Bank Stock Details.pdf"]),
     ("ratha vangi stock", "Blood Bank Stock", ["Blood Bank Stock Details.pdf"]),
     ("drug stores stock details", "Drug Stores Stock", ["Drug Stores Stock Details.pdf"]),

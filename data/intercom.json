@@ -243,7 +243,7 @@
       },
       {
         "ext": "2697",
-        "desc": "DR X-ray &amp; Mammography"
+        "desc": "DR X-ray & Mammography"
       },
       {
         "ext": "2698",
@@ -649,7 +649,7 @@
   },
   {
     "floor": "",
-    "dept": "Anaesthesia &amp; Operation Theatre",
+    "dept": "Anaesthesia & Operation Theatre",
     "extensions": [
       {
         "ext": "2111",
@@ -749,7 +749,7 @@
       },
       {
         "ext": "2199",
-        "desc": "Maintenance &amp; Transport"
+        "desc": "Maintenance & Transport"
       },
       {
         "ext": "2189",
@@ -769,7 +769,7 @@
       },
       {
         "ext": "2225",
-        "desc": "DGM &amp; IT Head"
+        "desc": "DGM & IT Head"
       },
       {
         "ext": "2227",
@@ -935,7 +935,7 @@
   },
   {
     "floor": "",
-    "dept": "Gynaecology &amp; Obstetric",
+    "dept": "Gynaecology & Obstetric",
     "extensions": [
       {
         "ext": "2251",
@@ -947,7 +947,7 @@
       },
       {
         "ext": "2284, 2285",
-        "desc": "Gynaecology &amp; Obstetric Ward"
+        "desc": "Gynaecology & Obstetric Ward"
       }
     ]
   },

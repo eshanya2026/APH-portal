@@ -19,7 +19,8 @@ from typing import Dict, Any, List, Optional, Tuple
 from search_registry import (
     SearchIntent, RESOURCE_REGISTRY, classify_search_intent,
     resolve_exact_registered_resource, clean_and_tokenize, expand_query_tokens,
-    GENERIC_STOP_WORDS as REGISTRY_STOP_WORDS, MULTILINGUAL_SYNONYMS
+    GENERIC_STOP_WORDS as REGISTRY_STOP_WORDS, MULTILINGUAL_SYNONYMS,
+    fuzzy_normalize_query
 )
 from search_index.database import search_passages
 from security_auth import (
@@ -489,6 +490,38 @@ def load_intercom():
 
 load_intercom()
 
+# Committee Documents (Minutes of Meeting & Governance Directory)
+COMMITTEE_DOCS: List[Dict[str, Any]] = []
+
+def load_committee_docs():
+    global COMMITTEE_DOCS
+    c_path = os.path.join(BASE_DIR, 'data', 'committees.json')
+    if os.path.exists(c_path):
+        try:
+            with open(c_path, 'r', encoding='utf-8') as f:
+                COMMITTEE_DOCS = json.load(f)
+            print(f"📋 Loaded {len(COMMITTEE_DOCS)} committee documents.")
+        except Exception as e:
+            print(f"⚠️ Error loading committees.json: {e}")
+
+load_committee_docs()
+
+# Circulars & Real-Time Bulletins
+CIRCULARS_DATA: List[Dict[str, Any]] = []
+
+def load_circulars():
+    global CIRCULARS_DATA
+    c_path = os.path.join(BASE_DIR, 'data', 'circulars.json')
+    if os.path.exists(c_path):
+        try:
+            with open(c_path, 'r', encoding='utf-8') as f:
+                CIRCULARS_DATA = json.load(f)
+            print(f"📢 Loaded {len(CIRCULARS_DATA)} circulars from circulars.json.")
+        except Exception as e:
+            print(f"⚠️ Error loading circulars.json: {e}")
+
+load_circulars()
+
 # =========================================================================
 # FILE VAULT AUTHORIZATION RULES (DIRECT /files/ ACCESS ENFORCEMENT)
 # =========================================================================
@@ -613,13 +646,58 @@ DEPARTMENT_INTERCOM_ALIASES = {
     'rattham': ('Blood Bank', 'Blood Bank', None),
     'ratham': ('Blood Bank', 'Blood Bank', None),
 
-    # Orthopaedics / Bone
+    # Orthopaedics / Bone / Wards
+    'male ortho': ('Ortho Male Ward', 'Ortho Ward', ['male']),
+    'ortho male': ('Ortho Male Ward', 'Ortho Ward', ['male']),
+    'male ortho ward': ('Ortho Male Ward', 'Ortho Ward', ['male']),
+    'ortho male ward': ('Ortho Male Ward', 'Ortho Ward', ['male']),
+    'female ortho': ('Ortho Female Ward', 'Ortho Ward', ['female']),
+    'ortho female': ('Ortho Female Ward', 'Ortho Ward', ['female']),
+    'female ortho ward': ('Ortho Female Ward', 'Ortho Ward', ['female']),
+    'ortho female ward': ('Ortho Female Ward', 'Ortho Ward', ['female']),
+    'ortho ward': ('Ortho Ward', 'Ortho Ward', None),
+    'aan ortho': ('Ortho Male Ward', 'Ortho Ward', ['male']),
+    'ortho aan': ('Ortho Male Ward', 'Ortho Ward', ['male']),
+    'pen ortho': ('Ortho Female Ward', 'Ortho Ward', ['female']),
+    'ortho pen': ('Ortho Female Ward', 'Ortho Ward', ['female']),
+    'ஆண் ஆர்த்தோ': ('Ortho Male Ward', 'Ortho Ward', ['male']),
+    'ஆர்த்தோ ஆண்': ('Ortho Male Ward', 'Ortho Ward', ['male']),
+    'பெண் ஆர்த்தோ': ('Ortho Female Ward', 'Ortho Ward', ['female']),
+    'ஆர்த்தோ பெண்': ('Ortho Female Ward', 'Ortho Ward', ['female']),
     'ortho': ('Ortho', 'Ortho', None),
     'orthopedic': ('Ortho', 'Ortho', None),
     'orthopaedics': ('Ortho', 'Ortho', None),
     'எலும்பு': ('Ortho', 'Ortho', None),
     'ஆர்த்தோ': ('Ortho', 'Ortho', None),
     'elumbu': ('Ortho', 'Ortho', None),
+
+    # Surgery Ward / General Surgery
+    'male surgery': ('Male Surgery Ward', 'Surgery Ward', ['male']),
+    'surgery male': ('Male Surgery Ward', 'Surgery Ward', ['male']),
+    'male surgery ward': ('Male Surgery Ward', 'Surgery Ward', ['male']),
+    'surgery male ward': ('Male Surgery Ward', 'Surgery Ward', ['male']),
+    'female surgery': ('Female Surgery Ward', 'Surgery Ward', ['female']),
+    'surgery female': ('Female Surgery Ward', 'Surgery Ward', ['female']),
+    'female surgery ward': ('Female Surgery Ward', 'Surgery Ward', ['female']),
+    'surgery female ward': ('Female Surgery Ward', 'Surgery Ward', ['female']),
+    'surgery ward': ('Surgery Ward', 'Surgery Ward', None),
+
+    # Medicine Ward / General Medicine
+    'male medicine': ('Male Medicine Ward', 'General Medicine Ward', ['male']),
+    'medicine male': ('Male Medicine Ward', 'General Medicine Ward', ['male']),
+    'male medicine ward': ('Male Medicine Ward', 'General Medicine Ward', ['male']),
+    'medicine male ward': ('Male Medicine Ward', 'General Medicine Ward', ['male']),
+    'female medicine': ('Female Medicine Ward', 'General Medicine Ward', ['female']),
+    'medicine female': ('Female Medicine Ward', 'General Medicine Ward', ['female']),
+    'female medicine ward': ('Female Medicine Ward', 'General Medicine Ward', ['female']),
+    'medicine female ward': ('Female Medicine Ward', 'General Medicine Ward', ['female']),
+    'medicine ward': ('General Medicine Ward', 'General Medicine Ward', None),
+
+    # Duty Doctor Rooms
+    'male duty doctor': ('PG/CRRI Male Doctor Duty Room', 'PG/CRRI Duty Room', ['male']),
+    'duty doctor male': ('PG/CRRI Male Doctor Duty Room', 'PG/CRRI Duty Room', ['male']),
+    'female duty doctor': ('PG/CRRI Female Doctor Duty Room', 'PG/CRRI Duty Room', ['female']),
+    'duty doctor female': ('PG/CRRI Female Doctor Duty Room', 'PG/CRRI Duty Room', ['female']),
 
     # Dialysis / Nephrology
     'dialysis': ('Dialysis', 'Dialysis', None),
@@ -830,7 +908,7 @@ def find_intercom_department(query):
                         desc = html.unescape(e.get('desc', '')).strip()
                         ext_val = str(e.get('ext', '')).strip()
                         if filter_descs:
-                            if any(fd in desc.lower() for fd in filter_descs):
+                            if any(re.search(r'\b' + re.escape(fd) + r'\b', desc.lower()) for fd in filter_descs):
                                 all_exts.append({'desc': desc, 'ext': ext_val})
                         else:
                             all_exts.append({'desc': desc, 'ext': ext_val})
@@ -871,6 +949,15 @@ def find_intercom_department(query):
         dept_score = 0
         matching_exts = []
 
+        # High-fidelity check: if query has multiple words, reward exact match across dept and row
+        for e in exts:
+            desc = html.unescape(e.get('desc', ''))
+            desc_lower = desc.lower()
+            combined = dept_lower + ' ' + desc_lower
+            if len(primary_words) > 1 and all(bool(re.search(r'\b' + re.escape(pw) + r'\b', combined)) for pw in primary_words):
+                matching_exts.append((e, 1500))
+                dept_score += 1000
+
         for w in primary_words:
             pat = r'\b' + re.escape(w) + r'\b'
             if re.search(pat, dept_lower):
@@ -891,6 +978,10 @@ def find_intercom_department(query):
                 desc = html.unescape(e.get('desc', ''))
                 if re.search(pat, desc.lower()):
                     matching_exts.append((e, 50))
+
+        # If any high-fidelity match exists (score >= 1500), keep only high-fidelity extensions
+        if any(s >= 1500 for _, s in matching_exts):
+            matching_exts = [(e, s) for e, s in matching_exts if s >= 1500]
 
         seen_ext = set()
         final_exts = []
@@ -1748,6 +1839,8 @@ def search_catalog_candidates(query, limit=6):
 
     for _, item in scored:
         u_raw = item.get('url', '').strip()
+        if not u_raw or u_raw == '#':
+            continue
         u_clean = urllib.parse.unquote(u_raw.split('?')[0]).lower().strip()
         t_clean = re.sub(r'[^a-z0-9]', '', item.get('title', '').lower())
         fname = os.path.basename(u_clean) if u_clean.endswith('.pdf') else None
@@ -1900,7 +1993,7 @@ Extension Numbers:
 {ext_lines}
 """
 
-    prompt = f"""You are the official Gemini AI Search Assistant for the Adhiparasakthi Hospitals & Research Institute (APH) Intranet Portal in Melmaruvathur, Tamil Nadu.
+    prompt = f"""You are the official APH AI Search Assistant for the Adhiparasakthi Hospitals & Research Institute (APH) Intranet Portal in Melmaruvathur, Tamil Nadu.
 
 CRITICAL INSTRUCTIONS ON RESOURCE URLS:
 1. Hospital file documents (PDFs, Excel sheets, and SOPs) are hosted EXCLUSIVELY on http://192.168.101.75:3000/files/
@@ -1997,6 +2090,8 @@ ON-PAGE SECTIONS ON INTRANET HOMEPAGE (index.html):
 - HIS System: Located in Core Systems section (#core-systems) as the first enterprise card "HIS System" (AOSTA Backbone hospital clinical login).
 - HR Forms: Located in Forms section (#forms) under the "HR Forms" tab (Faculty applications, non-teaching jobs, promotion, holidays).
 - Consent Forms: Located in Forms section (#forms) under the "Consent" tab (Surgical consent Tamil/English, blood transfusion consent).
+- Core Quality Committee Hub: Located in section #quality on index.html (NABH / JCI Accreditation Governance, 266 Manuals in Box 1 via ./manuals.html, and List of Committees in Box 2 via ./comitee.html).
+- Manuals & SOPs Hub: Located at ./manuals.html (266 official NABH 5th & 6th Edition accreditation manuals, chapter standards AAC, COP, MOM, PRE, PSQ, HIC, FMS, HRM, IMS, ROM, and clinical protocols).
 - When the user asks "where is ...", inform them clearly which section and tab contains it, and that the portal page provides instant one-click jump navigation to it.
 
 BILINGUAL & TANGLISH UNDERSTANDING:
@@ -2009,6 +2104,7 @@ User Question: {user_query}
 Instructions for output:
 1. CRITICAL: NEVER output robotic meta-text or inventory statistics like 'Found X verified documents matching...', 'Here are 6 documents...', or 'The primary resource is...'.
 2. ALWAYS provide a direct, practical, human-helpful answer in 2-3 concise sentences explaining the exact process, portal, or operational steps:
+   - For MANUALS / SOPS / CLINICAL GUIDELINES / QUALITY queries (e.g. 'manuals', 'open manuals', 'nabh manuals', 'quality manuals', 'core quality committee hub', 'quality hub', 'sops', 'hospital manuals'): The #1 primary recommended link MUST be **Hospital Accreditation Manuals Hub (NABH 5th & 6th Edition)** (./manuals.html) and **Core Quality Committee Hub** (./index.html#quality). Explain that it contains all 266 official NABH 5th & 6th Edition accreditation manuals, chapter standards, and departmental SOPs.
    - For LEAVE queries (e.g. 'i need to apply leave', 'leave application', 'leave balance', 'விடுமுறை'): Direct the user to log in to **PruWorks HRMS** (https://mapims-hrms.tecvinesolutions.com) to submit leave requests and track approvals online, or visit the Admin HR office (Ext: 2173 / 2169). The #1 primary recommended link MUST be PruWorks HRMS (NOT holiday lists).
    - For SALARY / PAYSLIP queries: Direct staff to download monthly pay slips via **PruWorks HRMS** or contact HR / Accounts (Ext: 2173 / 2175).
    - For ATTENDANCE queries: Explain that biometric punches and shifts are tracked in **PruWorks HRMS**.
@@ -2038,21 +2134,94 @@ Instructions for output:
 }}"""
     return prompt
 
+PORTAL_APP_URLS = {
+    "http://192.168.103.37/BB15SE/Backbone/admin/login.aspx": "Hospital Information System (HIS Backbone Login)",
+    "https://mapims-hrms.tecvinesolutions.com": "PruWorks HRMS Portal",
+    "http://192.168.101.224/User_Login.asp": "M - PACS (Medsynapse Radiology Viewer)",
+    "http://www.mapimsmrd.com/mapimsmrd/": "MRD Medical Records Portal",
+    "http://www.mapimshis.com/mapims/": "Campus Ticketing & Maintenance Desk (Job Orders)",
+    "http://192.168.103.158:8081": "Pathology Barcode Generator",
+    "http://192.168.103.158:8082": "Community Health Eye Camp-25 Outreach",
+    "https://192.168.103.158:8083": "Clinical Care Counselling & ICU App",
+    "http://192.168.103.158:8086": "LineLoom OPD Token Display System",
+    "https://mh.mapims.edu.in/": "MAPIMS AI Health Assessment (Master Health Checkup / MHC)",
+    "https://checklist.mapims.edu.in/": "Clinical Checklist App",
+    "https://gencl.mapims.edu.in/": "Non-Clinical Checklist App",
+    "./manuals.html": "Hospital Accreditation Manuals Hub (NABH 5th & 6th Edition)",
+    "./index.html#quality": "Core Quality Committee Hub",
+    "./comitee.html": "APH Hospital Committees & MOM Directory",
+    "./recent circular.html": "APH Recent Circulars Hub",
+    "./index.html#e-circulars": "Digital E – Circulars & Protocols (Bulletin Board)",
+    "./index.html#tariff-stock": "Tariff & Live Stock Dashboard",
+    "./consent.html": "Clinical Consent Forms Vault",
+    "./commonforms.html": "APH Common Forms Hub",
+    "./hrforms.html": "APH HR Forms Hub",
+    "./itforms.html": "APH IT Forms Hub",
+    "./index.html#quick-shortcuts-dock": "Quick Shortcuts Dock"
+}
+
+def tag_app_auto_open(resp: Dict[str, Any], registered: Optional[Dict[str, Any]] = None, intent: Any = None) -> Dict[str, Any]:
+    if not isinstance(resp, dict):
+        return resp
+    # Do NOT tag on-page section anchors or hub pages as external apps to open in a new tab
+    if registered and (registered.get("intent_type") == SearchIntent.NAVIGATE_SECTION or registered.get("id") in ["SECTION_CONSENT_VAULT", "SECTION_COMMON_FORMS", "SECTION_HR_FORMS", "SECTION_IT_FORMS", "DIR_FORMS_HUB", "SECTION_TARIFF_STOCK", "SECTION_QUICK_SHORTCUTS"]):
+        resp["is_section"] = True
+        resp["auto_open"] = False
+        resp["section_id"] = "quick-shortcuts-dock" if registered.get("id") == "SECTION_QUICK_SHORTCUTS" else resp.get("section_id")
+        return resp
+
+    if registered and (registered.get("id", "").startswith("APP_") or registered.get("intent_type") == SearchIntent.OPEN_APPLICATION):
+        resp["auto_open"] = True
+        resp["auto_open_url"] = registered.get("url", resp.get("links", [{}])[0].get("url", ""))
+        resp["auto_open_title"] = registered.get("title", resp.get("links", [{}])[0].get("title", ""))
+        resp["is_app"] = True
+    elif registered and (registered.get("id", "").startswith("FORM_") or registered.get("intent_type") == SearchIntent.OPEN_FORM):
+        if registered.get("intent_type") == SearchIntent.OPEN_FORM:
+            resp["auto_open"] = True
+            resp["auto_open_url"] = registered.get("url", resp.get("links", [{}])[0].get("url", ""))
+            resp["auto_open_title"] = registered.get("title", resp.get("links", [{}])[0].get("title", ""))
+            resp["is_form"] = True
+    elif resp.get("links") and resp["links"][0].get("url") in PORTAL_APP_URLS:
+        top_u = resp["links"][0]["url"]
+        # Do not tag on-page section anchors (starting with ./index.html#) as auto-open applications
+        if not ('index.html#' in top_u or top_u.startswith('#')):
+            resp["auto_open"] = True
+            resp["auto_open_url"] = top_u
+            resp["auto_open_title"] = PORTAL_APP_URLS.get(top_u, resp["links"][0].get("title", "Application"))
+            resp["is_app"] = True
+        else:
+            resp["is_section"] = True
+            resp["auto_open"] = False
+    return resp
+
 def build_canonical_response_for_resource(query, res, intent):
     is_tamil = is_tamil_query(query)
     res_id = res['id']
 
     if res_id == 'APP_HIS':
         if is_tamil:
-            answer = "மருத்துவமனை தகவல் அமைப்பு (HIS - Backbone / AOSTA) முதன்மை உள்நுழைவு தளம்: http://192.168.103.37/BB15SE/Backbone/admin/login.aspx. நோயாளி பதிவு, மருத்துவர் ஆலோசனை, மற்றும் பில்லிங் பணிகளுக்கு நேரடியாக திறக்கலாம்."
+            answer = "மருத்துவமனை தகவல் அமைப்பு (HIS - Backbone / AOSTA) முதன்மை உள்நுழைவு தளம்: http://192.168.103.37/BB15SE/Backbone/admin/login.aspx. நோயாளி விவரங்கள், புதிய மற்றும் பழைய நோயாளி பதிவு (IP/OP/ER), பில்லிங், வார்டு இண்டென்ட்ஸ், மற்றும் மருந்தக செயல்பாடுகளுக்கு நேரடியாக திறக்கலாம்."
         else:
-            answer = "The hospital information system (HIS - Backbone / AOSTA) clinical workstation login is available at http://192.168.103.37/BB15SE/Backbone/admin/login.aspx. Launch the system directly below."
+            answer = "The hospital information system (HIS - Backbone / AOSTA) clinical workstation login is available at http://192.168.103.37/BB15SE/Backbone/admin/login.aspx. Access patient details, IP/OP/ER registration (new & review), billing, ward indents, stores, and pharmacy dispensing directly below."
         links = [
             {"title": "Hospital Information System (HIS Backbone Login)", "url": "http://192.168.103.37/BB15SE/Backbone/admin/login.aspx", "category": "Core Systems", "badge": "System"},
             {"title": "New HIS User Request Form", "url": "http://192.168.101.75:3000/files/His%20User%20Creation.pdf", "category": "IT Forms", "badge": "IT Form"},
             {"title": "IT Forms Vault", "url": "./itforms.html", "category": "Forms Vault", "badge": "IT Vault"}
         ]
         suggestions = ["HIS Backbone Login", "New HIS User Request Form", "IT Software Support Ext: 2228"]
+        return {"answer": answer, "links": links, "suggestions": suggestions}
+
+    if res_id == 'APP_TICKETING':
+        if is_tamil:
+            answer = "கணினி வன்பொருள், பழுதுகள் (Repairs), மின்சார பராமரிப்பு (Electrical), துப்புரவு (Housekeeping), சலவை (Laundry) மற்றும் பராமரிப்பு பணிகளுக்கான வேலை உத்தரவு (Job Order) அல்லது புகார்களைப் பதிவு செய்ய **Campus Ticketing & Maintenance Desk** (http://www.mapimshis.com/mapims/) தளத்தைப் பயன்படுத்தவும். அவசர கணினி உதவிக்கு IT பிரிவை (Ext: 2226 / 2228) அழைக்கவும்."
+        else:
+            answer = "To report repairs, fixing any hardware/equipment, general maintenance, electrical breakdown, housekeeping, laundry service issues, or computer faults, register a job order on the **Campus Ticketing & Maintenance Desk** (http://www.mapimshis.com/mapims/). For urgent IT assistance, call the IT Help Desk at Ext: 2226 (Hardware) or 2228 (Software)."
+        links = [
+            {"title": "Campus Ticketing & Maintenance Desk (Job Orders)", "url": "http://www.mapimshis.com/mapims/", "category": "Core Systems", "badge": "System"},
+            {"title": "System Request Form", "url": "http://192.168.101.75:3000/files/SYSTEM%20REQUEST%20FORM.pdf", "category": "IT Forms", "badge": "IT Form"},
+            {"title": "IT Forms Vault", "url": "./itforms.html", "category": "Forms Vault", "badge": "IT Vault"}
+        ]
+        suggestions = ["Campus Ticketing & Maintenance Desk", "IT Hardware Support Ext: 2226", "IT Software Support Ext: 2228"]
         return {"answer": answer, "links": links, "suggestions": suggestions}
 
     if res_id == 'FORM_HIS_USER':
@@ -2117,6 +2286,252 @@ def build_canonical_response_for_resource(query, res, intent):
         ]
         suggestions = ["Printer Request Form", "System Request Form", "IT Helpdesk Ext: 2226"]
         return {"answer": answer, "links": links, "suggestions": suggestions}
+
+    # =========================================================================
+    # IT FORMS HUB & IT REQUISITIONS VAULT
+    # =========================================================================
+    if res_id == 'SECTION_IT_FORMS':
+        if is_tamil:
+            answer = (
+                "மருத்துவமனையின் **IT படிவங்கள் தளம் (APH IT Forms Hub - Hardware & Access)**: \n\n"
+                "📌 **1. மருத்துவமனை தகவல் அமைப்பு (HIS & Database)**:\n"
+                "• **New HIS User Request Form**: HIS புதிய பயனர் கணக்கு & அனுமதி படிவம்\n"
+                "• **New Doctor Name and ID Creation in HIS**: மருத்துவர் ஐடி உருவாக்கம் & ஓபிடி அனுமதி\n"
+                "• **Item Creation in HIS**: மருந்துகள், ஆய்வகப் பரிசோதனைகள் & கட்டண விவரங்கள் சேர்க்கும் படிவம்\n\n"
+                "📌 **2. கணினி & வன்பொருள் கோரிக்கைகள் (Hardware & Peripherals)**:\n"
+                "• **System Request Form**: புதிய டெஸ்க்டாப் கணினி, சிபியூ, மானிட்டர் கோரிக்கை படிவம்\n"
+                "• **Printer Request Form**: அச்சுப்பொறி (Printer), பார்கோடு லேபிள் பிரிண்டர் & டோனர் கார்ட்ரிட்ஜ்\n\n"
+                "📌 **3. இணையம் & தகவல் தொடர்பு (Network & Telecom)**:\n"
+                "• **Employee WIFI Request Form**: பணியாளர் மடிக்கணினி & மொபைல் வைஃபை அனுமதி படிவம்\n"
+                "• **CUG Request Form**: துறை ரீதியான CUG மொபைல் சிம் கார்டு அனுமதி படிவம்\n"
+                "• **Official Email Request**: நிறுவன அதிகாரப்பூர்வ @mapims.edu.in மின்னஞ்சல் முகவரி படிவம்"
+            )
+        else:
+            answer = (
+                "Official **APH IT Forms Hub (Hardware & Access)**:\n\n"
+                "📌 **1. Hospital Information System (HIS & Database)**:\n"
+                "• **New HIS User Request Form**: HIS user credentials, operator ID & module access permissions\n"
+                "• **New Doctor Name and ID Creation in HIS**: Consultant clinician ID generation & OPD roster registration\n"
+                "• **Item Creation in HIS**: Master catalogue addition for pharmacy drugs, lab test codes & tariffs\n\n"
+                "📌 **2. Workstations & Hardware Indents**:\n"
+                "• **System Request Form**: Desktop PC, CPU, dual monitor hardware indent & workstation setup\n"
+                "• **Printer Request Form**: Network laser printer, barcode label printer & toner requisitions\n\n"
+                "📌 **3. Network & Telecom Requisitions**:\n"
+                "• **Employee WIFI Request Form**: Secure campus wireless network authorization via MAC binding\n"
+                "• **CUG Request Form**: Closed User Group departmental mobile line & SIM allocation voucher\n"
+                "• **Official Email Request**: @mapims.edu.in institutional email domain credentials requisition"
+            )
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "APH IT Forms Hub", "url": "./itforms.html", "category": "Forms Vault", "badge": "Hardware & Access"},
+                {"title": "New HIS User Request Form", "url": "http://192.168.101.75:3000/files/His%20User%20Creation.pdf", "category": "IT Forms", "badge": "IT Form"},
+                {"title": "System Request Form", "url": "http://192.168.101.75:3000/files/SYSTEM%20REQUEST%20FORM.pdf", "category": "IT Forms", "badge": "IT Form"},
+                {"title": "Employee WIFI Request Form", "url": "http://192.168.101.75:3000/files/EMPLOYEE%20WIFI%20REQUEST%20FORM.pdf", "category": "IT Forms", "badge": "IT Form"},
+                {"title": "Printer Request Form", "url": "http://192.168.101.75:3000/files/PRINTER%20REQUEST%20FORM.pdf", "category": "IT Forms", "badge": "IT Form"}
+            ],
+            "suggestions": [
+                "New HIS User Request Form",
+                "System Request Form",
+                "Employee WIFI Request Form",
+                "Printer Request Form",
+                "IT Helpdesk Ext: 2226 / 2228"
+            ],
+            "is_section": True,
+            "auto_open": False,
+            "section_id": "forms"
+        }
+
+    if res_id == 'SECTION_QUICK_SHORTCUTS':
+        if is_tamil:
+            answer = (
+                "**விரைவு குறுக்குவழிப் பலகை (Quick Shortcuts Dock)** மருத்துவமனையின் முக்கிய 8 கருவிகளை உடனடியாக அணுக உதவுகிறது:\n\n"
+                "1. 📞 **இன்டர்காம் (Intercom)**: வளாக நேரடி தொலைபேசி பட்டியல் மற்றும் அழைப்பு வசதி\n"
+                "2. 🕒 **24 மணி நேரப் பணி விவரம் (24h Duty)**: அவசர சிகிச்சை மற்றும் மருத்துவர்கள் பணி அட்டவணை (PDF)\n"
+                "3. 🩸 **ரத்த வங்கி இருப்பு (Blood Bank)**: ரத்த அலகுகள் மற்றும் இருப்பு விவரம் (PDF)\n"
+                "4. 📧 **மின்னஞ்சல் பட்டியல் (Email List)**: பணியாளர்கள் அதிகாரப்பூர்வ மின்னஞ்சல் முகவரிகள் (PDF)\n"
+                "5. 📖 **மருத்துவ சுருக்கங்கள் (Abbreviation)**: அனுமதிக்கப்பட்ட மருத்துவ சுருக்கக் குறியீடுகள் (PDF)\n"
+                "6. 💳 **பில்லிங் கையேடு (Billing Manual)**: மருத்துவமனை பில்லிங் மற்றும் கட்டண வழிகாட்டி (PDF)\n"
+                "7. 🩺 **நர்சிங் கையேடு (Nursing Manual)**: நோயாளி பராமரிப்பு மற்றும் செவிலியர் வழிகாட்டி (PDF)\n"
+                "8. 🔄 **பிடிஎஃப் மாற்று சர்வர் (Replace PDF)**: இன்ட்ராநெட் ஆவணங்களை பதிவேற்றும் நிர்வாக சர்வர்."
+            )
+        else:
+            answer = (
+                "The **Quick Shortcuts Dock** provides instant one-click access to 8 essential hospital operational tools:\n\n"
+                "1. 📞 **Intercom Hotline**: Live campus telephony directory & direct dial\n"
+                "2. 🕒 **24h Duty**: Daily 24-hour consultant and resident clinical roster (PDF)\n"
+                "3. 🩸 **Blood Bank**: Live real-time blood components and units stock (PDF)\n"
+                "4. 📧 **Email List**: Official hospital and college staff email directory (PDF)\n"
+                "5. 📖 **Abbreviation**: Approved medical & clinical abbreviations guide (PDF)\n"
+                "6. 💳 **Billing**: Inpatient & outpatient billing operational manual (PDF)\n"
+                "7. 🩺 **Nursing**: Ward procedures, medication safety & nursing user manual (PDF)\n"
+                "8. 🔄 **Replace PDF**: Administrative server for intranet document updates & uploads."
+            )
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "Quick Shortcuts Dock", "url": "./index.html#quick-shortcuts-dock", "category": "Portal Dock", "badge": "8 Live Shortcuts"},
+                {"title": "Intercom Hotline Directory", "url": "./intercom.html", "category": "Quick Shortcuts", "badge": "Hotline"},
+                {"title": "24hr's Duty Details Roster", "url": "http://192.168.101.75:3000/files/24hr's%20Duty%20Details.pdf", "category": "Quick Shortcuts", "badge": "Roster PDF"},
+                {"title": "Blood Bank Stock Details", "url": "http://192.168.101.75:3000/files/Blood%20Bank%20Stock%20Details.pdf", "category": "Quick Shortcuts", "badge": "Stock PDF"},
+                {"title": "Staff Email Directory", "url": "http://192.168.101.75:3000/files/email.pdf", "category": "Quick Shortcuts", "badge": "Directory PDF"},
+                {"title": "Approved Medical Abbreviations", "url": "http://192.168.101.75:3000/files/Abrrevation.pdf", "category": "Quick Shortcuts", "badge": "Guide PDF"},
+                {"title": "Billing User Manual", "url": "http://192.168.101.75:3000/files/billingmanual.pdf", "category": "Quick Shortcuts", "badge": "Manual PDF"},
+                {"title": "Nursing User Manual", "url": "http://192.168.101.75:3000/files/nursingmanual.pdf", "category": "Quick Shortcuts", "badge": "Manual PDF"},
+                {"title": "Replace / Upload PDF Portal", "url": "http://192.168.101.75:8000/server", "category": "Quick Shortcuts", "badge": "Admin Portal"}
+            ],
+            "suggestions": [
+                "Intercom Directory",
+                "24hr Duty Roster",
+                "Blood Bank Stock",
+                "Staff Email Directory"
+            ],
+            "is_section": True,
+            "auto_open": False,
+            "section_id": "quick-shortcuts-dock"
+        }
+
+    if res_id == 'DOC_STAFF_EMAIL_DIR':
+        answer = "Official **Staff Email Directory**: Institutional contact directory of `@mapims.edu.in` email addresses for medical faculty, hospital administrators, and clinical departments."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "Official Staff Email Directory", "url": "http://192.168.101.75:3000/files/email.pdf", "category": "Staff Directory", "badge": "Directory PDF"},
+                {"title": "Official Email ID Request Form", "url": "http://192.168.101.75:3000/files/OFFICIAL%20EMAIL%20ID%20REQUEST%20FORM.pdf", "category": "IT Forms", "badge": "IT Form"},
+                {"title": "Quick Shortcuts Dock", "url": "./index.html#quick-shortcuts-dock", "category": "Quick Shortcuts", "badge": "Side Dock"}
+            ],
+            "suggestions": ["Official Email Request Form", "Hospital Intercom Directory", "Quick Shortcuts"],
+            "auto_open": True,
+            "auto_open_url": "http://192.168.101.75:3000/files/email.pdf",
+            "auto_open_title": "Official Staff Email Directory"
+        }
+
+    if res_id == 'DOC_ABBREVIATION_GUIDE':
+        answer = "Official **Approved Medical Abbreviations List**: Clinical guide for standardized diagnostic and prescription abbreviations across hospital medical records."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "Approved Medical Abbreviations", "url": "http://192.168.101.75:3000/files/Abrrevation.pdf", "category": "Clinical Guidelines", "badge": "Guide PDF"},
+                {"title": "Quick Shortcuts Dock", "url": "./index.html#quick-shortcuts-dock", "category": "Quick Shortcuts", "badge": "Side Dock"}
+            ],
+            "suggestions": ["Medical Abbreviations 2025-2026", "Hospital Manuals Hub", "Quick Shortcuts"],
+            "auto_open": True,
+            "auto_open_url": "http://192.168.101.75:3000/files/Abrrevation.pdf",
+            "auto_open_title": "Approved Medical Abbreviations"
+        }
+
+    if res_id == 'DOC_BILLING_MANUAL':
+        answer = "Official **User Billing Manual**: Step-by-step procedures and guidelines for hospital cashier counters, billing counters, and financial settlement workflows."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "User Billing Manual", "url": "http://192.168.101.75:3000/files/billingmanual.pdf", "category": "Operations Manual", "badge": "Manual PDF"},
+                {"title": "Hospital Tariffs (Schedule of Charges)", "url": "./index.html#tariff-stock", "category": "Tariff & Packages", "badge": "Section 8"},
+                {"title": "Quick Shortcuts Dock", "url": "./index.html#quick-shortcuts-dock", "category": "Quick Shortcuts", "badge": "Side Dock"}
+            ],
+            "suggestions": ["Hospital Tariffs", "HIS Billing System", "Quick Shortcuts"],
+            "auto_open": True,
+            "auto_open_url": "http://192.168.101.75:3000/files/billingmanual.pdf",
+            "auto_open_title": "User Billing Manual"
+        }
+
+    if res_id == 'DOC_NURSING_MANUAL':
+        answer = "Official **Nursing Operations Manual**: Ward protocols, bedside nursing procedures, medication administration guidelines, and patient safety checks."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "Nursing User Manual", "url": "http://192.168.101.75:3000/files/nursingmanual.pdf", "category": "Operations Manual", "badge": "Manual PDF"},
+                {"title": "Hospital Accreditation Manuals Hub", "url": "./manuals.html", "category": "Manuals & SOPs", "badge": "Manuals Hub"},
+                {"title": "Quick Shortcuts Dock", "url": "./index.html#quick-shortcuts-dock", "category": "Quick Shortcuts", "badge": "Side Dock"}
+            ],
+            "suggestions": ["Clinical Checklist App", "Infection Control Manual", "Quick Shortcuts"],
+            "auto_open": True,
+            "auto_open_url": "http://192.168.101.75:3000/files/nursingmanual.pdf",
+            "auto_open_title": "Nursing User Manual"
+        }
+
+    if res_id == 'APP_REPLACE_PDF':
+        answer = "Official **Replace / Upload PDF Portal**: Administrative server for updating, replacing, and uploading intranet hospital documents."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "Replace / Upload PDF Portal", "url": "http://192.168.101.75:8000/server", "category": "Admin Tools", "badge": "Admin Server"},
+                {"title": "Quick Shortcuts Dock", "url": "./index.html#quick-shortcuts-dock", "category": "Quick Shortcuts", "badge": "Side Dock"}
+            ],
+            "suggestions": ["Quick Shortcuts Dock", "Hospital Intranet Home"],
+            "auto_open": True,
+            "auto_open_url": "http://192.168.101.75:8000/server",
+            "auto_open_title": "Replace / Upload PDF Portal",
+            "is_app": True
+        }
+
+    if res_id == 'FORM_DOCTOR_ID':
+        if is_tamil:
+            answer = "HIS அமைப்பில் புதிய மருத்துவர் பெயர் மற்றும் மருத்துவர் ஐடி உருவாக்குவதற்கான அதிகாரப்பூர்வ படிவம்: **New Doctor Name and ID Creation in HIS**. நேரடி PDF ஆவணத்தைத் திறக்க கீழே உள்ள இணைப்பைப் பயன்படுத்தவும்."
+        else:
+            answer = "Official **New Doctor Name and ID Creation in HIS** form: Use this form for consultant clinician ID generation, roster setup, and OPD prescription authorization."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "New Doctor Name and ID Creation in HIS", "url": "http://192.168.101.75:3000/files/Doctor%20Name%20and%20ID%20Creation.pdf", "category": "IT Forms", "badge": "IT Form"},
+                {"title": "New HIS User Request Form", "url": "http://192.168.101.75:3000/files/His%20User%20Creation.pdf", "category": "IT Forms", "badge": "IT Form"},
+                {"title": "IT Forms Vault", "url": "./itforms.html", "category": "Forms Vault", "badge": "IT Vault"}
+            ],
+            "suggestions": ["Doctor ID Creation in HIS", "New HIS User Request Form", "IT Helpdesk Ext: 2228"],
+            "auto_open_url": res['url'],
+            "auto_open_title": res['title']
+        }
+
+    if res_id == 'FORM_ITEM_CREATION':
+        if is_tamil:
+            answer = "HIS அமைப்பில் புதிய மருந்துகள், ஆய்வகப் பரிசோதனைகள் மற்றும் கட்டண விவரங்களைச் சேர்ப்பதற்கான அதிகாரப்பூர்வ படிவம்: **Item Creation in HIS**. நேரடி PDF ஆவணத்தைத் திறக்க கீழே உள்ள இணைப்பைப் பயன்படுத்தவும்."
+        else:
+            answer = "Official **Item Creation in HIS** form: Master catalogue addition for pharmacy drugs, lab investigation codes, and hospital billing tariffs."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "Item Creation in HIS", "url": "http://192.168.101.75:3000/files/Item%20Creation.pdf", "category": "IT Forms", "badge": "IT Form"},
+                {"title": "New HIS User Request Form", "url": "http://192.168.101.75:3000/files/His%20User%20Creation.pdf", "category": "IT Forms", "badge": "IT Form"},
+                {"title": "IT Forms Vault", "url": "./itforms.html", "category": "Forms Vault", "badge": "IT Vault"}
+            ],
+            "suggestions": ["Item Creation in HIS", "New HIS User Request Form", "IT Helpdesk Ext: 2228"],
+            "auto_open_url": res['url'],
+            "auto_open_title": res['title']
+        }
+
+    if res_id == 'FORM_EMAIL_ID':
+        if is_tamil:
+            answer = "மருத்துவமனை அதிகாரப்பூர்வ நிறுவன மின்னஞ்சல் முகவரி (@mapims.edu.in) கோரும் படிவம்: **Official Email ID Request Form**. நேரடி PDF ஆவணத்தைத் திறக்க கீழே உள்ள இணைப்பைப் பயன்படுத்தவும்."
+        else:
+            answer = "Official **Official Email ID Request Form**: Requisition form to create an official institutional @mapims.edu.in email account and mailbox credentials."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "Official Email ID Request Form", "url": "http://192.168.101.75:3000/files/OFFICIAL%20EMAIL%20ID%20REQUEST%20FORM.pdf", "category": "IT Forms", "badge": "IT Form"},
+                {"title": "Employee WIFI Request Form", "url": "http://192.168.101.75:3000/files/EMPLOYEE%20WIFI%20REQUEST%20FORM.pdf", "category": "IT Forms", "badge": "IT Form"},
+                {"title": "IT Forms Vault", "url": "./itforms.html", "category": "Forms Vault", "badge": "IT Vault"}
+            ],
+            "suggestions": ["Official Email Request Form", "Employee WIFI Request Form", "IT Helpdesk Ext: 2226"],
+            "auto_open_url": res['url'],
+            "auto_open_title": res['title']
+        }
+
+    if res_id == 'FORM_SIM_CUG':
+        if is_tamil:
+            answer = "மருத்துவமனை துறை ரீதியான CUG மொபைல் சிம் கார்டு கோரும் அதிகாரப்பூர்வ படிவம்: **SIM CUG Request Form**. நேரடி PDF ஆவணத்தைத் திறக்க கீழே உள்ள இணைப்பைப் பயன்படுத்தவும்."
+        else:
+            answer = "Official **SIM CUG Request Form**: Closed User Group departmental mobile line and SIM card allocation voucher."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "SIM CUG Request Form", "url": "http://192.168.101.75:3000/files/SIM%20CUG%20REQUEST%20FORM.pdf", "category": "IT Forms", "badge": "IT Form"},
+                {"title": "Employee WIFI Request Form", "url": "http://192.168.101.75:3000/files/EMPLOYEE%20WIFI%20REQUEST%20FORM.pdf", "category": "IT Forms", "badge": "IT Form"},
+                {"title": "IT Forms Vault", "url": "./itforms.html", "category": "Forms Vault", "badge": "IT Vault"}
+            ],
+            "suggestions": ["SIM CUG Request Form", "Official Email ID Request Form", "IT Telecom Ext: 2226"],
+            "auto_open_url": res['url'],
+            "auto_open_title": res['title']
+        }
 
     if res_id == 'FORM_RESIGNATION_HRM':
         if is_tamil:
@@ -2193,6 +2608,1043 @@ def build_canonical_response_for_resource(query, res, intent):
         suggestions = ["LineLoom OPD Token Display", "OPD Queue Display", "Core Applications Hub"]
         return {"answer": answer, "links": links, "suggestions": suggestions}
 
+    if res_id == 'DIR_MANUALS':
+        if is_tamil:
+            answer = "மருத்துவமனை **அனைத்து 266 அதிகாரப்பூர்வ NABH 5வது மற்றும் 6வது பதிப்பு கையேடுகள்** (NABH 5th & 6th Edition Manuals), துறை வாரியான SOPகள், அத்தியாய வழிகாட்டுதல்கள் (AAC, COP, MOM, PRE, PSQ, HIC, FMS, HRM, IMS, ROM), மற்றும் மருத்துவ நெறிமுறைகளை **Hospital Accreditation Manuals Hub** தளத்தில் முழுமையாகப் பார்க்கலாம்."
+        else:
+            answer = "Explore all **266 official NABH 5th & 6th Edition accreditation manuals**, chapter standards (AAC, COP, MOM, PRE, PSQ, HIC, FMS, HRM, IMS, ROM), departmental SOPs, and clinical protocols in the **Hospital Accreditation Manuals Hub**."
+        links = [
+            {"title": "Hospital Accreditation Manuals Hub (NABH 5th & 6th Edition)", "url": "./manuals.html", "category": "Manuals & SOPs", "badge": "Manuals Hub"},
+            {"title": "Core Quality Committee Hub", "url": "./index.html#quality", "category": "Clinical Governance", "badge": "Quality Hub"},
+            {"title": "APH Hospital Committees & MOM Directory", "url": "./comitee.html", "category": "Committees & MOM", "badge": "Committees Directory"}
+        ]
+        suggestions = ["Hospital Manuals Hub", "Core Quality Committee Hub", "Committees & MOM"]
+        return {"answer": answer, "links": links, "suggestions": suggestions, "auto_open_url": "./manuals.html", "auto_open_title": "Hospital Accreditation Manuals Hub"}
+
+    if res_id == 'HUB_CORE_QUALITY':
+        if is_tamil:
+            answer = "மருத்துவமனை **Core Quality Committee Hub** என்பது NABH / JCI தர நிர்ணய நிர்வாகம், தரக் கட்டுப்பாடு குழு (Quality Committee) கூட்ட அறிக்கைகள் (MOM), 266 மருத்துவ கையேடுகள் மற்றும் மருத்துவ நெறிமுறைகளுக்கான பிரதான நிர்வாகத் தளமாகும்."
+        else:
+            answer = "The **Core Quality Committee Hub** is the central governance portal for NABH / JCI accreditation governance, hospital quality committee (QC) meeting minutes, chapter standards, and all 266 clinical & administrative manuals."
+        links = [
+            {"title": "Core Quality Committee Hub", "url": "./index.html#quality", "category": "Clinical Governance", "badge": "Quality Hub"},
+            {"title": "Hospital Accreditation Manuals Hub (NABH 5th & 6th Edition)", "url": "./manuals.html", "category": "Manuals & SOPs", "badge": "Manuals Hub"},
+            {"title": "APH Hospital Committees & MOM Directory", "url": "./comitee.html", "category": "Committees & MOM", "badge": "Committees Directory"}
+        ]
+        suggestions = ["Core Quality Committee Hub", "Hospital Manuals Hub", "Committees Directory"]
+        return {"answer": answer, "links": links, "suggestions": suggestions, "auto_open_url": "./index.html#quality", "auto_open_title": "Core Quality Committee Hub"}
+
+    if res_id == 'DIR_COMMITTEES':
+        if is_tamil:
+            answer = (
+                "மருத்துவமனை நிர்வாகக் குழுக்கள், அதிகாரப்பூர்வ சாசனங்கள் (Charters), "
+                "2026 ஆம் ஆண்டிற்கான திட்டமிடப்பட்ட கூட்ட அட்டவணை (Scheduled Calendar), மாதிரி ஒத்திகை (Mock Drill Calendar) "
+                "மற்றும் அனைத்து துறை வாரியான கூட்ட அறிக்கைகள் (MOM: Quality, Safety, HICC, CPR, Blood Transfusion, BMW, Pharmacy) "
+                "ஆகியவற்றை **APH Hospital Committees & MOM Directory** தளத்தில் பார்க்கலாம்."
+            )
+        else:
+            answer = (
+                "Access official hospital governance charters, quality committees, the **2026 Committee Scheduled Calendar**, "
+                "the **2026 Mock Drill Calendar**, and all departmental Minutes of Meeting (MOM: Quality, Safety, HICC, CPR, "
+                "Blood Transfusion, BMW, Pharmacy) in the **APH Hospital Committees & MOM Directory**."
+            )
+        links = [
+            {"title": "APH Hospital Committees & MOM Directory", "url": "./comitee.html", "category": "Committees & MOM", "badge": "Governance Hub"},
+            {"title": "Core Quality Committee Hub", "url": "./index.html#quality", "category": "Clinical Governance", "badge": "Quality Hub"},
+            {"title": "Hospital Accreditation Manuals Hub (NABH 5th & 6th Edition)", "url": "./manuals.html", "category": "Manuals & SOPs", "badge": "Manuals Hub"}
+        ]
+        suggestions = ["Committee Scheduled Calendar 2026", "Mock Drill Calendar 2026", "Core Quality Committee Hub"]
+        return {
+            "answer": answer,
+            "links": links,
+            "suggestions": suggestions,
+            "auto_open_url": "./comitee.html",
+            "auto_open_title": "APH Hospital Committees & MOM Directory"
+        }
+
+    if res_id == 'DIR_CIRCULARS':
+        if is_tamil:
+            answer = (
+                "மருத்துவமனையின் **Digital E – Circulars & Protocols (சமீபத்திய சுற்றறிக்கைகள் & நெறிமுறைகள்)** தளம்: \n\n"
+                "இங்கு நிர்வாக சுற்றறிக்கைகள், பாதுகாப்பு அறிவிப்புகள், 24 மணி நேர டூட்டி ரோஸ்டர், ரத்த வங்கி இருப்பு மற்றும் அவசர எண்கள் உடனுக்குடன் புதுப்பிக்கப்படுகின்றன.\n\n"
+                "📌 **முக்கிய அறிவிப்புகள் & சுற்றறிக்கைகள்**:\n"
+                "1. **Safety Meeting Circular- 2026** (பாதுகாப்புக் கூட்ட சுற்றறிக்கை)\n"
+                "2. **SWOT Analysis Circular Jan 2026** (SWOT பகுப்பாய்வு)\n"
+                "3. **AMSOUR DEVELOPED INHOUSE APPLICATIONS - 2026** (உள் கட்டமைக்கப்பட்ட மென்பொருள்கள்)\n"
+                "4. **Emergency Rescue Team (ERT)** & **Code Violet** (பாதுகாப்பு நெறிமுறைகள்)\n"
+                "5. **Refugee - 2026**, **Patient Valuable Policy**\n\n"
+                "அனைத்து சுற்றறிக்கைகளையும் பார்வையிட **[APH Recent Circulars Hub](./recent circular.html)** திறக்கவும்."
+            )
+        else:
+            answer = (
+                "The **Digital E – Circulars & Protocols** hub provides real-time digital access to administrative orders, safety bulletins, and departmental duty updates:\n\n"
+                "📌 **Featured Live Circulars & Bulletins**:\n"
+                "1. **Safety Meeting Circular- 2026** (Hospital safety committee directives)\n"
+                "2. **SWOT Analysis Circular Jan 2026** (Institutional strategic analysis)\n"
+                "3. **AMSOUR Developed In-house Applications - 2026** (In-house software launches)\n"
+                "4. **Emergency Rescue Team (ERT)** & **Code Violet Circulars**\n"
+                "5. **Refugee - 2026 Policy** & **Patient Valuable Policy**\n\n"
+                "📁 Open the **[APH Recent Circulars Hub](./recent circular.html)** to search and download all circular PDFs with live highlighting, or view the **[Digital E-Circulars Board](./index.html#e-circulars)** on the portal homepage."
+            )
+        links = [
+            {"title": "APH Recent Circulars Hub", "url": "./recent circular.html", "category": "Circulars & Bulletins", "badge": "Circulars Hub"},
+            {"title": "Digital E – Circulars & Protocols (Bulletin Section)", "url": "./index.html#e-circulars", "category": "Portal Section", "badge": "Section 7"},
+            {"title": "24-Hour Doctor On-Duty Roster", "url": "http://192.168.101.75:3000/files/24hr's Duty Details.pdf", "category": "Rosters", "badge": "Duty Roster"},
+            {"title": "Blood Bank Stock Details", "url": "http://192.168.101.75:3000/files/Blood Bank Stock Details.pdf", "category": "Rosters", "badge": "Live Inventory"},
+            {"title": "Safety Meeting Circular- 2026", "url": "http://192.168.101.75:3000/files/Safety meeting Circular- 2026.pdf", "category": "Circulars", "badge": "Latest Circular"}
+        ]
+        suggestions = ["24hr Duty Roster", "Blood Bank Stock", "Safety Meeting Circular", "SWOT Analysis Circular"]
+        return {
+            "answer": answer,
+            "links": links,
+            "suggestions": suggestions,
+            "auto_open_url": "./recent circular.html",
+            "auto_open_title": "APH Recent Circulars & Digital E-Circulars Hub"
+        }
+
+    if res_id == 'SECTION_E_CIRCULARS':
+        if is_tamil:
+            answer = (
+                "மருத்துவமனை முதன்மை பக்கத்தில் உள்ள **Digital E – Circulars & Protocols (பகுதி 7)** அறிவிப்பு பலகை:\n\n"
+                "இங்கு நேரடி 24 மணி நேர டூட்டி ரோஸ்டர், ரத்த வங்கி இருப்பு, காவல் நிலைய அவசர எண்கள், மருத்துவ வழக்கு வழிகாட்டிகள், PMS கொள்கை மற்றும் சமீபத்திய சுற்றறிக்கைகள் காட்சிப்படுத்தப்பட்டுள்ளன."
+            )
+        else:
+            answer = (
+                "The **Digital E – Circulars & Protocols** bulletin section on the portal homepage (Section 7) features real-time access to "
+                "the 24-hour doctor on-duty roster, blood bank inventory, police station hotlines, clinical case patients documentation, PMS policy, and recent circulars."
+            )
+        links = [
+            {"title": "Digital E – Circulars & Protocols (Section 7)", "url": "./index.html#e-circulars", "category": "Portal Section", "badge": "Section 7"},
+            {"title": "APH Recent Circulars Hub", "url": "./recent circular.html", "category": "Circulars & Bulletins", "badge": "Circulars Hub"},
+            {"title": "24-Hour Doctor On-Duty Roster", "url": "http://192.168.101.75:3000/files/24hr's Duty Details.pdf", "category": "Rosters", "badge": "Duty Roster"},
+            {"title": "Blood Bank Stock Details", "url": "http://192.168.101.75:3000/files/Blood Bank Stock Details.pdf", "category": "Rosters", "badge": "Live Inventory"}
+        ]
+        suggestions = ["Open Recent Circulars", "24hr Duty Roster", "Blood Bank Stock", "Police Station Number"]
+        return {
+            "answer": answer,
+            "links": links,
+            "suggestions": suggestions,
+            "auto_open_url": "./index.html#e-circulars",
+            "auto_open_title": "Digital E – Circulars & Protocols"
+        }
+
+    if res_id == 'DOC_DUTY_ROSTER':
+        if is_tamil:
+            answer = (
+                "மருத்துவமனை **24-Hour Doctor On-Duty Roster (24 மணி நேர டூட்டி ரோஸ்டர்)** ஆவணத்தில் அவசர சிகிச்சை மருத்துவர்கள் (Casualty CMO), "
+                "தீவிர சிகிச்சைப் பிரிவு மருத்துவர்கள் (Intensivists), மற்றும் நர்சிங் மேற்பார்வையாளர்களின் (Nursing Supervisors) நேரடி பணிப் பட்டியல் விவரங்கள் உள்ளன."
+            )
+        else:
+            answer = (
+                "The **24-Hour Doctor On-Duty Roster** details the live 24-hour duty rotations for Casualty CMOs (Casualty Medical Officers), "
+                "Intensivists, and Nursing Supervisors."
+            )
+        links = [
+            {"title": "24-Hour Doctor On-Duty Roster (Live PDF)", "url": "http://192.168.101.75:3000/files/24hr's Duty Details.pdf", "category": "Digital E-Circulars", "badge": "Duty Roster"},
+            {"title": "Digital E – Circulars & Protocols (Section 7)", "url": "./index.html#e-circulars", "category": "Portal Section", "badge": "Section 7"},
+            {"title": "Emergency Medicine Intercom Directory", "url": "./intercom.html?dept=Emergency%20Medicine", "category": "Telephony", "badge": "Ext: 2001 / 2002"}
+        ]
+        suggestions = ["View 24hr Duty Roster", "Blood Bank Stock Details", "Emergency Medicine Ext: 2001"]
+        return {
+            "answer": answer,
+            "links": links,
+            "suggestions": suggestions,
+            "auto_open": True,
+            "auto_open_url": "http://192.168.101.75:3000/files/24hr's Duty Details.pdf",
+            "auto_open_title": "24-Hour Doctor On-Duty Roster"
+        }
+
+    if res_id == 'DOC_BLOOD_BANK_STOCK':
+        if is_tamil:
+            answer = (
+                "மருத்துவமனை **Blood Bank Stock Details (ரத்த வங்கி இருப்பு விவரம்)** ஆவணத்தில் PRBC, FFP, பிளேட்லெட்டுகள் (Platelets), "
+                "கிரையோப்ரெசிபிடேட் மற்றும் அரிய வகை ரத்தப் பிரிவுகளின் நேரடி இருப்பு விவரங்கள் உள்ளன."
+            )
+        else:
+            answer = (
+                "The **Blood Bank Stock Details** provides real-time hospital inventory of Packed Red Blood Cells (PRBC), "
+                "Fresh Frozen Plasma (FFP), Platelet concentrates, cryoprecipitate, and rare blood units."
+            )
+        links = [
+            {"title": "Blood Bank Stock Details (Live PDF)", "url": "http://192.168.101.75:3000/files/Blood Bank Stock Details.pdf", "category": "Digital E-Circulars", "badge": "Live Inventory"},
+            {"title": "Blood Bank Department Intercom Directory", "url": "./intercom.html?dept=Blood%20Bank", "category": "Telephony", "badge": "Ext: 2024 / 2025"},
+            {"title": "Digital E – Circulars & Protocols (Section 7)", "url": "./index.html#e-circulars", "category": "Portal Section", "badge": "Section 7"}
+        ]
+        suggestions = ["Blood Bank Ext: 2024", "24hr Duty Roster", "Digital E-Circulars"]
+        return {
+            "answer": answer,
+            "links": links,
+            "suggestions": suggestions,
+            "auto_open": True,
+            "auto_open_url": "http://192.168.101.75:3000/files/Blood Bank Stock Details.pdf",
+            "auto_open_title": "Blood Bank Stock Details"
+        }
+
+    if res_id == 'DOC_POLICE_STATION_NUMBERS':
+        if is_tamil:
+            answer = (
+                "மருத்துவமனை **Police Station Contact Numbers & Liaison Directory (காவல் நிலைய அவசர எண்கள்)** ஆவணத்தில் "
+                "அருகிலுள்ள மேல்மருவத்தூர் மற்றும் மதுராந்தகம் காவல் நிலைய நேரடி எண்கள், காவல் ஆய்வாளர் எண்கள் மற்றும் மருத்துவ-சட்ட (MLC) தொடர்பு வழிகாட்டிகள் உள்ளன."
+            )
+        else:
+            answer = (
+                "The **Police Station Contact Numbers & Liaison Directory** provides verified emergency telephone numbers for "
+                "local police jurisdictions (Melmaruvathur, Madurantakam), police inspector direct lines, police outpost, and hospital Medico-Legal Case (MLC) reporting liaisons."
+            )
+        links = [
+            {"title": "Police Station Numbers & Hotlines (Live PDF)", "url": "http://192.168.101.75:3000/files/police.pdf", "category": "Digital E-Circulars", "badge": "Emergency Hotline"},
+            {"title": "Emergency Medicine Department Intercom Directory", "url": "./intercom.html?dept=Emergency%20Medicine", "category": "Telephony", "badge": "Ext: 2001 / 2002"},
+            {"title": "Digital E – Circulars & Protocols (Section 7)", "url": "./index.html#e-circulars", "category": "Portal Section", "badge": "Section 7"}
+        ]
+        suggestions = ["Police Station Numbers", "Casualty Intercom Ext: 2001", "24hr Duty Roster"]
+        return {
+            "answer": answer,
+            "links": links,
+            "suggestions": suggestions,
+            "auto_open_url": "http://192.168.101.75:3000/files/police.pdf",
+            "auto_open_title": "Police Station Contact Numbers & Directory"
+        }
+
+    if res_id == 'DOC_CLINICAL_CASE_PATIENTS':
+        if is_tamil:
+            answer = (
+                "மருத்துவமனை **Clinical Case Patients Documentation & Protocols** ஆவணம் மருத்துவ வழக்கு நோயாளிகள் ஆவணப்படுத்தல், "
+                "மருத்துவ சிகிச்சை வழிகாட்டுதல்கள் மற்றும் மருத்துவமனை நிலை நெறிமுறைகளைக் கொண்டுள்ளது."
+            )
+        else:
+            answer = (
+                "The **Clinical Case Patients Documentation & Protocols** document covers guidelines, documentation standards, "
+                "and hospital clinical standing orders for clinical case patients."
+            )
+        links = [
+            {"title": "Clinical Case Patients Documentation (Live PDF)", "url": "http://192.168.101.75:3000/files/clinical.pdf", "category": "Digital E-Circulars", "badge": "Clinical Protocol"},
+            {"title": "Digital E – Circulars & Protocols (Section 7)", "url": "./index.html#e-circulars", "category": "Portal Section", "badge": "Section 7"},
+            {"title": "Hospital Accreditation Manuals Hub", "url": "./manuals.html", "category": "Manuals & SOPs", "badge": "Manuals Hub"}
+        ]
+        suggestions = ["Clinical Case Patients PDF", "Hospital Manuals Hub", "PMS Policy"]
+        return {
+            "answer": answer,
+            "links": links,
+            "suggestions": suggestions,
+            "auto_open_url": "http://192.168.101.75:3000/files/clinical.pdf",
+            "auto_open_title": "Clinical Case Patients Documentation"
+        }
+
+    if res_id == 'DOC_PMS_POLICY':
+        if is_tamil:
+            answer = (
+                "மருத்துவமனை **Performance Management System (PMS) Policy & KPI Framework** ஆவணத்தில் ஊழியர்கள் மற்றும் ஆசிரியர்களுக்கான "
+                "செயல்திறன் மதிப்பீடு கொள்கை, முக்கிய செயல்திறன் குறிகாட்டிகள் (KPIs) மற்றும் வருடாந்திர மதிப்பீட்டு நெறிமுறைகள் உள்ளன."
+            )
+        else:
+            answer = (
+                "The **Performance Management System (PMS) Policy & KPI Framework** governs hospital employee and faculty performance appraisals, "
+                "key performance indicators (KPIs), promotion reviews, and annual institutional evaluation standards."
+            )
+        links = [
+            {"title": "Performance Management System (PMS) Policy (Live PDF)", "url": "http://192.168.101.75:3000/files/PMS Policy.pdf", "category": "Digital E-Circulars", "badge": "HR Policy"},
+            {"title": "HR Department Intercom Directory", "url": "./intercom.html?dept=HR", "category": "Telephony", "badge": "HR Admin"},
+            {"title": "Digital E – Circulars & Protocols (Section 7)", "url": "./index.html#e-circulars", "category": "Portal Section", "badge": "Section 7"}
+        ]
+        suggestions = ["PMS Policy PDF", "HRMS PruWorks Portal", "HR Department Ext: 2225"]
+        return {
+            "answer": answer,
+            "links": links,
+            "suggestions": suggestions,
+            "auto_open_url": "http://192.168.101.75:3000/files/PMS Policy.pdf",
+            "auto_open_title": "PMS Policy & KPI Framework"
+        }
+
+    # =========================================================================
+    # SECTION 8: TARIFF & LIVE STOCK DASHBOARD, TARIFFS & COUNTERS
+    # =========================================================================
+    if res_id == 'SECTION_TARIFF_STOCK':
+        if is_tamil:
+            answer = (
+                "மருத்துவமனையின் **Tariff & Live Stock (கட்டண அட்டவணைகள் & நேரடி இருப்பு - பகுதி 8)** தளம்: \n\n"
+                "📌 **1. மருத்துவமனை கட்டண அட்டவணைகள் (Hospital Tariffs - 7 அட்டவணைகள்)**:\n"
+                "• **Admission / Packages**: சிறப்பு சிகிச்சை & அறுவை சிகிச்சை பேக்கேஜ்கள் (மேல்மருவத்தூர் பஞ்சாயத்து 15% தள்ளுபடி)\n"
+                "• **Lab Tariff**: ரத்த பரிசோதனை, பயோகெமிஸ்ட்ரி, மைக்ரோபயாலஜி & பத்தாலஜி கட்டணங்கள்\n"
+                "• **Radiology Tariff**: டிஜிட்டல் எக்ஸ்ரே, சிடி ஸ்கேன், எம்ஆர்ஐ & அல்ட்ராசவுண்ட் கட்டணங்கள்\n"
+                "• **Physiotherapy Tariff**: உடற்பயிற்சி சிகிச்சை & மறுவாழ்வு கட்டணங்கள்\n"
+                "• **OT / Surgery Tariff**: பொது வார்டு அறுவை சிகிச்சை மற்றும் ஆபரேஷன் தியேட்டர் கட்டணங்கள்\n"
+                "• **ICU & Special Ward Tariff**: தீவிர சிகிச்சைப் பிரிவு படுக்கை கட்டணம் & டீலக்ஸ்/ஏசி அறை வாடகை\n"
+                "• **Other Departments Tariff**: பல், இஎன்டி, கண் மற்றும் இதர துறை கட்டணங்கள்\n\n"
+                "📌 **2. மருந்தக நேரடி இருப்பு (Pharmacy Live Stock)**:\n"
+                "• **139 Drugs**: மத்திய மருந்து சேமிப்பு கிடங்கு நேரடி இருப்பு பட்டியல்\n"
+                "• **77 IP**: உள்நோயாளி மருந்தகம் | **515 Insurance**: காப்பீட்டு மருந்தகம் | **90 OP**: வெளிநோயாளி மருந்தகம்\n"
+                "• **Formulary 2025**: அங்கீகரிக்கப்பட்ட மருந்து கையேடு | **Free Drug List (NMC)**: இலவச மருந்துகள்\n\n"
+                "📌 **3. பொது சேமிப்பு கிடங்கு (General Store Inventory)**:\n"
+                "• 738 பொது பொருட்கள், 160 எழுதுபொருட்கள், 93 அறுவை சிகிச்சை கிட்கள்."
+            )
+        else:
+            answer = (
+                "The **Tariff & Live Stock** dashboard (Section 8) provides verified schedules of hospital charges and live supply inventory:\n\n"
+                "📌 **1. Hospital Tariffs (7 Departmental Schedules)**:\n"
+                "• **Admission / Packages**: Inpatient & outpatient surgical packages, Panchayat 15% discount, and health checkup rates\n"
+                "• **Lab Tariff**: Pathology, biochemistry, microbiology, and haematology test charges\n"
+                "• **Radiology Tariff**: Digital X-Ray, CT Scan, MRI, Ultrasound (USG), and Doppler charges\n"
+                "• **Physiotherapy Tariff**: Rehabilitation, electrotherapy, and exercise therapy session rates\n"
+                "• **OT / Surgery Tariff**: General Ward OT packages, surgeon charges, and procedural tariffs\n"
+                "• **ICU & Special Ward Room Tariff**: ICU/ICCU/NICU bed rates, deluxe rooms, and AC ward rents\n"
+                "• **Other Departments Tariff**: Dental, ENT, Ophthalmology, Casualty, and specialty clinic fees\n\n"
+                "📌 **2. Pharmacy Live Stock Counters**:\n"
+                "• **Central Drug Store (139 items)**: Essential hospital medications and suture products\n"
+                "• **In-Patient (77 items)**, **Insurance (515 items)**, and **OP (90 items)** dispensary stock\n"
+                "• **Hospital Formulary 2025** & **Free Drug List (NMC Updated 11.05.26)**\n\n"
+                "📌 **3. General Store Inventory**:\n"
+                "• 738 active inventory items, 160 stationery items, and 93 surgical & CSSD kits.\n\n"
+                "Explore all schedules on the **[Tariff & Live Stock Dashboard](./index.html#tariff-stock)**."
+            )
+        links = [
+            {"title": "Tariff & Live Stock Dashboard (Section 8)", "url": "./index.html#tariff-stock", "category": "Portal Section", "badge": "Section 8"},
+            {"title": "Special Treatment & Health Packages", "url": "http://192.168.101.75:3000/files/Adhiparasakthi Hospitals Special Packages (04.05.2026).pdf", "category": "Tariff & Packages", "badge": "Tariff PDF"},
+            {"title": "ICU and Special Ward Room Tariff", "url": "http://192.168.101.75:3000/files/ICU and Special Ward Room Tariff.pdf", "category": "Tariff & Packages", "badge": "Tariff PDF"},
+            {"title": "Drug Stores Stock Details (139 Items)", "url": "http://192.168.101.75:3000/files/Drug Stores Stock Details.pdf", "category": "Pharmacy & Stock", "badge": "139 Drugs PDF"},
+            {"title": "General Store Inventory Stock Details (738 Items)", "url": "http://192.168.101.75:3000/files/Inventory Stock Details 2024.pdf", "category": "General Store", "badge": "738 Items PDF"}
+        ]
+        suggestions = ["Hospital Tariffs", "Pharmacy Live Stock", "Room Rent Tariff", "Inventory Stock Details"]
+        return {
+            "answer": answer,
+            "links": links,
+            "suggestions": suggestions,
+            "section_id": "tariff-stock",
+            "auto_open": False
+        }
+
+    if res_id == 'CARD_HOSPITAL_TARIFFS':
+        if is_tamil:
+            answer = (
+                "மருத்துவமனையின் **Hospital Tariffs (கட்டண அட்டவணைகள்)** 7 சிறப்புத் துறைகளின் கீழ் வகைப்படுத்தப்பட்டுள்ளது:\n\n"
+                "1. **Admission / Packages**: உள்நோயாளி மற்றும் அறுவை சிகிச்சை சிறப்பு பேக்கேஜ்கள் (பஞ்சாயத்து 15% தள்ளுபடி)\n"
+                "2. **Lab Tariff**: ரத்தப் பரிசோதனை, பயோகெமிஸ்ட்ரி, மைக்ரோபயாலஜி மற்றும் பத்தாலஜி கட்டணங்கள்\n"
+                "3. **Radiology Tariff**: டிஜிட்டல் எக்ஸ்ரே, சிடி ஸ்கேன், எம்ஆர்ஐ மற்றும் அல்ட்ராசவுண்ட் கட்டணங்கள்\n"
+                "4. **Physiotherapy Tariff**: பிசியோதெரபி மற்றும் மறுவாழ்வு சிகிச்சை அமர்வு கட்டணங்கள்\n"
+                "5. **OT / Surgery Tariff**: பொது வார்டு அறுவை சிகிச்சை மற்றும் ஆபரேஷன் தியேட்டர் கட்டணங்கள்\n"
+                "6. **ICU & Special Ward Room Tariff**: தீவிர சிகிச்சைப் பிரிவு மற்றும் சிறப்பு வார்டு அறை வாடகை\n"
+                "7. **Other Departments Tariff**: பல், காது-மூக்கு-தொண்டை, கண் மற்றும் அவசர சிகிச்சைக் கட்டணங்கள்."
+            )
+        else:
+            answer = (
+                "The **MAPIMS Hospital Tariffs (Schedule of Charges)** includes approved billing rates across 7 clinical divisions:\n\n"
+                "1. **Admission / Packages**: Inpatient admissions, surgery packages & Melmaruvathur Panchayat 15% discount\n"
+                "2. **Lab Tariff**: Pathology, clinical biochemistry, microbiology, and haematology test charges\n"
+                "3. **Radiology Tariff**: Digital X-Ray, CT Scan, MRI, Ultrasound (USG), and Doppler tariffs\n"
+                "4. **Physiotherapy Tariff**: Physical therapy, rehabilitation, and electrotherapy session charges\n"
+                "5. **OT / Surgery Tariff**: General Ward OT packages, surgeon fees, and surgical procedures\n"
+                "6. **ICU & Special Ward Room Tariff**: ICU/ICCU/NICU bed charges, deluxe rooms, and AC single room rent\n"
+                "7. **Other Departments Tariff**: Dental, ENT, Ophthalmology, Casualty, and specialty outpatient services."
+            )
+        links = [
+            {"title": "Special Treatment & Health Packages", "url": "http://192.168.101.75:3000/files/Adhiparasakthi Hospitals Special Packages (04.05.2026).pdf", "category": "Tariff & Packages", "badge": "Tariff PDF"},
+            {"title": "ICU and Special Ward Room Tariff", "url": "http://192.168.101.75:3000/files/ICU and Special Ward Room Tariff.pdf", "category": "Tariff & Packages", "badge": "Tariff PDF"},
+            {"title": "Laboratory Investigation Tariff", "url": "http://192.168.101.75:3000/files/Lab Tariff.pdf", "category": "Tariff & Packages", "badge": "Tariff PDF"},
+            {"title": "Radiology Imaging Tariff", "url": "http://192.168.101.75:3000/files/Radiology Tariff.pdf", "category": "Tariff & Packages", "badge": "Tariff PDF"},
+            {"title": "General Ward Surgery OT Tariff", "url": "http://192.168.101.75:3000/files/General Ward Surgery OT Tariff.pdf", "category": "Tariff & Packages", "badge": "Tariff PDF"},
+            {"title": "Physiotherapy Department Tariff", "url": "http://192.168.101.75:3000/files/Physiotherapy Tariff.pdf", "category": "Tariff & Packages", "badge": "Tariff PDF"},
+            {"title": "Other Departments Tariff", "url": "http://192.168.101.75:3000/files/Other Department Tariff.pdf", "category": "Tariff & Packages", "badge": "Tariff PDF"},
+            {"title": "Tariff & Live Stock Section", "url": "./index.html#tariff-stock", "category": "Portal Section", "badge": "Section 8"}
+        ]
+        suggestions = ["Special Packages Tariff", "Room Rent Tariff", "Lab Tariff", "Radiology Tariff"]
+        return {
+            "answer": answer,
+            "links": links,
+            "suggestions": suggestions,
+            "section_id": "tariff-stock",
+            "auto_open": False
+        }
+
+    if res_id == 'CARD_PHARMACY_STOCK':
+        if is_tamil:
+            answer = (
+                "மருத்துவமனையின் **Pharmacy Live Stock (மருந்தக நேரடி இருப்பு & விநியோக கவுண்டர்கள்)** விவரம்:\n\n"
+                "• **139 Drugs**: மத்திய மருந்து சேமிப்பு கிடங்கு அத்தியாவசிய மருந்துகள் மற்றும் தையல் பொருட்கள் இருப்பு\n"
+                "• **77 IP**: உள்நோயாளி மருந்தக இருப்பு (77 பொருட்கள்)\n"
+                "• **515 Insurance**: காப்பீட்டு மருந்தக இருப்பு (515 பொருட்கள்)\n"
+                "• **90 OP**: வெளிநோயாளி மருந்தக இருப்பு (90 பொருட்கள்)\n"
+                "• **Formulary 2025**: மருத்துவமனை அங்கீகரிக்கப்பட்ட மருந்து கையேடு 2025\n"
+                "• **Free Drug List (NMC)**: தேசிய மருத்துவ ஆணைய வழிகாட்டுதலின்படி இலவச மருந்து பட்டியல்."
+            )
+        else:
+            answer = (
+                "The **Pharmacy Live Stock Counters & Dispensary** provides real-time counts across hospital pharmacy units:\n\n"
+                "• **Drugs (139 items)**: Central Drug Stores stock details and essential medications\n"
+                "• **In-Patient (77 items)**: Inpatient dispensary active stock\n"
+                "• **Insurance (515 items)**: CMCHIS and TPA approved pharmacy stock\n"
+                "• **OP (90 items)**: Outpatient pharmacy dispensing stock\n"
+                "• **Formulary 2025**: Official MAPIMS Hospital Formulary 2025\n"
+                "• **Free Drug List (NMC)**: Free essential drug list updated to 11.05.2026."
+            )
+        links = [
+            {"title": "Drug Stores Stock Details (139 Items)", "url": "http://192.168.101.75:3000/files/Drug Stores Stock Details.pdf", "category": "Pharmacy & Stock", "badge": "139 Drugs PDF"},
+            {"title": "IP Pharmacy Stock Details (77 Items)", "url": "http://192.168.101.75:3000/files/IP Pharmacy Stock Details.pdf", "category": "Pharmacy & Stock", "badge": "77 Items PDF"},
+            {"title": "Insurance Pharmacy Stock Details (515 Items)", "url": "http://192.168.101.75:3000/files/Insurance Pharmacy Stock Details.pdf", "category": "Pharmacy & Stock", "badge": "515 Items PDF"},
+            {"title": "OP Pharmacy Stock Details (90 Items)", "url": "http://192.168.101.75:3000/files/Op Pharmacy Stock  Details.pdf", "category": "Pharmacy & Stock", "badge": "90 Items PDF"},
+            {"title": "Hospital Formulary - 2025", "url": "http://192.168.101.75:3000/files/Hospital Formulary - 2025.pdf", "category": "Pharmacy & Stock", "badge": "Formulary PDF"},
+            {"title": "Free Drug List (NMC)", "url": "http://192.168.101.75:3000/files/Pharmacy_Updated_11.05.26.pdf", "category": "Pharmacy & Stock", "badge": "Formulary PDF"},
+            {"title": "Tariff & Live Stock Section", "url": "./index.html#tariff-stock", "category": "Portal Section", "badge": "Section 8"}
+        ]
+        suggestions = ["139 Drugs Stock Details", "IP Pharmacy Stock", "Hospital Formulary 2025", "Free Drug List"]
+        return {
+            "answer": answer,
+            "links": links,
+            "suggestions": suggestions,
+            "section_id": "tariff-stock",
+            "auto_open": False
+        }
+
+    if res_id == 'CARD_GENERAL_STORE':
+        if is_tamil:
+            answer = (
+                "மருத்துவமனையின் **General Store (பொது சேமிப்பு கிடங்கு இருப்பு)**:\n\n"
+                "• **Inventory (738 பொருட்கள்)**: அறுவை சிகிச்சைக் கருவிகள், ஃபோர்செப்ஸ் மற்றும் மருத்துவப் பொருட்கள்\n"
+                "• **Stationery (160 பொருட்கள்)**: மருத்துவமனை எழுதுபொருட்கள் மற்றும் பதிவேடுகள்\n"
+                "• **Surgical & Kits (93 பொருட்கள்)**: CSSD மற்றும் அறுவை சிகிச்சை தொகுப்புகள்."
+            )
+        else:
+            answer = (
+                "The **General Store Inventory & Surgical Kits** features active counters for hospital supplies:\n\n"
+                "• **Active Inventory**: 738 surgical instruments, consumables, and hospital equipment items\n"
+                "• **Stationery**: 160 administrative and ward stationery items\n"
+                "• **Surgical & Kits**: 93 sterile surgical and CSSD procedure kits."
+            )
+        links = [
+            {"title": "Inventory Stock Details 2024 (738 Items)", "url": "http://192.168.101.75:3000/files/Inventory Stock Details 2024.pdf", "category": "General Store", "badge": "738 Items PDF"},
+            {"title": "Tariff & Live Stock Section", "url": "./index.html#tariff-stock", "category": "Portal Section", "badge": "Section 8"}
+        ]
+        suggestions = ["Inventory Stock Details PDF", "Pharmacy Stock", "Hospital Tariffs"]
+        return {
+            "answer": answer,
+            "links": links,
+            "suggestions": suggestions,
+            "section_id": "tariff-stock",
+            "auto_open": False
+        }
+        links = [
+            {"title": "Inventory Stock Details 2024 (738 Items)", "url": "http://192.168.101.75:3000/files/Inventory Stock Details 2024.pdf", "category": "General Store", "badge": "738 Items PDF"},
+            {"title": "Tariff & Live Stock Section", "url": "./index.html#tariff-stock", "category": "Portal Section", "badge": "Section 8"}
+        ]
+        suggestions = ["Inventory Stock Details PDF", "Pharmacy Stock", "Hospital Tariffs"]
+        return {
+            "answer": answer,
+            "links": links,
+            "suggestions": suggestions,
+            "auto_open_url": "./index.html#tariff-stock",
+            "auto_open_title": "General Store Inventory & Surgical Kits"
+        }
+
+    if res_id in [
+        'DOC_TARIFF_PACKAGES', 'DOC_TARIFF_LAB', 'DOC_TARIFF_RADIOLOGY', 'DOC_TARIFF_PHYSIOTHERAPY',
+        'DOC_TARIFF_OT_SURGERY', 'DOC_TARIFF_ICU_ROOM', 'DOC_TARIFF_OTHER_DEPTS',
+        'DOC_DRUG_STORES_STOCK', 'DOC_IP_PHARMACY_STOCK', 'DOC_INSURANCE_PHARMACY_STOCK',
+        'DOC_OP_PHARMACY_STOCK', 'DOC_HOSPITAL_FORMULARY_2025', 'DOC_FREE_DRUG_LIST_NMC',
+        'DOC_INVENTORY_STOCK_2024'
+    ]:
+        desc = res.get('description_ta' if is_tamil else 'description', res.get('description', ''))
+        answer = f"📄 **{res['title']}**: {desc}\n\n📁 Access the official PDF directly below or view live status on the **[Tariff & Live Stock Dashboard](./index.html#tariff-stock)**."
+        links = [
+            {"title": f"{res['title']} (PDF)", "url": res['url'], "category": res.get('category', 'Tariff & Stock'), "badge": res.get('badge', 'Tariff PDF')},
+            {"title": "Tariff & Live Stock Dashboard (Section 8)", "url": "./index.html#tariff-stock", "category": "Portal Section", "badge": "Section 8"}
+        ]
+        suggestions = ["Hospital Tariffs", "Pharmacy Live Stock", "General Store Inventory"]
+        return {
+            "answer": answer,
+            "links": links,
+            "suggestions": suggestions,
+            "auto_open_url": res['url'],
+            "auto_open_title": res['title']
+        }
+
+    if res_id.startswith('CIRCULAR_'):
+        desc = res.get('description_ta' if is_tamil else 'description', res.get('description', ''))
+        answer = f"📄 **{res['title']}**: {desc}\n\n📁 To search and explore all hospital circulars, visit the **[APH Recent Circulars Hub](./recent circular.html)**."
+        links = [
+            {"title": f"{res['title']} (PDF)", "url": res['url'], "category": "Hospital Circulars", "badge": res.get('badge', 'Circular')},
+            {"title": "APH Recent Circulars Hub", "url": "./recent circular.html", "category": "Circulars Hub", "badge": "Directory"},
+            {"title": "Digital E – Circulars & Protocols (Section 7)", "url": "./index.html#e-circulars", "category": "Portal Section", "badge": "Section 7"}
+        ]
+        suggestions = ["Open Recent Circulars", "Safety Meeting Circular", "SWOT Analysis Circular", "24hr Duty Roster"]
+        return {
+            "answer": answer,
+            "links": links,
+            "suggestions": suggestions,
+            "auto_open_url": res['url'],
+            "auto_open_title": res['title']
+        }
+
+    # =========================================================================
+    # MEDICOLEGAL CLINICAL CONSENT FORMS & CONSENT VAULT
+    # =========================================================================
+    if res_id == 'FORM_CONSENT_SURGERY_EN':
+        if is_tamil:
+            answer = "அறுவை சிகிச்சைகள், மயக்க மருந்து மற்றும் மருத்துவ நடைமுறைகளுக்கான ஆங்கில தகவலறிந்த ஒப்புதல் படிவம்: **Informed Consent Form For Surgery or Procedures -English**. படிவத்தை நேரடியாக திறக்க அல்லது அச்சிட கீழே உள்ள இணைப்பை கிளிக் செய்யவும்."
+        else:
+            answer = "For invasive surgical procedures, general/regional anaesthesia, and clinical interventions, use the official **Informed Consent Form For Surgery or Procedures -English**. It covers procedure details, potential risks, alternatives, anaesthesia consent, and doctor & patient/surrogate signatures."
+        links = [
+            {"title": "Informed Consent Form For Surgery or Procedures -English", "url": "http://192.168.101.75:3000/files/INFORMED%20CONSENT%20FORM%20FOR%20SURGERY%20OR%20PROCEDURES%20-English.pdf", "category": "Consent Forms", "badge": "Medicolegal"},
+            {"title": "Informed Consent Form For Surgery or Procedures-Tamil", "url": "http://192.168.101.75:3000/files/INFORMED%20CONSENT%20FORM%20FOR%20SURGERY%20OR%20PROCEDURES-Tamil.pdf", "category": "Consent Forms", "badge": "Medicolegal"},
+            {"title": "Clinical Consent Forms Vault", "url": "./consent.html", "category": "Forms Vault", "badge": "Medicolegal Hub"}
+        ]
+        suggestions = ["Informed Consent Form - English", "Informed Consent Form - Tamil", "Clinical Consent Forms Vault"]
+        return {"answer": answer, "links": links, "suggestions": suggestions, "auto_open_url": res['url'], "auto_open_title": res['title']}
+
+    if res_id == 'FORM_CONSENT_SURGERY_TA':
+        if is_tamil:
+            answer = "அறுவை சிகிச்சை மற்றும் மருத்துவ நடைமுறைகளுக்கான அதிகாரப்பூர்வ தமிழ் தகவலறிந்த ஒப்புதல் படிவம்: **Informed Consent Form For Surgery or Procedures-Tamil**. சிகிச்சை விளக்கம், சாத்தியமான அபாயங்கள் மற்றும் மயக்க மருந்து சம்மதம் ஆகியவற்றுடன் நோயாளி அல்லது பாதுகாவலரின் கையொப்பம் பெற இந்த படிவத்தைப் பயன்படுத்தவும்."
+        else:
+            answer = "Official operative and procedural consent form in Tamil script: **Informed Consent Form For Surgery or Procedures-Tamil**. Use this form to obtain informed patient or legal guardian authorization for surgical interventions, sedation, and clinical procedures."
+        links = [
+            {"title": "Informed Consent Form For Surgery or Procedures-Tamil", "url": "http://192.168.101.75:3000/files/INFORMED%20CONSENT%20FORM%20FOR%20SURGERY%20OR%20PROCEDURES-Tamil.pdf", "category": "Consent Forms", "badge": "Medicolegal"},
+            {"title": "Informed Consent Form For Surgery or Procedures -English", "url": "http://192.168.101.75:3000/files/INFORMED%20CONSENT%20FORM%20FOR%20SURGERY%20OR%20PROCEDURES%20-English.pdf", "category": "Consent Forms", "badge": "Medicolegal"},
+            {"title": "Clinical Consent Forms Vault", "url": "./consent.html", "category": "Forms Vault", "badge": "Medicolegal Hub"}
+        ]
+        suggestions = ["Informed Consent Form - Tamil", "Informed Consent Form - English", "Clinical Consent Forms Vault"]
+        return {"answer": answer, "links": links, "suggestions": suggestions, "auto_open_url": res['url'], "auto_open_title": res['title']}
+
+    if res_id == 'FORM_CONSENT_PAEDIATRIC':
+        if is_tamil:
+            answer = "குழந்தைகளுக்கான மருத்துவ மற்றும் அறுவை சிகிச்சைகளுக்கு பெற்றோரின் அல்லது சட்டப்பூர்வ பாதுகாவலரின் ஒப்புதலைப் பெற **Paediatric Consent Form** பயன்படுத்தப்படுகிறது. படிவத்தை நேரடியாக திறக்க கீழே உள்ள இணைப்பை கிளிக் செய்யவும்."
+        else:
+            answer = "For all neonatal, infant, and paediatric medical or surgical interventions, obtain informed parental or legal guardian consent using the official **Paediatric Consent Form**. Download and print the form directly below."
+        links = [
+            {"title": "Paediatric Consent Form", "url": "http://192.168.101.75:3000/files/paedconsent.pdf", "category": "Consent Forms", "badge": "Medicolegal"},
+            {"title": "Clinical Consent Forms Vault", "url": "./consent.html", "category": "Forms Vault", "badge": "Medicolegal Hub"},
+            {"title": "PAEDIATRIC DEPT (NABH 6th Edition)", "url": "http://192.168.101.75:3000/files/nabh/Paediatric%20Dept.pdf", "category": "Manuals & SOPs", "badge": "Manual"}
+        ]
+        suggestions = ["Paediatric Consent Form", "Clinical Consent Forms Vault", "Paediatrics Dept Manual"]
+        return {"answer": answer, "links": links, "suggestions": suggestions, "auto_open_url": res['url'], "auto_open_title": res['title']}
+
+    if res_id == 'FORM_CONSENT_BLOOD':
+        if is_tamil:
+            answer = "ரத்தம் மற்றும் ரத்த கூறுகள் (PRBC, FFP, Platelets) ஏற்றுவதற்கான நோயாளி ஒப்புதல் மற்றும் எதிர்வினை பதிவு படிவம்: **CONSENT FOR BLOOD COMPONENT TRANSFUSIONS**. படிவத்தை நேரடியாக திறக்க கீழே உள்ள இணைப்பை கிளிக் செய்யவும்."
+        else:
+            answer = "Official authorization and reaction monitoring form for whole blood, packed red cells (PRBC), fresh frozen plasma (FFP), and platelets: **CONSENT FOR BLOOD COMPONENT TRANSFUSIONS**. Download and print the form directly below."
+        links = [
+            {"title": "CONSENT FOR BLOOD COMPONENT TRANSFUSIONS", "url": "http://192.168.101.75:3000/files/Blood%20Transfusion%20Reaction%20Form%20version%202.pdf", "category": "Consent Forms", "badge": "Medicolegal"},
+            {"title": "Clinical Consent Forms Vault", "url": "./consent.html", "category": "Forms Vault", "badge": "Medicolegal Hub"},
+            {"title": "Blood Bank Department Intercom Directory", "url": "./intercom.html?dept=Blood%20Bank", "category": "Staff Directory", "badge": "Directory"}
+        ]
+        suggestions = ["Blood Transfusion Consent Form", "Clinical Consent Forms Vault", "Blood Bank Intercom Ext: 2131"]
+        return {"answer": answer, "links": links, "suggestions": suggestions, "auto_open_url": res['url'], "auto_open_title": res['title']}
+
+    if res_id == 'FORM_CONSENT_DAMA':
+        if is_tamil:
+            answer = "மருத்துவ ஆலோசனையை மீறி நோயாளி அல்லது உறவினர்கள் தானாக மருத்துவமனையிலிருந்து வெளியேறுவதற்கான (DAMA / LAMA) அதிகாரப்பூர்வ பொறுப்பேற்பு படிவம்: **DAMA Consent Form**. சாத்தியமான ஆபத்துக்கள் பதிவு செய்யப்பட்டு நோயாளி/பாதுகாவலர் கையொப்பம் பெறப்பட வேண்டும்."
+        else:
+            answer = "Mandatory medicolegal declaration for Discharge Against Medical Advice (DAMA) / Leaving Against Medical Advice (LAMA): **DAMA (Discharge Against Medical Advice) Consent Form**. Documents clinical advice, hazards of premature discharge, and risk undertaking."
+        links = [
+            {"title": "DAMA (Discharge Against Medical Advice) Consent.pdf", "url": "http://192.168.101.75:3000/files/Dama%20Consent%20Form.pdf", "category": "Consent Forms", "badge": "Medicolegal"},
+            {"title": "Clinical Consent Forms Vault", "url": "./consent.html", "category": "Forms Vault", "badge": "Medicolegal Hub"},
+            {"title": "MRD Medical Records Portal", "url": "http://www.mapimsmrd.com/mapimsmrd/", "category": "Core Systems", "badge": "System"}
+        ]
+        suggestions = ["DAMA Consent Form", "Clinical Consent Forms Vault", "MRD Portal"]
+        return {"answer": answer, "links": links, "suggestions": suggestions, "auto_open_url": res['url'], "auto_open_title": res['title']}
+
+    if res_id == 'FORM_CONSENT_NOT_WILLING':
+        if is_tamil:
+            answer = "பரிந்துரைக்கப்பட்ட பரிசோதனைகள், ஊசிகள் அல்லது மருத்துவ சிகிச்சையை நோயாளி மறுப்பதற்கான சட்டபூர்வ ஒப்புதல் படிவம்: **Not Willing Consent (சிகிச்சை மறுப்பு படிவம்)**. மறுப்பின் விளைவுகள் நோயாளியிடம் விளக்கப்பட்டு கையொப்பம் பெறப்பட வேண்டும்."
+        else:
+            answer = "Official medicolegal refusal documentation for diagnostic tests, blood draws, clinical procedures, or medical treatment: **Not Willing Consent (NOT WILLING FOR INVESTIGATION OR PROCEDURE CONSENT)**."
+        links = [
+            {"title": "NOT WILLING FOR INVESTIGATION OR PROCEDURE CONSENT.pdf", "url": "http://192.168.101.75:3000/files/Not%20Willing%20Consent.pdf", "category": "Consent Forms", "badge": "Medicolegal"},
+            {"title": "Clinical Consent Forms Vault", "url": "./consent.html", "category": "Forms Vault", "badge": "Medicolegal Hub"}
+        ]
+        suggestions = ["Not Willing Consent Form", "Clinical Consent Forms Vault", "Informed Consent SOP"]
+        return {"answer": answer, "links": links, "suggestions": suggestions, "auto_open_url": res['url'], "auto_open_title": res['title']}
+
+    if res_id == 'FORM_CONSENT_ADMISSION':
+        if is_tamil:
+            answer = "மருத்துவமனையில் உள்நோயாளியாக சேருதல், வார்டு செவிலியர் பராமரிப்பு மற்றும் பொது பரிசோதனைகளுக்கான சேர்க்கை ஒப்புதல் படிவம்: **General Patient Admission Consent (General Consent for Admission)**."
+        else:
+            answer = "Standard in-patient hospital admission consent authorizing routine nursing care, diagnostic examinations, ward rounds, and emergency resuscitation: **General Patient Admission Consent (General Consent for Admission)**."
+        links = [
+            {"title": "General Consent for Admission.pdf", "url": "http://192.168.101.75:3000/files/consent.pdf", "category": "Consent Forms", "badge": "Medicolegal"},
+            {"title": "Clinical Consent Forms Vault", "url": "./consent.html", "category": "Forms Vault", "badge": "Medicolegal Hub"}
+        ]
+        suggestions = ["General Consent for Admission", "Clinical Consent Forms Vault", "Hospital Forms Vault"]
+        return {"answer": answer, "links": links, "suggestions": suggestions, "auto_open_url": res['url'], "auto_open_title": res['title']}
+
+    if res_id == 'FORM_VISITING_CONSULTANT':
+        if is_tamil:
+            answer = "சிறப்பு மருத்துவர் வருகை மற்றும் சிறப்பு மருத்துவ ஆலோசனைக்கான கோரிக்கை கடிதம் / படிவம்: **Visiting Consultant Requisition Form**."
+        else:
+            answer = "Requisition protocol for external visiting super-specialist consultations and complex multidisciplinary clinical referrals: **Visiting Consultant Requisition Form**."
+        links = [
+            {"title": "Visiting Consultant Requisition Form", "url": "http://192.168.101.75:3000/files/Visiting%20Consultant%20Requisition%20letter.pdf", "category": "Consent Forms", "badge": "Medicolegal"},
+            {"title": "Clinical Consent Forms Vault", "url": "./consent.html", "category": "Forms Vault", "badge": "Medicolegal Hub"}
+        ]
+        suggestions = ["Visiting Consultant Requisition", "Clinical Consent Forms Vault", "Medical Admin Ext: 2173"]
+        return {"answer": answer, "links": links, "suggestions": suggestions, "auto_open_url": res['url'], "auto_open_title": res['title']}
+
+    if res_id == 'FORM_CONSENT_SURROGATE':
+        if is_tamil:
+            answer = "சுயமாக முடிவெடுக்க இயலாத நோயாளிகளுக்கான (கோமா, மனநல குறைபாடு, மயக்க நிலை) மாற்று முடிவெடுப்பவர் / குடும்பத்தினர் ஒப்புதல் நெறிமுறை: **Surrogate Consent Protocol**."
+        else:
+            answer = "NABH informed consent protocol for patients incapable of making independent clinical decisions (unconscious, altered sensorium, cognitive impairment, or sedated): **Surrogate Consent Protocol**."
+        links = [
+            {"title": "Surrogate Consent Protocol", "url": "http://192.168.101.75:3000/files/SURROGATE%20CONSENT.pdf", "category": "Consent Forms", "badge": "Medicolegal"},
+            {"title": "Clinical Consent Forms Vault", "url": "./consent.html", "category": "Forms Vault", "badge": "Medicolegal Hub"}
+        ]
+        suggestions = ["Surrogate Consent Protocol", "Clinical Consent Forms Vault", "Informed Consent Taking Process"]
+        return {"answer": answer, "links": links, "suggestions": suggestions, "auto_open_url": res['url'], "auto_open_title": res['title']}
+
+    if res_id == 'SECTION_CONSENT_VAULT':
+        if is_tamil:
+            answer = (
+                "மருத்துவமனையின் **Clinical Consent Forms Vault (மருத்துவ ஒப்புதல் படிவங்கள் களஞ்சியம்)**: \n\n"
+                "இங்கு அறுவை சிகிச்சை, ரத்த மாற்று, குழந்தை மருத்துவம், DAMA மற்றும் சிகிச்சை மறுப்புக்கான அனைத்து அதிகாரப்பூர்வ ஒப்புதல் படிவங்களும் (தமிழ் & ஆங்கிலம்) கிடைக்கின்றன:\n"
+                "1. **Surgery / Procedures Consent** (ஆங்கிலம் & தமிழ்)\n"
+                "2. **Paediatric Consent Form** (குழந்தைகள் ஒப்புதல்)\n"
+                "3. **Blood Component Transfusion Consent** (ரத்த மாற்று ஒப்புதல்)\n"
+                "4. **DAMA Consent Form** (மருத்துவ ஆலோசனையை மீறி வெளியேறுதல்)\n"
+                "5. **Not Willing Consent** (சிகிச்சை மறுப்பு படிவம்)\n"
+                "6. **General Patient Admission Consent** (சேர்க்கை ஒப்புதல்)\n"
+                "7. **Visiting Consultant Requisition Form** (சிறப்பு மருத்துவர் வருகை)\n"
+                "8. **Surrogate Consent Protocol** (மாற்று முடிவெடுப்பவர் ஒப்புதல்)\n\n"
+                "முழுமையான படிவங்களை **[Clinical Consent Forms Vault](./consent.html)** பக்கத்தில் பார்க்கலாம்."
+            )
+        else:
+            answer = (
+                "The **Clinical Consent Forms Vault** provides verified bilingual medicolegal consent documents approved by the Clinical Governance & Quality Cell:\n\n"
+                "1. **Informed Consent for Surgery or Procedures** (English & Tamil)\n"
+                "2. **Paediatric Consent Form** (Guardian consent for minors & neonates)\n"
+                "3. **Consent for Blood Component Transfusions** (PRBC, FFP, platelets)\n"
+                "4. **DAMA Consent Form** (Discharge Against Medical Advice undertaking)\n"
+                "5. **Not Willing Consent** (Formal treatment/investigation refusal)\n"
+                "6. **General Patient Admission Consent** (Inpatient ward admission authorization)\n"
+                "7. **Visiting Consultant Requisition Form** (External specialist consultation)\n"
+                "8. **Surrogate Consent Protocol** (Substitute decision makers for incapacitated patients)\n\n"
+                "Explore all forms in the interactive **[Clinical Consent Forms Vault](./consent.html)**."
+            )
+        links = [
+            {"title": "Clinical Consent Forms Vault", "url": "./consent.html", "category": "Forms Vault", "badge": "Medicolegal Hub"},
+            {"title": "Informed Consent Form For Surgery or Procedures -English", "url": "http://192.168.101.75:3000/files/INFORMED%20CONSENT%20FORM%20FOR%20SURGERY%20OR%20PROCEDURES%20-English.pdf", "category": "Consent Forms", "badge": "Medicolegal"},
+            {"title": "Informed Consent Form For Surgery or Procedures-Tamil", "url": "http://192.168.101.75:3000/files/INFORMED%20CONSENT%20FORM%20FOR%20SURGERY%20OR%20PROCEDURES-Tamil.pdf", "category": "Consent Forms", "badge": "Medicolegal"},
+            {"title": "Paediatric Consent Form", "url": "http://192.168.101.75:3000/files/paedconsent.pdf", "category": "Consent Forms", "badge": "Medicolegal"},
+            {"title": "CONSENT FOR BLOOD COMPONENT TRANSFUSIONS", "url": "http://192.168.101.75:3000/files/Blood%20Transfusion%20Reaction%20Form%20version%202.pdf", "category": "Consent Forms", "badge": "Medicolegal"},
+            {"title": "DAMA (Discharge Against Medical Advice) Consent.pdf", "url": "http://192.168.101.75:3000/files/Dama%20Consent%20Form.pdf", "category": "Consent Forms", "badge": "Medicolegal"},
+            {"title": "NOT WILLING FOR INVESTIGATION OR PROCEDURE CONSENT.pdf", "url": "http://192.168.101.75:3000/files/Not%20Willing%20Consent.pdf", "category": "Consent Forms", "badge": "Medicolegal"},
+            {"title": "General Consent for Admission.pdf", "url": "http://192.168.101.75:3000/files/consent.pdf", "category": "Consent Forms", "badge": "Medicolegal"},
+            {"title": "Visiting Consultant Requisition Form", "url": "http://192.168.101.75:3000/files/Visiting%20Consultant%20Requisition%20letter.pdf", "category": "Consent Forms", "badge": "Medicolegal"},
+            {"title": "Surrogate Consent Protocol", "url": "http://192.168.101.75:3000/files/SURROGATE%20CONSENT.pdf", "category": "Consent Forms", "badge": "Medicolegal"}
+        ]
+        suggestions = ["Surgical Consent Form", "Paediatric Consent Form", "Blood Transfusion Consent", "DAMA Consent Form", "Clinical Consent Forms Vault"]
+        return {"answer": answer, "links": links, "suggestions": suggestions, "is_section": True, "auto_open": False, "section_id": "forms"}
+
+    if res_id == 'SECTION_COMMON_FORMS':
+        if is_tamil:
+            answer = (
+                "மருத்துவமனையின் **Common Forms Hub (பொது மருத்துவ படிவங்கள் & ஐசியூ சரிபார்ப்பு களஞ்சியம்)**: \n\n"
+                "இங்கு தீவிர சிகிச்சை பிரிவு (ICU), அவசர சிகிச்சை (Emergency), மருந்தகம் (Pharmacy), மற்றும் தொற்று கட்டுப்பாடு (HIC) தொடர்பான 45 முக்கிய படிவங்கள் கிடைக்கின்றன:\n"
+                "1. **ICU Checklists**: ICU Casesheet Checklist & ICU to Ward Shifting Criteria Checklist\n"
+                "2. **Clinical Handover**: HANDING OVER SBAR Record Sheet\n"
+                "3. **Emergency Protocols**: Code Blue Algorithm, Code Blue Analysis Form & Code RRT Activation Form\n"
+                "4. **Controlled & High Alert Drugs**: Narcotic Drugs Form & High Alert Medications List\n"
+                "5. **Antimicrobial Review**: 48 Hour Antibiotics Review Form & Restricted Antibiotic Form (HIC)\n"
+                "6. **Patient Safety**: ADR Reporting Form, Incident Report Form & MEWS Monitoring Chart\n"
+                "7. **Clinical Services**: Food Token Requisition Slip & Counselling Documentation Form\n\n"
+                "அனைத்து படிவங்களையும் **[Common Forms Hub](./commonforms.html)** பக்கத்தில் பார்க்கலாம்."
+            )
+        else:
+            answer = (
+                "The **Common Forms Hub** provides verified clinical indents, ICU checklists, and safety documentation across 7 essential categories:\n\n"
+                "1. **ICU Checklists**: ICU Casesheet Checklist & ICU to Ward Shifting Criteria Checklist\n"
+                "2. **Clinical Handover**: HANDING OVER SBAR Record Sheet\n"
+                "3. **Emergency Protocols**: Code Blue Algorithm, Code Blue Post Event Analysis & Code RRT Form\n"
+                "4. **Controlled & High Alert Drugs**: Narcotic Drugs Form & High Alert Medications List\n"
+                "5. **Antimicrobial Review**: 48 Hour Antibiotics Review Form & Restricted Antibiotic Form (HIC)\n"
+                "6. **Patient Safety**: ADR Reporting Form, Incident Report Form & MEWS Monitoring Chart\n"
+                "7. **Clinical Services**: Food Token Requisition Slip & Counselling Documentation Form\n\n"
+                "Access all forms directly in the interactive **[Common Forms Hub](./commonforms.html)**."
+            )
+        links = [
+            {"title": "Common Forms Hub (Clinical Indents & ICU Checklists)", "url": "./commonforms.html", "category": "Forms Vault", "badge": "Clinical Vault"},
+            {"title": "ICU Casesheet Checklist", "url": "http://192.168.101.75:3000/files/ICU%20Casesheet%20Checklist.pdf", "category": "Common Forms", "badge": "Clinical Protocol"},
+            {"title": "ICU to Ward Shifting Criteria Checklist", "url": "http://192.168.101.75:3000/files/ICU%20to%20Ward%20Shifting%20Criteria%20Checklist.pdf", "category": "Common Forms", "badge": "Clinical Protocol"},
+            {"title": "HANDING OVER SBAR Protocol", "url": "http://192.168.101.75:3000/files/HANDING%20OVER%20SBAR.pdf", "category": "Common Forms", "badge": "Clinical Protocol"},
+            {"title": "NARCOTIC DRUGS FORM & Register", "url": "http://192.168.101.75:3000/files/NARCOTIC%20DRUGS%20FORM.pdf", "category": "Common Forms", "badge": "Controlled Drug"},
+            {"title": "Code Blue Resuscitation Algorithm & Protocol", "url": "http://192.168.101.75:3000/files/Code.pdf", "category": "Common Forms", "badge": "Emergency Protocol"},
+            {"title": "48 Hour Antibiotics Review Form", "url": "http://192.168.101.75:3000/files/48%20Hour%20Antibiotics%20Review%20From.pdf", "category": "Common Forms", "badge": "Antimicrobial Form"},
+            {"title": "Food Token Requisition Slip", "url": "http://192.168.101.75:3000/files/food.pdf", "category": "Common Forms", "badge": "Clinical Indent"}
+        ]
+        suggestions = ["ICU Casesheet Checklist", "Handing Over SBAR", "Narcotic Drugs Form", "Code Blue Protocol", "Common Forms Hub"]
+        return {"answer": answer, "links": links, "suggestions": suggestions, "is_section": True, "auto_open": False, "section_id": "forms"}
+
+    # =========================================================================
+    # HR FORMS HUB & HUMAN RESOURCE FORMS VAULT
+    # =========================================================================
+    if res_id == 'SECTION_HR_FORMS':
+        if is_tamil:
+            answer = (
+                "மருத்துவமனையின் **HR படிவங்கள் தளம் (APH HR Forms Hub - People & Culture)**: \n\n"
+                "📌 **1. பணியாளர் நியமனம் & மதிப்பீடு (Recruitment & Appraisal)**:\n"
+                "• **List of Holidays - 2026**: அரசு & மருத்துவமனை அதிகாரப்பூர்வ விடுமுறை பட்டியல்\n"
+                "• **Teaching Faculty Application & Appraisal**: மருத்துவக் கல்லூரி பேராசிரியர் விண்ணப்பம் & சுய மதிப்பீடு\n"
+                "• **Non-Teaching Staff Application**: செவிலியர், துணை மருத்துவம், நிர்வாகப் பணியாளர் வேலை விண்ணப்பம்\n"
+                "• **For Promotion - Non Teaching**: பணியாளர் பதவி உயர்வு மற்றும் பணி மூப்பு பரிந்துரை படிவம்\n"
+                "• **Non Performer - Non Teaching**: பணியாளர் குறைபாடு மதிப்பீடு மற்றும் மறுபயிற்சி பதிவு\n\n"
+                "📌 **2. பயிற்சி & நிறுவனக் கொள்கைகள் (Training & Policies)**:\n"
+                "• **Staff Training Feedback Form**: மருத்துவமனை பயிற்சி பின்னூட்ட படிவம்\n"
+                "• **Performance Management System (PMS) Policy**: செயல்திறன் மேலாண்மை மற்றும் கேபிஐ (KPI) கொள்கை\n"
+                "• **Human Resources Manual (HRM - 2025)**: பணி விலகல், நோட்டீஸ் காலம், ஒழுங்குமுறை கையேடு\n\n"
+                "📌 **3. மருத்துவர் பணி உரிமைகள் & நெறிமுறைகள் (Privileging & Cadre)**:\n"
+                "• **Clinical Privileges - General Medicine**: பொது மருத்துவம் அங்கீகார படிவம்\n"
+                "• **Clinical Privileges - ENT**: காது மூக்கு தொண்டை அறுவைசிகிச்சை உரிமை படிவம்\n"
+                "• **Clinical Privileges - Anaesthesia**: மயக்கவியல் சிகிச்சை அங்கீகார படிவம்\n"
+                "• **Chief Medical Officer (CMO) Policy**: தலைமை மருத்துவ அலுவலர் வழிகாட்டுதல் கொள்கை\n"
+                "• **Junior Resident Policy**: இளநிலை உறைவிட மருத்துவர் பணி நெறிமுறைகள்"
+            )
+        else:
+            answer = (
+                "Official **APH HR Forms Hub (People & Culture)**:\n\n"
+                "📌 **1. Recruitment, Appraisal & Promotion**:\n"
+                "• **List of Holidays - 2026**: Official gazetted institutional holiday schedule & sanctioned dates\n"
+                "• **Teaching Faculty Application & Appraisal Form**: Medical faculty recruitment credentials & annual appraisal\n"
+                "• **Non-Teaching Staff Application Form**: Nursing, paramedical, lab, and administrative employment application\n"
+                "• **For Promotion - Non Teaching**: Departmental seniority review & career elevation recommendation\n"
+                "• **Non Performer - Non Teaching**: Performance gap evaluation log, retraining modules & mentoring\n\n"
+                "📌 **2. Staff Training & HR Governance Policies**:\n"
+                "• **Staff Training Feedback Form**: Post-training participant evaluation for hospital induction & CMEs\n"
+                "• **Performance Management System (PMS) Policy**: Institutional framework for KPIs, 360-degree reviews & increments\n"
+                "• **Human Resources Manual (HRM - 2025)**: Service rules, leave entitlements, resignation & exit clearance\n\n"
+                "📌 **3. Doctor Privileging & Medical Cadre Charters**:\n"
+                "• **Clinical Privileges - General Medicine**: Procedural credentialing & inpatient admission scope\n"
+                "• **Clinical Privileges - ENT**: Surgical scope of practice & OR credentialing\n"
+                "• **Clinical Privileges - Anaesthesia**: Matrix for general/regional blocks & critical airway care\n"
+                "• **Chief Medical Officer (CMO) Policy**: Casualty management leadership & shift handover charter\n"
+                "• **Junior Resident Policy**: Patient care documentation, night duty rosters & consultant supervision"
+            )
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "APH HR Forms Hub", "url": "./hrforms.html", "category": "Forms Vault", "badge": "People & Culture"},
+                {"title": "Teaching Faculty Application & Appraisal Form", "url": "http://192.168.101.75:3000/files/Teaching.pdf", "category": "HR Forms", "badge": "HR Application"},
+                {"title": "Non-Teaching Staff Application Form", "url": "http://192.168.101.75:3000/files/Non%20Teaching.pdf", "category": "HR Forms", "badge": "HR Application"},
+                {"title": "For Promotion - Non Teaching", "url": "http://192.168.101.75:3000/files/For%20promotion%20-%20Non%20Teaching.pdf", "category": "HR Forms", "badge": "HR Promotion"},
+                {"title": "Human Resources Manual (HRM - 2025)", "url": "http://192.168.101.75:3000/files/HRM%202025.pdf", "category": "HR Forms", "badge": "HR Manual"}
+            ],
+            "suggestions": [
+                "Teaching Faculty Application",
+                "Non-Teaching Staff Application",
+                "For Promotion - Non Teaching",
+                "Staff Training Feedback Form",
+                "Clinical Privileges - General Medicine",
+                "List of Holidays 2026"
+            ],
+            "is_section": True,
+            "auto_open": False,
+            "section_id": "forms"
+        }
+
+    if res_id == 'SECTION_QUICK_SHORTCUTS':
+        if is_tamil:
+            answer = (
+                "**விரைவு குறுக்குவழிப் பலகை (Quick Shortcuts Dock)** மருத்துவமனையின் முக்கிய 8 கருவிகளை உடனடியாக அணுக உதவுகிறது:\n\n"
+                "1. 📞 **இன்டர்காம் (Intercom)**: வளாக நேரடி தொலைபேசி பட்டியல் மற்றும் அழைப்பு வசதி\n"
+                "2. 🕒 **24 மணி நேரப் பணி விவரம் (24h Duty)**: அவசர சிகிச்சை மற்றும் மருத்துவர்கள் பணி அட்டவணை (PDF)\n"
+                "3. 🩸 **ரத்த வங்கி இருப்பு (Blood Bank)**: ரத்த அலகுகள் மற்றும் இருப்பு விவரம் (PDF)\n"
+                "4. 📧 **மின்னஞ்சல் பட்டியல் (Email List)**: பணியாளர்கள் அதிகாரப்பூர்வ மின்னஞ்சல் முகவரிகள் (PDF)\n"
+                "5. 📖 **மருத்துவ சுருக்கங்கள் (Abbreviation)**: அனுமதிக்கப்பட்ட மருத்துவ சுருக்கக் குறியீடுகள் (PDF)\n"
+                "6. 💳 **பில்லிங் கையேடு (Billing Manual)**: மருத்துவமனை பில்லிங் மற்றும் கட்டண வழிகாட்டி (PDF)\n"
+                "7. 🩺 **நர்சிங் கையேடு (Nursing Manual)**: நோயாளி பராமரிப்பு மற்றும் செவிலியர் வழிகாட்டி (PDF)\n"
+                "8. 🔄 **பிடிஎஃப் மாற்று சர்வர் (Replace PDF)**: இன்ட்ராநெட் ஆவணங்களை பதிவேற்றும் நிர்வாக சர்வர்."
+            )
+        else:
+            answer = (
+                "The **Quick Shortcuts Dock** provides instant one-click access to 8 essential hospital operational tools:\n\n"
+                "1. 📞 **Intercom Hotline**: Live campus telephony directory & direct dial\n"
+                "2. 🕒 **24h Duty**: Daily 24-hour consultant and resident clinical roster (PDF)\n"
+                "3. 🩸 **Blood Bank**: Live real-time blood components and units stock (PDF)\n"
+                "4. 📧 **Email List**: Official hospital and college staff email directory (PDF)\n"
+                "5. 📖 **Abbreviation**: Approved medical & clinical abbreviations guide (PDF)\n"
+                "6. 💳 **Billing**: Inpatient & outpatient billing operational manual (PDF)\n"
+                "7. 🩺 **Nursing**: Ward procedures, medication safety & nursing user manual (PDF)\n"
+                "8. 🔄 **Replace PDF**: Administrative server for intranet document updates & uploads."
+            )
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "Quick Shortcuts Dock", "url": "./index.html#quick-shortcuts-dock", "category": "Portal Dock", "badge": "8 Live Shortcuts"},
+                {"title": "Intercom Hotline Directory", "url": "./intercom.html", "category": "Quick Shortcuts", "badge": "Hotline"},
+                {"title": "24hr's Duty Details Roster", "url": "http://192.168.101.75:3000/files/24hr's%20Duty%20Details.pdf", "category": "Quick Shortcuts", "badge": "Roster PDF"},
+                {"title": "Blood Bank Stock Details", "url": "http://192.168.101.75:3000/files/Blood%20Bank%20Stock%20Details.pdf", "category": "Quick Shortcuts", "badge": "Stock PDF"},
+                {"title": "Staff Email Directory", "url": "http://192.168.101.75:3000/files/email.pdf", "category": "Quick Shortcuts", "badge": "Directory PDF"},
+                {"title": "Approved Medical Abbreviations", "url": "http://192.168.101.75:3000/files/Abrrevation.pdf", "category": "Quick Shortcuts", "badge": "Guide PDF"},
+                {"title": "Billing User Manual", "url": "http://192.168.101.75:3000/files/billingmanual.pdf", "category": "Quick Shortcuts", "badge": "Manual PDF"},
+                {"title": "Nursing User Manual", "url": "http://192.168.101.75:3000/files/nursingmanual.pdf", "category": "Quick Shortcuts", "badge": "Manual PDF"},
+                {"title": "Replace / Upload PDF Portal", "url": "http://192.168.101.75:8000/server", "category": "Quick Shortcuts", "badge": "Admin Portal"}
+            ],
+            "suggestions": [
+                "Intercom Directory",
+                "24hr Duty Roster",
+                "Blood Bank Stock",
+                "Staff Email Directory"
+            ],
+            "is_section": True,
+            "auto_open": False,
+            "section_id": "quick-shortcuts-dock"
+        }
+
+    if res_id == 'DOC_STAFF_EMAIL_DIR':
+        answer = "Official **Staff Email Directory**: Institutional contact directory of `@mapims.edu.in` email addresses for medical faculty, hospital administrators, and clinical departments."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "Official Staff Email Directory", "url": "http://192.168.101.75:3000/files/email.pdf", "category": "Staff Directory", "badge": "Directory PDF"},
+                {"title": "Official Email ID Request Form", "url": "http://192.168.101.75:3000/files/OFFICIAL%20EMAIL%20ID%20REQUEST%20FORM.pdf", "category": "IT Forms", "badge": "IT Form"},
+                {"title": "Quick Shortcuts Dock", "url": "./index.html#quick-shortcuts-dock", "category": "Quick Shortcuts", "badge": "Side Dock"}
+            ],
+            "suggestions": ["Official Email Request Form", "Hospital Intercom Directory", "Quick Shortcuts"],
+            "auto_open": True,
+            "auto_open_url": "http://192.168.101.75:3000/files/email.pdf",
+            "auto_open_title": "Official Staff Email Directory"
+        }
+
+    if res_id == 'DOC_ABBREVIATION_GUIDE':
+        answer = "Official **Approved Medical Abbreviations List**: Clinical guide for standardized diagnostic and prescription abbreviations across hospital medical records."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "Approved Medical Abbreviations", "url": "http://192.168.101.75:3000/files/Abrrevation.pdf", "category": "Clinical Guidelines", "badge": "Guide PDF"},
+                {"title": "Quick Shortcuts Dock", "url": "./index.html#quick-shortcuts-dock", "category": "Quick Shortcuts", "badge": "Side Dock"}
+            ],
+            "suggestions": ["Medical Abbreviations 2025-2026", "Hospital Manuals Hub", "Quick Shortcuts"],
+            "auto_open": True,
+            "auto_open_url": "http://192.168.101.75:3000/files/Abrrevation.pdf",
+            "auto_open_title": "Approved Medical Abbreviations"
+        }
+
+    if res_id == 'DOC_BILLING_MANUAL':
+        answer = "Official **User Billing Manual**: Step-by-step procedures and guidelines for hospital cashier counters, billing counters, and financial settlement workflows."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "User Billing Manual", "url": "http://192.168.101.75:3000/files/billingmanual.pdf", "category": "Operations Manual", "badge": "Manual PDF"},
+                {"title": "Hospital Tariffs (Schedule of Charges)", "url": "./index.html#tariff-stock", "category": "Tariff & Packages", "badge": "Section 8"},
+                {"title": "Quick Shortcuts Dock", "url": "./index.html#quick-shortcuts-dock", "category": "Quick Shortcuts", "badge": "Side Dock"}
+            ],
+            "suggestions": ["Hospital Tariffs", "HIS Billing System", "Quick Shortcuts"],
+            "auto_open": True,
+            "auto_open_url": "http://192.168.101.75:3000/files/billingmanual.pdf",
+            "auto_open_title": "User Billing Manual"
+        }
+
+    if res_id == 'DOC_NURSING_MANUAL':
+        answer = "Official **Nursing Operations Manual**: Ward protocols, bedside nursing procedures, medication administration guidelines, and patient safety checks."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "Nursing User Manual", "url": "http://192.168.101.75:3000/files/nursingmanual.pdf", "category": "Operations Manual", "badge": "Manual PDF"},
+                {"title": "Hospital Accreditation Manuals Hub", "url": "./manuals.html", "category": "Manuals & SOPs", "badge": "Manuals Hub"},
+                {"title": "Quick Shortcuts Dock", "url": "./index.html#quick-shortcuts-dock", "category": "Quick Shortcuts", "badge": "Side Dock"}
+            ],
+            "suggestions": ["Clinical Checklist App", "Infection Control Manual", "Quick Shortcuts"],
+            "auto_open": True,
+            "auto_open_url": "http://192.168.101.75:3000/files/nursingmanual.pdf",
+            "auto_open_title": "Nursing User Manual"
+        }
+
+    if res_id == 'APP_REPLACE_PDF':
+        answer = "Official **Replace / Upload PDF Portal**: Administrative server for updating, replacing, and uploading intranet hospital documents."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "Replace / Upload PDF Portal", "url": "http://192.168.101.75:8000/server", "category": "Admin Tools", "badge": "Admin Server"},
+                {"title": "Quick Shortcuts Dock", "url": "./index.html#quick-shortcuts-dock", "category": "Quick Shortcuts", "badge": "Side Dock"}
+            ],
+            "suggestions": ["Quick Shortcuts Dock", "Hospital Intranet Home"],
+            "auto_open": True,
+            "auto_open_url": "http://192.168.101.75:8000/server",
+            "auto_open_title": "Replace / Upload PDF Portal",
+            "is_app": True
+        }
+
+    if res_id == 'FORM_TEACHING':
+        if is_tamil:
+            answer = "மருத்துவக் கல்லூரி ஆசிரியர் மற்றும் பேராசிரியர் பணிக்கான அதிகாரப்பூர்வ விண்ணப்பம் & சுய மதிப்பீட்டுப் படிவம்: **Teaching Faculty Application & Appraisal Form**. நேரடி PDF ஆவணத்தைத் திறக்க கீழே உள்ள இணைப்பைப் பயன்படுத்தவும்."
+        else:
+            answer = "Official **Teaching Faculty Application & Appraisal Form** for medical college teaching faculty and clinical professors. Covers recruitment credentials, academic qualifications, research publications, and annual faculty appraisal."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "Teaching Faculty Application & Appraisal Form", "url": "http://192.168.101.75:3000/files/Teaching.pdf", "category": "HR Forms", "badge": "HR Application"},
+                {"title": "APH HR Forms Hub", "url": "./hrforms.html", "category": "Forms Vault", "badge": "People & Culture"}
+            ],
+            "suggestions": ["Teaching Faculty Application", "Non-Teaching Staff Application", "HR Forms Hub"],
+            "auto_open_url": res['url'],
+            "auto_open_title": res['title']
+        }
+
+    if res_id == 'FORM_NON_TEACHING':
+        if is_tamil:
+            answer = "செவிலியர், ஆய்வக நுட்புநர், துணை மருத்துவம் மற்றும் நிர்வாகப் பணிகளுக்கான வேலை விண்ணப்பப் படிவம்: **Non-Teaching Staff Application Form**. நேரடி PDF ஆவணத்தைத் திறக்க கீழே உள்ள இணைப்பைப் பயன்படுத்தவும்."
+        else:
+            answer = "Official **Non-Teaching Staff Application Form** for nursing staff, paramedical professionals, laboratory technicians, and administrative personnel."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "Non-Teaching Staff Application Form", "url": "http://192.168.101.75:3000/files/Non%20Teaching.pdf", "category": "HR Forms", "badge": "HR Application"},
+                {"title": "For Promotion - Non Teaching", "url": "http://192.168.101.75:3000/files/For%20promotion%20-%20Non%20Teaching.pdf", "category": "HR Forms", "badge": "HR Promotion"},
+                {"title": "APH HR Forms Hub", "url": "./hrforms.html", "category": "Forms Vault", "badge": "People & Culture"}
+            ],
+            "suggestions": ["Non-Teaching Staff Application", "Teaching Faculty Application", "HR Forms Hub"],
+            "auto_open_url": res['url'],
+            "auto_open_title": res['title']
+        }
+
+    if res_id == 'FORM_HR_PROMOTION':
+        if is_tamil:
+            answer = "ஆசிரியரல்லாத பணியாளர்களுக்கான பதவி உயர்வு மற்றும் பணி மூப்பு பரிந்துரை படிவம்: **For Promotion - Non Teaching**. நேரடி PDF ஆவணத்தைத் திறக்க கீழே உள்ள இணைப்பைப் பயன்படுத்தவும்."
+        else:
+            answer = "Official **For Promotion - Non Teaching** form: Department head appraisal, service seniority verification, and career elevation recommendation form for non-teaching employees."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "For Promotion - Non Teaching", "url": "http://192.168.101.75:3000/files/For%20promotion%20-%20Non%20Teaching.pdf", "category": "HR Forms", "badge": "HR Promotion"},
+                {"title": "Non Performer - Non Teaching", "url": "http://192.168.101.75:3000/files/Non%20performer-%20Non%20Teaching.pdf", "category": "HR Forms", "badge": "Performance Review"},
+                {"title": "APH HR Forms Hub", "url": "./hrforms.html", "category": "Forms Vault", "badge": "People & Culture"}
+            ],
+            "suggestions": ["For Promotion - Non Teaching", "Non Performer - Non Teaching", "HR Forms Hub"],
+            "auto_open_url": res['url'],
+            "auto_open_title": res['title']
+        }
+
+    if res_id == 'FORM_HR_NON_PERFORMER':
+        if is_tamil:
+            answer = "பணியாளர் குறைபாடு மதிப்பீடு, மறுபயிற்சி மற்றும் வழிகாட்டுதல் பதிவு படிவம்: **Non Performer - Non Teaching**. நேரடி PDF ஆவணத்தைத் திறக்க கீழே உள்ள இணைப்பைப் பயன்படுத்தவும்."
+        else:
+            answer = "Official **Non Performer - Non Teaching** evaluation log: Framework for identifying performance gaps, structuring retraining modules, and mentoring non-performing staff."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "Non Performer - Non Teaching", "url": "http://192.168.101.75:3000/files/Non%20performer-%20Non%20Teaching.pdf", "category": "HR Forms", "badge": "Performance Review"},
+                {"title": "Performance Management System (PMS) Policy", "url": "http://192.168.101.75:3000/files/PMS%20Policy.pdf", "category": "HR Forms", "badge": "HR Policy"},
+                {"title": "APH HR Forms Hub", "url": "./hrforms.html", "category": "Forms Vault", "badge": "People & Culture"}
+            ],
+            "suggestions": ["Non Performer - Non Teaching", "PMS Policy", "HR Forms Hub"],
+            "auto_open_url": res['url'],
+            "auto_open_title": res['title']
+        }
+
+    if res_id == 'FORM_HR_TRAINING_FEEDBACK':
+        if is_tamil:
+            answer = "மருத்துவமனை பயிற்சி மற்றும் பயிலரங்கப் பின்னூட்ட மதிப்பீட்டுப் படிவம்: **Staff Training Feedback Form**. நேரடி PDF ஆவணத்தைத் திறக்க கீழே உள்ள இணைப்பைப் பயன்படுத்தவும்."
+        else:
+            answer = "Official **Staff Training Feedback Form**: Post-training assessment and participant feedback form for hospital induction, fire safety drills, and clinical CME courses."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "Staff Training Feedback Form", "url": "http://192.168.101.75:3000/files/Training%20Feedback%20Form.pdf", "category": "HR Forms", "badge": "Training Feedback"},
+                {"title": "APH HR Forms Hub", "url": "./hrforms.html", "category": "Forms Vault", "badge": "People & Culture"}
+            ],
+            "suggestions": ["Staff Training Feedback Form", "PMS Policy", "HR Forms Hub"],
+            "auto_open_url": res['url'],
+            "auto_open_title": res['title']
+        }
+
+    if res_id == 'FORM_HR_PMS':
+        if is_tamil:
+            answer = "நிறுவன செயல்திறன் மேலாண்மை அமைப்பு (PMS), கேபிஐ (KPIs) மற்றும் மதிப்பீட்டுக் கொள்கை: **Performance Management System (PMS) Policy**. நேரடி PDF ஆவணத்தைத் திறக்க கீழே உள்ள இணைப்பைப் பயன்படுத்தவும்."
+        else:
+            answer = "Official **Performance Management System (PMS) Policy**: Institutional framework establishing key performance indicators (KPIs), 360-degree appraisal benchmarks, and merit increments."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "Performance Management System (PMS) Policy", "url": "http://192.168.101.75:3000/files/PMS%20Policy.pdf", "category": "HR Forms", "badge": "HR Policy"},
+                {"title": "Human Resources Manual (HRM - 2025)", "url": "http://192.168.101.75:3000/files/HRM%202025.pdf", "category": "HR Forms", "badge": "HR Manual"},
+                {"title": "APH HR Forms Hub", "url": "./hrforms.html", "category": "Forms Vault", "badge": "People & Culture"}
+            ],
+            "suggestions": ["PMS Policy", "Staff Training Feedback Form", "HR Forms Hub"],
+            "auto_open_url": res['url'],
+            "auto_open_title": res['title']
+        }
+
+    if res_id == 'FORM_HR_PRIVILEGES_MEDICINE':
+        if is_tamil:
+            answer = "பொது மருத்துவ மருத்துவர்களுக்கான மருத்துவ உரிமைகள் மற்றும் அங்கீகாரப் படிவம்: **Clinical Privileges - General Medicine**. நேரடி PDF ஆவணத்தைத் திறக்க கீழே உள்ள இணைப்பைப் பயன்படுத்தவும்."
+        else:
+            answer = "Official **Clinical Privileges - General Medicine**: Formal clinical credentialing, procedural scope of practice, and inpatient admission privileges for General Medicine consultants."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "Clinical Privileges - General Medicine", "url": "http://192.168.101.75:3000/files/hrmedicine.pdf", "category": "HR Forms", "badge": "Privileging"},
+                {"title": "Clinical Privileges - ENT", "url": "http://192.168.101.75:3000/files/hrent.pdf", "category": "HR Forms", "badge": "Privileging"},
+                {"title": "Clinical Privileges - Anaesthesia", "url": "http://192.168.101.75:3000/files/hranaesthesia.pdf", "category": "HR Forms", "badge": "Privileging"},
+                {"title": "APH HR Forms Hub", "url": "./hrforms.html", "category": "Forms Vault", "badge": "People & Culture"}
+            ],
+            "suggestions": ["Clinical Privileges - General Medicine", "Clinical Privileges - Anaesthesia", "HR Forms Hub"],
+            "auto_open_url": res['url'],
+            "auto_open_title": res['title']
+        }
+
+    if res_id == 'FORM_HR_PRIVILEGES_ENT':
+        if is_tamil:
+            answer = "காது மூக்கு தொண்டை (ENT) மருத்துவர்களுக்கான அறுவைசிகிச்சை மற்றும் மருத்துவ உரிமைகள் படிவம்: **Clinical Privileges - ENT**. நேரடி PDF ஆவணத்தைத் திறக்க கீழே உள்ள இணைப்பைப் பயன்படுத்தவும்."
+        else:
+            answer = "Official **Clinical Privileges - ENT**: Surgical scope of clinical practice, outpatient procedures, and operating theatre credentialing for ENT surgeons."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "Clinical Privileges - ENT", "url": "http://192.168.101.75:3000/files/hrent.pdf", "category": "HR Forms", "badge": "Privileging"},
+                {"title": "Clinical Privileges - Anaesthesia", "url": "http://192.168.101.75:3000/files/hranaesthesia.pdf", "category": "HR Forms", "badge": "Privileging"},
+                {"title": "APH HR Forms Hub", "url": "./hrforms.html", "category": "Forms Vault", "badge": "People & Culture"}
+            ],
+            "suggestions": ["Clinical Privileges - ENT", "Clinical Privileges - General Medicine", "HR Forms Hub"],
+            "auto_open_url": res['url'],
+            "auto_open_title": res['title']
+        }
+
+    if res_id == 'FORM_HR_PRIVILEGES_ANAESTHESIA':
+        if is_tamil:
+            answer = "மயக்கவியல் (Anaesthesia) மருத்துவர்களுக்கான அங்கீகார மற்றும் சிகிச்சை உரிமைகள் படிவம்: **Clinical Privileges - Anaesthesia**. நேரடி PDF ஆவணத்தைத் திறக்க கீழே உள்ள இணைப்பைப் பயன்படுத்தவும்."
+        else:
+            answer = "Official **Clinical Privileges - Anaesthesia**: Privileging matrix for general, neuraxial, and regional blocks, difficult airway management, and critical care procedures."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "Clinical Privileges - Anaesthesia", "url": "http://192.168.101.75:3000/files/hranaesthesia.pdf", "category": "HR Forms", "badge": "Privileging"},
+                {"title": "Clinical Privileges - General Medicine", "url": "http://192.168.101.75:3000/files/hrmedicine.pdf", "category": "HR Forms", "badge": "Privileging"},
+                {"title": "APH HR Forms Hub", "url": "./hrforms.html", "category": "Forms Vault", "badge": "People & Culture"}
+            ],
+            "suggestions": ["Clinical Privileges - Anaesthesia", "Clinical Privileges - General Medicine", "HR Forms Hub"],
+            "auto_open_url": res['url'],
+            "auto_open_title": res['title']
+        }
+
+    if res_id == 'FORM_HR_CMO_POLICY':
+        if is_tamil:
+            answer = "தலைமை மருத்துவ அலுவலர் (CMO) பணிக் கொள்கை மற்றும் அவசர சிகிச்சைப் பிரிவு நெறிமுறைகள்: **Chief Medical Officer (CMO) Policy**. நேரடி PDF ஆவணத்தைத் திறக்க கீழே உள்ள இணைப்பைப் பயன்படுத்தவும்."
+        else:
+            answer = "Official **Chief Medical Officer (CMO) Policy**: Institutional charter delineating casualty management protocols, emergency response leadership, and clinical shift handover duties."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "Chief Medical Officer (CMO) Policy", "url": "http://192.168.101.75:3000/files/CMO%20Policy.pdf", "category": "HR Forms", "badge": "Cadre Policy"},
+                {"title": "Junior Resident Policy", "url": "http://192.168.101.75:3000/files/Junior%20resident%20Policy.pdf", "category": "HR Forms", "badge": "Cadre Policy"},
+                {"title": "APH HR Forms Hub", "url": "./hrforms.html", "category": "Forms Vault", "badge": "People & Culture"}
+            ],
+            "suggestions": ["CMO Policy", "Junior Resident Policy", "HR Forms Hub"],
+            "auto_open_url": res['url'],
+            "auto_open_title": res['title']
+        }
+
+    if res_id == 'FORM_HR_JUNIOR_RESIDENT':
+        if is_tamil:
+            answer = "இளநிலை உறைவிட மருத்துவர் (Junior Resident) பணிக் கொள்கை மற்றும் வழிகாட்டுதல்கள்: **Junior Resident Policy**. நேரடி PDF ஆவணத்தைத் திறக்க கீழே உள்ள இணைப்பைப் பயன்படுத்தவும்."
+        else:
+            answer = "Official **Junior Resident Policy**: Academic governance, patient care documentation standards, night duty schedules, and consultant supervisory guidelines for residents."
+        return {
+            "answer": answer,
+            "links": [
+                {"title": "Junior Resident Policy", "url": "http://192.168.101.75:3000/files/Junior%20resident%20Policy.pdf", "category": "HR Forms", "badge": "Cadre Policy"},
+                {"title": "Chief Medical Officer (CMO) Policy", "url": "http://192.168.101.75:3000/files/CMO%20Policy.pdf", "category": "HR Forms", "badge": "Cadre Policy"},
+                {"title": "APH HR Forms Hub", "url": "./hrforms.html", "category": "Forms Vault", "badge": "People & Culture"}
+            ],
+            "suggestions": ["Junior Resident Policy", "CMO Policy", "HR Forms Hub"],
+            "auto_open_url": res['url'],
+            "auto_open_title": res['title']
+        }
+
     desc = res.get('description_ta' if is_tamil else 'description', res.get('description', ''))
     answer = f"{res['title']}: {desc}"
     links = [
@@ -2239,21 +3691,49 @@ CLINICAL_PROTOCOL_TOPICS = [
     'cauti', 'clabsi', 'vae', 'ventilator associated', 'mews', 'sbar',
     'hand hygiene moments', '5 moments', 'kai sugatharam', 'கை சுகாதாரம்',
     'biomedical waste', 'waste segregation', 'waste management', 'colour code', 'color code', 'கழிவு மேலாண்மை',
-    'code blue protocol', 'code blue', 'cardiac arrest protocol', 'cpr protocol'
+    'code blue protocol', 'code blue', 'cardiac arrest protocol', 'cpr protocol', 'cpr guideline', 'cpr guidelines',
+    # Emergency Codes & Protocols
+    'code yellow', 'code red', 'code pink', 'code black', 'code purple', 'code orange',
+    'triage protocol', 'triage policy', 'triage in casualty', 'casualty triage',
+    'disaster management', 'disaster plan', 'hospital disaster',
+    # Patient Safety & Vulnerable Care
+    'restraint management', 'restraint policy', 'physical restraint', 'chemical restraint',
+    'vulnerable patient', 'vulnerable patients',
+    'fall prevention', 'fall risk', 'fall protocol',
+    'pain management', 'pain assessment',
+    'wrong site surgery', 'wrong patient', 'wrong procedure', 'surgical safety checklist',
+    'brought dead', 'dead on arrival', 'brought death',
+    # Critical Care & Inpatient
+    'icu bed shortage', 'icu admission criteria', 'icu discharge criteria', 'infection control in icu',
+    'ambulance service', 'ambulance protocol', 'telemedicine policy',
+    'end of life care', 'dnr protocol', 'organ transplant', 'organ donation',
+    # Medication Management
+    'high alert medication', 'high risk medication', 'lasa drugs', 'look alike sound alike',
+    'medication recall', 'medication error', 'medication return', 'verbal order',
+    'antimicrobial resistance', 'antibiotic policy', 'antibiogram', 'amsp',
+    # Infection Control & Sterilization
+    'dialysis tubing', 'tubing reprocessing', 'reprocessing of single use',
+    'cssd sterilization', 'autoclave protocol', 'spill management', 'blood spill', 'mercury spill',
+    'radiation safety', 'radiation manual',
+    # Patient Rights & Governance
+    'patient rights and responsibilities', 'patient rights', 'informed consent process',
+    'surrogate consent', 'effective communication with patient', '7 cs of communication',
+    'mrd retention policy', 'medical records retention', 'hazard identification and risk assessment', 'hira'
 ]
 
 def should_route_to_knowledge_retrieval(query: str, intent: Any, registered: Optional[Dict[str, Any]]) -> bool:
     """Determines whether query is asking a document content/knowledge question."""
     q = query.lower().strip()
 
-    # 1. Core Applications & Exact Forms are deterministic Stage 0
-    if registered and registered.get('intent_type') in [SearchIntent.OPEN_APPLICATION, SearchIntent.OPEN_FORM]:
-        return False
-
-    # 2. Resignation HRM: route to knowledge only if explanatory / question query
+    # 1. Resignation HRM: route to knowledge only if explanatory / question query
     if registered and registered.get('id') == 'FORM_RESIGNATION_HRM':
         is_expl = any(q.startswith(w) for w in ['explain', 'what is', 'how long', 'details of']) or any(k in q for k in ['evvalavu', 'எவ்வளவு', 'காலம் எவ்வளவு']) or '?' in query
-        return is_expl
+        if is_expl:
+            return True
+
+    # 2. Core Applications & Exact Forms are deterministic Stage 0
+    if registered and registered.get('intent_type') in [SearchIntent.OPEN_APPLICATION, SearchIntent.OPEN_FORM]:
+        return False
 
     # 3. Explicit question starters or question mark
     if any(q.startswith(w) for w in EXPLICIT_QUESTION_STARTERS) or '?' in query:
@@ -2265,6 +3745,13 @@ def should_route_to_knowledge_retrieval(query: str, intent: Any, registered: Opt
 
     # 5. Clinical protocol topics
     if any(k in q for k in CLINICAL_PROTOCOL_TOPICS):
+        return True
+
+    # 6. Operational protocol / guideline / criteria / SOP questions
+    if any(k in q for k in [
+        'protocol', 'guideline', 'guidelines', 'sop', 'sops', 'policy on', 'criteria for',
+        'procedure for', 'steps for', 'rules for', 'management of', 'prevention of'
+    ]) and not any(k in q for k in ['open ', 'his ', 'hrms', 'pacs', 'ticketing']):
         return True
 
     return False
@@ -2352,7 +3839,7 @@ def generate_local_grounded_answer(
     suggestions = [
         f"{top_match['title']} (p. {page_num})",
         "Hospital Manuals Hub",
-        "Clinical Forms Vault"
+        "Core Quality Committee Hub"
     ]
 
     grounding_status = "LOCAL_FALLBACK" if is_fallback else "LOCAL_GROUNDED"
@@ -2491,7 +3978,7 @@ def generate_gemini_grounded_answer(
     suggestions = [
         f"{top_match['title']} (p. {top_match['page_number']})",
         "Hospital Manuals Hub",
-        "Clinical Forms Vault"
+        "Core Quality Committee Hub"
     ]
 
     return {
@@ -2503,25 +3990,320 @@ def generate_gemini_grounded_answer(
         "grounding_status": grounding_status
     }
 
+MONTH_MOM_LOOKUP = {
+    'jan': ('jan', 'January', 'ஜனவரி'),
+    'january': ('jan', 'January', 'ஜனவரி'),
+    'ஜனவரி': ('jan', 'January', 'ஜனவரி'),
+    'feb': ('feb', 'February', 'பிப்ரவரி'),
+    'february': ('feb', 'February', 'பிப்ரவரி'),
+    'பிப்ரவரி': ('feb', 'February', 'பிப்ரவரி'),
+    'mar': ('mar', 'March', 'மார்ச்'),
+    'march': ('mar', 'March', 'மார்ச்'),
+    'மார்ச்': ('mar', 'March', 'மார்ச்'),
+    'apr': ('apr', 'April', 'ஏப்ரல்'),
+    'april': ('apr', 'April', 'ஏப்ரல்'),
+    'ஏப்ரல்': ('apr', 'April', 'ஏப்ரல்'),
+    'may': ('may', 'May', 'மே'),
+    'மே': ('may', 'May', 'மே'),
+    'jun': ('jun', 'June', 'ஜூன்'),
+    'june': ('jun', 'June', 'ஜூன்'),
+    'ஜூன்': ('jun', 'June', 'ஜூன்'),
+    'jul': ('jul', 'July', 'ஜூலை'),
+    'july': ('jul', 'July', 'ஜூலை'),
+    'ஜூலை': ('jul', 'July', 'ஜூலை'),
+    'aug': ('aug', 'August', 'ஆகஸ்ட்'),
+    'august': ('aug', 'August', 'ஆகஸ்ட்'),
+    'ஆகஸ்ட்': ('aug', 'August', 'ஆகஸ்ட்'),
+    'sep': ('sep', 'September', 'செப்டம்பர்'),
+    'sept': ('sep', 'September', 'செப்டம்பர்'),
+    'september': ('sep', 'September', 'செப்டம்பர்'),
+    'செப்டம்பர்': ('sep', 'September', 'செப்டம்பர்'),
+    'oct': ('oct', 'October', 'அக்டோபர்'),
+    'october': ('oct', 'October', 'அக்டோபர்'),
+    'அக்டோபர்': ('oct', 'October', 'அக்டோபர்'),
+    'nov': ('nov', 'November', 'நவம்பர்'),
+    'november': ('nov', 'November', 'நவம்பர்'),
+    'நவம்பர்': ('nov', 'November', 'நவம்பர்'),
+    'dec': ('dec', 'December', 'டிசம்பர்'),
+    'december': ('dec', 'December', 'டிசம்பர்'),
+    'டிசம்பர்': ('dec', 'December', 'டிசம்பர்'),
+}
+
+MONTH_PATTERNS = {
+    'jan': r'\bJAN(UARY)?\b',
+    'feb': r'\bFEB(RUARY)?\b',
+    'mar': r'\bMAR(CH)?\b',
+    'apr': r'\bAPR(IL)?\b',
+    'may': r'\bMAY\b',
+    'jun': r'\bJUN(E)?\b',
+    'jul': r'\bJUL(Y)?\b|\bJULY?[- ]',
+    'aug': r'\bAUG(UST)?\b',
+    'sep': r'\bSEP(T|TEMBER)?\b',
+    'oct': r'\bOCT(OBER)?\b',
+    'nov': r'\bNOV(EMBER)?\b',
+    'dec': r'\bDEC(EMBER)?\b',
+}
+
+COMMITTEE_ACRONYM_NAMES = {
+    'BMW': ('Bio-Medical Waste Committee', 'பயோ-மெடிக்கல் கழிவு மேலாண்மைக் குழு'),
+    'CAC': ('Clinical Audit Committee', 'மருத்துவ தணிக்கைக் குழு'),
+    'QC': ('Quality Committee', 'தரக் கட்டுப்பாட்டுக் குழு'),
+    'BTC': ('Blood Transfusion Committee', 'இரத்த மாற்று சிகிச்சை குழு'),
+    'DTC': ('Drugs & Therapeutics Committee', 'மருந்துகள் & சிகிச்சைக் குழு'),
+    'FMS': ('Facility Management & Safety Committee', 'வசதி மேலாண்மை & பாதுகாப்பு குழு'),
+    'HR': ('Human Resources Committee', 'மனிதவளக் குழு'),
+    'CPC': ('Clinical Protocol Committee', 'மருத்துவ சிகிச்சை நெறிமுறைக் குழு'),
+    'CPR': ('Cardiopulmonary Resuscitation (Code Blue) Committee', 'அவசர சிகிச்சை மீட்புக் குழு (Code Blue)'),
+    'IPC': ('Infection Prevention & Control Committee', 'தொற்று தடுப்பு & கட்டுப்பாட்டுக் குழு'),
+    'HIC': ('Hospital Infection Control Committee', 'மருத்துவமனை தொற்று கட்டுப்பாட்டுக் குழு'),
+    'HICC': ('Hospital Infection Control Committee', 'மருத்துவமனை தொற்று கட்டுப்பாட்டுக் குழு'),
+    'MRD': ('Medical Records Department Committee', 'மருத்துவ பதிவேடுகள் துறை குழு'),
+    'AMS': ('Antimicrobial Stewardship Committee', 'ஆன்டிமைக்ரோபியல் பயன்பாட்டு கண்காணிப்புக் குழு'),
+    'PURCHASE': ('Purchase & Procurement Committee', 'கொள்முதல் & உபகரணக் குழு'),
+    'M&M': ('Mortality & Morbidity Committee', 'இறப்பு மற்றும் நோய் விகித ஆய்வுக் குழு'),
+}
+
+MOM_INDICATORS = {'mom', 'moms', 'minute', 'minutes', 'meeting', 'meetings', 'கூட்ட அறிக்கை', 'கூட்டம்', 'மீட்டிங்', 'அறிக்கை'}
+
+def resolve_month_mom_query(query: str, verified_role: str = ACCESS_PUBLIC) -> Optional[Dict[str, Any]]:
+    """
+    Directly resolves Minutes of Meeting (MOM) queries for specific months
+    (e.g., 'oct MOM', 'MOM oct', 'MOM for oct', 'october mom', 'mom october', 'nov mom', 'apr mom').
+    Lists the verified committee MOM documents with direct PDF links and auto-opens comitee.html?q=month.
+    """
+    global COMMITTEE_DOCS
+    if not COMMITTEE_DOCS:
+        load_committee_docs()
+
+    q_norm = query.lower().strip()
+    words = re.findall(r'[\w\u0b80-\u0bff]+', q_norm)
+
+    # 1. Look for explicit month token
+    matched_month = None
+    for w in words:
+        if w in MONTH_MOM_LOOKUP:
+            matched_month = MONTH_MOM_LOOKUP[w]
+            break
+
+    if not matched_month:
+        return None
+
+    m_key, m_en, m_ta = matched_month
+
+    # Check if query indicates MOM or if query is just the month / month MOM
+    has_mom = any(w in MOM_INDICATORS for w in words) or any(k in q_norm for k in ['கூட்ட அறிக்கை', 'meeting minutes', 'minutes of meeting', 'mom'])
+    is_pure_month = q_norm in [k for k in MONTH_MOM_LOOKUP if len(k) > 3] or q_norm in [f'{k} month' for k in MONTH_MOM_LOOKUP]
+
+    if not (has_mom or is_pure_month):
+        return None
+
+    # Filter documents matching this month
+    pat = MONTH_PATTERNS.get(m_key, r'\b' + m_key + r'\b')
+    matched_docs = [d for d in COMMITTEE_DOCS if re.search(pat, d.get('title', ''), re.IGNORECASE)]
+
+    if not matched_docs:
+        return None
+
+    is_tamil = is_tamil_query(query)
+
+    # Format document list
+    doc_lines = []
+    links = [
+        {
+            "title": f"Open Committees & MOM Hub ({m_en} Filter)",
+            "url": f"./comitee.html?q={m_key}",
+            "category": "Governance Directory",
+            "badge": f"{m_en} Directory",
+            "access_level": ACCESS_PUBLIC
+        }
+    ]
+
+    for idx, d in enumerate(matched_docs, 1):
+        title = d.get('title', '').strip()
+        url = d.get('url', '').strip()
+
+        # Committee name lookup
+        comm_en = "Hospital Committee"
+        comm_ta = "மருத்துவமனை குழு"
+        for acro, (name_en, name_ta) in COMMITTEE_ACRONYM_NAMES.items():
+            if re.search(r'\b' + acro + r'\b', title, re.IGNORECASE):
+                comm_en = f"{name_en} ({acro})"
+                comm_ta = f"{name_ta} ({acro})"
+                break
+
+        if is_tamil:
+            doc_lines.append(f"{idx}. **{comm_ta}**: [{title}]({url})")
+        else:
+            doc_lines.append(f"{idx}. **{comm_en}**: [{title}]({url})")
+
+        links.append({
+            "title": f"{title} - {comm_en}",
+            "url": url,
+            "category": "Hospital Committee Minutes (MOM)",
+            "badge": f"{m_en} MOM",
+            "access_level": ACCESS_STAFF
+        })
+
+    docs_list_text = "\n".join(doc_lines)
+
+    if is_tamil:
+        answer = (
+            f"📋 **{m_ta} மாத கூட்ட அறிக்கைகள் (MOM) - ({len(matched_docs)} ஆவணங்கள்)**:\n\n"
+            f"மருத்துவமனை நிர்வாகக் குழுக்களின் அதிகாரப்பூர்வ **{m_ta} ({m_en}) Minutes of Meeting (MOM)** ஆவணங்கள் கீழே பட்டியலிடப்பட்டுள்ளன:\n\n"
+            f"{docs_list_text}\n\n"
+            f"📁 அனைத்து குழுக்களின் கூட்ட அறிக்கைகள் மற்றும் அட்டவணையைப் பார்க்க **[மருத்துவமனை குழுக்கள் & MOM பக்கம் ({m_ta})](./comitee.html?q={m_key})** திறக்கவும்."
+        )
+    else:
+        answer = (
+            f"📋 **{m_en} Minutes of Meeting (MOM) Records ({len(matched_docs)} Documents Found)**:\n\n"
+            f"Here are the official verified **{m_en} Minutes of Meeting (MOM)** records for hospital governance and quality committees:\n\n"
+            f"{docs_list_text}\n\n"
+            f"📁 To view and search all committee documents with live keyword highlighting, open the **[Hospital Committees & MOM Directory](./comitee.html?q={m_key})**."
+        )
+
+    # Adjacent month suggestions
+    all_months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
+    cur_idx = all_months.index(m_key) if m_key in all_months else 0
+    prev_m = MONTH_MOM_LOOKUP[all_months[(cur_idx - 1) % 12]][1]
+    next_m = MONTH_MOM_LOOKUP[all_months[(cur_idx + 1) % 12]][1]
+
+    suggestions = [
+        f"{next_m} MOM",
+        f"{prev_m} MOM",
+        "Committee Scheduled Calendar 2026",
+        "List of Committees"
+    ]
+
+    return {
+        "answer": answer,
+        "links": links,
+        "suggestions": suggestions,
+        "auto_open_url": f"./comitee.html?q={m_key}",
+        "auto_open_title": f"APH Hospital Committees - {m_en} MOM Directory",
+        "access_status": "AUTHORIZED",
+        "grounding_status": "GROUNDED_CATALOG"
+    }
+
+YEAR_CIRCULAR_KEYWORDS = {'circular', 'circulars', 'order', 'orders', 'memo', 'memos', 'bulletin', 'bulletins', 'சுற்றறிக்கை', 'சுற்றறிக்கைகள்'}
+
+def resolve_year_circular_query(query: str, verified_role: str = ACCESS_PUBLIC) -> Optional[Dict[str, Any]]:
+    """
+    Directly resolves year-specific Circular queries (e.g. '2026 circular', 'circular 2026', '2026 circulars', 'circulars 2026').
+    Lists all circulars matching that year with direct PDF links and auto-opens recent circular.html?q=year.
+    """
+    global CIRCULARS_DATA
+    if not CIRCULARS_DATA:
+        load_circulars()
+
+    q_norm = query.lower().strip()
+    year_match = re.search(r'\b(202[0-9])\b', q_norm)
+    if not year_match:
+        return None
+
+    year = year_match.group(1)
+    words = re.findall(r'[\w\u0b80-\u0bff]+', q_norm)
+    has_circ = any(w in YEAR_CIRCULAR_KEYWORDS for w in words) or any(k in q_norm for k in ['சுற்றறிக்கை', 'office order', 'circular', 'circulars'])
+
+    if not has_circ:
+        return None
+
+    # Filter circulars matching this year
+    matched_circs = [c for c in CIRCULARS_DATA if year in c.get('title', '') or year in c.get('date', '')]
+    if not matched_circs:
+        return None
+
+    is_tamil = is_tamil_query(query)
+
+    doc_lines = []
+    links = [
+        {
+            "title": f"APH Recent Circulars Hub ({year} Filter)",
+            "url": f"./recent circular.html?q={year}",
+            "category": "Circulars Hub",
+            "badge": f"{year} Circulars",
+            "access_level": ACCESS_PUBLIC
+        }
+    ]
+
+    for idx, c in enumerate(matched_circs, 1):
+        title = c.get('title', '').strip()
+        url = c.get('url', '').strip()
+        date_str = c.get('date', '').strip()
+        date_info = f" ({'தேதி' if is_tamil else 'Date'}: {date_str})" if date_str else ""
+        doc_lines.append(f"{idx}. **[{title}]({url})**{date_info}")
+        links.append({
+            "title": f"{title} ({date_str})" if date_str else title,
+            "url": url,
+            "category": "Hospital Circulars",
+            "badge": f"{year} Circular",
+            "access_level": ACCESS_STAFF
+        })
+
+    docs_list_text = "\n".join(doc_lines)
+
+    if is_tamil:
+        answer = (
+            f"📋 **{year} ஆம் ஆண்டிற்கான அதிகாரப்பூர்வ மருத்துவமனை சுற்றறிக்கைகள் ({len(matched_circs)} ஆவணங்கள்)**:\n\n"
+            f"{year} ஆம் ஆண்டிற்கான மருத்துவமனை நிர்வாக மற்றும் பாதுகாப்பு சுற்றறிக்கைகள் கீழே பட்டியலிடப்பட்டுள்ளன:\n\n"
+            f"{docs_list_text}\n\n"
+            f"📁 அனைத்து சுற்றறிக்கைகளையும் பார்வையிட **[APH Recent Circulars Hub ({year})](./recent circular.html?q={year})** திறக்கவும்."
+        )
+    else:
+        answer = (
+            f"📋 **Official {year} Hospital Circulars & Management Orders ({len(matched_circs)} Documents Found)**:\n\n"
+            f"Here are the official verified institutional circulars and management notifications issued for **{year}**:\n\n"
+            f"{docs_list_text}\n\n"
+            f"📁 To view and search all circulars with live keyword highlighting, open the **[APH Recent Circulars Hub ({year} Filter)](./recent circular.html?q={year})**."
+        )
+
+    suggestions = [
+        "Safety Meeting Circular- 2026",
+        "SWOT Analysis Circular Jan 2026",
+        "List of Holidays 2026",
+        "Digital E – Circulars & Protocols"
+    ]
+
+    return {
+        "answer": answer,
+        "links": links,
+        "suggestions": suggestions,
+        "auto_open_url": f"./recent circular.html?q={year}",
+        "auto_open_title": f"APH Recent Circulars - {year}",
+        "access_status": "AUTHORIZED",
+        "grounding_status": "GROUNDED_CATALOG"
+    }
+
 def execute_search_pipeline(query: str, verified_role: str = ACCESS_PUBLIC) -> Dict[str, Any]:
     """
     Unified multi-stage search pipeline for APH SmartSearch AI (Phase 3.4):
-    Stage 0: Deterministic Canonical Resource Resolution (Exact Applications & Forms)
+    Stage 0a: Month-specific Minutes of Meeting (MOM) Resolution
+    Stage 0b: Year-specific Circulars Resolution (e.g. '2026 circular', 'circular 2026')
+    Stage 0c: Deterministic Canonical Resource Resolution (Exact Applications & Forms)
     Stage 1: Intercom & Department Telephony Resolution
     Stage 2: Knowledge Retrieval (SQLite FTS5 Full-Text Index with Pre-Search RBAC + Gemini Grounding)
     Stage 3: Catalog Fallback (Semantic keyword scoring & disambiguation)
     """
-    # 0. Canonical Resource Registry & Explicit Intent Resolution FIRST
+    # 0a. Month-specific Minutes of Meeting (MOM) Resolution FIRST
+    month_mom_res = resolve_month_mom_query(query, verified_role)
+    if month_mom_res:
+        return month_mom_res
+
+    # 0b. Year-specific Circulars Resolution
+    year_circ_res = resolve_year_circular_query(query, verified_role)
+    if year_circ_res:
+        return year_circ_res
+
+    # 0c. Canonical Resource Registry & Explicit Intent Resolution
     intent = classify_search_intent(query)
     registered = resolve_exact_registered_resource(query, intent)
 
     if registered and not should_route_to_knowledge_retrieval(query, intent, registered):
-        return build_canonical_response_for_resource(query, registered, intent)
+        return tag_app_auto_open(build_canonical_response_for_resource(query, registered, intent), registered, intent)
 
     # 1. Telephony and Department Intercom Directory Lookups resolve deterministically
     matched_dept = find_intercom_department(query)
     if (matched_dept or is_telephony_query(query)) and not should_route_to_knowledge_retrieval(query, intent, registered):
-        return generate_catalog_fallback_result(query)
+        return tag_app_auto_open(generate_catalog_fallback_result(query), registered, intent)
 
     # 2. Document Knowledge Retrieval (SQLite FTS5)
     if should_route_to_knowledge_retrieval(query, intent, registered):
@@ -2603,22 +4385,22 @@ def execute_search_pipeline(query: str, verified_role: str = ACCESS_PUBLIC) -> D
 
     # If Stage 0 had a match and FTS5 didn't find specific passages, return canonical resource
     if registered:
-        return build_canonical_response_for_resource(query, registered, intent)
+        return tag_app_auto_open(build_canonical_response_for_resource(query, registered, intent), registered, intent)
 
     # 3. Fallback to Catalog Search
-    return generate_catalog_fallback_result(query)
+    return tag_app_auto_open(generate_catalog_fallback_result(query), registered, intent)
 
 def query_gemini_ai(user_query, api_key):
     # 0. Canonical Resource Registry & Explicit Intent Resolution FIRST
     intent = classify_search_intent(user_query)
     registered = resolve_exact_registered_resource(user_query, intent)
     if registered:
-        return build_canonical_response_for_resource(user_query, registered, intent)
+        return tag_app_auto_open(build_canonical_response_for_resource(user_query, registered, intent), registered, intent)
 
     # Telephony and Department Intercom Directory Lookups resolve deterministically
     matched_dept = find_intercom_department(user_query)
     if matched_dept or is_telephony_query(user_query):
-        return generate_catalog_fallback_result(user_query)
+        return tag_app_auto_open(generate_catalog_fallback_result(user_query), registered, intent)
 
     # 1. Retrieve top matching catalog candidates
     candidates = search_catalog_candidates(user_query, limit=6)
@@ -3171,16 +4953,29 @@ def generate_catalog_fallback_result(query, candidates=None):
         suggestions = ["LineLoom Token Display", "Core Hospital Applications", "OPD Intercom: 2001"]
         return {"answer": answer, "links": links, "suggestions": suggestions}
 
-    # 3. Ticketing & Maintenance Desk
+    # 3. Ticketing & Maintenance Desk (Repair, Fixing Anything, Maintenance, Electrical, Housekeeping, Laundry)
+    is_patient_scope = any(k in q_lower for k in [
+        'patient details', 'patient detail', 'patient info', 'patient record', 'op billing', 'ip billing',
+        'discharge billing', 'patient registration', 'reg op', 'reg ip', 'reg er', 'indents stores', 'ward indents'
+    ])
     is_ticketing_query = (
-        any(k in q_lower for k in ['ticketing', 'ticket desk', 'maintenance desk', 'job order', 'complaint', 'breakdown', 'pazhuthu', 'kuraigal', 'பழுது', 'புகார்']) or
-        ('ticket' in q_lower and not any(k in q_lower for k in ['food', 'unavu', 'sapadu', 'உணவு']))
+        not is_patient_scope and
+        not any(k in q_lower for k in ['sop', 'manual', 'policy', 'guideline', 'protocol', 'கையேடு', 'விதிமுறை']) and
+        not any(k in q_lower for k in ['resignation', 'relieving', 'notice period', 'job application', 'job form', 'faculty application', 'printer request form', 'system request form']) and
+        (
+            any(k in q_lower for k in [
+                'ticketing', 'ticket desk', 'maintenance desk', 'job order', 'complaint', 'breakdown', 'pazhuthu', 'kuraigal', 'பழுது', 'புகார்',
+                'repair', 'fixing anything', 'fixing', 'fix', 'maintenance',
+                'electrical', 'housekeeping', 'laundry'
+            ]) or
+            ('ticket' in q_lower and not any(k in q_lower for k in ['food', 'unavu', 'sapadu', 'உணவு']))
+        )
     )
     if is_ticketing_query:
         if is_tamil:
-            answer = "கணினி வன்பொருள், இணைய இணைப்பு, மென்பொருள் குறைபாடுகள் மற்றும் மருத்துவமனை பராமரிப்பு பணிகளுக்கான வேலை உத்தரவு (Job Order) அல்லது புகார்களைப் பதிவு செய்ய **Ticketing & Maintenance Desk** (http://www.mapimshis.com/mapims/) தளத்தைப் பயன்படுத்தவும். அவசர கணினி உதவிக்கு IT பிரிவை (Ext: 2226 / 2228) அழைக்கவும்."
+            answer = "கணினி வன்பொருள், பழுதுகள் (Repairs), மின்சார பராமரிப்பு (Electrical), துப்புரவு (Housekeeping), சலவை (Laundry) மற்றும் பராமரிப்பு பணிகளுக்கான வேலை உத்தரவு (Job Order) அல்லது புகார்களைப் பதிவு செய்ய **Ticketing & Maintenance Desk** (http://www.mapimshis.com/mapims/) தளத்தைப் பயன்படுத்தவும். அவசர கணினி உதவிக்கு IT பிரிவை (Ext: 2226 / 2228) அழைக்கவும்."
         else:
-            answer = "To report hardware breakdowns, network faults, HIS software issues, or hospital facility repairs, register a job order on the **Ticketing & Maintenance Desk** (http://www.mapimshis.com/mapims/). For urgent IT assistance, call the IT Help Desk at Ext: 2226 (Hardware) or 2228 (Software)."
+            answer = "To report repairs, fixing any hardware/equipment, general maintenance, electrical breakdown, housekeeping, laundry service issues, or computer faults, register a job order on the **Ticketing & Maintenance Desk** (http://www.mapimshis.com/mapims/). For urgent IT assistance, call the IT Help Desk at Ext: 2226 (Hardware) or 2228 (Software)."
         links = [
             {"title": "Ticketing & Maintenance Desk", "url": "http://www.mapimshis.com/mapims/", "category": "IT & Maintenance", "badge": "System"},
             {"title": "System Request Form", "url": "http://192.168.101.75:3000/files/SYSTEM%20REQUEST%20FORM.pdf", "category": "IT Forms", "badge": "IT Form"},
@@ -3771,7 +5566,7 @@ def generate_catalog_fallback_result(query, candidates=None):
     is_apply_leave_intent = any(k in q_lower for k in ['leave', 'leavu', 'vidumurai', 'viduppu', 'விடுமுறை', 'விடுப்பு', 'permission', 'vacation']) and not any(k in q_lower for k in ['list of holidays', 'holiday calendar'])
     is_salary_intent = any(k in q_lower for k in ['salary', 'payslip', 'pay slip', 'payroll', 'wages', 'sambalam', 'sampalam', 'sambala', 'சம்பளம்', 'சம்பள', 'ரசீது'])
     is_attendance_intent = any(k in q_lower for k in ['attendance', 'biometric', 'punch', 'punching', 'varugai', 'வருகை']) and not is_apply_leave_intent
-    is_ticket_intent = any(k in q_lower for k in ['ticket', 'ticketing', 'job order', 'breakdown', 'complaint', 'repair', 'not working', 'fault', 'bug', 'பழுது'])
+    is_ticket_intent = any(k in q_lower for k in ['ticket', 'ticketing', 'job order', 'breakdown', 'complaint', 'repair', 'not working', 'fault', 'bug', 'பழுது']) and not any(k in q_lower for k in ['sop', 'manual', 'policy', 'guideline', 'protocol', 'கையேடு', 'விதிமுறை'])
     is_his_intent = any(k in q_lower for k in ['his', 'aosta', 'backbone', 'his user', 'user creation'])
     is_pacs_intent = any(k in q_lower for k in ['pacs', 'medsynapse', 'xray', 'x-ray', 'ct scan', 'mri', 'ultrasound', 'scan viewer'])
     is_wifi_intent = any(k in q_lower for k in ['wifi', 'wi-fi', 'wireless', 'internet'])
@@ -4088,6 +5883,9 @@ class APHPortalRequestHandler(SimpleHTTPRequestHandler):
         self.send_header('X-Content-Type-Options', 'nosniff')
         self.send_header('X-Frame-Options', 'SAMEORIGIN')
         self.send_header('Referrer-Policy', 'strict-origin-when-cross-origin')
+        self.send_header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
+        self.send_header('Pragma', 'no-cache')
+        self.send_header('Expires', '0')
 
         origin = self.headers.get('Origin')
         if origin and self.is_trusted_origin(origin):

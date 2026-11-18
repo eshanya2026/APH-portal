@@ -130,6 +130,8 @@ def classify_access_level(category: str, title: str, url: str) -> str:
         return ACCESS_PUBLIC
     if "holiday" in title_lower or "holidays" in title_lower:
         return ACCESS_PUBLIC
+    if any(k in title_lower for k in ["code yellow", "code_yellow", "disaster management"]):
+        return ACCESS_PUBLIC
 
     if any(k in cat_lower for k in ["committee", "mom", "governance"]) or any(k in title_lower for k in ["mom ", "mom_", "minutes of meeting", "committee charter"]):
         return ACCESS_MANAGEMENT

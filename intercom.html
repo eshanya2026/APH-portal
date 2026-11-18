@@ -126,101 +126,99 @@
             width: 140px
         }
 
-        /* Department Spotlight Banner */
-        .dept-spotlight-banner {
-            background: linear-gradient(135deg, #1e3a8a, #2563eb);
-            border-radius: 16px;
-            padding: 20px 24px;
-            color: #fff;
+        /* Highlighting & Glow Styles */
+        .card.highlighted-card {
+            box-shadow: 0 0 0 3.5px #2563eb, 0 10px 25px -5px rgba(37, 99, 235, 0.45) !important;
+            border: 2px solid #2563eb;
+            animation: cardPulse 2s infinite alternate;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes cardPulse {
+            0% { box-shadow: 0 0 0 3px #2563eb, 0 8px 20px -4px rgba(37, 99, 235, 0.35); }
+            100% { box-shadow: 0 0 0 5.5px #1d4ed8, 0 14px 28px -4px rgba(29, 78, 216, 0.6); }
+        }
+
+        .card.highlighted-card h2 {
+            background: linear-gradient(90deg, #1d4ed8, #2563eb) !important;
             display: flex;
-            flex-wrap: wrap;
+            align-items: center;
             justify-content: space-between;
-            align-items: center;
-            gap: 16px;
-            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.28);
-            margin-bottom: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
-        .dept-spotlight-left {
-            max-width: 600px;
-        }
-
-        .dept-badge {
-            display: inline-block;
+        .dept-match-tag {
             font-size: 10px;
+            letter-spacing: 0.05em;
+            background: #f59e0b;
+            color: #78350f;
+            padding: 3px 9px;
+            border-radius: 9999px;
+            font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 0.08em;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-weight: 800;
-            color: #dbeafe;
-            margin-bottom: 6px;
         }
 
-        .dept-name {
-            margin: 0;
-            font-size: 22px;
-            font-weight: 800;
-            color: #ffffff;
-            letter-spacing: -0.01em;
+        tr.highlighted-row {
+            background: #fefce8 !important;
+            border-left: 4px solid #f59e0b;
         }
 
-        .dept-desc {
-            margin: 6px 0 0;
-            font-size: 13px;
-            color: #e0e7ff;
-            line-height: 1.4;
-        }
-
-        .dept-spotlight-actions {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .dept-btn-print {
+        .ext-badge-highlight {
             display: inline-flex;
             align-items: center;
-            gap: 7px;
-            background: #ffffff;
-            color: #1e3a8a;
+            justify-content: center;
+            gap: 5px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #ffffff !important;
+            padding: 5px 13px;
+            border-radius: 9999px;
+            font-weight: 800;
+            font-size: 15px;
+            letter-spacing: 0.05em;
+            box-shadow: 0 2px 8px rgba(217, 119, 6, 0.45);
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+
+        .ext-badge-highlight:hover {
+            transform: scale(1.08);
+            box-shadow: 0 4px 14px rgba(217, 119, 6, 0.7);
+        }
+
+        mark.text-highlight {
+            background: #fef08a;
+            color: #854d0e;
+            padding: 2px 6px;
+            border-radius: 4px;
             font-weight: 700;
-            font-size: 13px;
-            padding: 9px 18px;
-            border-radius: 12px;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.12);
-            transition: all 0.15s ease;
         }
 
-        .dept-btn-print:hover {
-            background: #f8fafc;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.18);
-        }
-
-        .dept-btn-clear {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(255, 255, 255, 0.2);
+        /* Toast notification */
+        #intercom-toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #0f172a;
             color: #ffffff;
+            padding: 12px 24px;
+            border-radius: 9999px;
+            font-size: 13.5px;
             font-weight: 600;
-            font-size: 13px;
-            padding: 9px 16px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.15s ease;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            border: 1px solid #334155;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 9999;
+            opacity: 0;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
         }
 
-        .dept-btn-clear:hover {
-            background: rgba(255, 255, 255, 0.32);
+        #intercom-toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
         }
 
         /* Print Media Styles */
@@ -236,8 +234,6 @@
             }
 
             header,
-            .dept-spotlight-banner,
-            .dept-spotlight-actions,
             #search,
             .logo-header,
             a[href="./index.html"],
@@ -318,7 +314,10 @@
             </div>
             <div class="logo-header">
                 <img src="./assets/images/logo2%20(1).png" onerror="this.src='./assets/images/logo2.png'" alt="APH Logo">
-                <input id='search' placeholder='Search extension or description...'>
+                <div style="position: relative; width: 100%; max-width: 480px; margin-top: 10px;">
+                    <input id='search' placeholder='Search by department, room, staff, or number (e.g. 2800, canteen, casualty)...' style="width: 100%; margin: 0; padding-right: 38px;">
+                    <button type="button" id="clear-search-btn" onclick="clearDeptFilter()" style="display: none; position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: #94a3b8; color: #fff; border: none; border-radius: 50%; width: 22px; height: 22px; font-size: 11px; cursor: pointer; align-items: center; justify-content: center; font-weight: bold;">✕</button>
+                </div>
             </div>
         </header>
         <div class='container'>
@@ -335,9 +334,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Dynamic Department Spotlight Banner (Populated via JS when ?dept= is present) -->
-            <div id="dept-spotlight-container"></div>
             <section class='card'>
                 <h3 style='margin:18px;color:#0d47a1'>?? Campus</h3>
                 
@@ -2038,9 +2034,28 @@
         </div>
         <script>
             const s = document.getElementById('search');
+            const clearBtn = document.getElementById('clear-search-btn');
             let ALL_CARDS_DATA = [];
-            const urlParams = new URLSearchParams(window.location.search);
-            let activeDeptParam = (urlParams.get('dept') || urlParams.get('search') || urlParams.get('q') || '').trim();
+
+            // Read query from URL parameter (dept, department, q, query, search, s, ext, extension, phone, number, call, tel) or hash
+            function getQueryFromUrl() {
+                try {
+                    const p = new URLSearchParams(window.location.search);
+                    const val = (
+                        p.get('dept') || p.get('department') ||
+                        p.get('q') || p.get('query') || p.get('search') || p.get('s') ||
+                        p.get('ext') || p.get('extension') ||
+                        p.get('phone') || p.get('number') || p.get('call') || p.get('tel') ||
+                        (window.location.hash ? window.location.hash.replace(/^#/, '') : '') ||
+                        ''
+                    ).trim();
+                    return val;
+                } catch (e) {
+                    return '';
+                }
+            }
+
+            let activeDeptParam = getQueryFromUrl();
 
             function updatePrintHeader(titleText) {
                 const printTitle = document.getElementById('print-dept-title');
@@ -2049,72 +2064,140 @@
                 }
             }
 
-            function renderSpotlightBanner(deptName, matchCount) {
-                const bannerContainer = document.getElementById('dept-spotlight-container');
-                if (!bannerContainer) return;
-
-                if (!deptName) {
-                    bannerContainer.innerHTML = '';
-                    updatePrintHeader('');
-                    return;
+            function showToast(msg) {
+                let toast = document.getElementById('intercom-toast');
+                if (!toast) {
+                    toast = document.createElement('div');
+                    toast.id = 'intercom-toast';
+                    document.body.appendChild(toast);
                 }
+                toast.innerHTML = msg;
+                toast.classList.add('show');
+                clearTimeout(toast._timeout);
+                toast._timeout = setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 2800);
+            }
 
-                updatePrintHeader(deptName);
-                bannerContainer.innerHTML = `
-                    <div class="dept-spotlight-banner">
-                        <div class="dept-spotlight-left">
-                            <span class="dept-badge">DEPARTMENT EXTENSIONS</span>
-                            <h2 class="dept-name">📞 ${escapeHtml(deptName)} Intercom Directory</h2>
-                            <p class="dept-desc">Filtered to official verified lines for <strong>${escapeHtml(deptName)}</strong> (${matchCount} ${matchCount === 1 ? 'line' : 'lines'} found). You can print or save as a single-department PDF below.</p>
-                        </div>
-                        <div class="dept-spotlight-actions">
-                            <button type="button" onclick="window.print()" class="dept-btn-print" title="Print or save as 1-page PDF">
-                                <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="stroke-width: 2.2;">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
-                                </svg>
-                                <span>Print / Save ${escapeHtml(deptName)} PDF</span>
-                            </button>
-                            <button type="button" onclick="clearDeptFilter()" class="dept-btn-clear" title="View entire campus directory">
-                                <span>✕ Show All 60+ Departments</span>
-                            </button>
-                        </div>
-                    </div>
-                `;
+            function copyExt(extNum, desc) {
+                if (!extNum) return;
+                try {
+                    navigator.clipboard.writeText(extNum);
+                } catch(e) {
+                    const el = document.createElement('textarea');
+                    el.value = extNum;
+                    document.body.appendChild(el);
+                    el.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(el);
+                }
+                showToast(`📞 Copied Ext <strong>${escapeHtml(extNum)}</strong> ${desc ? `(${escapeHtml(desc)})` : ''} to clipboard!`);
+            }
+
+            function copyAllDeptLines(deptName) {
+                const cards = document.querySelectorAll('.card');
+                let foundLines = [];
+                cards.forEach(c => {
+                    if (c.style.display !== 'none') {
+                        c.querySelectorAll('tbody tr, tr').forEach((r, idx) => {
+                            if (idx === 0 || r.style.display === 'none') return;
+                            const ext = r.getAttribute('data-ext') || (r.children[0] ? r.children[0].innerText.trim() : '');
+                            const desc = r.getAttribute('data-desc') || (r.children[1] ? r.children[1].innerText.trim() : '');
+                            if (ext) foundLines.push(`${ext} - ${desc}`);
+                        });
+                    }
+                });
+                if (foundLines.length > 0) {
+                    const fullText = (deptName ? `${deptName} Extensions:\n` : '') + foundLines.join('\n');
+                    try {
+                        navigator.clipboard.writeText(fullText);
+                    } catch(e) {
+                        const el = document.createElement('textarea');
+                        el.value = fullText;
+                        document.body.appendChild(el);
+                        el.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(el);
+                    }
+                    showToast(`📋 Copied ${foundLines.length} extensions for <strong>${escapeHtml(deptName || 'Department')}</strong>!`);
+                }
             }
 
             function clearDeptFilter() {
                 activeDeptParam = '';
                 if (s) s.value = '';
+                if (clearBtn) clearBtn.style.display = 'none';
                 try {
                     const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
                     window.history.pushState({ path: cleanUrl }, '', cleanUrl);
                 } catch(e){}
-                renderSpotlightBanner('', 0);
                 filterCards('');
             }
 
             function escapeHtml(str) {
                 if (!str) return '';
-                return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+                return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
             }
 
+            const TELEPHONY_STOPWORDS = new Set([
+                'phone', 'phones', 'number', 'numbers', 'intercom', 'intercoms', 'telephone', 'telephones',
+                'call', 'calling', 'calls', 'dial', 'dialing', 'contact', 'contacts',
+                'ext', 'extension', 'extensions', 'en', 'yenn', 'tholaipesi', 'tholaipasi',
+                'inaippu', 'inaippugal', 'azhaippu', 'alaippu', 'koopidu', 'pesa',
+                'தொலைபேசி', 'இணைப்பு', 'அழைப்பு', 'எண்', 'போன்', 'கால்', 'கூப்பிடு', 'பேசு', 'தொடர்பு', 'இன்டர்காம்', 'எக்ஸ்டென்ஷன்',
+                'dept', 'department', 'what', 'is', 'the', 'of', 'for', 'to', 'please', 'tell', 'me', 'hospital', 'campus'
+            ]);
+
+            function cleanTelephonyQuery(raw) {
+                if (!raw) return { cleaned: '', extNum: null };
+                const str = raw.trim();
+                const numMatch = str.match(/\b\d{3,4}\b/);
+                const extNum = numMatch ? numMatch[0] : null;
+
+                if (/^\d{3,4}$/.test(str)) {
+                    return { cleaned: str, extNum: str };
+                }
+
+                const words = str.toLowerCase().replace(/[^\w\s\u0B80-\u0BFF]/g, ' ').split(/\s+/).filter(Boolean);
+                const nonStop = words.filter(w => !TELEPHONY_STOPWORDS.has(w));
+                const cleaned = nonStop.join(' ').trim();
+                return { cleaned: cleaned || str, extNum };
+            }
+
+            // Comprehensive Department & Telephony Aliases covering all 61 departments
             const DEPARTMENT_ALIASES = {
-                'hr': ['hr', 'human resource', 'human resources'],
-                'it': ['it', 'hardware', 'software', 'network', 'kanini'],
-                'ortho': ['ortho', 'orthopaedic', 'orthopaedics'],
-                'casualty': ['casualty', 'emergency', 'triage'],
-                'emergency': ['emergency', 'casualty', 'triage'],
-                'blood bank': ['blood bank', 'blood donor', 'blood component', 'blood'],
-                'icu': ['icu', 'intensive care', 'critical care', 'pacu'],
-                'ent': ['ent', 'audiometry', 'endoscopy', 'bera'],
-                'dialysis': ['dialysis', 'nephro'],
-                'billing': ['billing', 'cashier', 'insurance'],
-                'radiology': ['radiology', 'x-ray', 'xray', 'mri', 'ct scan', 'usg', 'ultrasound'],
-                'pharmacy': ['pharmacy', 'drug', 'dispensing'],
-                'security': ['security', 'main gate', 'gate'],
-                'dietetics': ['canteen', 'catering', 'diet', 'dietetics', 'kitchen'],
-                'mrd': ['mrd', 'medical records'],
-                'admin': ['admin', 'manager', 'secretary', 'superintendent']
+                'dietetics': ['dietetics', 'dietician', 'dietitian', 'canteen', 'catering', 'kitchen', 'mess', 'food', 'sakthi catering', 'unavu', 'உணவு', 'சாப்பாடு'],
+                'emergency': ['emergency', 'emergency medicine', 'casualty', 'triage', 'trauma', 'er', 'ambulance', 'resuscitation', 'அவசர சிகிச்சை'],
+                'blood bank': ['blood bank', 'blood donor', 'blood component', 'blood', 'ratha vangi', 'iratha vangi', 'ரத்த வங்கி'],
+                'icu': ['icu', 'intensive care', 'critical care', 'micu', 'sicu', 'picu', 'nicu', 'pacu', 'ccu', 'ns office'],
+                'pharmacy': ['pharmacy', 'drug', 'dispensing', 'medicine', 'medical shop', 'marunthagam', 'marunthu', 'மருந்தகம்'],
+                'it': ['it', 'hardware', 'software', 'network', 'computer', 'kanini', 'helpdesk', 'internet', 'system', 'கணினி'],
+                'radiology': ['radiology', 'x-ray', 'xray', 'mri', 'ct scan', 'usg', 'ultrasound', 'scan', 'imaging', 'எக்ஸ்ரே', 'ஸ்கேன்'],
+                'billing': ['billing', 'cashier', 'cash', 'counter', 'discharge billing', 'insurance', 'tpa', 'பில்லிங்'],
+                'mrd': ['mrd', 'medical records', 'records', 'discharge summary', 'case sheet'],
+                'ortho': ['ortho', 'orthopaedic', 'orthopaedics', 'bone', 'fracture', 'எலும்பு'],
+                'ophthalmology': ['ophthalmology', 'ophthal', 'eye', 'eye camp', 'vision', 'கண்'],
+                'paediatrics': ['paediatrics', 'pediatrics', 'child', 'children', 'baby', 'pediatrician', 'குழந்தை'],
+                'gynaecology': ['gynaecology', 'obstetric', 'gynae', 'obg', 'labour', 'delivery', 'maternity', 'பிரசவம்'],
+                'ent': ['ent', 'audiometry', 'endoscopy', 'bera', 'ear', 'nose', 'throat', 'காது மூக்கு தொண்டை'],
+                'dermatology': ['dermatology', 'skin', 'derma', 'தோல்'],
+                'psychiatry': ['psychiatry', 'mental health', 'counselling', 'மனநலம்'],
+                'cardiology': ['cardiology', 'cardiac', 'heart', 'ecg', 'echo', 'இதயம்'],
+                'dialysis': ['dialysis', 'nephro', 'nephrology', 'kidney', 'சிறுநீரகம்'],
+                'general surgery': ['general surgery', 'surgery', 'surgeon', 'operation', 'ot', 'theatre', 'அறுவை சிகிச்சை'],
+                'biomedical': ['biomedical', 'equipment', 'medical engineering', 'instruments'],
+                'house keeping': ['house keeping', 'housekeeping', 'cleaning', 'sanitation', 'sanitary', 'sweeper', 'தூய்மை'],
+                'laundry': ['laundry', 'linen', 'washing', 'dhobi', 'சலவை'],
+                'maintenance': ['maintenance', 'electrical', 'electrician', 'plumber', 'civil', 'ac', 'air conditioning', 'power', 'generator', 'பழுது'],
+                'security': ['security', 'guard', 'main gate', 'gate', 'a zone', 'b zone', 'c zone', 'kaaval', 'பாதுகாப்பு'],
+                'ms office': ['ms office', 'medical superintendent', 'ms', 'dean', 'director', 'principal', 'management', 'superintendent'],
+                'lab collection': ['lab collection', 'laboratory', 'lab', 'pathology', 'biochemistry', 'microbiology', 'blood test', 'sample', 'ஆய்வகம்'],
+                'cssd': ['cssd', 'sterilization', 'autoclave', 'sterile'],
+                'physiotherapy': ['physiotherapy', 'physio', 'rehabilitation', 'rehab', 'exercise'],
+                'reception': ['reception', 'front desk', 'inquiry', 'enquiry', 'help desk', 'வரவேற்பு'],
+                'lifts': ['lift', 'elevator', 'lifts', 'lift 1', 'lift 2', 'service lift', 'மின்தூக்கி'],
+                'quality': ['quality', 'nabh', 'audit', 'accreditation', 'quality manager'],
+                'purchase': ['purchase', 'stores', 'procurement', 'indent']
             };
 
             function matchesToken(token, text) {
@@ -2149,18 +2232,48 @@
                 return false;
             }
 
-            function filterCards(query) {
-                const q = (query || '').toLowerCase().trim();
+            function highlightTokensInText(text, tokens) {
+                if (!text || !tokens || tokens.length === 0) return escapeHtml(text);
+                const safeText = escapeHtml(text);
+                const validTokens = tokens
+                    .filter(t => t && t.length > 2 && !/^\d+$/.test(t))
+                    .map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+                    .sort((a, b) => b.length - a.length);
+
+                if (validTokens.length === 0) return safeText;
+                const pattern = new RegExp(`\\b(${validTokens.join('|')})`, 'gi');
+                return safeText.replace(pattern, '<mark class="text-highlight">$1</mark>');
+            }
+
+            function filterCards(query, shouldScroll = false) {
+                const rawQ = (query || '').trim();
+                if (clearBtn) clearBtn.style.display = rawQ ? 'flex' : 'none';
+
+                const { cleaned, extNum } = cleanTelephonyQuery(rawQ);
+                const q = cleaned.toLowerCase().trim();
+
                 let totalVisibleExts = 0;
                 let anyVisibleCards = 0;
+                let firstMatchedElement = null;
+                const highlightedExtList = [];
 
                 // Build match keywords for query (including aliases if applicable)
                 const searchTokens = [];
+                if (extNum) searchTokens.push(extNum);
+                if (q && q !== extNum) searchTokens.push(q);
+
                 if (q) {
-                    searchTokens.push(q);
-                    // Check if q has predefined department aliases
                     for (const [aliasKey, aliasList] of Object.entries(DEPARTMENT_ALIASES)) {
-                        if (aliasKey === q || matchesToken(aliasKey, q) || q.includes(aliasKey)) {
+                        const isMatch = (
+                            aliasKey === q ||
+                            q === aliasKey ||
+                            matchesToken(aliasKey, q) ||
+                            matchesToken(q, aliasKey) ||
+                            aliasList.includes(q) ||
+                            aliasList.some(a => matchesToken(a, q) || matchesToken(q, a))
+                        );
+                        if (isMatch) {
+                            if (!searchTokens.includes(aliasKey)) searchTokens.push(aliasKey);
                             aliasList.forEach(a => {
                                 if (!searchTokens.includes(a)) searchTokens.push(a);
                             });
@@ -2171,13 +2284,17 @@
                 const cards = document.querySelectorAll('.card');
                 cards.forEach(c => {
                     const h2 = c.querySelector('h2');
-                    const deptTitle = (h2 ? h2.innerText : '').toLowerCase();
+                    if (!c.getAttribute('data-orig-title')) {
+                        c.setAttribute('data-orig-title', h2 ? h2.innerText.trim() : '');
+                    }
+                    const origDeptTitle = c.getAttribute('data-orig-title') || '';
+                    const deptLower = origDeptTitle.toLowerCase();
 
                     // Check if department card title itself is a match (using tokens)
                     let isCardDeptMatch = false;
                     if (q) {
                         for (const tok of searchTokens) {
-                            if (matchesToken(tok, deptTitle)) {
+                            if (matchesToken(tok, deptLower)) {
                                 isCardDeptMatch = true;
                                 break;
                             }
@@ -2187,53 +2304,107 @@
                     let visibleRows = 0;
                     c.querySelectorAll('tbody tr, tr').forEach((r, i) => {
                         if (i === 0) return; // table header
-                        if (!q) {
+                        const tdExt = r.children[0];
+                        const tdDesc = r.children[1];
+                        if (!tdExt || !tdDesc) return;
+
+                        if (!r.getAttribute('data-ext')) {
+                            r.setAttribute('data-ext', tdExt.innerText.trim());
+                        }
+                        if (!r.getAttribute('data-desc')) {
+                            r.setAttribute('data-desc', tdDesc.innerText.trim());
+                        }
+
+                        const origExt = r.getAttribute('data-ext');
+                        const origDesc = r.getAttribute('data-desc');
+                        const extLower = origExt.toLowerCase();
+                        const descLower = origDesc.toLowerCase();
+
+                        if (!q && !extNum) {
                             r.style.display = '';
+                            r.classList.remove('highlighted-row');
+                            tdExt.innerHTML = escapeHtml(origExt);
+                            tdDesc.innerHTML = escapeHtml(origDesc);
                             visibleRows++;
                             totalVisibleExts++;
                             return;
                         }
 
-                        // A row matches if:
-                        // 1. The card department matched the query (e.g. Card "Ortho" when query is "ortho")
-                        // 2. OR the row itself matches one of the search tokens
-                        const rowDesc = r.innerText.toLowerCase();
                         let isRowMatch = false;
 
-                        // If the department card is an umbrella department like "Admin Office" or "General",
-                        // only display rows that explicitly match the search tokens!
-                        const isUmbrellaCard = ['admin office', 'general', 'hospital admin', 'fourth floor'].includes(deptTitle.trim());
-                        if (isCardDeptMatch && !isUmbrellaCard) {
+                        if (extNum && (origExt === extNum || origExt.includes(extNum))) {
                             isRowMatch = true;
                         } else {
+                            // Check if row description or extension matches any search token
                             for (const tok of searchTokens) {
-                                if (matchesToken(tok, rowDesc)) {
+                                if (matchesToken(tok, extLower) || matchesToken(tok, descLower)) {
                                     isRowMatch = true;
                                     break;
                                 }
                             }
+                            // If whole card matches (and not umbrella card like 'admin office' or 'general')
+                            const isUmbrellaCard = ['admin office', 'general', 'hospital admin', 'fourth floor'].includes(deptLower.trim());
+                            if (!isRowMatch && isCardDeptMatch && !isUmbrellaCard && !extNum) {
+                                isRowMatch = true;
+                            }
                         }
 
-                        r.style.display = isRowMatch ? '' : 'none';
                         if (isRowMatch) {
+                            r.style.display = '';
+                            r.classList.add('highlighted-row');
+
+                            // High-visibility extension badge
+                            tdExt.innerHTML = `
+                                <span class="ext-badge-highlight" onclick="copyExt('${escapeHtml(origExt)}', '${escapeHtml(origDesc)}')" title="Click to copy Ext ${escapeHtml(origExt)}">
+                                    <span style="font-size: 13px;">📞</span> ${escapeHtml(origExt)}
+                                </span>
+                            `;
+
+                            // Highlight matching text in description
+                            tdDesc.innerHTML = highlightTokensInText(origDesc, searchTokens);
+
                             visibleRows++;
                             totalVisibleExts++;
+                            highlightedExtList.push({ ext: origExt, desc: origDesc, dept: origDeptTitle });
+
+                            if (!firstMatchedElement) {
+                                firstMatchedElement = r;
+                            }
+                        } else {
+                            r.style.display = 'none';
+                            r.classList.remove('highlighted-row');
+                            tdExt.innerHTML = escapeHtml(origExt);
+                            tdDesc.innerHTML = escapeHtml(origDesc);
                         }
                     });
 
-                    const shouldShowCard = !q || visibleRows > 0;
+                    const shouldShowCard = (!q && !extNum) || visibleRows > 0;
                     c.style.display = shouldShowCard ? 'block' : 'none';
-                    if (shouldShowCard) anyVisibleCards++;
+
+                    if (shouldShowCard && (q || extNum)) {
+                        anyVisibleCards++;
+                        c.classList.add('highlighted-card');
+                        if (h2) {
+                            h2.innerHTML = `
+                                <span>${escapeHtml(origDeptTitle)}</span>
+                                <span class="dept-match-tag">MATCHED</span>
+                            `;
+                        }
+                        if (!firstMatchedElement) {
+                            firstMatchedElement = c;
+                        }
+                    } else {
+                        c.classList.remove('highlighted-card');
+                        if (h2) {
+                            h2.innerHTML = escapeHtml(origDeptTitle);
+                        }
+                    }
                 });
 
-                if (activeDeptParam && q === activeDeptParam.toLowerCase()) {
-                    renderSpotlightBanner(activeDeptParam, totalVisibleExts);
-                } else if (!q) {
-                    renderSpotlightBanner('', 0);
-                } else {
-                    renderSpotlightBanner(query, totalVisibleExts);
-                }
+                // Update print title
+                updatePrintHeader((q || extNum) ? (highlightedExtList.length > 0 ? highlightedExtList[0].dept : rawQ) : '');
 
+                // Handle No Results
                 let noResultEl = document.getElementById('no-intercom-results');
                 if (!noResultEl) {
                     noResultEl = document.createElement('div');
@@ -2245,22 +2416,27 @@
                 if (anyVisibleCards === 0) {
                     noResultEl.style.display = 'block';
                     noResultEl.innerHTML = `
-                        <div style="font-size: 28px; margin-bottom: 8px;">🔍</div>
-                        <div style="font-weight: 700; color: #1e293b; font-size: 16px; margin-bottom: 4px;">No Extensions Found for "${escapeHtml(query)}"</div>
-                        <p style="margin: 0 0 16px; color: #64748b; font-size: 13px;">Check the spelling or search by room, extension number, or designation.</p>
-                        <button type="button" onclick="clearDeptFilter()" style="background: #2563eb; color: #fff; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer;">Show All Departments</button>
+                        <div style="font-size: 32px; margin-bottom: 10px;">🔍</div>
+                        <div style="font-weight: 700; color: #1e293b; font-size: 17px; margin-bottom: 6px;">No Extensions Found for "${escapeHtml(rawQ)}"</div>
+                        <p style="margin: 0 0 16px; color: #64748b; font-size: 13.5px;">Check the spelling or try searching by department (e.g., "Casualty", "Blood Bank", "Canteen"), extension number (e.g., "2800"), or staff role.</p>
+                        <button type="button" onclick="clearDeptFilter()" style="background: #2563eb; color: #fff; border: none; padding: 9px 20px; border-radius: 10px; font-weight: 600; font-size: 13.5px; cursor: pointer; box-shadow: 0 2px 6px rgba(37,99,235,0.3);">Show All 60+ Departments</button>
                     `;
                 } else {
                     noResultEl.style.display = 'none';
+                }
+
+                // Smooth scroll to match
+                if (shouldScroll && firstMatchedElement) {
+                    setTimeout(() => {
+                        firstMatchedElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 80);
                 }
             }
 
             function handleIntercomSearch() {
                 const val = s ? s.value : '';
-                if (activeDeptParam && val.trim().toLowerCase() !== activeDeptParam.toLowerCase()) {
-                    activeDeptParam = val.trim();
-                }
-                filterCards(val);
+                activeDeptParam = val.trim();
+                filterCards(val, false);
             }
 
             if (s) {
@@ -2274,7 +2450,7 @@
             }
 
             // Run initial filter on static DOM
-            filterCards(activeDeptParam);
+            filterCards(activeDeptParam, Boolean(activeDeptParam));
 
             // Fetch live data and re-apply
             fetch('data/intercom.json')
@@ -2301,22 +2477,21 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="dept-spotlight-container"></div>
                     `;
 
                     const cardsHtml = cards.map(c => `
-                        <section class='card'>
+                        <section class='card' data-orig-title="${escapeHtml(c.dept)}">
                             ${c.floor ? `<h3 style='margin:18px;color:#0d47a1'>${c.floor}</h3>` : ''}
-                            <h2>${c.dept}</h2>
+                            <h2>${escapeHtml(c.dept)}</h2>
                             <table class='tbl'>
                                 <tr>
                                     <th>Extension</th>
                                     <th>Description</th>
                                 </tr>
                                 ${c.extensions.map(e => `
-                                    <tr>
-                                        <td>${e.ext}</td>
-                                        <td>${e.desc}</td>
+                                    <tr data-ext="${escapeHtml(e.ext)}" data-desc="${escapeHtml(e.desc)}">
+                                        <td>${escapeHtml(e.ext)}</td>
+                                        <td>${escapeHtml(e.desc)}</td>
                                     </tr>
                                 `).join('')}
                             </table>
@@ -2324,14 +2499,16 @@
                     `).join('');
 
                     container.innerHTML = printHeaderHtml + cardsHtml;
-                    filterCards(s ? s.value : activeDeptParam);
+                    const queryToApply = (s && s.value) ? s.value : activeDeptParam;
+                    filterCards(queryToApply, Boolean(queryToApply));
                 })
                 .catch(err => {
                     console.warn('Using embedded fallback for intercom:', err);
-                    filterCards(s ? s.value : activeDeptParam);
+                    filterCards(s ? s.value : activeDeptParam, Boolean(activeDeptParam));
                 });
         </script>
         <script src="assets/js/pageRefresh.js"></script>
+        <div id="intercom-toast"></div>
     </div>
 </body>
 

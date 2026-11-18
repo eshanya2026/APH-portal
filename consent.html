@@ -11,8 +11,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    #consent-grid div.bg-white p {
-      display: none !important;
+    .consent-card-highlight {
+      border-color: #2563EB !important;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.35), 0 10px 25px -5px rgba(0, 0, 0, 0.1) !important;
+      animation: pulseHighlight 2s ease-in-out infinite;
+    }
+    @keyframes pulseHighlight {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.015); }
     }
   </style>
 </head>
@@ -40,6 +46,35 @@
       <p class="text-xs sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
         Bilingual surgical, blood transfusion, external consultation, and clinical procedure consent documents.
       </p>
+
+      <!-- Live Search Bar -->
+      <div class="mt-6 max-w-xl mx-auto relative">
+        <div class="relative flex items-center">
+          <input
+            type="text"
+            id="consent-search"
+            oninput="filterConsentCards(this.value)"
+            placeholder="Search consent forms (e.g. 'surgery', 'paediatric', 'DAMA', 'blood transfusion')..."
+            class="w-full pl-11 pr-10 py-3.5 bg-slate-900/90 border border-slate-700 rounded-2xl text-white placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all shadow-lg"
+          />
+          <div class="absolute left-3.5 text-slate-400 pointer-events-none">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+          </div>
+          <button
+            type="button"
+            id="clear-search-btn"
+            onclick="clearSearch()"
+            class="hidden absolute right-3.5 text-slate-400 hover:text-white transition-colors"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+        <div id="consent-search-count" class="text-xs text-slate-400 mt-2 text-center font-medium"></div>
+      </div>
     </div>
   </div>
 
@@ -167,6 +202,36 @@
         </a>
       </div>
 
+      <!-- 9. Surrogate Consent -->
+      <div class="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-emerald-300 hover:shadow-md transition-all">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg">SURROGATE / NEXT-OF-KIN</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base sm:text-lg mb-1">Surrogate Consent Form</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Informed clinical consent for patients incapable of independent medical decision-making (Surrogate / Next-of-Kin).</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/SURROGATE%20CONSENT.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
+      <!-- 10. Informed Consent Taking Process -->
+      <div class="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-sky-300 hover:shadow-md transition-all">
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-sky-600 bg-sky-50 px-2.5 py-1 rounded-lg">NABH CLINICAL SOP</span>
+            <span class="text-[11px] font-bold text-slate-400">PDF</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base sm:text-lg mb-1">Informed Consent Taking Process (NABH Protocol)</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Standard operating procedure for obtaining valid informed clinical, operative, and procedural consent.</p>
+        </div>
+        <a href="http://192.168.101.75:3000/files/INFORMED%20CONSENT%20TAKING%20PROCESS.pdf" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-sky-600 hover:bg-sky-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+          <span>Open PDF Document</span> &rarr;
+        </a>
+      </div>
+
     </div>
   </main>
 
@@ -178,33 +243,125 @@
   <!-- Page Auto Refresh Script -->
   <script src="assets/js/pageRefresh.js"></script> 
 
-  <!-- Dynamic JSON Forms Loader -->
+  <!-- Dynamic JSON Forms Loader with Real-time Search & URL Parameter Support -->
   <script>
+    let allConsentForms = [];
+    const colorPalette = ['blue', 'indigo', 'rose', 'amber', 'red', 'teal', 'purple', 'cyan', 'emerald', 'sky'];
+
+    function renderForms(formsToRender, highlightQuery = '') {
+      const grid = document.getElementById('consent-grid');
+      const countEl = document.getElementById('consent-search-count');
+      if (!grid) return;
+
+      if (!formsToRender || formsToRender.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full py-12 text-center text-slate-500">
+            <p class="text-sm font-semibold">No consent forms matching "${highlightQuery}"</p>
+            <p class="text-xs text-slate-400 mt-1">Try searching for surgery, pediatric, DAMA, transfusion, or admission</p>
+          </div>
+        `;
+        if (countEl) countEl.textContent = '0 forms found';
+        return;
+      }
+
+      if (countEl) {
+        countEl.textContent = highlightQuery
+          ? `Showing ${formsToRender.length} of ${allConsentForms.length} consent forms`
+          : `${allConsentForms.length} official clinical consent forms available`;
+      }
+
+      grid.innerHTML = formsToRender.map((f, i) => {
+        const col = colorPalette[i % colorPalette.length];
+        const isMatch = highlightQuery && (
+          (f.name || '').toLowerCase().includes(highlightQuery.toLowerCase()) ||
+          (f.desc || '').toLowerCase().includes(highlightQuery.toLowerCase())
+        );
+        return `
+          <div id="consent-card-${i}" class="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-${col}-300 hover:shadow-md transition-all ${isMatch ? 'consent-card-highlight' : ''}">
+            <div class="mb-4">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-${col}-600 bg-${col}-50 px-2.5 py-1 rounded-lg">MEDICOLEGAL</span>
+                <span class="text-[11px] font-bold text-slate-400">PDF</span>
+              </div>
+              <h3 class="font-bold text-slate-900 text-base sm:text-lg mb-1">${f.name}</h3>
+              <p class="text-xs text-slate-500 leading-relaxed">${f.desc || ''}</p>
+            </div>
+            <a href="${f.url}" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+              <span>Open PDF Document</span> &rarr;
+            </a>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function filterConsentCards(query) {
+      query = (query || '').toLowerCase().trim();
+      const clearBtn = document.getElementById('clear-search-btn');
+      if (clearBtn) {
+        clearBtn.classList.toggle('hidden', !query);
+      }
+
+      if (!query) {
+        renderForms(allConsentForms);
+        return;
+      }
+
+      // Normalization of typos and Tanglish terms
+      let normalizedQuery = query
+        .replace(/\bconcent\b/g, 'consent')
+        .replace(/\bsergery\b/g, 'surgery')
+        .replace(/\bpedatric\b/g, 'pediatric')
+        .replace(/\bpaedatric\b/g, 'paediatric')
+        .replace(/\btransfution\b/g, 'transfusion')
+        .replace(/\bdamma\b/g, 'dama')
+        .replace(/\baruvai\b/g, 'surgery')
+        .replace(/\bkuzhanthai\b/g, 'paediatric')
+        .replace(/\bratha\b/g, 'blood')
+        .replace(/\bmaruppu\b/g, 'willing')
+        .replace(/\bserkai\b/g, 'admission');
+
+      const filtered = allConsentForms.filter(f => {
+        const text = `${f.name || ''} ${f.desc || ''}`.toLowerCase();
+        return text.includes(query) || text.includes(normalizedQuery);
+      });
+
+      renderForms(filtered, query);
+    }
+
+    function clearSearch() {
+      const input = document.getElementById('consent-search');
+      if (input) {
+        input.value = '';
+        filterConsentCards('');
+        input.focus();
+      }
+    }
+
+    // Load from data/consent-forms.json
     fetch('data/consent-forms.json')
       .then(r => r.json())
       .then(data => {
-        const forms = Array.isArray(data) ? data : (data.forms || []);
-        if (!forms || forms.length === 0) return;
-        const grid = document.getElementById('consent-grid');
-        if (!grid) return;
-        const colorPalette = ['blue', 'indigo', 'rose', 'amber', 'red', 'teal', 'purple', 'cyan', 'emerald'];
-        grid.innerHTML = forms.map((f, i) => {
-          const col = colorPalette[i % colorPalette.length];
-          return `
-            <div class="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-${col}-300 hover:shadow-md transition-all">
-              <div class="mb-4">
-                <div class="flex items-center justify-between mb-2">
-                  <span class="text-[10px] font-bold uppercase tracking-wider text-${col}-600 bg-${col}-50 px-2.5 py-1 rounded-lg">MEDICOLEGAL</span>
-                  <span class="text-[11px] font-bold text-slate-400">PDF</span>
-                </div>
-                <h3 class="font-bold text-slate-900 text-base sm:text-lg mb-1">${f.name}</h3>
-              </div>
-              <a href="${f.url}" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
-                <span>Open PDF Document</span> &rarr;
-              </a>
-            </div>
-          `;
-        }).join('');
+        allConsentForms = Array.isArray(data) ? data : (data.forms || []);
+        if (!allConsentForms || allConsentForms.length === 0) return;
+
+        // Check URL parameter ?q=
+        const urlParams = new URLSearchParams(window.location.search);
+        const qParam = urlParams.get('q');
+        const searchInput = document.getElementById('consent-search');
+
+        if (qParam) {
+          if (searchInput) searchInput.value = qParam;
+          filterConsentCards(qParam);
+          // Smooth scroll to first matching card
+          setTimeout(() => {
+            const firstCard = document.querySelector('.consent-card-highlight');
+            if (firstCard) {
+              firstCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          }, 300);
+        } else {
+          renderForms(allConsentForms);
+        }
       })
       .catch(e => console.warn('Using embedded fallback for consent forms:', e));
   </script>

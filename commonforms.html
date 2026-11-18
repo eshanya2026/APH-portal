@@ -28,9 +28,9 @@
         border-color: #94a3b8 !important;
       }
     }
-    /* Hide individual form descriptions */
-    .form-card p {
-      display: none !important;
+    /* Ensure smooth transitions for card hover */
+    .form-card {
+      transition: all 0.2s ease;
     }
   </style>
 </head>
@@ -896,6 +896,39 @@
         });
       });
 
+      function handleUrlParams() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const queryParam = urlParams.get('q');
+        const catParam = urlParams.get('category');
+
+        if (catParam) {
+          const targetBtn = filterTabs.querySelector(`.filter-btn[data-filter="${catParam}"]`);
+          if (targetBtn) {
+            filterTabs.querySelectorAll('.filter-btn').forEach(b => {
+              b.classList.remove('active', 'bg-[#921111]', 'text-white');
+              b.classList.add('bg-slate-100', 'text-slate-600');
+            });
+            targetBtn.classList.add('active', 'bg-[#921111]', 'text-white');
+            targetBtn.classList.remove('bg-slate-100', 'text-slate-600');
+            currentFilter = catParam;
+          }
+        }
+
+        if (queryParam) {
+          searchInput.value = queryParam;
+          applyFilter();
+          const visibleCards = Array.from(formsGrid.querySelectorAll('.form-card:not(.hidden)'));
+          if (visibleCards.length > 0) {
+            const firstCard = visibleCards[0];
+            firstCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            firstCard.classList.add('ring-4', 'ring-[#921111]', 'ring-offset-2', 'transition-all');
+            setTimeout(() => firstCard.classList.remove('ring-4', 'ring-[#921111]', 'ring-offset-2'), 3000);
+          }
+        }
+      }
+
+      handleUrlParams();
+
       // Dynamic JSON sync: respects the exact order of data/common-forms.json
       fetch(`data/common-forms.json?v=${Date.now()}`, { cache: 'no-cache' })
         .then(r => r.json())
@@ -970,6 +1003,7 @@
 
           updateCategoryCounts();
           applyFilter();
+          handleUrlParams();
         })
         .catch(e => console.warn('Using embedded fallback for common forms:', e));
     });

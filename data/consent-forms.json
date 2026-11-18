@@ -45,6 +45,16 @@
       "name": "General Patient Admission Consent",
       "desc": "General hospital in-patient care, nursing rounds, and routine diagnostic tests authorization",
       "url": "http://192.168.101.75:3000/files/consent.pdf"
+    },
+    {
+      "name": "Surrogate Consent Form",
+      "desc": "Informed clinical consent for patients incapable of independent medical decision-making (Surrogate / Next-of-Kin)",
+      "url": "http://192.168.101.75:3000/files/SURROGATE%20CONSENT.pdf"
+    },
+    {
+      "name": "Informed Consent Taking Process (NABH Protocol)",
+      "desc": "Standard operating procedure for obtaining valid informed clinical and surgical consent",
+      "url": "http://192.168.101.75:3000/files/INFORMED%20CONSENT%20TAKING%20PROCESS.pdf"
     }
   ]
 }

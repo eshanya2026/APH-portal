@@ -72,6 +72,24 @@
     "hubPage": "./consent.html"
   },
   {
+    "title": "Surrogate Consent Form",
+    "url": "http://192.168.101.75:3000/files/SURROGATE%20CONSENT.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/SURROGATE CONSENT.pdf",
+    "category": "Consent Forms",
+    "description": "Informed clinical consent for patients incapable of independent medical decision-making (Surrogate / Next-of-Kin)",
+    "badge": "Medicolegal",
+    "hubPage": "./consent.html"
+  },
+  {
+    "title": "Informed Consent Taking Process (NABH Protocol)",
+    "url": "http://192.168.101.75:3000/files/INFORMED%20CONSENT%20TAKING%20PROCESS.pdf",
+    "canonicalUrl": "http://192.168.101.75:3000/files/INFORMED CONSENT TAKING PROCESS.pdf",
+    "category": "Consent Forms",
+    "description": "Standard operating procedure for obtaining valid informed clinical and surgical consent",
+    "badge": "Medicolegal",
+    "hubPage": "./consent.html"
+  },
+  {
     "title": "Code Blue",
     "url": "http://192.168.101.75:3000/files/Code.pdf",
     "canonicalUrl": "http://192.168.101.75:3000/files/Code.pdf",
@@ -1854,15 +1872,6 @@
     "hubPage": "./manuals.html"
   },
   {
-    "title": "Informed Consent Taking Process (NABH 5th Edition)",
-    "url": "http://192.168.101.75:3000/files/Qc/INFORMED CONSENT TAKING PROCESS.pdf",
-    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/INFORMED CONSENT TAKING PROCESS.pdf",
-    "category": "Manuals & SOPs",
-    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
-    "badge": "Manual",
-    "hubPage": "./manuals.html"
-  },
-  {
     "title": "Interdept Referral (NABH 5th Edition)",
     "url": "http://192.168.101.75:3000/files/Qc/interdept referral.pdf",
     "canonicalUrl": "http://192.168.101.75:3000/files/Qc/interdept referral.pdf",
@@ -2181,15 +2190,6 @@
     "title": "Surgical Service II (NABH 5th Edition)",
     "url": "http://192.168.101.75:3000/files/Qc/SURGICAL SERVICES.2.pdf",
     "canonicalUrl": "http://192.168.101.75:3000/files/Qc/SURGICAL SERVICES.2.pdf",
-    "category": "Manuals & SOPs",
-    "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
-    "badge": "Manual",
-    "hubPage": "./manuals.html"
-  },
-  {
-    "title": "Surrogate Consent (NABH 5th Edition)",
-    "url": "http://192.168.101.75:3000/files/Qc/SURROGATE CONSENT.pdf",
-    "canonicalUrl": "http://192.168.101.75:3000/files/Qc/SURROGATE CONSENT.pdf",
     "category": "Manuals & SOPs",
     "description": "NABH 5th Edition Policy Manual departmental standard operating procedure",
     "badge": "Manual",

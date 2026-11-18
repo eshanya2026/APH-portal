@@ -2213,27 +2213,81 @@
             }
         }
 
-        // Search Filter
+        // Search Filter with Cross-Tab Discovery & Highlighting
         function filterActiveTable() {
             if (!searchInput) return;
             const q = searchInput.value.toLowerCase().trim();
             const activeSection = document.querySelector('.tab-content:not([hidden])');
             if (!activeSection) return;
 
+            // If empty, reset all rows in active section
+            if (!q) {
+                const rows = activeSection.querySelectorAll('table tbody tr:not(.no-match-row), table tr:not(:first-child):not(.no-match-row)');
+                rows.forEach(r => {
+                    r.style.display = '';
+                    const titleCell = r.querySelector('td:first-child');
+                    if (titleCell && titleCell.getAttribute('data-orig-title')) {
+                        titleCell.innerHTML = titleCell.getAttribute('data-orig-title');
+                    }
+                });
+                const noMatch = activeSection.querySelector('.no-match-row');
+                if (noMatch) noMatch.remove();
+                return;
+            }
+
+            // Check matches in current active section
             const rows = activeSection.querySelectorAll('table tbody tr:not(.no-match-row), table tr:not(:first-child):not(.no-match-row)');
-            let matches = 0;
+            let currentMatches = 0;
             rows.forEach(r => {
-                const match = r.textContent.toLowerCase().includes(q);
+                const titleCell = r.querySelector('td:first-child');
+                if (titleCell && !titleCell.getAttribute('data-orig-title')) {
+                    titleCell.setAttribute('data-orig-title', titleCell.innerHTML);
+                }
+                const origHtml = titleCell ? titleCell.getAttribute('data-orig-title') : r.innerHTML;
+                const text = r.textContent.toLowerCase();
+                const match = text.includes(q);
                 r.style.display = match ? '' : 'none';
-                if (match) matches++;
+
+                if (match) {
+                    currentMatches++;
+                    if (titleCell) {
+                        const regex = new RegExp(`(${q.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\$&')})`, 'gi');
+                        titleCell.innerHTML = origHtml.replace(regex, '<mark style="background:#FEF08A;color:#854D0E;padding:0.1rem 0.3rem;border-radius:4px;font-weight:700;">$1</mark>');
+                    }
+                } else if (titleCell) {
+                    titleCell.innerHTML = origHtml;
+                }
             });
 
+            // If no match in current section, check if another category has matches and auto-switch
+            if (currentMatches === 0 && manualsData) {
+                let bestKey = null;
+                for (const [key, items] of Object.entries(manualsData)) {
+                    if (items.some(item => (item.title || '').toLowerCase().includes(q))) {
+                        bestKey = key;
+                        break;
+                    }
+                }
+                if (bestKey) {
+                    const [lvl, tb] = bestKey.split('-');
+                    const parentTab = document.querySelector(`.tab[data-level="${lvl}"]`);
+                    if (parentTab) {
+                        parentTab.click();
+                        const sub = document.querySelector(`.sub-tab[data-parent="${lvl}"][data-tab="${tb}"]`);
+                        if (sub) {
+                            sub.click();
+                            return; // Sub-tab click triggers filterActiveTable
+                        }
+                    }
+                }
+            }
+
             let noMatch = activeSection.querySelector('.no-match-row');
-            if (matches === 0 && rows.length > 0) {
+            if (currentMatches === 0 && rows.length > 0) {
                 if (!noMatch) {
                     noMatch = document.createElement('tr');
                     noMatch.className = 'no-match-row';
-                    noMatch.innerHTML = `<td colspan="2" style="text-align:center; padding: 2.5rem 1rem; color: #64748B; font-weight: 500;">No manuals found in this category matching "${searchInput.value}"</td>`;
+                    noMatch.innerHTML = `<td colspan="2" style="text-align:center; padding: 2.5rem 1rem; color: #64748B; font-weight: 500;">No manuals found in this category matching "${searchInput.value}". Try searching another tab or category.</td>`;
                     const tbody = activeSection.querySelector('tbody') || activeSection.querySelector('table');
                     if (tbody) tbody.appendChild(noMatch);
                 }
@@ -2244,6 +2298,32 @@
 
         if (searchInput) {
             searchInput.addEventListener('input', filterActiveTable);
+        }
+
+        // URL Parameters Support (?q=... or ?search=...)
+        function applyUrlSearch() {
+            try {
+                const params = new URLSearchParams(window.location.search);
+                const queryParam = (params.get('q') || params.get('search') || params.get('query') || params.get('manual') || '').trim();
+                const tabParam = (params.get('tab') || '').trim();
+                const levelParam = (params.get('level') || params.get('edition') || '').trim();
+
+                if (levelParam) {
+                    const tabToClick = document.querySelector(`.tab[data-level="${levelParam}"]`);
+                    if (tabToClick) tabToClick.click();
+                }
+                if (tabParam) {
+                    const subToClick = document.querySelector(`.sub-tab[data-tab="${tabParam}"]`);
+                    if (subToClick) subToClick.click();
+                }
+
+                if (queryParam && searchInput) {
+                    searchInput.value = queryParam;
+                    filterActiveTable();
+                }
+            } catch (e) {
+                console.warn('Error reading URL params:', e);
+            }
         }
 
         // Dynamic JSON Loader
@@ -2297,11 +2377,13 @@
             .then(data => {
                 manualsData = data;
                 renderAllManuals();
+                applyUrlSearch();
             })
             .catch(err => console.warn('Using embedded fallback for manuals:', err));
 
         // INIT
         document.querySelector('.tab.active').click();
+        applyUrlSearch();
     </script>
 </body>
 </html>

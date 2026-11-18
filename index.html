@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <title>Integrated Hospital Operations Portal - Adhiparasakthi Hospitals &amp; Research Institute</title>
   <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon_io/favicon-32x32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon_io/favicon-16x16.png" />
@@ -577,7 +580,7 @@
                 type="submit" 
                 id="ai-search-submit-btn"
                 class="px-3.5 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-500 hover:to-indigo-500 active:scale-95 text-white font-bold text-xs sm:text-sm rounded-lg sm:rounded-xl transition-all duration-150 flex items-center gap-1.5 shadow-md shadow-blue-600/30 shrink-0"
-                title="Search with Gemini AI"
+                title="Search with AI"
               >
                 <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-200 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
@@ -595,7 +598,7 @@
 
         <!-- AI Smart Search Assistant Panel -->
         <div id="ai-search-panel" class="hidden absolute top-full left-0 right-0 mt-3 bg-slate-900/95 backdrop-blur-xl text-white rounded-2xl sm:rounded-3xl shadow-2xl border border-blue-500/30 overflow-hidden z-50 text-left ring-1 ring-blue-500/20 max-h-[82vh] overflow-y-auto">
-          <!-- Header with Gemini badge & close button -->
+          <!-- Header with AI Search badge & close button -->
           <div class="px-5 py-3.5 bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border-b border-slate-800 flex items-center justify-between gap-3">
             <div class="flex items-center gap-2.5">
               <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-sm">
@@ -605,7 +608,7 @@
               </span>
               <div>
                 <div class="text-xs sm:text-sm font-bold text-white flex items-center gap-2">
-                  <span>APH Gemini AI Search</span>
+                  <span>APH AI Search</span>
                   <span class="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30">Hospital Assistant</span>
                 </div>
                 <div class="text-[11px] text-slate-400">Intelligent search across all hospital systems, forms &amp; protocols</div>
@@ -915,7 +918,7 @@
       <div class="grid grid-cols-1 min-[420px]:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4 sm:gap-5">
         
         <!-- Circular 1: 24hr's Duty Roster -->
-        <div class="glass-card-dark rounded-2xl p-5 flex flex-col justify-between">
+        <div id="card-duty-roster" class="glass-card-dark rounded-2xl p-5 flex flex-col justify-between scroll-mt-28">
           <div>
             <div class="w-12 h-12 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center justify-center mb-4">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -937,7 +940,7 @@
         </div>
 
         <!-- Circular 2: Blood Bank Stock -->
-        <div class="glass-card-dark rounded-2xl p-5 flex flex-col justify-between">
+        <div id="card-blood-stock" class="glass-card-dark rounded-2xl p-5 flex flex-col justify-between scroll-mt-28">
           <div>
             <div class="w-12 h-12 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30 flex items-center justify-center mb-4">
               <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
@@ -958,7 +961,7 @@
         </div>
 
         <!-- Circular 3: MLC & Police Directory -->
-        <div class="glass-card-dark rounded-2xl p-5 flex flex-col justify-between">
+        <div id="card-police-directory" class="glass-card-dark rounded-2xl p-5 flex flex-col justify-between scroll-mt-28">
           <div>
             <div class="w-12 h-12 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30 flex items-center justify-center mb-4">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -979,7 +982,7 @@
         </div>
 
         <!-- Circular 4: Clinical Case Patients -->
-        <div class="glass-card-dark rounded-2xl p-5 flex flex-col justify-between">
+        <div id="card-clinical-cases" class="glass-card-dark rounded-2xl p-5 flex flex-col justify-between scroll-mt-28">
           <div>
             <div class="w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center justify-center mb-4">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1000,7 +1003,7 @@
         </div>
 
         <!-- Circular 5: PMS Policy -->
-        <div class="glass-card-dark rounded-2xl p-5 flex flex-col justify-between">
+        <div id="card-pms-policy" class="glass-card-dark rounded-2xl p-5 flex flex-col justify-between scroll-mt-28">
           <div>
             <div class="w-12 h-12 rounded-full bg-violet-500/20 text-violet-300 border border-violet-500/30 flex items-center justify-center mb-4">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1021,7 +1024,7 @@
         </div>
 
         <!-- Circular 6: Recent Circulars -->
-        <div class="glass-card-dark rounded-2xl p-5 flex flex-col justify-between">
+        <div id="card-recent-circulars" class="glass-card-dark rounded-2xl p-5 flex flex-col justify-between scroll-mt-28">
           <div>
             <div class="w-12 h-12 rounded-full bg-pink-500/20 text-pink-300 border border-pink-500/30 flex items-center justify-center mb-4">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1071,7 +1074,7 @@
     <div class="grid grid-cols-1 xl:grid-cols-12 gap-5">
 
       <!-- Hospital Tariffs -->
-      <div class="tariff-card xl:col-span-5 bg-white border border-[#E2E8F0] rounded-2xl overflow-hidden shadow-sm">
+      <div id="card-hospital-tariffs" class="tariff-card xl:col-span-5 bg-white border border-[#E2E8F0] rounded-2xl overflow-hidden shadow-sm scroll-mt-28">
         <div class="px-5 py-4 border-b border-[#BFDBFE] bg-gradient-to-r from-[#EFF6FF] to-white flex items-center justify-between gap-3">
           <div class="flex items-center gap-3 min-w-0">
             <div class="w-10 h-10 rounded-xl bg-[#2563EB] text-white flex items-center justify-center shrink-0 shadow-sm shadow-blue-500/25">
@@ -1086,49 +1089,49 @@
         </div>
 
         <div class="p-3 sm:p-4 space-y-1">
-          <a href="http://192.168.101.75:3000/files/Adhiparasakthi Hospitals Special Packages (04.05.2026).pdf" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 hover:bg-[#EFF6FF] transition-colors border border-transparent hover:border-[#BFDBFE]">
+          <a id="item-tariff-packages" href="http://192.168.101.75:3000/files/Adhiparasakthi Hospitals Special Packages (04.05.2026).pdf" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 hover:bg-[#EFF6FF] transition-colors border border-transparent hover:border-[#BFDBFE]">
             <span class="flex items-center gap-2.5 min-w-0">
               <span class="w-1.5 h-1.5 rounded-full bg-[#2563EB] shrink-0"></span>
               <span class="text-sm font-medium text-[#0F172A]">Admission / Packages</span>
             </span>
             <span class="text-[11px] font-bold text-[#2563EB] bg-[#EFF6FF] group-hover:bg-[#2563EB] group-hover:text-white px-2.5 py-1 rounded-lg whitespace-nowrap transition-colors">View PDF</span>
           </a>
-          <a href="http://192.168.101.75:3000/files/Lab Tariff.pdf" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 hover:bg-[#EFF6FF] transition-colors border border-transparent hover:border-[#BFDBFE]">
+          <a id="item-tariff-lab" href="http://192.168.101.75:3000/files/Lab Tariff.pdf" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 hover:bg-[#EFF6FF] transition-colors border border-transparent hover:border-[#BFDBFE]">
             <span class="flex items-center gap-2.5 min-w-0">
               <span class="w-1.5 h-1.5 rounded-full bg-[#2563EB] shrink-0"></span>
               <span class="text-sm font-medium text-[#0F172A]">Lab</span>
             </span>
             <span class="text-[11px] font-bold text-[#2563EB] bg-[#EFF6FF] group-hover:bg-[#2563EB] group-hover:text-white px-2.5 py-1 rounded-lg whitespace-nowrap transition-colors">View PDF</span>
           </a>
-          <a href="http://192.168.101.75:3000/files/Radiology Tariff.pdf" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 hover:bg-[#EFF6FF] transition-colors border border-transparent hover:border-[#BFDBFE]">
+          <a id="item-tariff-radiology" href="http://192.168.101.75:3000/files/Radiology Tariff.pdf" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 hover:bg-[#EFF6FF] transition-colors border border-transparent hover:border-[#BFDBFE]">
             <span class="flex items-center gap-2.5 min-w-0">
               <span class="w-1.5 h-1.5 rounded-full bg-[#2563EB] shrink-0"></span>
               <span class="text-sm font-medium text-[#0F172A]">Radiology</span>
             </span>
             <span class="text-[11px] font-bold text-[#2563EB] bg-[#EFF6FF] group-hover:bg-[#2563EB] group-hover:text-white px-2.5 py-1 rounded-lg whitespace-nowrap transition-colors">View PDF</span>
           </a>
-          <a href="http://192.168.101.75:3000/files/Physiotherapy Tariff.pdf" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 hover:bg-[#EFF6FF] transition-colors border border-transparent hover:border-[#BFDBFE]">
+          <a id="item-tariff-physiotherapy" href="http://192.168.101.75:3000/files/Physiotherapy Tariff.pdf" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 hover:bg-[#EFF6FF] transition-colors border border-transparent hover:border-[#BFDBFE]">
             <span class="flex items-center gap-2.5 min-w-0">
               <span class="w-1.5 h-1.5 rounded-full bg-[#2563EB] shrink-0"></span>
               <span class="text-sm font-medium text-[#0F172A]">Physiotherapy</span>
             </span>
             <span class="text-[11px] font-bold text-[#2563EB] bg-[#EFF6FF] group-hover:bg-[#2563EB] group-hover:text-white px-2.5 py-1 rounded-lg whitespace-nowrap transition-colors">View PDF</span>
           </a>
-          <a href="http://192.168.101.75:3000/files/General Ward Surgery OT Tariff.pdf" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 hover:bg-[#EFF6FF] transition-colors border border-transparent hover:border-[#BFDBFE]">
+          <a id="item-tariff-ot" href="http://192.168.101.75:3000/files/General Ward Surgery OT Tariff.pdf" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 hover:bg-[#EFF6FF] transition-colors border border-transparent hover:border-[#BFDBFE]">
             <span class="flex items-center gap-2.5 min-w-0">
               <span class="w-1.5 h-1.5 rounded-full bg-[#2563EB] shrink-0"></span>
               <span class="text-sm font-medium text-[#0F172A]">OT / Surgery</span>
             </span>
             <span class="text-[11px] font-bold text-[#2563EB] bg-[#EFF6FF] group-hover:bg-[#2563EB] group-hover:text-white px-2.5 py-1 rounded-lg whitespace-nowrap transition-colors">View PDF</span>
           </a>
-          <a href="http://192.168.101.75:3000/files/ICU and Special Ward Room Tariff.pdf" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 hover:bg-[#EFF6FF] transition-colors border border-transparent hover:border-[#BFDBFE]">
+          <a id="item-tariff-icu" href="http://192.168.101.75:3000/files/ICU and Special Ward Room Tariff.pdf" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 hover:bg-[#EFF6FF] transition-colors border border-transparent hover:border-[#BFDBFE]">
             <span class="flex items-center gap-2.5 min-w-0">
               <span class="w-1.5 h-1.5 rounded-full bg-[#2563EB] shrink-0"></span>
               <span class="text-sm font-medium text-[#0F172A]">ICU &amp; Special Ward</span>
             </span>
             <span class="text-[11px] font-bold text-[#2563EB] bg-[#EFF6FF] group-hover:bg-[#2563EB] group-hover:text-white px-2.5 py-1 rounded-lg whitespace-nowrap transition-colors">View PDF</span>
           </a>
-          <a href="http://192.168.101.75:3000/files/Other Department Tariff.pdf" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 hover:bg-[#EFF6FF] transition-colors border border-transparent hover:border-[#BFDBFE]">
+          <a id="item-tariff-other" href="http://192.168.101.75:3000/files/Other Department Tariff.pdf" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 hover:bg-[#EFF6FF] transition-colors border border-transparent hover:border-[#BFDBFE]">
             <span class="flex items-center gap-2.5 min-w-0">
               <span class="w-1.5 h-1.5 rounded-full bg-[#2563EB] shrink-0"></span>
               <span class="text-sm font-medium text-[#0F172A]">Other Departments</span>
@@ -1142,7 +1145,7 @@
       <div class="xl:col-span-7 flex flex-col gap-5">
 
         <!-- Pharmacy -->
-        <div class="tariff-card bg-white border border-[#E2E8F0] rounded-2xl overflow-hidden flex-1 shadow-sm">
+        <div id="card-pharmacy-stock" class="tariff-card bg-white border border-[#E2E8F0] rounded-2xl overflow-hidden flex-1 shadow-sm scroll-mt-28">
           <div class="px-5 py-4 border-b border-[#FECACA] bg-gradient-to-r from-[#FFF1F2] to-white flex items-center justify-between gap-3">
             <div class="flex items-center gap-3 min-w-0">
               <div class="w-10 h-10 rounded-xl bg-[#E11D48] text-white flex items-center justify-center shrink-0 shadow-sm shadow-rose-500/25">
@@ -1161,22 +1164,22 @@
 
           <div class="p-4 sm:p-5">
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
-              <a href="http://192.168.101.75:3000/files/Drug Stores Stock Details.pdf" target="_blank" rel="noopener noreferrer" title="Open Drugs stock PDF" class="group rounded-xl border border-[#FECDD3] bg-[#FFF1F2] p-3.5 hover:border-[#E11D48] hover:shadow-sm transition-all cursor-pointer">
+              <a id="card-stock-drugs-139" href="http://192.168.101.75:3000/files/Drug Stores Stock Details.pdf" target="_blank" rel="noopener noreferrer" title="Open Drugs stock PDF" class="group rounded-xl border border-[#FECDD3] bg-[#FFF1F2] p-3.5 hover:border-[#E11D48] hover:shadow-sm transition-all cursor-pointer">
                 <div class="text-[10px] font-bold uppercase tracking-wider text-[#BE123C] mb-1">Drugs</div>
                 <div class="font-mono text-2xl font-extrabold tabular-nums text-[#0F172A]">139</div>
                 <div class="mt-1.5 text-[11px] font-bold text-[#E11D48] group-hover:underline">View PDF →</div>
               </a>
-              <a href="http://192.168.101.75:3000/files/IP Pharmacy Stock Details.pdf" target="_blank" rel="noopener noreferrer" title="Open In-Patient pharmacy stock PDF" class="group rounded-xl border border-[#FDE68A] bg-[#FFFBEB] p-3.5 hover:border-[#F59E0B] hover:shadow-sm transition-all cursor-pointer">
+              <a id="card-stock-ip" href="http://192.168.101.75:3000/files/IP Pharmacy Stock Details.pdf" target="_blank" rel="noopener noreferrer" title="Open In-Patient pharmacy stock PDF" class="group rounded-xl border border-[#FDE68A] bg-[#FFFBEB] p-3.5 hover:border-[#F59E0B] hover:shadow-sm transition-all cursor-pointer">
                 <div class="text-[10px] font-bold uppercase tracking-wider text-[#B45309] mb-1">In-Patient</div>
                 <div class="font-mono text-2xl font-extrabold tabular-nums text-[#0F172A]">77</div>
                 <div class="mt-1.5 text-[11px] font-bold text-[#B45309] group-hover:underline">View PDF →</div>
               </a>
-              <a href="http://192.168.101.75:3000/files/Insurance Pharmacy Stock Details.pdf" target="_blank" rel="noopener noreferrer" title="Open Insurance pharmacy stock PDF" class="group rounded-xl border border-[#C7D2FE] bg-[#EEF2FF] p-3.5 hover:border-[#6366F1] hover:shadow-sm transition-all cursor-pointer">
+              <a id="card-stock-insurance" href="http://192.168.101.75:3000/files/Insurance Pharmacy Stock Details.pdf" target="_blank" rel="noopener noreferrer" title="Open Insurance pharmacy stock PDF" class="group rounded-xl border border-[#C7D2FE] bg-[#EEF2FF] p-3.5 hover:border-[#6366F1] hover:shadow-sm transition-all cursor-pointer">
                 <div class="text-[10px] font-bold uppercase tracking-wider text-[#4338CA] mb-1">Insurance</div>
                 <div class="font-mono text-2xl font-extrabold tabular-nums text-[#0F172A]">515</div>
                 <div class="mt-1.5 text-[11px] font-bold text-[#4338CA] group-hover:underline">View PDF →</div>
               </a>
-              <a href="http://192.168.101.75:3000/files/Op Pharmacy Stock  Details.pdf" target="_blank" rel="noopener noreferrer" title="Open OP pharmacy stock PDF" class="group rounded-xl border border-[#A5F3FC] bg-[#ECFEFF] p-3.5 hover:border-[#06B6D4] hover:shadow-sm transition-all cursor-pointer">
+              <a id="card-stock-op" href="http://192.168.101.75:3000/files/Op Pharmacy Stock  Details.pdf" target="_blank" rel="noopener noreferrer" title="Open OP pharmacy stock PDF" class="group rounded-xl border border-[#A5F3FC] bg-[#ECFEFF] p-3.5 hover:border-[#06B6D4] hover:shadow-sm transition-all cursor-pointer">
                 <div class="text-[10px] font-bold uppercase tracking-wider text-[#0E7490] mb-1">OP</div>
                 <div class="font-mono text-2xl font-extrabold tabular-nums text-[#0F172A]">90</div>
                 <div class="mt-1.5 text-[11px] font-bold text-[#0E7490] group-hover:underline">View PDF →</div>
@@ -1184,11 +1187,11 @@
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-              <a href="http://192.168.101.75:3000/files/Hospital Formulary - 2025.pdf" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between gap-3 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] px-4 py-3 hover:border-[#E11D48] hover:bg-[#FFF1F2] transition-colors group">
+              <a id="card-formulary-2025" href="http://192.168.101.75:3000/files/Hospital Formulary - 2025.pdf" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between gap-3 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] px-4 py-3 hover:border-[#E11D48] hover:bg-[#FFF1F2] transition-colors group">
                 <span class="text-sm font-medium text-[#0F172A]">Formulary 2025</span>
                 <span class="text-[11px] font-bold text-[#E11D48]">View PDF</span>
               </a>
-              <a href="http://192.168.101.75:3000/files/Pharmacy_Updated_11.05.26.pdf" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between gap-3 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] px-4 py-3 hover:border-[#E11D48] hover:bg-[#FFF1F2] transition-colors group">
+              <a id="card-free-drug-list" href="http://192.168.101.75:3000/files/Pharmacy_Updated_11.05.26.pdf" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between gap-3 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] px-4 py-3 hover:border-[#E11D48] hover:bg-[#FFF1F2] transition-colors group">
                 <span class="text-sm font-medium text-[#0F172A]">Free Drug List (NMC)</span>
                 <span class="text-[11px] font-bold text-[#E11D48]">View PDF</span>
               </a>
@@ -1197,7 +1200,7 @@
         </div>
 
         <!-- General Store -->
-        <div class="tariff-card bg-white border border-[#E2E8F0] rounded-2xl overflow-hidden shadow-sm">
+        <div id="card-general-store" class="tariff-card bg-white border border-[#E2E8F0] rounded-2xl overflow-hidden shadow-sm scroll-mt-28">
           <div class="px-5 py-4 border-b border-[#A7F3D0] bg-gradient-to-r from-[#ECFDF5] to-white flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div class="flex items-center gap-3 min-w-0">
               <div class="w-10 h-10 rounded-xl bg-[#059669] text-white flex items-center justify-center shrink-0 shadow-sm shadow-emerald-500/25">
@@ -1208,7 +1211,7 @@
                 <p class="text-[11px] text-[#64748B] mt-0.5">Stationery, CSSD &amp; surgical kits</p>
               </div>
             </div>
-            <a href="http://192.168.101.75:3000/files/Inventory Stock Details 2024.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 self-start text-[11px] font-bold text-white bg-[#059669] hover:bg-[#047857] px-3 py-1.5 rounded-lg transition-colors">
+            <a id="card-inventory-pdf" href="http://192.168.101.75:3000/files/Inventory Stock Details 2024.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 self-start text-[11px] font-bold text-white bg-[#059669] hover:bg-[#047857] px-3 py-1.5 rounded-lg transition-colors">
               Open Inventory PDF
               <span aria-hidden="true">→</span>
             </a>
@@ -3020,6 +3023,13 @@
     // TANGLISH & TAMIL PHONETIC SYNONYM DICTIONARY FOR PORTAL SEARCH
     // =========================================================================
     const TANGLISH_TAMIL_DICTIONARY = {
+      // Shortcuts & Quick Access
+      'kurukku vazhi': 'quick shortcuts dock emergency links குறுக்குவழி',
+      'kurukku': 'quick shortcuts dock குறுக்குவழி',
+      'குறுக்குவழிகள்': 'quick shortcuts dock emergency links',
+      'விரைவு குறுக்குவழி': 'quick shortcuts dock emergency links',
+      'குறுக்கு வழி': 'quick shortcuts dock emergency links',
+
       // Surgery & Procedures
       'aruvai': 'surgery surgical procedures operation ot consent அறுவை',
       'sigichai': 'treatment procedure care surgery சிகிச்சை',
@@ -3038,6 +3048,19 @@
       'maruppu': 'refusal not willing treatment refusal dama மறுப்பு',
       'viruppamillai': 'not willing refusal dama விருப்பமில்லை',
       'dama': 'discharge against medical advice refusal veliye',
+      'kuzhanthai': 'paediatric pediatric child children infant kuzhanthai குழந்தை',
+      'kulandhai': 'paediatric pediatric child children infant kulandhai குழந்தை',
+      'pillai': 'paediatric pediatric child infant பிள்ளை',
+      'pasanga': 'paediatric pediatric child children pasanga',
+      'veliye poga': 'dama discharge against medical advice veliye',
+      'hospital vittu poga': 'dama discharge against medical advice veliye',
+      'veetuku poga': 'dama discharge against medical advice veliye',
+      'chikitsai maruppu': 'not willing treatment refusal maruppu',
+      'treatment vendam': 'not willing treatment refusal maruppu',
+      'thevailla': 'not willing treatment refusal',
+      'serkai': 'admission inpatient hospital admission serkai சேர்க்கை',
+      'saerkai': 'admission inpatient admission சேர்க்கை',
+      'admit aaga': 'admission inpatient admission consent',
 
       // Blood, Transfusion & Blood Bank
       'radham': 'blood transfusion component prbc ffp reaction stock bank ரத்தம் இரத்தம்',
@@ -3221,7 +3244,69 @@
       'உணவு': 'diet dietician food token unavu',
       'தொற்று': 'infection control hic bundle cauti clabsi ssi vae thotru',
       'ஆவணம்': 'medical records fit mrd archive aavanam',
-      'தொலைபேசி': 'intercom extension directory telephone tholaipesi'
+      'தொலைபேசி': 'intercom extension directory telephone tholaipesi',
+      'unavu token': 'food token requisition dietary slip food.pdf',
+      'narcotic form': 'narcotic drugs form register controlled substances',
+      'theevira sigichai checklist': 'icu casesheet checklist intensive care audit',
+      'ward shifting checklist': 'icu to ward shifting criteria checklist',
+      'ward shifting padivam': 'icu to ward shifting criteria checklist',
+      'போதை மருந்து': 'narcotic drugs form register controlled substances',
+      'போதை மருந்து படிவம்': 'narcotic drugs form register',
+      'உணவு டோக்கன்': 'food token requisition slip dietary',
+      'சாப்பாடு டோக்கன்': 'food token requisition slip dietary',
+      'வார்டு மாற்றம்': 'icu to ward shifting criteria checklist',
+      'தீவிர சிகிச்சை செக்லிஸ்ட்': 'icu casesheet checklist audit',
+      'பொது படிவங்கள்': 'common forms hub clinical indents icu checklists',
+      'மருத்துவ படிவங்கள்': 'common forms hub clinical indents icu checklists',
+      // HR Forms & Cadre Policies
+      'pathavi uyartvu': 'for promotion non teaching form seniority elevation',
+      'pathavi uyartvu padivam': 'for promotion non teaching form',
+      'payirchi form': 'staff training feedback form participant evaluation',
+      'payirchi feedback': 'staff training feedback form',
+      'பதவி உயர்வு': 'for promotion non teaching form seniority elevation',
+      'பதவி உயர்வு படிவம்': 'for promotion non teaching form',
+      'பயிற்சி படிவம்': 'staff training feedback form',
+      'பயிற்சி பின்னூட்டம்': 'staff training feedback form',
+      'செயல்திறன் கொள்கை': 'performance management system pms policy kpi',
+      'செயல்திறன் மேலாண்மை': 'performance management system pms policy',
+      'எச்.ஆர் படிவங்கள்': 'hr forms hub faculty non teaching applications',
+      'எச் ஆர் படிவங்கள்': 'hr forms hub faculty non teaching applications',
+      'பணியாளர் படிவங்கள்': 'hr forms hub faculty non teaching applications',
+      'மனித வள படிவங்கள்': 'hr forms hub people and culture',
+      'ஜூனியர் ரெசிடென்ட்': 'junior resident policy academic governance',
+      'உறைவிட மருத்துவர் கொள்கை': 'junior resident policy',
+      'மருத்துவ அலுவலர் கொள்கை': 'cmo chief medical officer policy casualty',
+      'மருத்துவ உரிமை': 'clinical privileges general medicine scope',
+      'மயக்கவியல் மருத்துவ உரிமை': 'clinical privileges anaesthesia blocks',
+      'காது மூக்கு தொண்டை உரிமை': 'clinical privileges ent surgical scope',
+      // IT Forms & Hardware
+      'it padivangal': 'it forms hub new his user doctor id system printer wifi cug email',
+      'it padivam': 'it forms hub new his user doctor id system printer wifi cug email',
+      'ஐடி படிவங்கள்': 'it forms hub new his user doctor id system printer wifi cug email',
+      'தகவல் தொழில்நுட்ப படிவங்கள்': 'it forms hub new his user doctor id system printer wifi cug email',
+      'kanini padivam': 'system request form desktop cpu workstation indent',
+      'kanini pazhuthu padivam': 'system request form hardware breakdown',
+      'கணினி படிவம்': 'system request form desktop cpu workstation indent',
+      'கணினி கோரிக்கை படிவம்': 'system request form desktop cpu workstation indent',
+      'acchaagam padivam': 'printer request form barcode label toner cartridge',
+      'பிரிண்டர் படிவம்': 'printer request form barcode label toner cartridge',
+      'அச்சக படிவம்': 'printer request form barcode label toner cartridge',
+      'அச்சுப்பொறி படிவம்': 'printer request form barcode label toner cartridge',
+      'minnanjal padivam': 'official email id request form institutional mailbox',
+      'மின்னஞ்சல் படிவம்': 'official email id request form institutional mailbox',
+      'மின்னஞ்சல் கோரிக்கை': 'official email id request form institutional mailbox',
+      'sim padivam': 'sim cug request form closed user group mobile connection',
+      'cug padivam': 'sim cug request form closed user group mobile connection',
+      'சிம் படிவம்': 'sim cug request form closed user group mobile connection',
+      'சிம் கார்டு படிவம்': 'sim cug request form closed user group mobile connection',
+      'சிம் கார்டு கோரிக்கை': 'sim cug request form closed user group mobile connection',
+      'wifi padivam': 'employee wifi request form wireless network mac binding',
+      'வைஃபை படிவம்': 'employee wifi request form wireless network mac binding',
+      'வைஃபை கோரிக்கை': 'employee wifi request form wireless network mac binding',
+      'maruthuvar id padivam': 'new doctor name and id creation in his consultant',
+      'மருத்துவர் ஐடி படிவம்': 'new doctor name and id creation in his consultant',
+      'marunthu porul his': 'item creation in his master catalogue pharmacy lab tariffs',
+      'பொருள் உருவாக்கம்': 'item creation in his master catalogue pharmacy lab tariffs'
     };
 
     function expandTanglishSearch(query) {
@@ -3354,19 +3439,16 @@
         sectionId: 'forms',
         categoryTab: 'consent',
         highlightId: 'cat-card-consent',
-        description: '6 bilingual surgical consent, blood transfusion consent, and DAMA refusal protocols',
+        description: 'Bilingual surgical consent, blood transfusion, DAMA, and treatment refusal protocols',
         keywords: [
-          'consent form', 'consent forms', 'surgery consent', 'surgical consent',
-          'dama form', 'dama consent', 'blood transfusion consent', 'not willing consent',
-          'oputhal form', 'opputhal form'
+          'consent form', 'consent forms', 'concent form', 'concent forms', 'consent vault',
+          'medicolegal forms', 'clinical consents', 'oputhal form', 'opputhal form',
+          'sammatham form', 'opputhal padivam', 'sammatha padivam', 'ஒப்புதல் படிவம்'
         ],
         patterns: [
-          /consent\s*forms?/i,
-          /surgical\s*consent/i,
-          /surgery\s*consent/i,
-          /dama\s*consent/i,
-          /oputhal/i,
-          /opputhal/i
+          /con[sc]ents?\s*forms?/i,
+          /\b(oputhal|opputhal|oppudhal|sammatham|sammatha)\b/i,
+          /(ஒப்புதல்\s*படிவம்|சம்மத\s*படிவம்)/
         ]
       },
       {
@@ -3436,13 +3518,92 @@
       },
       {
         id: 'tariff-stock',
-        title: 'Hospital Tariffs & Drug Stock',
+        title: 'Tariff & Live Stock Dashboard',
         sectionId: 'tariff-stock',
         categoryTab: null,
         highlightId: 'tariff-stock',
-        description: 'OT, ICU and OPD tariffs, Pharmacy 139 drugs stock & General store inventory',
-        keywords: ['tariff', 'tariffs', 'drug stock', 'pharmacy stock', 'hospital charges', 'room tariff', 'ot tariff', 'investigation charges', 'billing rates'],
-        patterns: [/\btariffs?\b/i, /\bdrug\s*stores?\s*stock\b/i, /\bpharmacy\s*stock\b/i]
+        description: 'Hospital Tariffs (7 schedules), Pharmacy live stock counters (139 drugs), and General store inventory',
+        keywords: [
+          'tariff & live stock', 'tariff and live stock', 'tariff live stock', 'tariff stock', 'live stock',
+          'tariffs and stock', 'tariffs & stock', 'hospital tariffs and stock', 'tariff and stock section',
+          'where is tariff section', 'tariff section', 'live stock section', 'billing schedules',
+          'hospital tariff', 'hospital tariffs', 'hospital traiff', 'hospital traiffs', 'traiff', 'traiffs',
+          'கட்டணம் மற்றும் இருப்பு', 'கட்டண விவரம்', 'மருந்து இருப்பு', 'சேமிப்பு கிடங்கு இருப்பு', 'கட்டண அட்டவணை',
+          'tariff விவரம்', 'hospital kattanam', 'vilai vivaram', 'selavu vivaram'
+        ],
+        patterns: [
+          /tariff\s*(&|and)?\s*live\s*stock/i,
+          /tariff\s*stock/i,
+          /\blive\s*stock\b/i,
+          /\bhospital\s*tra?iffs?\b/i,
+          /\btra?iffs?\b/i,
+          /(கட்டணம்\s*மற்றும்\s*இருப்பு|கட்டண\s*விவரம்|மருந்து\s*இருப்பு)/
+        ]
+      },
+      {
+        id: 'card-hospital-tariffs',
+        title: 'Hospital Tariffs (Schedule of Charges)',
+        sectionId: 'tariff-stock',
+        categoryTab: null,
+        highlightId: 'card-hospital-tariffs',
+        description: 'Admission packages, Lab, Radiology, Physiotherapy, OT surgery, ICU and Other department charges',
+        keywords: [
+          'hospital tariffs', 'hospital tariff', 'hospital traiff', 'hospital traiffs', 'tariffs', 'tariff', 'traiff', 'traiffs',
+          'schedule of charges', 'hospital charges',
+          'billing rates', 'rate list', 'treatment cost', 'hospital fees', 'service charges', 'all tariffs',
+          'list of tariffs', 'special packages', 'lab tariff', 'radiology tariff', 'physiotherapy tariff',
+          'ot tariff', 'surgery tariff', 'room rent', 'icu tariff', 'bed charges',
+          'மருத்துவமனை கட்டணம்', 'கட்டண பட்டியல்', 'கட்டண விபரம்', 'மருத்துவ கட்டணம்', 'அறை வாடகை', 'லேப் கட்டணம்'
+        ],
+        patterns: [
+          /\bhospital\s*tra?iffs?\b/i,
+          /\btra?iffs?\b/i,
+          /\bschedule\s*of\s*charges\b/i,
+          /\b(room\s*rent|bed\s*charges?)\b/i,
+          /\b(ot|surgery)\s*(tariff|charges?)\b/i,
+          /\b(lab|radiology)\s*tariff\b/i,
+          /(மருத்துவமனை\s*கட்டணம்|கட்டண\s*பட்டியல்|அறை\s*வாடகை)/
+        ]
+      },
+      {
+        id: 'card-pharmacy-stock',
+        title: 'Pharmacy Live Stock Counters',
+        sectionId: 'tariff-stock',
+        categoryTab: null,
+        highlightId: 'card-pharmacy-stock',
+        description: 'Live counters: Drugs 139, In-Patient 77, Insurance 515, OP 90, Formulary 2025, and Free Drug List',
+        keywords: [
+          'pharmacy stock', 'pharmacy live stock', 'live pharmacy stock', 'drug counters', 'pharmacy stock counters',
+          'drug stock', 'medicines stock', 'drugs stock', '139 drugs', '139 drugs stock', 'ip pharmacy stock',
+          'insurance pharmacy stock', 'op pharmacy stock', 'hospital formulary', 'free drug list',
+          'மருந்தக இருப்பு', 'மருந்து இருப்பு விபரம்', 'marunthu stock'
+        ],
+        patterns: [
+          /pharmacy\s*(live\s*)?stock/i,
+          /\bdrug\s*stores?\s*stock\b/i,
+          /139\s*drugs/i,
+          /(மருந்தக\s*இருப்பு|மருந்து\s*இருப்பு)/
+        ]
+      },
+      {
+        id: 'card-general-store',
+        title: 'General Store Inventory & Surgical Kits',
+        sectionId: 'tariff-stock',
+        categoryTab: null,
+        highlightId: 'card-general-store',
+        description: '738 inventory items, 160 stationery items, 93 surgical & CSSD kits',
+        keywords: [
+          'general store', 'hospital general store', 'general store stock', 'general store inventory',
+          'store inventory', 'stationery stock', 'surgical kits stock', 'inventory stock details 2024',
+          'பொது சேமிப்பு கிடங்கு', 'ஸ்டோர் இருப்பு', 'பொது ஸ்டோர்'
+        ],
+        patterns: [
+          /general\s*store/i,
+          /inventory\s*stock/i,
+          /stationery\s*stock/i,
+          /surgical\s*kits?\s*stock/i,
+          /(பொது\s*சேமிப்பு\s*கிடங்கு|ஸ்டோர்\s*இருப்பு)/
+        ]
       },
       {
         id: 'quality-manuals',
@@ -3456,13 +3617,131 @@
       },
       {
         id: 'e-circulars',
-        title: 'Institutional E-Circulars & Duty Rosters',
+        title: 'Digital E – Circulars & Protocols',
         sectionId: 'e-circulars',
         categoryTab: null,
         highlightId: 'e-circulars',
-        description: 'Administrative circulars, office orders, and 24-hour doctor on-duty rosters',
-        keywords: ['circular', 'circulars', 'e-circular', 'e circular', 'duty details', 'duty roster', 'roster', '24hr duty'],
-        patterns: [/\bcirculars?\b/i, /\be-?circulars?\b/i, /\bduty\s*details?\b/i, /\bduty\s*rosters?\b/i]
+        description: 'Administrative circulars, 24hr duty rosters, blood bank stock, police directory & clinical protocols',
+        keywords: [
+          'digital e circulars', 'digital e-circulars', 'digital e circular', 'e-circulars', 'e circulars',
+          'circulars and protocols', 'protocols and circulars', 'circular', 'circulars', 'bulletin board',
+          'digital board', 'real-time bulletins', 'சுற்றறிக்கை', 'மின் சுற்றறிக்கை'
+        ],
+        patterns: [
+          /digital\s*e[- ]?circulars?/i,
+          /\be-?circulars?\b/i,
+          /circulars?\s*(and|&)\s*protocols?/i,
+          /bulletin\s*board/i,
+          /(சுற்றறிக்கை|மின்\s*சுற்றறிக்கை)/
+        ]
+      },
+      {
+        id: 'duty-roster',
+        title: "24hr's Doctor & Staff On-Duty Roster",
+        sectionId: 'e-circulars',
+        categoryTab: null,
+        highlightId: 'card-duty-roster',
+        description: 'Live roster for Casualty CMOs, Intensivists & Nursing Supervisors on 24hr rotation',
+        keywords: [
+          '24hr duty roster', 'duty roster', '24 hours duty', 'cmo duty roster', 'intensivist duty',
+          'nursing supervisor roster', 'on duty roster', 'who is on duty', 'duty doctor list',
+          'casualty cmo', 'doctor duty roster', 'டூட்டி ரோஸ்டர்', 'பணி அட்டவணை', 'டூட்டி டாக்டர்'
+        ],
+        patterns: [
+          /24\s*hr'?s?\s*duty/i,
+          /\bduty\s*rosters?\b/i,
+          /\bon[- ]?duty\b/i,
+          /\bcmo\s*duty\b/i,
+          /(டூட்டி\s*ரோஸ்டர்|பணி\s*அட்டவணை)/
+        ]
+      },
+      {
+        id: 'blood-bank-stock',
+        title: 'Blood Bank Stock Details',
+        sectionId: 'e-circulars',
+        categoryTab: null,
+        highlightId: 'card-blood-stock',
+        description: 'Real-time inventory of PRBC, FFP, Platelets, and rare blood units',
+        keywords: [
+          'blood bank stock', 'blood stock', 'blood availability', 'prbc stock', 'ffp stock',
+          'platelet stock', 'rare blood units', 'ratha vangi stock', 'iratha vangi', 'இரத்த வங்கி இருப்பு', 'ரத்த வங்கி ஸ்டாக்'
+        ],
+        patterns: [
+          /blood\s*bank\s*stock/i,
+          /blood\s*stock/i,
+          /blood\s*availab/i,
+          /(ரத்த|இரத்த)\s*வங்கி\s*இருப்பு/
+        ]
+      },
+      {
+        id: 'police-directory',
+        title: 'MLC & Police Station Hotline Directory',
+        sectionId: 'e-circulars',
+        categoryTab: null,
+        highlightId: 'card-police-directory',
+        description: 'Nearest local station contacts, police inspector lines & MLC liaisons',
+        keywords: [
+          'police station number', 'police directory', 'police contact', 'police station phone',
+          'mlc police', 'police liaison', 'police hotline', 'காவல் நிலைய எண்', 'போலீஸ் எண்', 'காவல்துறை தொடர்பு'
+        ],
+        patterns: [
+          /police\s*station/i,
+          /police\s*directory/i,
+          /police\s*number/i,
+          /(காவல்\s*நிலைய|போலீஸ்)\s*எண்/
+        ]
+      },
+      {
+        id: 'clinical-cases',
+        title: 'Clinical Case Patients & Guidelines',
+        sectionId: 'e-circulars',
+        categoryTab: null,
+        highlightId: 'card-clinical-cases',
+        description: 'Clinical case patient documentation, guidelines & protocols',
+        keywords: [
+          'clinical case patients', 'clinical cases', 'clinical case patient', 'patient documentation protocol',
+          'clinical casesheet protocol', 'மருத்துவ வழக்கு நோயாளிகள்'
+        ],
+        patterns: [
+          /clinical\s*case\s*patients?/i,
+          /clinical\s*cases/i
+        ]
+      },
+      {
+        id: 'pms-policy',
+        title: 'Performance Management System (PMS) Policy',
+        sectionId: 'e-circulars',
+        categoryTab: null,
+        highlightId: 'card-pms-policy',
+        description: 'Performance Management System policy, KPIs and hospital evaluation framework',
+        keywords: [
+          'pms policy', 'performance management system', 'hospital pms', 'kpi policy', 'staff appraisal policy',
+          'செயல்திறன் மேலாண்மை கொள்கை'
+        ],
+        patterns: [
+          /\bpms\s*policy\b/i,
+          /performance\s*management\s*system/i,
+          /\bkpi\s*policy\b/i
+        ]
+      },
+      {
+        id: 'recent-circulars',
+        title: 'APH Recent Circulars Hub',
+        sectionId: 'e-circulars',
+        categoryTab: null,
+        highlightId: 'card-recent-circulars',
+        description: 'Safety meeting circulars, SWOT analysis, in-house apps, executive notices & policies',
+        keywords: [
+          'recent circulars', 'recent circular', 'circulars', 'circular', 'hospital circulars',
+          'safety circular', 'swot circular', 'ams circular', 'refugee circular', 'code violet',
+          'சுற்றறிக்கைகள்', 'சுற்றறிக்கை'
+        ],
+        patterns: [
+          /recent\s*circulars?/i,
+          /\bcirculars?\b/i,
+          /safety\s*(meeting\s*)?circular/i,
+          /swot\s*circular/i
+        ]
       },
       {
         id: 'in-house-apps',
@@ -3483,6 +3762,20 @@
         description: 'Live campus intercom telephone directory and emergency hotlines (Emergency: 2001, Main Gate: 2800, ICU: 2156)',
         keywords: ['intercom', 'extension', 'extensions', 'phone directory', 'telephone directory', 'intercom numbers', 'extension numbers', 'emergency extension'],
         patterns: [/\bintercoms?\b/i, /\bextensions?\b/i, /\bphone\s*directory\b/i, /\btelephone\s*directory\b/i]
+      },
+      {
+        id: 'quick-shortcuts-dock',
+        title: 'Quick Shortcuts Dock',
+        sectionId: 'quick-shortcuts-dock',
+        categoryTab: null,
+        highlightId: 'quick-shortcuts-dock',
+        description: 'Quick-access dock for 8 hospital links: Intercom, 24h Duty Roster, Blood Bank Stock, Email Directory, Abbreviations, Manuals & Replace PDF',
+        keywords: [
+          'quick shortcuts', 'quick shortcut', 'quicks shortcut', 'quicks shortcuts', 'shortcuts dock', 'shortcuts panel',
+          'shortcuts', 'shortcut', 'quick links', 'side shortcuts', 'floating dock', 'emergency links',
+          'விரைவு குறுக்குவழி', 'குறுக்குவழிகள்', 'குறுக்கு வழி', 'kurukku vazhi'
+        ],
+        patterns: [/\bquick\s*shortcuts?\b/i, /\bquicks\s*shortcuts?\b/i, /\bshortcuts?\s*(dock|panel|bar)?\b/i, /\bquick\s*links?\b/i]
       }
     ];
 
@@ -3498,7 +3791,112 @@
     // =========================================================================
     const DIRECT_DOCUMENT_ACTIONS = [
       // -----------------------------------------------------------------------
-      // CORE ENTERPRISE & IN-HOUSE APPLICATIONS
+      // QUICK SHORTCUTS DOCK
+      // -----------------------------------------------------------------------
+      {
+        id: 'quick-shortcuts-dock',
+        title: 'Quick Shortcuts Dock',
+        url: './index.html#quick-shortcuts-dock',
+        description: 'Quick-action dock with 8 essential hospital operational links (Intercom, 24h Duty, Blood Bank, Emails, Guidelines, Manuals)',
+        category: 'Quick Access Dock',
+        categoryTab: null,
+        sectionId: 'quick-shortcuts-dock',
+        highlightId: 'quick-shortcuts-dock',
+        badge: '8 Links',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\b(quick\s*shortcuts?|quicks\s*shortcuts?|shortcuts?\s*dock|shortcuts?\s*panel|quick\s*links?|side\s*shortcuts?)\b/i.test(ql)) return true;
+          if (/^(shortcuts?|குறுக்குவழிகள்|விரைவு\s*குறுக்குவழி|quicks\s*shortcut)$/i.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'doc-staff-email-dir',
+        title: 'Official Staff Email Directory',
+        url: 'http://192.168.101.75:3000/files/email.pdf',
+        description: 'Hospital staff, consultants, HODs and administrative departmental official email contact list',
+        category: 'Quick Access Dock',
+        categoryTab: null,
+        sectionId: 'quick-shortcuts-dock',
+        highlightId: 'quick-shortcuts-dock',
+        badge: 'Email Directory',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (ql.includes('form') || ql.includes('request') || ql.includes('id creation') || ql.includes('vinnappam')) return false;
+          if (/\b(staff\s*emails?|email\s*directory|staff\s*email\s*directory|email\s*list|doctor\s*emails?)\b/i.test(ql)) return true;
+          if (/^(email|emails|email\s*pdf)$/i.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'doc-abbreviation-guide',
+        title: 'Approved Medical Abbreviations List 2025-2026',
+        url: 'http://192.168.101.75:3000/files/Abrrevation.pdf',
+        description: 'Institutional accredited abbreviations handbook for clinical casesheets, prescriptions & nursing notes',
+        category: 'Quick Access Dock',
+        categoryTab: null,
+        sectionId: 'quick-shortcuts-dock',
+        highlightId: 'quick-shortcuts-dock',
+        badge: 'Clinical Guide',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\b(abbreviations?|abbrevation|abbrevations|medical\s*abbreviations?|hospital\s*abbreviations?)\b/i.test(ql)) return true;
+          if (/(சுருக்கங்கள்|மருத்துவ\s*சுருக்க)/.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'doc-billing-manual',
+        title: 'User Billing Manual (APH)',
+        url: 'http://192.168.101.75:3000/files/billingmanual.pdf',
+        description: 'Standard Operating Procedure and user manual for IP/OP patient billing and tariffs in HIS',
+        category: 'Quick Access Dock',
+        categoryTab: null,
+        sectionId: 'quick-shortcuts-dock',
+        highlightId: 'quick-shortcuts-dock',
+        badge: 'Operations Manual',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\b(billing\s*manual|billing\s*sop|billing\s*guide|user\s*billing\s*manual)\b/i.test(ql)) return true;
+          if (/(பில்லிங்\s*கையேடு)/.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'doc-nursing-manual',
+        title: 'Nursing Operations Manual',
+        url: 'http://192.168.101.75:3000/files/nursingmanual.pdf',
+        description: 'Clinical nursing guidelines, shift protocols, patient safety standards and medication administration manual',
+        category: 'Quick Access Dock',
+        categoryTab: null,
+        sectionId: 'quick-shortcuts-dock',
+        highlightId: 'quick-shortcuts-dock',
+        badge: 'Operations Manual',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\b(nursing\s*manual|nursing\s*sop|nursing\s*guide|nurse\s*manual)\b/i.test(ql)) return true;
+          if (/(செவிலியர்\s*கையேடு)/.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'app-replace-pdf',
+        title: 'Replace / Upload PDF Portal',
+        url: 'http://192.168.101.75:8000/server',
+        description: 'Intranet administrative utility for updating, uploading and replacing institutional PDF documents',
+        category: 'Quick Access Dock',
+        categoryTab: null,
+        sectionId: 'quick-shortcuts-dock',
+        highlightId: 'quick-shortcuts-dock',
+        badge: 'Admin Tool',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\b(replace\s*pdf|upload\s*pdf|pdf\s*replace|pdf\s*upload|pdf\s*tool)\b/i.test(ql)) return true;
+          return false;
+        }
+      },
+      // -----------------------------------------------------------------------
+      // CORE ENTERPRISE & IN-HOUSE APPLICATIONS (AUTO-LAUNCH DIRECT ACTIONS)
       // -----------------------------------------------------------------------
       {
         id: 'pruworks-hrms',
@@ -3517,9 +3915,11 @@
           if (/\b(apply|put|take|request)\s+(leave|leavu)\b/i.test(ql)) return true;
           if (/\bleave\s+(apply|application|balance|portal|login)\b/i.test(ql)) return true;
           if (/\b(payslip|pay\s*slip|salary\s*slip)\b/i.test(ql)) return true;
-          if (/\bsambalam\s*(slip|raseedhu|portal|login)\b/i.test(ql)) return true;
-          if (/\b(leavu\s*apply|leavu\s*podanum|leave\s*podanum)\b/i.test(ql)) return true;
-          if (/(ப்ரூவொர்க்ஸ்|சம்பள\s*ரசீது|லீவு\s*அப்ளை)/.test(ql)) return true;
+          if (/\b(salary|sambalam|sampalam|payroll|wages)\b/i.test(ql)) return true;
+          if (/\b(how\s*to\s*check\s*my\s*salary|check\s*salary)\b/i.test(ql)) return true;
+          if (/\b(biometric|punch|punching|attendance)\b/i.test(ql) && !ql.includes('manual')) return true;
+          if (/\b(varugai|leavu\s*apply|leavu\s*podanum|leave\s*podanum)\b/i.test(ql)) return true;
+          if (/(ப்ரூவொர்க்ஸ்|சம்பள\s*ரசீது|சம்பளம்|வருகை|லீவு\s*அப்ளை)/.test(ql)) return true;
           return false;
         }
       },
@@ -3527,7 +3927,7 @@
         id: 'his-login-system',
         title: 'HIS System (AOSTA Backbone Login)',
         url: 'http://192.168.103.37/BB15SE/Backbone/admin/login.aspx',
-        description: 'Hospital Information System (HIS) core clinical, billing, and OPD/IPD administrative login',
+        description: 'Hospital Information System (HIS) core clinical, billing, OPD/IPD/ER registration, and indents login',
         category: 'Core Enterprise Systems',
         categoryTab: null,
         sectionId: 'core-systems',
@@ -3537,11 +3937,30 @@
           const ql = q.toLowerCase().trim();
           // Exclude queries specifically asking for user creation forms or wifi/printer
           if (ql.includes('form') || ql.includes('creation') || ql.includes('vinnappam') || ql.includes('படிவ')) return false;
+          // Negative exclusion: Ticketing, breakdown, repair, maintenance, electrical, housekeeping, laundry
+          if (/\b(repair|fixing|maintenance|electrical|housekeeping|laundry|breakdown|job\s*order|fault|ticket|complaint)\b/i.test(ql)) return false;
+          // Negative exclusion: Manuals, SOPs, guidelines, policies
+          if (/\b(manual|sop|guide|guideline|handbook|policy|cpm|hrm)\b/i.test(ql)) return false;
+
           if (/\baosta(\s*his)?\b/i.test(ql)) return true;
           if (/\bbackbone(\s*his)?\b/i.test(ql)) return true;
-          if (/\bhis\s*(login|system|portal|app|software|admin)\b/i.test(ql)) return true;
+          if (/\bhis\s*(login|system|portal|app|application|software|webapplication|admin|workstation|website)\b/i.test(ql)) return true;
           if (/^his$/i.test(ql) || /^open\s+his$/i.test(ql) || /^his\s+open(\s+pannu)?$/i.test(ql)) return true;
-          if (/(அவோஸ்டா|பேக்போன்|ஹிஸ்\s*லாகின்)/.test(ql)) return true;
+
+          // Patient clinical, registration, billing, indents, pharmacy
+          if (/\bpatient\s*(details?|info|records?|search|history)\b/i.test(ql)) return true;
+          if (/\b(reg\s*io|reg\s*op|reg\s*ip|reg\s*er|op\s*registration|ip\s*registration|er\s*registration|emergency\s*registration)\b/i.test(ql)) return true;
+          if (/\b(new\s*patient|review\s*patient|patient\s*review|ip\s*admission|patient\s*discharge)\b/i.test(ql)) return true;
+          if (/\b(billing|billinh|op\s*billing|ip\s*billing|discharge\s*billing|patient\s*billing|billing\s*login)\b/i.test(ql)) return true;
+          if (/\b(indents?\s*stores?|ward\s*indents?|store\s*indents?|material\s*issue|indents?)\b/i.test(ql) && !ql.includes('stock')) return true;
+          if (/\b(pharmacy\s*in\s*his|his\s*pharmacy|pharmacy\s*dispensing|pharmacy\s*billing|pharmacy\s*login)\b/i.test(ql)) return true;
+          if (/\b(frontend\s*login|front\s*end\s*login|doctor\s*consultation|doctor\s*workstation|clinical\s*workstation)\b/i.test(ql)) return true;
+          if (/\b(front\s*office|front\s*desk|frontoffice)\b/i.test(ql)) return true;
+          if (/\bhis\s*[- ]*(op|ip|ward|discharge(\s*summary)?|front\s*office)\b/i.test(ql)) return true;
+          if (/^his\s*[- ]*discharge$/i.test(ql) || /^his\s*discharge\s*summary$/i.test(ql)) return true;
+          if (/\b(ward\s*his|op\s*his|ip\s*his|ward\s*login|ward\s*management|inpatient\s*ward)\b/i.test(ql)) return true;
+          if (/\b(op\s*login|ip\s*login|opd\s*login|ipd\s*login)\b/i.test(ql)) return true;
+          if (/(அவோஸ்டா|பேக்போன்|ஹிஸ்\s*லாகின்|ஹெச்ஐஎஸ்)/.test(ql)) return true;
           return false;
         }
       },
@@ -3549,7 +3968,7 @@
         id: 'ticketing-system',
         title: 'Ticketing & Maintenance Job Orders Desk',
         url: 'http://www.mapimshis.com/mapims/',
-        description: 'Report IT hardware breakdowns, HIS bugs, biomedical faults, or hospital facilities maintenance',
+        description: 'Report IT hardware breakdowns, repairs, electrical, housekeeping, laundry & maintenance job orders',
         category: 'Core Enterprise Systems',
         categoryTab: null,
         sectionId: 'core-systems',
@@ -3557,13 +3976,34 @@
         badge: 'Enterprise App',
         match: function(q) {
           const ql = q.toLowerCase().trim();
+          if (ql.includes('படிவம்') || ql.includes('padivam') || ql.includes('form')) return false;
+          if (ql.includes('resignation') || ql.includes('relieving') || ql.includes('notice period') || ql.includes('job form')) return false;
+          // Negative exclusion: Patient details, registration, billing, indents
+          if (/\b(patient\s*details|op\s*billing|ip\s*billing|reg\s*op|reg\s*ip|reg\s*er|indents?\s*stores?)\b/i.test(ql)) return false;
+
+          // Core ticketing terms
           if (/\bticket(ing)?\b/i.test(ql)) return true;
           if (/\bjob\s*order\b/i.test(ql)) return true;
           if (/\bbreakdown\b/i.test(ql)) return true;
-          if (/\bmaintenance\s*(desk|portal|system|order|job)\b/i.test(ql)) return true;
-          if (/\b(pc|system|computer|network|printer|fan|light|ac)\s*(not\s*working|problem|fault|issue|repair)\b/i.test(ql)) return true;
-          if (/\bcomplaint\s*(desk|portal|book|log)\b/i.test(ql)) return true;
-          if (/\bcomplaint\s*(podanum|panna)\b/i.test(ql)) return true;
+          if (/\bmaintenance\b/i.test(ql)) return true;
+
+          // Repair & fixing anything
+          if (/\b(repair|fixing\s*anything|fixing|fix)\b/i.test(ql)) return true;
+
+          // Electrical
+          if (/\belectrical(\s*(maintenance|repair|fault|issue|work|complaint))?\b/i.test(ql)) return true;
+
+          // Housekeeping
+          if (/\bhousekeeping(\s*(maintenance|complaint|request|cleaning))?\b/i.test(ql)) return true;
+
+          // Laundry
+          if (/\blaundry(\s*(service|complaint|issue|maintenance|request))?\b/i.test(ql) && !/\b(phone|extension|intercom|number|ext)\b/i.test(ql)) return true;
+
+          if (/\b(it\s*breakdown|hardware\s*repair|hardware\s*breakdown)\b/i.test(ql)) return true;
+          if (/\b(report\s*broken|broken\s*computer|broken\s*hardware)\b/i.test(ql)) return true;
+          if (/\b(pc|system|computer|network|printer|fan|light|ac|monitor|display|keyboard|mouse)\s*(not\s*working|problem|fault|issue|repair|breakdown)\b/i.test(ql)) return true;
+          if (/\b(display|monitor)\s*not\s*working\b/i.test(ql)) return true;
+          if (/\bcomplaint\s*(desk|portal|book|log|podanum|panna)\b/i.test(ql)) return true;
           if (/(பழுது|புகார்\s*பதிவு|டிக்கெட்)/.test(ql)) return true;
           return false;
         }
@@ -3580,8 +4020,9 @@
         badge: 'In-House App',
         match: function(q) {
           const ql = q.toLowerCase().trim();
+          if (ql.includes('food') || ql.includes('unavu') || ql.includes('சாப்பாடு')) return false;
           if (/\blineloom\b/i.test(ql)) return true;
-          if (/\btoken\s*(display|engine|screen|system|stream|live)\b/i.test(ql)) return true;
+          if (/\btoken\s*(display|engine|screen|system|stream|live|app|application|software|webapplication|machine)\b/i.test(ql)) return true;
           if (/\b(op|opd)\s*token\b/i.test(ql)) return true;
           if (/\bqueue\s*(display|system|token)\b/i.test(ql)) return true;
           if (/(டோக்கன்\s*டிஸ்பிளே|டோக்கன்)/.test(ql)) return true;
@@ -3602,9 +4043,9 @@
           const ql = q.toLowerCase().trim();
           if (/\bpacs\b/i.test(ql)) return true;
           if (/\bmedsynapse\b/i.test(ql)) return true;
-          if (/\b(xray|x-ray|ct\s*scan|mri|radiology|dicom)\s*(viewer|portal|login|open|image|images)\b/i.test(ql)) return true;
-          if (/\b(scan\s*paakanum|scan\s*viewer|xray\s*paakanum)\b/i.test(ql)) return true;
-          if (/(ரேடியாலஜி|எக்ஸ்ரே|ஸ்கேன்\s*வியூவர்)/.test(ql)) return true;
+          if (/\b(xray|x-ray|ct\s*scan|mri|radiology|dicom)\b/i.test(ql)) return true;
+          if (/\b(scan\s*paakanum|scan\s*viewer|xray\s*paakanum|digital\s*xray)\b/i.test(ql)) return true;
+          if (/(ரேடியாலஜி|எக்ஸ்ரே|ஸ்கேன்\s*வியூவர்|ஸ்கேன்\s*பார்க்க)/.test(ql)) return true;
           return false;
         }
       },
@@ -3621,9 +4062,11 @@
         match: function(q) {
           const ql = q.toLowerCase().trim();
           if (ql.includes('mom') || ql.includes('committee')) return false;
-          if (/\bmrd\s*(portal|login|app|system|archive|file)\b/i.test(ql)) return true;
+          if (ql.includes('his')) return false;
+          if (/\bmrd\b/i.test(ql)) return true;
           if (/\bfit\s*mrd\b/i.test(ql)) return true;
-          if (/\bmedical\s*records?\s*(portal|system|software|login)\b/i.test(ql)) return true;
+          if (/\bmedical\s*records?\s*(portal|system|software|login|app|application|webapplication)\b/i.test(ql)) return true;
+          if (/\b(discharge\s*summary|historical\s*patient|case\s*sheet\s*archive|patient\s*discharge)\b/i.test(ql)) return true;
           if (/(எம்ஆர்டி|மருத்துவ\s*ஆவணம்)/.test(ql)) return true;
           return false;
         }
@@ -3644,7 +4087,6 @@
           if (/\b(master\s*health|master\s*health\s*checkup|master\s*health\s*check|health\s*check\s*app|health\s*checkup\s*app|health\s*checkup|health\s*check|healthcheck)\b/i.test(ql)) return true;
           if (/\b(mapims\s*ai|ai\s*health|ai\s*assessment|ai\s*checkup|tele-?consultation|ai\s*doctor|health\s*assessment\s*ai)\b/i.test(ql)) return true;
           if (/(மாஸ்டர்\s*ஹெல்த்|ஹெல்த்\s*செக்கப்|ஹெல்த்\s*செக்|ஏஐ\s*ஹெல்த்|ஆரோக்கிய\s*மதிப்பீடு)/.test(ql)) return true;
-          if (/(mhc.*(open|enga|iruku|eruku|pannu|app|portal)|open.*mhc|master\s*health.*(enga|open|iruku|eruku|pannu))/i.test(ql)) return true;
           return false;
         }
       },
@@ -3660,7 +4102,8 @@
         badge: 'In-House App',
         match: function(q) {
           const ql = q.toLowerCase().trim();
-          if (/\b(pathology\s*barcode|barcode\s*(app|generator)|patient\s*barcode|tube\s*barcode|sample\s*barcode|lab\s*barcode)\b/i.test(ql)) return true;
+          if (/\bbarcode\b/i.test(ql)) return true;
+          if (/\b(pathology\s*barcode|sample\s*barcode|tube\s*barcode|specimen\s*barcode|lab\s*barcode)\b/i.test(ql)) return true;
           if (/(பார்கோடு|மாதிரி\s*பார்கோடு)/.test(ql)) return true;
           return false;
         }
@@ -3694,7 +4137,350 @@
         badge: 'In-House App',
         match: function(q) {
           const ql = q.toLowerCase().trim();
-          if (/\b(counselling\s*(&|and)?\s*icu\s*app|counselling\s*app|icu\s*log\s*app)\b/i.test(ql)) return true;
+          if (ql.includes('checklist') || ql.includes('casesheet') || ql.includes('shifting')) return false;
+          if (/\b(counselling|counseling)\b/i.test(ql)) return true;
+          if (/\b(icu\s*app|icu\s*application|icu\s*software|icu\s*log)\b/i.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'clinical-checklist-app',
+        title: 'Clinical Checklist App',
+        url: 'https://checklist.mapims.edu.in/',
+        description: 'NABH daily clinical audit, nursing checklists & clinical quality verification tool',
+        category: 'Quality, Audit & Compliance Checklists',
+        categoryTab: null,
+        sectionId: 'checklists',
+        highlightId: 'card-clinical-checklist',
+        badge: 'Quality App',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (ql.includes('non clinical') || ql.includes('non-clinical') || ql.includes('gencl') || ql.includes('sbar') || ql.includes('casesheet')) return false;
+          if (/\bclinical\s*checklist\b/i.test(ql)) return true;
+          if (/\bchecklist\s*(app|application|software|webapplication|portal|tool|system)\b/i.test(ql)) return true;
+          if (/\b(clinical\s*audit|audit\s*app|audit\s*software|audit\s*application)\b/i.test(ql)) return true;
+          if (/^checklist$/i.test(ql) || /^open\s+checklist$/i.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'non-clinical-checklist-app',
+        title: 'Non-Clinical Checklist App (GENCL)',
+        url: 'https://gencl.mapims.edu.in/',
+        description: 'General hospital facility rounds, biomedical maintenance, housekeeping & non-clinical compliance inspection tool',
+        category: 'Quality, Audit & Compliance Checklists',
+        categoryTab: null,
+        sectionId: 'checklists',
+        highlightId: 'card-non-clinical-checklist',
+        badge: 'Quality App',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\bnon[- ]?clinical\s*checklist\b/i.test(ql)) return true;
+          if (/\bgencl\b/i.test(ql)) return true;
+          if (/\b(facility\s*checklist|general\s*checklist)\b/i.test(ql)) return true;
+          return false;
+        }
+      },
+
+      // -----------------------------------------------------------------------
+      // DIRECT HUBS & DIRECTORIES (MANUALS, COMMITTEES & CIRCULARS)
+      // -----------------------------------------------------------------------
+      {
+        id: 'recent-circulars-2026',
+        title: 'APH Recent Circulars (2026)',
+        url: './recent circular.html?q=2026',
+        description: 'Safety meeting circulars, SWOT analysis, in-house apps, and 2026 executive notifications',
+        category: 'Digital E-Circulars',
+        categoryTab: null,
+        sectionId: 'e-circulars',
+        highlightId: 'card-recent-circulars',
+        badge: 'Circulars Hub',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\b(2026|26)\s*(circulars?|சுற்றறிக்கை)/i.test(ql)) return true;
+          if (/\b(circulars?|சுற்றறிக்கை)\s*(2026|26)/i.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'recent-circulars-hub',
+        title: 'APH Recent Circulars Hub',
+        url: './recent circular.html',
+        description: 'Management memorandums, safety meeting circulars, executive notices, and official hospital orders',
+        category: 'Digital E-Circulars',
+        categoryTab: null,
+        sectionId: 'e-circulars',
+        highlightId: 'card-recent-circulars',
+        badge: 'Circulars Hub',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\b(digital\s*e[- ]?circulars?|recent\s*circulars?|hospital\s*circulars?|office\s*circulars?)\b/i.test(ql)) return true;
+          if (/^(circulars?|e-?circulars?|சுற்றறிக்கை|சுற்றறிக்கைகள்)$/i.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'manuals-hub',
+        title: 'Hospital Accreditation Manuals Hub',
+        url: './manuals.html',
+        description: 'Official clinical, nursing, infection control, and administrative manuals repository',
+        category: 'Manuals & SOPs',
+        categoryTab: null,
+        sectionId: 'quality',
+        highlightId: 'quality',
+        badge: 'Manuals Hub',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\b(open\s+manuals?|hospital\s+manuals?|all\s+manuals?|manuals?\s+hub|manuals?\s+directory)\b/i.test(ql)) return true;
+          if (/^(manuals?|sops?|கையேடுகள்|விதிமுறைகள்)$/i.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'committees-directory',
+        title: 'APH Hospital Committees & MOM Directory',
+        url: './comitee.html',
+        description: 'Hospital statutory committees, charters, scheduled meeting calendar, and MOM repository',
+        category: 'Committees & Governance',
+        categoryTab: null,
+        sectionId: 'quality',
+        highlightId: 'quality',
+        badge: 'Governance Hub',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\b(committee\s*list|list\s*of\s*comm?itt?ees?|open\s*comm?itt?ees?|hospital\s*comm?itt?ees?)\b/i.test(ql)) return true;
+          if (/^(comm?itt?ees?|comm?itee|குழுக்கள்|நிர்வாகக்\s*குழு)$/i.test(ql)) return true;
+          return false;
+        }
+      },
+
+      // -----------------------------------------------------------------------
+      // TARIFF & LIVE STOCK (FINANCIAL & SUPPLY DASHBOARD)
+      // -----------------------------------------------------------------------
+      {
+        id: 'doc-tariff-packages',
+        title: 'Special Treatment & Health Packages (04.05.2026)',
+        url: 'http://192.168.101.75:3000/files/Adhiparasakthi Hospitals Special Packages (04.05.2026).pdf',
+        description: 'Inpatient admission, surgery packages, Panchayat discount (15%), and health checkups',
+        category: 'Tariff & Packages',
+        categoryTab: null,
+        sectionId: 'tariff-stock',
+        highlightId: 'item-tariff-packages',
+        badge: 'Tariff PDF',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\b(special\s*packages?|admission\s*packages?|health\s*packages?|panchayat\s*discount|treatment\s*packages?|சிகிச்சை\s*தொகுப்பு|பேக்கேஜ்\s*கட்டணம்)\b/i.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'doc-tariff-lab',
+        title: 'Laboratory Investigation Tariff',
+        url: 'http://192.168.101.75:3000/files/Lab Tariff.pdf',
+        description: 'Pathology, clinical biochemistry, microbiology, and haematology test charges',
+        category: 'Tariff & Packages',
+        categoryTab: null,
+        sectionId: 'tariff-stock',
+        highlightId: 'item-tariff-lab',
+        badge: 'Tariff PDF',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\b(lab\s*tariff|lab\s*charges?|laboratory\s*tariff|lab\s*investigation\s*tariff|blood\s*test\s*charges?|pathology\s*charges?|லேப்\s*கட்டணம்|இரத்த\s*பரிசோதனை\s*கட்டணம்)\b/i.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'doc-tariff-radiology',
+        title: 'Radiology Imaging Tariff',
+        url: 'http://192.168.101.75:3000/files/Radiology Tariff.pdf',
+        description: 'Digital X-Ray, CT Scan, MRI, Ultrasound (USG), and Doppler tariffs',
+        category: 'Tariff & Packages',
+        categoryTab: null,
+        sectionId: 'tariff-stock',
+        highlightId: 'item-tariff-radiology',
+        badge: 'Tariff PDF',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\b(pacs|viewer|intercom)\b/i.test(ql)) return false;
+          if (/\b(radiology\s*tariff|radiology\s*charges?|xray\s*tariff|ct\s*scan\s*tariff|mri\s*tariff|ultrasound\s*tariff|scan\s*charges?|ரேடியாலஜி\s*கட்டணம்|ஸ்கேன்\s*கட்டணம்|எக்ஸ்ரே\s*கட்டணம்)\b/i.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'doc-tariff-physiotherapy',
+        title: 'Physiotherapy Department Tariff',
+        url: 'http://192.168.101.75:3000/files/Physiotherapy Tariff.pdf',
+        description: 'Rehabilitation, electrotherapy, traction, and exercise therapy session rates',
+        category: 'Tariff & Packages',
+        categoryTab: null,
+        sectionId: 'tariff-stock',
+        highlightId: 'item-tariff-physiotherapy',
+        badge: 'Tariff PDF',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\b(physiotherapy\s*tariff|physiotherapy\s*charges?|physio\s*tariff|physio\s*charges?|பிசியோதெரபி\s*கட்டணம்)\b/i.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'doc-tariff-ot',
+        title: 'General Ward Surgery OT Tariff',
+        url: 'http://192.168.101.75:3000/files/General Ward Surgery OT Tariff.pdf',
+        description: 'Operation Theatre charges, surgeon fees, anaesthesia, and surgical packages',
+        category: 'Tariff & Packages',
+        categoryTab: null,
+        sectionId: 'tariff-stock',
+        highlightId: 'item-tariff-ot',
+        badge: 'Tariff PDF',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\b(consent|opputhal|sammatham|படிவம்)\b/i.test(ql)) return false;
+          if (/\b(ot\s*tariff|surgery\s*tariff|operation\s*theatre\s*tariff|ot\s*charges?|surgery\s*charges?|அறுவை\s*சிகிச்சை\s*கட்டணம்|ஆபரேஷன்\s*தியேட்டர்\s*கட்டணம்)\b/i.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'doc-tariff-icu-room',
+        title: 'ICU and Special Ward Room Tariff',
+        url: 'http://192.168.101.75:3000/files/ICU and Special Ward Room Tariff.pdf',
+        description: 'ICU/ICCU/NICU bed charges, deluxe rooms, and AC single room rents per day',
+        category: 'Tariff & Packages',
+        categoryTab: null,
+        sectionId: 'tariff-stock',
+        highlightId: 'item-tariff-icu',
+        badge: 'Tariff PDF',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\b(room\s*rent|room\s*tariff|bed\s*charges?|ward\s*charges?|icu\s*tariff|icu\s*charges?|special\s*ward\s*room\s*tariff|deluxe\s*room\s*rent|அறை\s*வாடகை|ஐசியூ\s*கட்டணம்|படுக்கை\s*கட்டணம்)\b/i.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'doc-tariff-other',
+        title: 'Other Departments Tariff',
+        url: 'http://192.168.101.75:3000/files/Other Department Tariff.pdf',
+        description: 'Dental, ENT, Ophthalmology, Casualty, and specialty outpatient services',
+        category: 'Tariff & Packages',
+        categoryTab: null,
+        sectionId: 'tariff-stock',
+        highlightId: 'item-tariff-other',
+        badge: 'Tariff PDF',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\b(other\s*departments?\s*tariff|other\s*tariffs?|dental\s*tariff|ent\s*charges?|இதர\s*கட்டணங்கள்)\b/i.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'doc-stock-drugs-139',
+        title: 'Drug Stores Stock Details (139 Drugs)',
+        url: 'http://192.168.101.75:3000/files/Drug Stores Stock Details.pdf',
+        description: 'Central Drug Store active inventory counts across 139 essential hospital medications',
+        category: 'Pharmacy & Stock',
+        categoryTab: null,
+        sectionId: 'tariff-stock',
+        highlightId: 'card-stock-drugs-139',
+        badge: '139 Drugs PDF',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\b(intercom|extension|phone|call|login|aosta|blood|ரத்தம்|இரத்தம்)\b/i.test(ql)) return false;
+          if (/\b(139\s*drugs?|drug\s*stores?\s*stock|central\s*pharmacy\s*drug\s*stock|139\s*மருந்து\s*இருப்பு)\b/i.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'doc-stock-ip',
+        title: 'IP Pharmacy Stock Details (77 Items)',
+        url: 'http://192.168.101.75:3000/files/IP Pharmacy Stock Details.pdf',
+        description: 'Inpatient pharmacy dispensary inventory covering 77 active medications',
+        category: 'Pharmacy & Stock',
+        categoryTab: null,
+        sectionId: 'tariff-stock',
+        highlightId: 'card-stock-ip',
+        badge: '77 Items PDF',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\b(ip\s*pharmacy\s*stock|inpatient\s*pharmacy\s*stock|in\s*patient\s*pharmacy\s*stock|77\s*items?\s*pharmacy|உள்நோயாளி\s*மருந்தக\s*இருப்பு)\b/i.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'doc-stock-insurance',
+        title: 'Insurance Pharmacy Stock Details (515 Items)',
+        url: 'http://192.168.101.75:3000/files/Insurance Pharmacy Stock Details.pdf',
+        description: 'Approved insurance, CMCHIS, and TPA medications available at insurance pharmacy',
+        category: 'Pharmacy & Stock',
+        categoryTab: null,
+        sectionId: 'tariff-stock',
+        highlightId: 'card-stock-insurance',
+        badge: '515 Items PDF',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\b(insurance\s*pharmacy\s*stock|tpa\s*pharmacy\s*stock|515\s*items?\s*pharmacy|காப்பீட்டு\s*மருந்தக\s*இருப்பு)\b/i.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'doc-stock-op',
+        title: 'OP Pharmacy Stock Details (90 Items)',
+        url: 'http://192.168.101.75:3000/files/Op Pharmacy Stock  Details.pdf',
+        description: 'Outpatient pharmacy dispensary inventory covering 90 vital prescription medications',
+        category: 'Pharmacy & Stock',
+        categoryTab: null,
+        sectionId: 'tariff-stock',
+        highlightId: 'card-stock-op',
+        badge: '90 Items PDF',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\b(op\s*pharmacy\s*stock|opd\s*pharmacy\s*stock|outpatient\s*pharmacy\s*stock|90\s*items?\s*pharmacy|வெளிநோயாளி\s*மருந்தக\s*இருப்பு)\b/i.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'doc-formulary-2025',
+        title: 'Hospital Formulary - 2025',
+        url: 'http://192.168.101.75:3000/files/Hospital Formulary - 2025.pdf',
+        description: 'Official MAPIMS Hospital Drug Formulary 2025',
+        category: 'Pharmacy & Stock',
+        categoryTab: null,
+        sectionId: 'tariff-stock',
+        highlightId: 'card-formulary-2025',
+        badge: 'Formulary PDF',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\b(hospital\s*formulary\s*2025|hospital\s*formulary|formulary\s*2025|மருந்து\s*கையேடு\s*2025)\b/i.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'doc-free-drug-list',
+        title: 'Free Drug List (NMC)',
+        url: 'http://192.168.101.75:3000/files/Pharmacy_Updated_11.05.26.pdf',
+        description: 'National Medical Commission (NMC) mandatory list of essential medicines dispensed free',
+        category: 'Pharmacy & Stock',
+        categoryTab: null,
+        sectionId: 'tariff-stock',
+        highlightId: 'card-free-drug-list',
+        badge: 'Formulary PDF',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\b(free\s*drug\s*list|nmc\s*free\s*drugs?|nmc\s*drug\s*list|free\s*medicines?\s*list|இலவச\s*மருந்து\s*பட்டியல்)\b/i.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'doc-inventory-stock-2024',
+        title: 'Inventory Stock Details 2024 (738 Items)',
+        url: 'http://192.168.101.75:3000/files/Inventory Stock Details 2024.pdf',
+        description: 'Complete inventory ledger of all 738 items in the hospital general store',
+        category: 'General Store',
+        categoryTab: null,
+        sectionId: 'tariff-stock',
+        highlightId: 'card-inventory-pdf',
+        badge: '738 Items PDF',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\b(inventory\s*stock\s*details|inventory\s*stock\s*pdf|general\s*store\s*inventory|738\s*inventory|ஸ்டோர்\s*இருப்பு\s*விவரம்)\b/i.test(ql)) return true;
           return false;
         }
       },
@@ -3869,9 +4655,10 @@
         badge: 'Medicolegal',
         match: function(q) {
           const ql = q.toLowerCase().trim();
-          if (/\b(paediatric|pediatric|child|children|infant|newborn|kuzhanthai|kulandhai|pillai)\s*consent\b/i.test(ql)) return true;
-          if (ql.includes('consent') && (ql.includes('pediatric') || ql.includes('paediatric') || ql.includes('kuzhanthai') || ql.includes('child'))) return true;
-          if (/(குழந்தை\s*ஒப்புதல்|குழந்தை\s*படிவம்)/.test(ql)) return true;
+          if (/\b(paediatric|pediatric|pedatric|paedatric|child|children|infant|newborn|kuzhanthai|kulandhai|pillai|pasanga)\s*(consent|concent|form|padivam|sammatham)?\b/i.test(ql)) return true;
+          if ((ql.includes('consent') || ql.includes('concent') || ql.includes('sammatham') || ql.includes('opputhal')) &&
+              (ql.includes('pediatric') || ql.includes('paediatric') || ql.includes('pedatric') || ql.includes('kuzhanthai') || ql.includes('kulandhai') || ql.includes('child'))) return true;
+          if (/(குழந்தை\s*ஒப்புதல்|குழந்தைகள்\s*ஒப்புதல்|குழந்தை\s*படிவம்|குழந்தை\s*சம்மதம்)/.test(ql)) return true;
           return false;
         }
       },
@@ -3887,9 +4674,10 @@
         badge: 'Medicolegal',
         match: function(q) {
           const ql = q.toLowerCase().trim();
-          if (/\b(surgery|surgical|aruvai)\s*consent\s*tamil\b/i.test(ql)) return true;
-          if (/\b(aruvai\s*opputhal|aruvai\s*sammatham|aruvai\s*sigichai\s*opputhal)\b/i.test(ql)) return true;
-          if (/(அறுவை\s*சிகிச்சை\s*ஒப்புதல்|அறுவை\s*ஒப்புதல்|தமிழ்\s*ஒப்புதல்)/.test(ql)) return true;
+          if (/\b(surgery|surgical|aruvai|sikitsai|sigichai)\s*(consent|concent|sammatham|opputhal|padivam)?\s*(tamil|தமிழ்)\b/i.test(ql)) return true;
+          if (/\b(tamil|தமிழ்)\s*(surgery|surgical|aruvai)\s*(consent|concent|sammatham|opputhal|padivam)?\b/i.test(ql)) return true;
+          if (/\b(aruvai\s*opputhal|aruvai\s*sammatham|aruvai\s*sigichai\s*opputhal|aruvai\s*sigichai\s*sammatham|aruvai\s*sikitsai\s*sammatham|aruvaisikitsai|aruvaisigichai)\b/i.test(ql)) return true;
+          if (/(அறுவை\s*சிகிச்சை\s*ஒப்புதல்|அறுவை\s*சிகிச்சை\s*சம்மதம்|அறுவை\s*சிகிச்சை\s*படிவம்|அறுவை\s*ஒப்புதல்|தமிழ்\s*ஒப்புதல்)/.test(ql)) return true;
           return false;
         }
       },
@@ -3905,9 +4693,10 @@
         badge: 'Medicolegal',
         match: function(q) {
           const ql = q.toLowerCase().trim();
-          if (ql.includes('tamil') || ql.includes('தமிழ்')) return false;
-          if (/\b(surgery|surgical|operative|operation)\s*(consent|form)\b/i.test(ql)) return true;
-          if (/\bconsent\s*for\s*(surgery|procedures|operation)\b/i.test(ql)) return true;
+          if (ql.includes('tamil') || ql.includes('தமிழ்') || ql.includes('aruvai') || ql.includes('sikitsai') || ql.includes('sigichai')) return false;
+          if (/\b(surgery|surgical|sergery|suregry|surgry|operative|operation)\s*(consent|concent|form|padivam)\b/i.test(ql)) return true;
+          if (/\b(consent|concent)\s*for\s*(surgery|procedures|operation)\b/i.test(ql)) return true;
+          if (/\bot\s*(consent|concent)\b/i.test(ql)) return true;
           return false;
         }
       },
@@ -3923,9 +4712,11 @@
         badge: 'Medicolegal',
         match: function(q) {
           const ql = q.toLowerCase().trim();
-          if (/\b(blood|transfusion|radha|ratha|raththam)\s*(consent|reaction\s*form)\b/i.test(ql)) return true;
-          if (ql.includes('consent') && (ql.includes('blood') || ql.includes('transfusion') || ql.includes('prbc') || ql.includes('raththam'))) return true;
-          if (/(ரத்த\s*ஒப்புதல்|ரத்ததான\s*ஒப்புதல்)/.test(ql)) return true;
+          if (/\b(blood\s*transfusion|transfusion|transfution|blood\s*component)\s*(consent|concent|form|padivam|sammatham)?\b/i.test(ql)) return true;
+          if (/\b(blood|radha|ratha|raththam|ratham|iratha)\s*(consent|concent|reaction\s*form|sammatham|opputhal)\b/i.test(ql)) return true;
+          if ((ql.includes('consent') || ql.includes('concent') || ql.includes('sammatham')) &&
+              (ql.includes('blood') || ql.includes('transfusion') || ql.includes('prbc') || ql.includes('raththam') || ql.includes('ratha'))) return true;
+          if (/(ரத்த\s*ஒப்புதல்|ரத்ததான\s*ஒப்புதல்|ரத்த\s*மாற்று\s*ஒப்புதல்|இரத்த\s*மாற்று\s*சம்மதம்)/.test(ql)) return true;
           return false;
         }
       },
@@ -3941,9 +4732,10 @@
         badge: 'Medicolegal',
         match: function(q) {
           const ql = q.toLowerCase().trim();
-          if (/\b(dama|lama)\s*(form|consent)?\b/i.test(ql)) return true;
+          if (/\b(dama|lama|damma|damaa)\s*(form|consent|concent|undertaking)?\b/i.test(ql)) return true;
           if (/\bdischarge\s*against\s*medical\s*advice\b/i.test(ql)) return true;
-          if (/\bveliye\s*poga\s*consent\b/i.test(ql)) return true;
+          if (/\b(veliye\s*poga|hospital\s*vittu\s*poga|veetuku\s*poga|hospital\s*la\s*irunthu\s*poga|discharge\s*aaga)\s*(consent|concent|form|padivam)?\b/i.test(ql)) return true;
+          if (/(மருத்துவ\s*ஆலோசனைக்கு\s*மாறாக|டாமா\s*படிவம்|டாமா\s*ஒப்புதல்)/.test(ql)) return true;
           return false;
         }
       },
@@ -3959,9 +4751,10 @@
         badge: 'Medicolegal',
         match: function(q) {
           const ql = q.toLowerCase().trim();
-          if (/\bnot\s*willing\s*(consent|form)\b/i.test(ql)) return true;
-          if (/\b(treatment\s*refusal|procedure\s*refusal|maruppu\s*form)\b/i.test(ql)) return true;
-          if (/(சிகிச்சை\s*மறுப்பு|மறுப்பு\s*படிவம்)/.test(ql)) return true;
+          if (/\b(not\s*willing|not\s*wiling|not\s*willin)\s*(consent|concent|form|padivam)?\b/i.test(ql)) return true;
+          if (/\b(treatment\s*refusal|procedure\s*refusal|investigation\s*refusal|refusal\s*consent)\b/i.test(ql)) return true;
+          if (/\b(maruppu\s*form|maruppu\s*padivam|chikitsai\s*maruppu|treatment\s*vendam|thevailla\s*consent|viruppamillai\s*consent|viruppamilla\s*padivam)\b/i.test(ql)) return true;
+          if (/(சிகிச்சை\s*மறுப்பு|மறுப்பு\s*படிவம்|விருப்பமில்லா\s*படிவம்|மறுப்பு\s*ஒப்புதல்)/.test(ql)) return true;
           return false;
         }
       },
@@ -3977,9 +4770,45 @@
         badge: 'Medicolegal',
         match: function(q) {
           const ql = q.toLowerCase().trim();
-          if (/\b(admission|inpatient\s*admission|general\s*admission)\s*(consent|form)\b/i.test(ql)) return true;
-          if (/\bserkkai\s*opputhal\b/i.test(ql)) return true;
-          if (/(சேர்க்கை\s*ஒப்புதல்)/.test(ql)) return true;
+          if (/\b(admission|admisison|admissin|inpatient\s*admission|general\s*admission)\s*(consent|concent|form|padivam|sammatham)\b/i.test(ql)) return true;
+          if (/\b(serkai\s*sammatham|serkai\s*padivam|serkkai\s*opputhal|admit\s*aaga\s*consent|ward\s*serkai\s*consent|ip\s*admission\s*consent)\b/i.test(ql)) return true;
+          if (/(சேர்க்கை\s*ஒப்புதல்|நோயாளி\s*சேர்க்கை\s*சம்மதம்|சேர்க்கை\s*படிவம்)/.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'visiting-consultant-form',
+        title: 'Visiting Consultant Requisition Form',
+        url: 'http://192.168.101.75:3000/files/Visiting%20Consultant%20Requisition%20letter.pdf',
+        description: 'Specialist consultation requisition protocol and external visiting doctor invitation letter',
+        category: 'Consent Forms',
+        categoryTab: 'consent',
+        sectionId: 'forms',
+        highlightId: 'cat-card-consent',
+        badge: 'Medicolegal',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\b(visiting|visitin)\s*(consultant|consultent|doctor|specialist)\s*(form|letter|requisition)?\b/i.test(ql)) return true;
+          if (/\bconsultant\s*requisition\s*(form|letter)?\b/i.test(ql)) return true;
+          if (/(வெளி\s*மருத்துவர்\s*வருகை|சிறப்பு\s*மருத்துவர்\s*வருகை)/.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'surrogate-consent-form',
+        title: 'Surrogate Consent Protocol',
+        url: 'http://192.168.101.75:3000/files/SURROGATE%20CONSENT.pdf',
+        description: 'NABH informed consent protocol for patients incapable of independent medical decision-making (Surrogate / Next-of-Kin)',
+        category: 'Consent Forms',
+        categoryTab: 'consent',
+        sectionId: 'forms',
+        highlightId: 'cat-card-consent',
+        badge: 'Medicolegal',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\b(surrogate|surrugate|surogate)\s*(consent|concent|form|protocol)?\b/i.test(ql)) return true;
+          if (/\bsubstitute\s*decision\s*maker\s*(consent|form)?\b/i.test(ql)) return true;
+          if (/\bincapable\s*patient\s*consent\b/i.test(ql)) return true;
           return false;
         }
       },
@@ -4159,6 +4988,312 @@
           return false;
         }
       },
+      {
+        id: 'code-blue-analysis-form',
+        title: 'Code Blue Post Event Analysis Form',
+        url: 'http://192.168.101.75:3000/files/Code%20Blue%20Post%20Event%20Analysis%20Form.pdf',
+        description: 'CPR debriefing, resuscitation timing audit, defibrillation log & team performance review',
+        category: 'Common Forms',
+        categoryTab: 'clinical',
+        sectionId: 'forms',
+        highlightId: 'cat-card-clinical',
+        badge: 'Audit Form',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\bcode\s*blue\s*(post\s*event\s*)?analysis\b/i.test(ql)) return true;
+          if (/\bcode\s*blue\s*audit\b/i.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'code-rrt-activation-form',
+        title: 'Code RRT Activation Form',
+        url: 'http://192.168.101.75:3000/files/Code%20RRT%20Activation%20Form.pdf',
+        description: 'Rapid Response Team (RRT) bedside trigger evaluation and intervention log',
+        category: 'Common Forms',
+        categoryTab: 'clinical',
+        sectionId: 'forms',
+        highlightId: 'cat-card-clinical',
+        badge: 'Rapid Response',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\b(code\s*)?rrt\s*(activation\s*)?(form)?\b/i.test(ql)) return true;
+          if (/\brapid\s*response\s*(team\s*)?(form)?\b/i.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'high-alert-medications-form',
+        title: 'HIGH ALERT MEDICATIONS',
+        url: 'http://192.168.101.75:3000/files/HIGH%20ALERT%20MEDICATIONS.pdf',
+        description: 'High-risk drug safety protocol, storage segregation & independent double-check guidelines',
+        category: 'Common Forms',
+        categoryTab: 'clinical',
+        sectionId: 'forms',
+        highlightId: 'cat-card-clinical',
+        badge: 'Patient Safety',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\bhigh\s*alert\s*(medications?|drugs?|meds?)\b/i.test(ql)) return true;
+          if (/(உயர்\s*எச்சரிக்கை\s*மருந்துகள்)/.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'drug-food-interaction-form',
+        title: 'DRUG - FOOD INTERACTION LIST',
+        url: 'http://192.168.101.75:3000/files/DRUG%20-%20FOOD%20INTERACTION%20LIST.pdf',
+        description: 'Official clinical guide on drug-nutrient and dietary timing precautions',
+        category: 'Common Forms',
+        categoryTab: 'clinical',
+        sectionId: 'forms',
+        highlightId: 'cat-card-clinical',
+        badge: 'Clinical Reference',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\b(drug\s*[- ]?\s*food|food\s*[- ]?\s*drug)\s*interactions?\b/i.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'drug-drug-interaction-form',
+        title: 'DRUG - DRUG INTERACTION LIST',
+        url: 'http://192.168.101.75:3000/files/DRUG%20-%20DRUG%20INTERACTION%20LIST.pdf',
+        description: 'Major adverse pharmacological combinations and contraindicated drug interactions',
+        category: 'Common Forms',
+        categoryTab: 'clinical',
+        sectionId: 'forms',
+        highlightId: 'cat-card-clinical',
+        badge: 'Clinical Reference',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\bdrug\s*[- ]?\s*drug\s*interactions?\b/i.test(ql)) return true;
+          if (/\bdrug\s*interactions?\s*list\b/i.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'approved-abbreviations-form',
+        title: 'Approved Medical Abbreviations List 2025-2026',
+        url: 'http://192.168.101.75:3000/files/Approved%20abbreviation%20July%202025%20-2026.pdf',
+        description: 'NABH standardized medical abbreviations & dangerous unapproved abbreviations list',
+        category: 'Common Forms',
+        categoryTab: 'clinical',
+        sectionId: 'forms',
+        highlightId: 'cat-card-clinical',
+        badge: 'NABH Standard',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\bapproved\s*(medical\s*)?abbreviations?\b/i.test(ql)) return true;
+          if (/\bdo\s*not\s*use\s*abbreviations?\b/i.test(ql)) return true;
+          if (/\bhospital\s*abbreviations?\b/i.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'emergency-medication-list-form',
+        title: 'EMERGENCY MEDICATION LIST - JAN 2026',
+        url: 'http://192.168.101.75:3000/files/EMERGENCY%20MEDICATION%20LIST%20-%20JAN%202026.pdf',
+        description: 'Emergency resuscitation trolley and emergency room essential emergency medicines stocking list',
+        category: 'Common Forms',
+        categoryTab: 'clinical',
+        sectionId: 'forms',
+        highlightId: 'cat-card-clinical',
+        badge: 'Crash Cart List',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\bemergency\s*(medications?|drugs?|medicines?)\s*list\b/i.test(ql)) return true;
+          if (/\bcrash\s*cart\s*(medications?|drugs?)\s*list\b/i.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'daycare-assessment-form',
+        title: 'Day Care Assessment Form',
+        url: 'http://192.168.101.75:3000/files/Day%20Care%20Assessment%20Form.pdf',
+        description: 'Day care clinical evaluation, anesthesia assessment, and admission record',
+        category: 'Common Forms',
+        categoryTab: 'clinical',
+        sectionId: 'forms',
+        highlightId: 'cat-card-clinical',
+        badge: 'Day Care Form',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\bday\s*care\s*assessment\b/i.test(ql)) return true;
+          if (/\bdaycare\s*assessment\b/i.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'daycare-discharge-summary',
+        title: 'Day Care Discharge Summary',
+        url: 'http://192.168.101.75:3000/files/Day%20Care%20-%20Discharge%20Summary.pdf',
+        description: 'Standardized discharge instruction note and follow-up guidance for day care patients',
+        category: 'Common Forms',
+        categoryTab: 'clinical',
+        sectionId: 'forms',
+        highlightId: 'cat-card-clinical',
+        badge: 'Day Care Form',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\bday\s*care\s*discharge\b/i.test(ql)) return true;
+          if (/\bdaycare\s*discharge\b/i.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'er-discharge-summary-form',
+        title: 'ER Discharge Summary Form',
+        url: 'http://192.168.101.75:3000/files/ER%20-%20DISCHARGE%20SUMMARY%20FORM.pdf',
+        description: 'Emergency Room treatment summary, discharge instructions, and follow-up referral sheet',
+        category: 'Common Forms',
+        categoryTab: 'clinical',
+        sectionId: 'forms',
+        highlightId: 'cat-card-clinical',
+        badge: 'ER Record',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\ber\s*(discharge\s*)?summary\b/i.test(ql)) return true;
+          if (/\bemergency\s*(room\s*)?discharge\s*summary\b/i.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'er-doctors-assessment-form',
+        title: 'ER Doctors Initial Assessment Form',
+        url: 'http://192.168.101.75:3000/files/DOCTORS%20INITIAL%20ASSESSMENT%20FOR%20EMERGENCY%20ROOM.pdf',
+        description: 'Emergency room physician initial clinical triage and preliminary diagnostic record',
+        category: 'Common Forms',
+        categoryTab: 'clinical',
+        sectionId: 'forms',
+        highlightId: 'cat-card-clinical',
+        badge: 'ER Assessment',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\ber\s*doctors?\s*(initial\s*)?assessment\b/i.test(ql)) return true;
+          if (/\bemergency\s*room\s*doctor\s*assessment\b/i.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'er-nurses-assessment-form',
+        title: 'ER Nurses Initial Assessment Form',
+        url: 'http://192.168.101.75:3000/files/Nurses%20Initial%20Assessment%20for%20Emergency%20Room.pdf',
+        description: 'Emergency room nursing initial triage, vital sign chart & baseline assessment',
+        category: 'Common Forms',
+        categoryTab: 'clinical',
+        sectionId: 'forms',
+        highlightId: 'cat-card-clinical',
+        badge: 'ER Assessment',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\ber\s*nurses?\s*(initial\s*)?assessment\b/i.test(ql)) return true;
+          if (/\bemergency\s*room\s*nurse\s*assessment\b/i.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'incident-report-form',
+        title: 'Incident Report Form',
+        url: 'http://192.168.101.75:3000/files/Incident.pdf',
+        description: 'Hospital sentinel event, clinical incident, fall, and near-miss documentation form',
+        category: 'Common Forms',
+        categoryTab: 'clinical',
+        sectionId: 'forms',
+        highlightId: 'cat-card-clinical',
+        badge: 'Safety Incident',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\bincident\s*(report\s*)?(form)?\b/i.test(ql)) return true;
+          if (/(நிகழ்வு\s*அறிக்கை|விபத்து\s*அறிக்கை)/.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'transfusion-protocol-form',
+        title: 'Transfusion Technique Protocol',
+        url: 'http://192.168.101.75:3000/files/transfusionprotocol.pdf',
+        description: 'Blood and blood component administration checklist, filter use, and reaction monitoring protocol',
+        category: 'Common Forms',
+        categoryTab: 'clinical',
+        sectionId: 'forms',
+        highlightId: 'cat-card-clinical',
+        badge: 'Clinical Protocol',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\btransfusion\s*technique\s*protocol\b/i.test(ql)) return true;
+          if (/\btransfusion\s*protocol\s*form\b/i.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'antibiogram-form',
+        title: 'Antibiogram',
+        url: 'http://192.168.101.75:3000/files/ANTIBIOGRAM.pdf',
+        description: 'Hospital microbial susceptibility profile and antibiotic resistance cumulative surveillance report',
+        category: 'Common Forms',
+        categoryTab: 'clinical',
+        sectionId: 'forms',
+        highlightId: 'cat-card-clinical',
+        badge: 'Microbiology',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\bantibiogram\b/i.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'restricted-antibiotic-form',
+        title: 'Restricted Anti-biotic Form (HIC)',
+        url: 'http://192.168.101.75:3000/files/HIC.pdf',
+        description: 'Hospital Infection Control prior-authorization form for reserve and restricted antibiotics',
+        category: 'Common Forms',
+        categoryTab: 'clinical',
+        sectionId: 'forms',
+        highlightId: 'cat-card-clinical',
+        badge: 'Antimicrobial Form',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\brestricted\s*anti[- ]?biotic\s*(form)?\b/i.test(ql)) return true;
+          if (/(கட்டுப்படுத்தப்பட்ட\s*ஆன்டிபயாடிக்)/.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'restricted-antibiotic-list',
+        title: 'Restricted Anti-biotic Drug List',
+        url: 'http://192.168.101.75:3000/files/antibiotic.pdf',
+        description: 'Listing of reserve, restricted and watch-group antimicrobial agents requiring ID / HIC authorization',
+        category: 'Common Forms',
+        categoryTab: 'clinical',
+        sectionId: 'forms',
+        highlightId: 'cat-card-clinical',
+        badge: 'Drug Formulary',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\brestricted\s*anti[- ]?biotic\s*drug\s*list\b/i.test(ql)) return true;
+          if (/\brestricted\s*antibiotic\s*list\b/i.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'counselling-doc-form',
+        title: 'Counselling Documentation Form',
+        url: 'http://192.168.101.75:3000/files/Counselling%20Documentation%20Form.pdf',
+        description: 'Clinical care counselling, family discussion, poor prognosis, and treatment options documentation sheet',
+        category: 'Common Forms',
+        categoryTab: 'clinical',
+        sectionId: 'forms',
+        highlightId: 'cat-card-clinical',
+        badge: 'Clinical Counselling',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\bcounselling\s*(documentation\s*)?(form)?\b/i.test(ql)) return true;
+          if (/\bcounseling\s*(documentation\s*)?(form)?\b/i.test(ql)) return true;
+          if (/(நோயாளி\s*ஆலோசனை\s*படிவம்)/.test(ql)) return true;
+          return false;
+        }
+      },
 
       // -----------------------------------------------------------------------
       // HR RECRUITMENT, FACULTY & POLICY FORMS
@@ -4294,14 +5429,276 @@
           if (/(பணி\s*விலகல்|ராஜினாமா)/.test(ql)) return true;
           return false;
         }
+      },
+      {
+        id: 'hr-non-performer',
+        title: 'Non Performer - Non Teaching Form',
+        url: 'http://192.168.101.75:3000/files/Non%20performer-%20Non%20Teaching.pdf',
+        description: 'Departmental evaluation log for identifying performance gaps, structuring retraining modules & mentoring non-performing staff',
+        category: 'HR Forms',
+        categoryTab: 'hr',
+        sectionId: 'forms',
+        highlightId: 'cat-card-hr',
+        badge: 'HR Form',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\bnon[- ]?performer\b/i.test(ql)) return true;
+          if (/\b(performance\s*gap|retraining\s*modules?|staff\s*mentoring)\b/i.test(ql)) return true;
+          if (/(குறைபாடு\s*மதிப்பீடு|பணியாளர்\s*குறைபாடு)/.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'hr-pms-policy',
+        title: 'Performance Management System (PMS) Policy',
+        url: 'http://192.168.101.75:3000/files/PMS%20Policy.pdf',
+        description: 'Institutional framework establishing key performance indicators (KPIs), 360-degree appraisal benchmarks & merit increments',
+        category: 'HR Forms',
+        categoryTab: 'hr',
+        sectionId: 'forms',
+        highlightId: 'cat-card-hr',
+        badge: 'HR Policy',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\bpms\s*(policy|form|appraisal)?\b/i.test(ql)) return true;
+          if (/\bperformance\s*management\s*(system|policy)?\b/i.test(ql)) return true;
+          if (/(செயல்திறன்\s*மேலாண்மை)/.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'hr-privileges-medicine',
+        title: 'Clinical Privileges - General Medicine',
+        url: 'http://192.168.101.75:3000/files/hrmedicine.pdf',
+        description: 'Formal clinical credentialing, procedural scope of practice, and inpatient admission privileges for General Medicine consultants',
+        category: 'HR Forms',
+        categoryTab: 'hr',
+        sectionId: 'forms',
+        highlightId: 'cat-card-hr',
+        badge: 'Doctor Privileges',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\b(clinical\s*)?privileges?\s*(general\s*)?medicine\b/i.test(ql)) return true;
+          if (/\bmedicine\s*(clinical\s*)?privileges?\b/i.test(ql)) return true;
+          if (/(பொது\s*மருத்துவ(ம்)?\s*(அங்கீகார|உரிமை))/i.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'hr-privileges-ent',
+        title: 'Clinical Privileges - ENT',
+        url: 'http://192.168.101.75:3000/files/hrent.pdf',
+        description: 'Surgical scope of clinical practice, outpatient procedures, and operating theatre credentialing for ENT surgeons',
+        category: 'HR Forms',
+        categoryTab: 'hr',
+        sectionId: 'forms',
+        highlightId: 'cat-card-hr',
+        badge: 'Doctor Privileges',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\b(clinical\s*)?privileges?\s*ent\b/i.test(ql)) return true;
+          if (/\bent\s*(clinical\s*)?privileges?\b/i.test(ql)) return true;
+          if (/\bear\s*nose\s*throat\s*privileges?\b/i.test(ql)) return true;
+          if (/(காது\s*மூக்கு\s*தொண்டை\s*உரிமை)/i.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'hr-privileges-anaesthesia',
+        title: 'Clinical Privileges - Anaesthesia',
+        url: 'http://192.168.101.75:3000/files/hranaesthesia.pdf',
+        description: 'Privileging matrix for general, neuraxial, and regional blocks, difficult airway management, and critical care procedures',
+        category: 'HR Forms',
+        categoryTab: 'hr',
+        sectionId: 'forms',
+        highlightId: 'cat-card-hr',
+        badge: 'Doctor Privileges',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\b(clinical\s*)?privileges?\s*anaesthesia\b/i.test(ql)) return true;
+          if (/\b(clinical\s*)?privileges?\s*anesthesia\b/i.test(ql)) return true;
+          if (/\banaesthesia\s*(clinical\s*)?privileges?\b/i.test(ql)) return true;
+          if (/\banesthesia\s*(clinical\s*)?privileges?\b/i.test(ql)) return true;
+          if (/(மயக்கவியல்\s*(மருத்துவ\s*)?உரிமை)/i.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'hr-cmo-policy',
+        title: 'Chief Medical Officer (CMO) Policy',
+        url: 'http://192.168.101.75:3000/files/CMO%20Policy.pdf',
+        description: 'Institutional charter delineating casualty management protocols, emergency response leadership & clinical shift handover duties',
+        category: 'HR Forms',
+        categoryTab: 'hr',
+        sectionId: 'forms',
+        highlightId: 'cat-card-hr',
+        badge: 'Cadre Policy',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\bcmo\s*policy\b/i.test(ql)) return true;
+          if (/\bchief\s*medical\s*officer\s*policy\b/i.test(ql)) return true;
+          if (/(தலைமை\s*மருத்துவ\s*அலுவலர்\s*கொள்கை)/.test(ql)) return true;
+          return false;
+        }
+      },
+      {
+        id: 'hr-junior-resident',
+        title: 'Junior Resident Policy',
+        url: 'http://192.168.101.75:3000/files/Junior%20resident%20Policy.pdf',
+        description: 'Academic governance, patient care documentation standards, night duty schedules & consultant supervisory guidelines for residents',
+        category: 'HR Forms',
+        categoryTab: 'hr',
+        sectionId: 'forms',
+        highlightId: 'cat-card-hr',
+        badge: 'Cadre Policy',
+        match: function(q) {
+          const ql = q.toLowerCase().trim();
+          if (/\bjunior\s*resident\s*(policy|guidelines?)\b/i.test(ql)) return true;
+          if (/\b(jr|resident)\s*policy\b/i.test(ql)) return true;
+          if (/(இளநிலை\s*உறைவிட\s*மருத்துவர்|உறைவிட\s*மருத்துவர்\s*கொள்கை)/.test(ql)) return true;
+          return false;
+        }
       }
     ];
+
+    // Fuzzy Similarity & Typo Normalizer for Hospital Lexicon
+    const HOSPITAL_FUZZY_VOCAB = [
+      // Applications & Systems
+      'his', 'backbone', 'aosta', 'hrms', 'pruworks', 'pacs', 'medsynapse',
+      'mrd', 'mhc', 'lineloom', 'barcode', 'counselling', 'counseling', 'eyecamp', 'gencl',
+      'ticketing', 'checklist',
+      // App Descriptors & Actions
+      'open', 'launch', 'login', 'portal', 'workstation', 'viewer', 'software',
+      'application', 'webapplication', 'website', 'system', 'access',
+      // Ticketing / Maintenance / Facility
+      'repair', 'fixing', 'maintenance', 'electrical', 'housekeeping', 'laundry',
+      'breakdown', 'complaint', 'ticket', 'cleaning', 'computer', 'hardware',
+      // HIS & Clinical Workflows
+      'patient', 'details', 'registration', 'admission', 'discharge', 'billing',
+      'indents', 'stores', 'pharmacy', 'dispensing', 'doctor', 'consultation', 'consultant',
+      'review', 'emergency', 'staff', 'creation',
+      // HRMS & Employee
+      'salary', 'payslip', 'leave', 'attendance', 'biometric', 'punch',
+      'resignation', 'relieving',
+      // Radiology
+      'xray', 'scan', 'dicom', 'radiology',
+      // Clinical & Safety Protocols
+      'code', 'blue', 'red', 'pink', 'cpr', 'needle', 'stick', 'injury', 'waste',
+      'segregation', 'biomedical', 'resuscitation', 'protocol', 'policy', 'manual',
+      'sop', 'sops', 'nabh', 'hicc', 'infection', 'control', 'blood', 'transfusion',
+      'hand', 'hygiene', 'drill', 'audit', 'tariff', 'tariffs', 'stock', 'stocks',
+      'inventory', 'formulary', 'package', 'packages', 'consent', 'surgery', 'pediatric',
+      // Telephony & Docs
+      'intercom', 'extension', 'directory', 'telephone', 'phone', 'circular', 'circulars',
+      'roster', 'rosters', 'police', 'bulletin', 'violet',
+      'interaction', 'interactions', 'incident', 'incidents', 'abbreviation', 'abbreviations',
+      'narcotic', 'narcotics', 'antibiogram', 'antibiograms',
+      'promotion', 'promotions', 'performer', 'performers', 'performance',
+      'privilege', 'privileges', 'privileging',
+      'appraisal', 'appraisals', 'resident', 'residents', 'faculty', 'training',
+      'printer', 'printers', 'toner', 'desktop', 'item', 'wifi', 'cug', 'sim',
+      'form', 'forms', 'requisition', 'holiday',
+      'shortcut', 'shortcuts', 'quick', 'dock'
+    ];
+
+    const EXPLICIT_TYPOS_MAP = {
+      'opn': 'open', 'hiss': 'his', 'foam': 'form', 'foarm': 'form',
+      'quicks': 'quick', 'shorcut': 'shortcut', 'shortcurt': 'shortcut',
+      'shotcut': 'shortcut', 'sortcut': 'shortcut', 'shrotcut': 'shortcut',
+      'inercom': 'intercom', 'leavu': 'leave', 'vinnapam': 'vinnappam',
+      'vidumura': 'vidumurai', 'rajinamaa': 'rajinama', 'billinh': 'billing',
+      'billin': 'billing', 'paitent': 'patient', 'paitents': 'patients',
+      'repar': 'repair', 'fixin': 'fixing', 'maintenence': 'maintenance',
+      'maintenace': 'maintenance', 'electircal': 'electrical', 'husekeeping': 'housekeeping',
+      'lundry': 'laundry', 'salery': 'salary', 'atendance': 'attendance',
+      'checlist': 'checklist', 'barcod': 'barcode', 'linelom': 'lineloom',
+      'eyecmp': 'eyecamp', 'pharamcy': 'pharmacy', 'medsynaps': 'medsynapse',
+      'pruwork': 'pruworks', 'backboen': 'backbone', 'xrey': 'xray',
+      'softwer': 'software', 'aplication': 'application', 'webaplication': 'webapplication',
+      'traiff': 'tariff', 'traiffs': 'tariffs',
+      'concent': 'consent', 'consen': 'consent', 'consnt': 'consent', 'commset': 'consent', 'conset': 'consent',
+      'sergery': 'surgery', 'suregry': 'surgery', 'sugery': 'surgery', 'surgry': 'surgery',
+      'pedatric': 'pediatric', 'paedatric': 'paediatric', 'paditric': 'pediatric', 'peadiatric': 'pediatric',
+      'transfution': 'transfusion', 'transfuson': 'transfusion', 'trasfusion': 'transfusion',
+      'damma': 'dama', 'damaa': 'dama',
+      'wiling': 'willing', 'willin': 'willing',
+      'admisison': 'admission', 'admissin': 'admission', 'admision': 'admission',
+      'visitin': 'visiting', 'consultent': 'consultant', 'consaltant': 'consultant',
+      'surrugate': 'surrogate', 'surogate': 'surrogate',
+      'oputhal': 'opputhal', 'oppudhal': 'opputhal', 'sammatha': 'sammatham', 'samatham': 'sammatham',
+      'narcotik': 'narcotic', 'tokan': 'token', 'tokn': 'token', 'reviw': 'review', 'reveiw': 'review',
+      'antibiogramm': 'antibiogram', 'antiboitic': 'antibiotic', 'antiobiotic': 'antibiotic', 'antibioitcs': 'antibiotics',
+      'councelling': 'counselling', 'counceling': 'counselling', 'daycar': 'daycare', 'casheet': 'casesheet', 'caseshet': 'casesheet',
+      'promtion': 'promotion', 'promation': 'promotion', 'performr': 'performer', 'nonperformer': 'non performer',
+      'apprasal': 'appraisal', 'apraisal': 'appraisal', 'privilage': 'privilege', 'privilages': 'privileges',
+      'priviledge': 'privilege', 'priviledges': 'privileges', 'feedbak': 'feedback', 'fedback': 'feedback',
+      'recrutment': 'recruitment', 'recruitmnt': 'recruitment', 'teching': 'teaching',
+      'prnter': 'printer', 'prntr': 'printer', 'wirless': 'wireless', 'wify': 'wifi',
+      'kannini': 'kanini', 'desktp': 'desktop', 'computr': 'computer', 'systm': 'system',
+      'emial': 'email', 'maill': 'mail', 'cuug': 'cug'
+    };
+
+    function damerauLevenshtein(a, b) {
+      if (a === b) return 0;
+      const al = a.length, bl = b.length;
+      if (al === 0) return bl;
+      if (bl === 0) return al;
+      const d = [];
+      for (let i = 0; i <= al; i++) d[i] = [i];
+      for (let j = 0; j <= bl; j++) d[0][j] = j;
+      for (let i = 1; i <= al; i++) {
+        for (let j = 1; j <= bl; j++) {
+          const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+          d[i][j] = Math.min(
+            d[i - 1][j] + 1,
+            d[i][j - 1] + 1,
+            d[i - 1][j - 1] + cost
+          );
+          if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) {
+            d[i][j] = Math.min(d[i][j], d[i - 2][j - 2] + 1);
+          }
+        }
+      }
+      return d[al][bl];
+    }
+
+    function fuzzyNormalizeToken(token) {
+      const t = (token || '').toLowerCase().trim();
+      if (!t) return token;
+      if (EXPLICIT_TYPOS_MAP[t]) return EXPLICIT_TYPOS_MAP[t];
+      if (HOSPITAL_FUZZY_VOCAB.includes(t) || t.length <= 3) return t;
+
+      let bestMatch = t;
+      let highestSim = 0;
+      for (const vocab of HOSPITAL_FUZZY_VOCAB) {
+        if (Math.abs(vocab.length - t.length) > 2) continue;
+        // First letter or swapped first two letters must match
+        if (vocab[0] !== t[0] && !(t.length > 1 && vocab.length > 1 && vocab.slice(0, 2) === t[1] + t[0])) continue;
+        const dist = damerauLevenshtein(t, vocab);
+        const maxLen = Math.max(t.length, vocab.length);
+        const sim = 1 - (dist / maxLen);
+        const threshold = t.length <= 4 ? 0.82 : (t.length <= 6 ? 0.76 : 0.74);
+        if (sim >= threshold && sim > highestSim) {
+          highestSim = sim;
+          bestMatch = vocab;
+        }
+      }
+      return bestMatch;
+    }
+
+    function fuzzyNormalizeQuery(text) {
+      if (!text) return '';
+      return text.replace(/[a-zA-Z]+/g, function(word) {
+        return fuzzyNormalizeToken(word);
+      });
+    }
 
     function detectDirectDocumentAction(rawQuery) {
       if (!rawQuery) return null;
       const q = rawQuery.trim();
+      const normQ = fuzzyNormalizeQuery(q);
       for (const action of DIRECT_DOCUMENT_ACTIONS) {
-        if (action.match(q)) return action;
+        if (action.match(q) || (normQ && action.match(normQ))) return action;
       }
       return null;
     }
@@ -4312,11 +5709,15 @@
       const q = rawQuery.toLowerCase().trim().replace(/[?.,!]/g, '');
       if (!q) return [];
 
-      // Telephony Rule: If query contains any telephony words in English, Tamil, or Tanglish, let AI Search & Intercom Directory handle it exclusively
-      const isTelephony = /\b(intercom|inercom|intercoms|extension|extensions|ext|exts|call|calling|calls|phone|phones|telephone|telephones|tholaipesi|tholaipasi|inaippu|inaippugal|azhaippu|alaippu|koopidu|pesa|en|yenn|dial|dialing)\b/i.test(q) ||
-        /(தொலைபேசி|இணைப்பு|இணைப்புகள்|அழைப்பு|அழைப்புகள்|எண்|எண்கள்|போன்|கால்|கூப்பிடு|பேசு|தொடர்பு|இன்டர்காம்|எக்ஸ்டென்ஷன்)/.test(q);
-      if (isTelephony) {
-        return [];
+      // Telephony Rule: If query asks for specific department extensions/numbers (e.g. "it intercom", "hr extension"), let AI Search handle it.
+      // BUT if asking for the directory or section itself (e.g. "where is intercom", "intercom directory", "phone directory"), navigate to it!
+      const isDirectoryRequest = /\b(where\s+is\s+(the\s+)?intercom|intercom\s*directory|phone\s*directory|telephone\s*directory|open\s*intercom|intercom\s*list|intercom\s*section|intercom\s*page)\b/i.test(q);
+      if (!isDirectoryRequest) {
+        const isTelephony = /\b(intercom|inercom|intercoms|extension|extensions|ext|exts|call|calling|calls|phone|phones|telephone|telephones|tholaipesi|tholaipasi|inaippu|inaippugal|azhaippu|alaippu|koopidu|pesa|en|yenn|dial|dialing)\b/i.test(q) ||
+          /(தொலைபேசி|இணைப்பு|இணைப்புகள்|அழைப்பு|அழைப்புகள்|எண்|எண்கள்|போன்|கால்|கூப்பிடு|பேசு|தொடர்பு|இன்டர்காம்|எக்ஸ்டென்ஷன்)/.test(q);
+        if (isTelephony) {
+          return [];
+        }
       }
 
       const matches = [];
@@ -4332,9 +5733,12 @@
 
         // Guard: If asking for specific department extensions or asking a question, do not jump to shortcuts dock, let AI Search handle it
         if (dest.id === 'intercom-directory') {
-          const isQuestionOrDept = /\b(it|hr|billing|admin|ortho|dialysis|ent|radiology|blood|biomedical|quality|security|gate|canteen|diet|food|mrd|physio|casualty|emergency|cardio|surgery|paediatric|pediatric|ophthalmology|eye|gynaec|derma|skin|psychiatry|siddha|lab|laboratory|cssd|purchase|laundry|maintenance|art|lift|icu|ot|ms|ns|superintendent|doctor|duty|room|ward|number|numbers|need|what|who|where|how|tell|give|please|for|of|in|contact|phone|call)\b/i.test(q);
-          if (isQuestionOrDept) {
-            continue;
+          const isDirectoryQuery = /\b(where\s+is\s+(the\s+)?intercom|intercom\s*directory|phone\s*directory|telephone\s*directory|open\s*intercom|intercom\s*list|intercom\s*section|intercom\s*page)\b/i.test(q);
+          if (!isDirectoryQuery) {
+            const isQuestionOrDept = /\b(it|hr|billing|admin|ortho|dialysis|ent|radiology|blood|biomedical|quality|security|gate|canteen|diet|food|mrd|physio|casualty|emergency|cardio|surgery|paediatric|pediatric|ophthalmology|eye|gynaec|derma|skin|psychiatry|siddha|lab|laboratory|cssd|purchase|laundry|maintenance|art|lift|icu|ot|ms|ns|superintendent|doctor|duty|room|ward|number|numbers|need|what|who|how|tell|give|please|for|of|in|contact|phone|call)\b/i.test(q);
+            if (isQuestionOrDept) {
+              continue;
+            }
           }
         }
         if (dest.id === 'tariff-stock' && (q.includes('intercom') || q.includes('extension') || q.includes('phone') || q.includes('number'))) {
@@ -5003,13 +6407,13 @@
         });
       }
 
-      // Bottom banner: Ask Gemini AI directly
+      // Bottom banner: Ask AI directly
       html += `
         <button type="button" onclick="executeAiSearch('${escapeHtml(query)}')" 
                 class="w-full p-3 bg-gradient-to-r from-blue-50 via-indigo-50 to-blue-50 hover:from-blue-100 hover:to-indigo-100 flex items-center justify-between text-left transition-colors border-t border-blue-200 text-blue-700 font-bold text-xs sm:text-sm cursor-pointer">
           <div class="flex items-center gap-2">
             <span class="flex h-5 w-5 rounded-full bg-gradient-to-br from-blue-600 to-indigo-600 text-white items-center justify-center text-[10px] shadow-xs">✨</span>
-            <span>Ask Gemini AI: "<strong>${escapeHtml(query)}</strong>"</span>
+            <span>Ask AI: "<strong>${escapeHtml(query)}</strong>"</span>
           </div>
           <span class="text-xs font-extrabold text-blue-600 flex items-center gap-0.5"><span>Ask AI</span> <span>&rarr;</span></span>
         </button>
@@ -5059,16 +6463,26 @@
         return;
       }
 
-      // 1. Direct Document Action Check (e.g. "open his forms", "i need to fill his forms", "enaku his form enga erukunu trla")
+      // 1. Direct Document Action Check (e.g. applications, forms in IT, HR, Consent, Common)
       const directAction = detectDirectDocumentAction(term);
       if (directAction) {
-        // Automatically open the form PDF in a new tab!
-        try {
-          window.open(directAction.url, '_blank');
-        } catch (err) {
-          console.warn('Auto-open window.open blocked by browser:', err);
+        const u = directAction.url || '';
+        const isCurrentPageAnchor = u.includes('#') && (
+          u.startsWith('#') ||
+          u.startsWith('./index.html#') ||
+          u.startsWith('index.html#')
+        );
+
+        if (!isCurrentPageAnchor) {
+          // Automatically open the external app or form PDF in a new tab!
+          try {
+            window.open(directAction.url, '_blank');
+          } catch (err) {
+            console.warn('Auto-open window.open blocked by browser:', err);
+          }
+          const isPdf = u.toLowerCase().endsWith('.pdf');
+          showToast(isPdf ? `🚀 Automatically opening "${directAction.title}" (PDF)...` : `🚀 Automatically launching "${directAction.title}"...`);
         }
-        showToast(`🚀 Automatically opening "${directAction.title}" (PDF)...`);
 
         // Also navigate to the form section in page view
         if (directAction.sectionId) {
@@ -5076,8 +6490,12 @@
             directAction.sectionId,
             directAction.categoryTab,
             directAction.highlightId,
-            `📍 Opened "${directAction.title}" (PDF) & highlighted in Forms Vault!`
+            isCurrentPageAnchor ? `📍 Switched to ${directAction.title}!` : (u.toLowerCase().endsWith('.pdf') ? `📍 Opened "${directAction.title}" (PDF) & highlighted in Forms Vault!` : `📍 Launched "${directAction.title}"!`)
           );
+        }
+
+        if (isCurrentPageAnchor) {
+          return;
         }
 
         // Also execute AI search with directAction passed to show banner and detailed steps
@@ -5105,7 +6523,7 @@
       executeAiSearch(term);
     }
 
-    // Execute Gemini AI Search with fallback pipeline
+    // Execute AI Search with fallback pipeline
     async function executeAiSearch(query, directAction = null) {
       query = (query || '').trim();
       if (!query) return;
@@ -5131,7 +6549,7 @@
             </span>
           </div>
           <div>
-            <h5 class="text-sm font-bold text-white">Gemini AI is researching hospital records...</h5>
+            <h5 class="text-sm font-bold text-white">AI is researching hospital records...</h5>
             <p class="text-xs text-slate-400 mt-0.5">Searching clinical systems, surgical consent forms, SOP manuals &amp; tariffs</p>
           </div>
           <div class="w-full max-w-md bg-slate-800/80 rounded-full h-1.5 overflow-hidden mt-2">
@@ -5160,8 +6578,34 @@
       if (!aiResult || aiResult.error) {
         aiResult = localSmartFallback(query);
       }
-      if (!aiResult || aiResult.error) {
-        aiResult = localSmartFallback(query);
+
+      // Auto-open application or form if recognized by backend/fallback and not already opened
+      if (!directAction && aiResult && (aiResult.auto_open_url || (aiResult.is_app && aiResult.links && aiResult.links[0]))) {
+        const autoUrl = aiResult.auto_open_url || aiResult.links[0].url;
+        const autoTitle = aiResult.auto_open_title || aiResult.links[0].title;
+
+        // Guard: NEVER open a new tab if URL points to an on-page section/anchor of index.html!
+        const hashIdx = (autoUrl || '').indexOf('#');
+        const isCurrentPageAnchor = hashIdx !== -1 && (
+          autoUrl.startsWith('#') ||
+          autoUrl.startsWith('./index.html#') ||
+          autoUrl.startsWith('index.html#') ||
+          autoUrl.includes(window.location.pathname.split('/').pop() + '#')
+        );
+
+        if (isCurrentPageAnchor) {
+          const sectionId = autoUrl.slice(hashIdx + 1);
+          if (sectionId) {
+            navigateToPageSection(sectionId, null, sectionId, `📍 Navigated to "${autoTitle}"!`);
+          }
+        } else if (aiResult.is_app || (autoUrl && autoUrl.toLowerCase().endsWith('.pdf'))) {
+          try {
+            window.open(autoUrl, '_blank');
+            showToast(`🚀 Automatically launching "${autoTitle}"...`);
+          } catch (err) {
+            console.warn('Auto-open window.open blocked by browser:', err);
+          }
+        }
       }
 
       renderAiSearchResults(query, aiResult, directAction);
@@ -5895,8 +7339,27 @@
       const matchedDirect = directAction || detectDirectDocumentAction(query);
       let directBannerHtml = '';
       if (matchedDirect) {
-        const isPdf = matchedDirect.url.endsWith('.pdf');
-        const actionLabel = isPdf ? 'Open PDF Again' : 'Launch App Again';
+        const u = matchedDirect.url || '';
+        const isPdf = u.toLowerCase().endsWith('.pdf');
+        const isAnchor = u.includes('#') && (
+          u.startsWith('#') ||
+          u.startsWith('./index.html#') ||
+          u.startsWith('index.html#')
+        );
+        const actionLabel = isAnchor ? 'View Section' : (isPdf ? 'Open PDF Again' : 'Launch App Again');
+        const badgeLabel = isAnchor ? 'Available on this Page' : 'Auto-Opened in New Tab';
+        const buttonHtml = isAnchor && matchedDirect.sectionId
+          ? `<button type="button" onclick="navigateToPageSection('${matchedDirect.sectionId}', null, '${matchedDirect.highlightId || matchedDirect.sectionId}', '📍 Switched to ${escapeHtml(matchedDirect.title)}!');"
+               class="px-4 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white font-extrabold text-xs rounded-xl shadow-lg transition-all text-center shrink-0 flex items-center justify-center gap-1.5 cursor-pointer">
+              <span>${actionLabel}</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+            </button>`
+          : `<a href="${matchedDirect.url}" target="_blank" rel="noopener noreferrer"
+               class="px-4 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white font-extrabold text-xs rounded-xl shadow-lg transition-all text-center shrink-0 flex items-center justify-center gap-1.5 cursor-pointer">
+              <span>${actionLabel}</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            </a>`;
+
         directBannerHtml = `
           <div class="rounded-2xl bg-gradient-to-r from-emerald-950 via-teal-900 to-slate-900 border-2 border-emerald-400 p-4 sm:p-5 shadow-xl relative overflow-hidden mb-3">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -5906,18 +7369,14 @@
                 </div>
                 <div class="min-w-0">
                   <div class="flex items-center gap-2">
-                    <span class="px-2 py-0.5 rounded text-[10px] font-extrabold uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-400/50">Auto-Opened in New Tab</span>
+                    <span class="px-2 py-0.5 rounded text-[10px] font-extrabold uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-400/50">${badgeLabel}</span>
                     <span class="text-[11px] text-emerald-200 font-semibold">${escapeHtml(matchedDirect.category)}</span>
                   </div>
                   <h4 class="text-sm sm:text-base font-extrabold text-white mt-0.5 truncate">${escapeHtml(matchedDirect.title)}</h4>
                   <p class="text-xs text-slate-300 truncate">${escapeHtml(matchedDirect.description)}</p>
                 </div>
               </div>
-              <a href="${matchedDirect.url}" target="_blank" rel="noopener noreferrer"
-                 class="px-4 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white font-extrabold text-xs rounded-xl shadow-lg transition-all text-center shrink-0 flex items-center justify-center gap-1.5 cursor-pointer">
-                <span>${actionLabel}</span>
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-              </a>
+              ${buttonHtml}
             </div>
           </div>
         `;
