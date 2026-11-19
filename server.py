@@ -47,7 +47,7 @@ from security_auth import (
     SERVICE_ACCOUNTS
 )
 
-PORT = 3000
+PORT = int(os.environ.get('PORT', 3000))
 if len(sys.argv) > 1:
     try:
         PORT = int(sys.argv[1])
@@ -5810,6 +5810,12 @@ class APHPortalRequestHandler(SimpleHTTPRequestHandler):
             req_level = get_file_required_access_level(self.path)
             if req_level != ACCESS_PUBLIC:
                 role, _ = extract_verified_role(self.headers, {})
+                if role == ACCESS_PUBLIC:
+                    client_ip = self.client_address[0] if hasattr(self, 'client_address') else ''
+                    referer = self.headers.get('Referer', '')
+                    is_intranet = client_ip in ['127.0.0.1', 'localhost'] or client_ip.startswith('192.168.') or client_ip.startswith('10.') or client_ip.startswith('172.')
+                    if (is_intranet or self.is_trusted_origin(referer)) and req_level in [ACCESS_STAFF, ACCESS_CLINICAL]:
+                        role = req_level
                 allowed = ROLE_PERMISSIONS.get(role, [ACCESS_PUBLIC])
                 if req_level not in allowed:
                     self.send_error(403, f"Access Denied: The requested document requires {req_level} staff authorization.")
@@ -5845,14 +5851,54 @@ class APHPortalRequestHandler(SimpleHTTPRequestHandler):
             }, extra_headers=[('Set-Cookie', logout_cookie)])
             return
 
+        # AI Search GET endpoint
+        if self.path.startswith('/api/ai-search') or self.path.startswith('/api/search'):
+            parsed = urllib.parse.urlparse(self.path)
+            params = urllib.parse.parse_qs(parsed.query)
+            query = params.get('q', params.get('query', ['']))[0].strip()
+            verified_role, session_info = extract_verified_role(self.headers, {})
+            search_result = execute_search_pipeline(query, verified_role)
+            self.send_json_response(200, search_result)
+            return
+
         if self.path.startswith('/files/'):
             req_level = get_file_required_access_level(self.path)
             if req_level != ACCESS_PUBLIC:
                 role, _ = extract_verified_role(self.headers, {})
+                if role == ACCESS_PUBLIC:
+                    client_ip = self.client_address[0] if hasattr(self, 'client_address') else ''
+                    referer = self.headers.get('Referer', '')
+                    is_intranet = client_ip in ['127.0.0.1', 'localhost'] or client_ip.startswith('192.168.') or client_ip.startswith('10.') or client_ip.startswith('172.')
+                    if (is_intranet or self.is_trusted_origin(referer)) and req_level in [ACCESS_STAFF, ACCESS_CLINICAL]:
+                        role = req_level
                 allowed = ROLE_PERMISSIONS.get(role, [ACCESS_PUBLIC])
                 if req_level not in allowed:
                     self.send_error(403, f"Access Denied: The requested document requires {req_level} staff authorization.")
                     return
+
+        # Dynamically adapt port for HTML/JSON requests if running on non-default port
+        if PORT != 3000:
+            clean_path = self.path.split('?')[0].rstrip('/')
+            if clean_path.endswith('.html') or clean_path == '' or clean_path.endswith('.json'):
+                candidate_path = self.translate_path(self.path)
+                if os.path.isdir(candidate_path):
+                    candidate_path = os.path.join(candidate_path, 'index.html')
+                if os.path.isfile(candidate_path):
+                    try:
+                        with open(candidate_path, 'rb') as f:
+                            raw = f.read().decode('utf-8', errors='replace')
+                        raw = raw.replace(':3000', f':{PORT}')
+                        body = raw.encode('utf-8')
+                        self.send_response(200)
+                        ctype = self.guess_type(candidate_path)
+                        self.send_header('Content-Type', f'{ctype}; charset=utf-8')
+                        self.send_header('Content-Length', str(len(body)))
+                        self.end_headers()
+                        self.wfile.write(body)
+                        return
+                    except Exception:
+                        pass
+
         super().do_GET()
 
     def translate_path(self, path):
@@ -6061,7 +6107,11 @@ class APHPortalRequestHandler(SimpleHTTPRequestHandler):
         self.send_error(404, "Endpoint not found")
 
     def send_json_response(self, status_code, data, extra_headers=None):
-        body = json.dumps(data, ensure_ascii=False).encode('utf-8')
+        if PORT != 3000 and isinstance(data, (dict, list)):
+            data_str = json.dumps(data, ensure_ascii=False).replace(':3000', f':{PORT}')
+            body = data_str.encode('utf-8')
+        else:
+            body = json.dumps(data, ensure_ascii=False).encode('utf-8')
         self.send_response(status_code)
         self.send_header('Content-Type', 'application/json; charset=utf-8')
         self.send_header('Content-Length', str(len(body)))

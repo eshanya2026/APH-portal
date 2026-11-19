@@ -11,3 +11,4 @@ data/.*tokens*
 data/.*credentials*
 *.key
 *.pyc
+*.log

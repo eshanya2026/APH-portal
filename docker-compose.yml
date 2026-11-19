@@ -1,0 +1,22 @@
+services:
+  aph-portal:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: aph-hospital-portal
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - PYTHONUNBUFFERED=1
+    volumes:
+      # Optional: bind mount PDF cache and data so updates persist without rebuilding
+      - ./data:/app/data
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:3000/', timeout=2)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+

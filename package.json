@@ -1,0 +1,18 @@
+{
+  "name": "aph-hospital-portal",
+  "version": "1.0.0",
+  "description": "Adhiparasakthi Hospitals & Research Institute Intranet Portal Server",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js 3000",
+    "stop": "node -e \"process.exit(0)\""
+  },
+  "keywords": [
+    "hospital",
+    "portal",
+    "intranet"
+  ],
+  "author": "APH IT",
+  "license": "UNLICENSED"
+}
+

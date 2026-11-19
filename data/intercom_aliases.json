@@ -1,0 +1,1396 @@
+{
+  "hr": {
+    "dept_label": "HR",
+    "target_dept": "Admin Office",
+    "filter_descs": [
+      "hr senior manager",
+      "hr jr executive",
+      "hr assistant"
+    ]
+  },
+  "hrm": {
+    "dept_label": "HR",
+    "target_dept": "Admin Office",
+    "filter_descs": [
+      "hr senior manager",
+      "hr jr executive",
+      "hr assistant"
+    ]
+  },
+  "human resource": {
+    "dept_label": "HR",
+    "target_dept": "Admin Office",
+    "filter_descs": [
+      "hr senior manager",
+      "hr jr executive",
+      "hr assistant"
+    ]
+  },
+  "human resources": {
+    "dept_label": "HR",
+    "target_dept": "Admin Office",
+    "filter_descs": [
+      "hr senior manager",
+      "hr jr executive",
+      "hr assistant"
+    ]
+  },
+  "மனிதவளம்": {
+    "dept_label": "HR",
+    "target_dept": "Admin Office",
+    "filter_descs": [
+      "hr senior manager",
+      "hr jr executive",
+      "hr assistant"
+    ]
+  },
+  "மனித வளம்": {
+    "dept_label": "HR",
+    "target_dept": "Admin Office",
+    "filter_descs": [
+      "hr senior manager",
+      "hr jr executive",
+      "hr assistant"
+    ]
+  },
+  "manithavalam": {
+    "dept_label": "HR",
+    "target_dept": "Admin Office",
+    "filter_descs": [
+      "hr senior manager",
+      "hr jr executive",
+      "hr assistant"
+    ]
+  },
+  "manitha valam": {
+    "dept_label": "HR",
+    "target_dept": "Admin Office",
+    "filter_descs": [
+      "hr senior manager",
+      "hr jr executive",
+      "hr assistant"
+    ]
+  },
+  "சம்பளம்": {
+    "dept_label": "HR",
+    "target_dept": "Admin Office",
+    "filter_descs": [
+      "hr senior manager",
+      "hr jr executive",
+      "hr assistant"
+    ]
+  },
+  "sambalam": {
+    "dept_label": "HR",
+    "target_dept": "Admin Office",
+    "filter_descs": [
+      "hr senior manager",
+      "hr jr executive",
+      "hr assistant"
+    ]
+  },
+  "sampalam": {
+    "dept_label": "HR",
+    "target_dept": "Admin Office",
+    "filter_descs": [
+      "hr senior manager",
+      "hr jr executive",
+      "hr assistant"
+    ]
+  },
+  "பணியாளர்": {
+    "dept_label": "HR",
+    "target_dept": "Admin Office",
+    "filter_descs": [
+      "hr senior manager",
+      "hr jr executive",
+      "hr assistant"
+    ]
+  },
+  "paniyaalar": {
+    "dept_label": "HR",
+    "target_dept": "Admin Office",
+    "filter_descs": [
+      "hr senior manager",
+      "hr jr executive",
+      "hr assistant"
+    ]
+  },
+  "வேலை": {
+    "dept_label": "HR",
+    "target_dept": "Admin Office",
+    "filter_descs": [
+      "hr senior manager",
+      "hr jr executive",
+      "hr assistant"
+    ]
+  },
+  "velai": {
+    "dept_label": "HR",
+    "target_dept": "Admin Office",
+    "filter_descs": [
+      "hr senior manager",
+      "hr jr executive",
+      "hr assistant"
+    ]
+  },
+  "it": {
+    "dept_label": "IT",
+    "target_dept": "Admin Office",
+    "filter_descs": [
+      "it hardware support",
+      "it software support",
+      "it manager",
+      "dgm & it head"
+    ]
+  },
+  "information technology": {
+    "dept_label": "IT",
+    "target_dept": "Admin Office",
+    "filter_descs": [
+      "it hardware support",
+      "it software support",
+      "it manager",
+      "dgm & it head"
+    ]
+  },
+  "kanini": {
+    "dept_label": "IT",
+    "target_dept": "Admin Office",
+    "filter_descs": [
+      "it hardware support",
+      "it software support",
+      "it manager",
+      "dgm & it head"
+    ]
+  },
+  "கணினி": {
+    "dept_label": "IT",
+    "target_dept": "Admin Office",
+    "filter_descs": [
+      "it hardware support",
+      "it software support",
+      "it manager",
+      "dgm & it head"
+    ]
+  },
+  "கணிப்பொறி": {
+    "dept_label": "IT",
+    "target_dept": "Admin Office",
+    "filter_descs": [
+      "it hardware support",
+      "it software support",
+      "it manager",
+      "dgm & it head"
+    ]
+  },
+  "kanipori": {
+    "dept_label": "IT",
+    "target_dept": "Admin Office",
+    "filter_descs": [
+      "it hardware support",
+      "it software support",
+      "it manager",
+      "dgm & it head"
+    ]
+  },
+  "ஐடி": {
+    "dept_label": "IT",
+    "target_dept": "Admin Office",
+    "filter_descs": [
+      "it hardware support",
+      "it software support",
+      "it manager",
+      "dgm & it head"
+    ]
+  },
+  "hardware": {
+    "dept_label": "IT",
+    "target_dept": "Admin Office",
+    "filter_descs": [
+      "it hardware support",
+      "it software support",
+      "it manager",
+      "dgm & it head"
+    ]
+  },
+  "software": {
+    "dept_label": "IT",
+    "target_dept": "Admin Office",
+    "filter_descs": [
+      "it hardware support",
+      "it software support",
+      "it manager",
+      "dgm & it head"
+    ]
+  },
+  "billing": {
+    "dept_label": "Billing",
+    "target_dept": "Billing",
+    "filter_descs": null
+  },
+  "bill": {
+    "dept_label": "Billing",
+    "target_dept": "Billing",
+    "filter_descs": null
+  },
+  "bills": {
+    "dept_label": "Billing",
+    "target_dept": "Billing",
+    "filter_descs": null
+  },
+  "cashier": {
+    "dept_label": "Billing",
+    "target_dept": "Billing",
+    "filter_descs": null
+  },
+  "கட்டணம்": {
+    "dept_label": "Billing",
+    "target_dept": "Billing",
+    "filter_descs": null
+  },
+  "kattanam": {
+    "dept_label": "Billing",
+    "target_dept": "Billing",
+    "filter_descs": null
+  },
+  "பில்லிங்": {
+    "dept_label": "Billing",
+    "target_dept": "Billing",
+    "filter_descs": null
+  },
+  "பில்": {
+    "dept_label": "Billing",
+    "target_dept": "Billing",
+    "filter_descs": null
+  },
+  "diet": {
+    "dept_label": "Dietetics",
+    "target_dept": "Dietetics",
+    "filter_descs": null
+  },
+  "dietetics": {
+    "dept_label": "Dietetics",
+    "target_dept": "Dietetics",
+    "filter_descs": null
+  },
+  "canteen": {
+    "dept_label": "Dietetics",
+    "target_dept": "Dietetics",
+    "filter_descs": null
+  },
+  "food": {
+    "dept_label": "Dietetics",
+    "target_dept": "Dietetics",
+    "filter_descs": null
+  },
+  "nutrition": {
+    "dept_label": "Dietetics",
+    "target_dept": "Dietetics",
+    "filter_descs": null
+  },
+  "உணவு": {
+    "dept_label": "Dietetics",
+    "target_dept": "Dietetics",
+    "filter_descs": null
+  },
+  "unavu": {
+    "dept_label": "Dietetics",
+    "target_dept": "Dietetics",
+    "filter_descs": null
+  },
+  "சாப்பாடு": {
+    "dept_label": "Dietetics",
+    "target_dept": "Dietetics",
+    "filter_descs": null
+  },
+  "sapadu": {
+    "dept_label": "Dietetics",
+    "target_dept": "Dietetics",
+    "filter_descs": null
+  },
+  "கேண்டீன்": {
+    "dept_label": "Dietetics",
+    "target_dept": "Dietetics",
+    "filter_descs": null
+  },
+  "டயட்": {
+    "dept_label": "Dietetics",
+    "target_dept": "Dietetics",
+    "filter_descs": null
+  },
+  "casualty": {
+    "dept_label": "Emergency Medicine",
+    "target_dept": "Emergency Medicine",
+    "filter_descs": null
+  },
+  "emergency": {
+    "dept_label": "Emergency Medicine",
+    "target_dept": "Emergency Medicine",
+    "filter_descs": null
+  },
+  "er": {
+    "dept_label": "Emergency Medicine",
+    "target_dept": "Emergency Medicine",
+    "filter_descs": null
+  },
+  "அவசரம்": {
+    "dept_label": "Emergency Medicine",
+    "target_dept": "Emergency Medicine",
+    "filter_descs": null
+  },
+  "அவசர சிகிச்சை": {
+    "dept_label": "Emergency Medicine",
+    "target_dept": "Emergency Medicine",
+    "filter_descs": null
+  },
+  "avasaram": {
+    "dept_label": "Emergency Medicine",
+    "target_dept": "Emergency Medicine",
+    "filter_descs": null
+  },
+  "avacharam": {
+    "dept_label": "Emergency Medicine",
+    "target_dept": "Emergency Medicine",
+    "filter_descs": null
+  },
+  "காசுவல்டி": {
+    "dept_label": "Emergency Medicine",
+    "target_dept": "Emergency Medicine",
+    "filter_descs": null
+  },
+  "mrd": {
+    "dept_label": "MRD",
+    "target_dept": "MRD",
+    "filter_descs": null
+  },
+  "medical records": {
+    "dept_label": "MRD",
+    "target_dept": "MRD",
+    "filter_descs": null
+  },
+  "ஆவணம்": {
+    "dept_label": "MRD",
+    "target_dept": "MRD",
+    "filter_descs": null
+  },
+  "மருத்துவ ஆவணம்": {
+    "dept_label": "MRD",
+    "target_dept": "MRD",
+    "filter_descs": null
+  },
+  "aavanam": {
+    "dept_label": "MRD",
+    "target_dept": "MRD",
+    "filter_descs": null
+  },
+  "blood bank": {
+    "dept_label": "Blood Bank",
+    "target_dept": "Blood Bank",
+    "filter_descs": null
+  },
+  "blood": {
+    "dept_label": "Blood Bank",
+    "target_dept": "Blood Bank",
+    "filter_descs": null
+  },
+  "ரத்த வங்கி": {
+    "dept_label": "Blood Bank",
+    "target_dept": "Blood Bank",
+    "filter_descs": null
+  },
+  "இரத்த வங்கி": {
+    "dept_label": "Blood Bank",
+    "target_dept": "Blood Bank",
+    "filter_descs": null
+  },
+  "குருதி வங்கி": {
+    "dept_label": "Blood Bank",
+    "target_dept": "Blood Bank",
+    "filter_descs": null
+  },
+  "ரத்தம்": {
+    "dept_label": "Blood Bank",
+    "target_dept": "Blood Bank",
+    "filter_descs": null
+  },
+  "இரத்தம்": {
+    "dept_label": "Blood Bank",
+    "target_dept": "Blood Bank",
+    "filter_descs": null
+  },
+  "rattha vangi": {
+    "dept_label": "Blood Bank",
+    "target_dept": "Blood Bank",
+    "filter_descs": null
+  },
+  "ratha vangi": {
+    "dept_label": "Blood Bank",
+    "target_dept": "Blood Bank",
+    "filter_descs": null
+  },
+  "iratha vangi": {
+    "dept_label": "Blood Bank",
+    "target_dept": "Blood Bank",
+    "filter_descs": null
+  },
+  "rattham": {
+    "dept_label": "Blood Bank",
+    "target_dept": "Blood Bank",
+    "filter_descs": null
+  },
+  "ratham": {
+    "dept_label": "Blood Bank",
+    "target_dept": "Blood Bank",
+    "filter_descs": null
+  },
+  "male ortho": {
+    "dept_label": "Ortho Male Ward",
+    "target_dept": "Ortho Ward",
+    "filter_descs": [
+      "male"
+    ]
+  },
+  "ortho male": {
+    "dept_label": "Ortho Male Ward",
+    "target_dept": "Ortho Ward",
+    "filter_descs": [
+      "male"
+    ]
+  },
+  "male ortho ward": {
+    "dept_label": "Ortho Male Ward",
+    "target_dept": "Ortho Ward",
+    "filter_descs": [
+      "male"
+    ]
+  },
+  "ortho male ward": {
+    "dept_label": "Ortho Male Ward",
+    "target_dept": "Ortho Ward",
+    "filter_descs": [
+      "male"
+    ]
+  },
+  "female ortho": {
+    "dept_label": "Ortho Female Ward",
+    "target_dept": "Ortho Ward",
+    "filter_descs": [
+      "female"
+    ]
+  },
+  "ortho female": {
+    "dept_label": "Ortho Female Ward",
+    "target_dept": "Ortho Ward",
+    "filter_descs": [
+      "female"
+    ]
+  },
+  "female ortho ward": {
+    "dept_label": "Ortho Female Ward",
+    "target_dept": "Ortho Ward",
+    "filter_descs": [
+      "female"
+    ]
+  },
+  "ortho female ward": {
+    "dept_label": "Ortho Female Ward",
+    "target_dept": "Ortho Ward",
+    "filter_descs": [
+      "female"
+    ]
+  },
+  "ortho ward": {
+    "dept_label": "Ortho Ward",
+    "target_dept": "Ortho Ward",
+    "filter_descs": null
+  },
+  "aan ortho": {
+    "dept_label": "Ortho Male Ward",
+    "target_dept": "Ortho Ward",
+    "filter_descs": [
+      "male"
+    ]
+  },
+  "ortho aan": {
+    "dept_label": "Ortho Male Ward",
+    "target_dept": "Ortho Ward",
+    "filter_descs": [
+      "male"
+    ]
+  },
+  "pen ortho": {
+    "dept_label": "Ortho Female Ward",
+    "target_dept": "Ortho Ward",
+    "filter_descs": [
+      "female"
+    ]
+  },
+  "ortho pen": {
+    "dept_label": "Ortho Female Ward",
+    "target_dept": "Ortho Ward",
+    "filter_descs": [
+      "female"
+    ]
+  },
+  "ஆண் ஆர்த்தோ": {
+    "dept_label": "Ortho Male Ward",
+    "target_dept": "Ortho Ward",
+    "filter_descs": [
+      "male"
+    ]
+  },
+  "ஆர்த்தோ ஆண்": {
+    "dept_label": "Ortho Male Ward",
+    "target_dept": "Ortho Ward",
+    "filter_descs": [
+      "male"
+    ]
+  },
+  "பெண் ஆர்த்தோ": {
+    "dept_label": "Ortho Female Ward",
+    "target_dept": "Ortho Ward",
+    "filter_descs": [
+      "female"
+    ]
+  },
+  "ஆர்த்தோ பெண்": {
+    "dept_label": "Ortho Female Ward",
+    "target_dept": "Ortho Ward",
+    "filter_descs": [
+      "female"
+    ]
+  },
+  "ortho": {
+    "dept_label": "Ortho",
+    "target_dept": "Ortho",
+    "filter_descs": null
+  },
+  "orthopedic": {
+    "dept_label": "Ortho",
+    "target_dept": "Ortho",
+    "filter_descs": null
+  },
+  "orthopaedics": {
+    "dept_label": "Ortho",
+    "target_dept": "Ortho",
+    "filter_descs": null
+  },
+  "எலும்பு": {
+    "dept_label": "Ortho",
+    "target_dept": "Ortho",
+    "filter_descs": null
+  },
+  "ஆர்த்தோ": {
+    "dept_label": "Ortho",
+    "target_dept": "Ortho",
+    "filter_descs": null
+  },
+  "elumbu": {
+    "dept_label": "Ortho",
+    "target_dept": "Ortho",
+    "filter_descs": null
+  },
+  "male surgery": {
+    "dept_label": "Male Surgery Ward",
+    "target_dept": "Surgery Ward",
+    "filter_descs": [
+      "male"
+    ]
+  },
+  "surgery male": {
+    "dept_label": "Male Surgery Ward",
+    "target_dept": "Surgery Ward",
+    "filter_descs": [
+      "male"
+    ]
+  },
+  "male surgery ward": {
+    "dept_label": "Male Surgery Ward",
+    "target_dept": "Surgery Ward",
+    "filter_descs": [
+      "male"
+    ]
+  },
+  "surgery male ward": {
+    "dept_label": "Male Surgery Ward",
+    "target_dept": "Surgery Ward",
+    "filter_descs": [
+      "male"
+    ]
+  },
+  "female surgery": {
+    "dept_label": "Female Surgery Ward",
+    "target_dept": "Surgery Ward",
+    "filter_descs": [
+      "female"
+    ]
+  },
+  "surgery female": {
+    "dept_label": "Female Surgery Ward",
+    "target_dept": "Surgery Ward",
+    "filter_descs": [
+      "female"
+    ]
+  },
+  "female surgery ward": {
+    "dept_label": "Female Surgery Ward",
+    "target_dept": "Surgery Ward",
+    "filter_descs": [
+      "female"
+    ]
+  },
+  "surgery female ward": {
+    "dept_label": "Female Surgery Ward",
+    "target_dept": "Surgery Ward",
+    "filter_descs": [
+      "female"
+    ]
+  },
+  "surgery ward": {
+    "dept_label": "Surgery Ward",
+    "target_dept": "Surgery Ward",
+    "filter_descs": null
+  },
+  "male medicine": {
+    "dept_label": "Male Medicine Ward",
+    "target_dept": "General Medicine Ward",
+    "filter_descs": [
+      "male"
+    ]
+  },
+  "medicine male": {
+    "dept_label": "Male Medicine Ward",
+    "target_dept": "General Medicine Ward",
+    "filter_descs": [
+      "male"
+    ]
+  },
+  "male medicine ward": {
+    "dept_label": "Male Medicine Ward",
+    "target_dept": "General Medicine Ward",
+    "filter_descs": [
+      "male"
+    ]
+  },
+  "medicine male ward": {
+    "dept_label": "Male Medicine Ward",
+    "target_dept": "General Medicine Ward",
+    "filter_descs": [
+      "male"
+    ]
+  },
+  "female medicine": {
+    "dept_label": "Female Medicine Ward",
+    "target_dept": "General Medicine Ward",
+    "filter_descs": [
+      "female"
+    ]
+  },
+  "medicine female": {
+    "dept_label": "Female Medicine Ward",
+    "target_dept": "General Medicine Ward",
+    "filter_descs": [
+      "female"
+    ]
+  },
+  "female medicine ward": {
+    "dept_label": "Female Medicine Ward",
+    "target_dept": "General Medicine Ward",
+    "filter_descs": [
+      "female"
+    ]
+  },
+  "medicine female ward": {
+    "dept_label": "Female Medicine Ward",
+    "target_dept": "General Medicine Ward",
+    "filter_descs": [
+      "female"
+    ]
+  },
+  "medicine ward": {
+    "dept_label": "General Medicine Ward",
+    "target_dept": "General Medicine Ward",
+    "filter_descs": null
+  },
+  "male duty doctor": {
+    "dept_label": "PG/CRRI Male Doctor Duty Room",
+    "target_dept": "PG/CRRI Duty Room",
+    "filter_descs": [
+      "male"
+    ]
+  },
+  "duty doctor male": {
+    "dept_label": "PG/CRRI Male Doctor Duty Room",
+    "target_dept": "PG/CRRI Duty Room",
+    "filter_descs": [
+      "male"
+    ]
+  },
+  "female duty doctor": {
+    "dept_label": "PG/CRRI Female Doctor Duty Room",
+    "target_dept": "PG/CRRI Duty Room",
+    "filter_descs": [
+      "female"
+    ]
+  },
+  "duty doctor female": {
+    "dept_label": "PG/CRRI Female Doctor Duty Room",
+    "target_dept": "PG/CRRI Duty Room",
+    "filter_descs": [
+      "female"
+    ]
+  },
+  "dialysis": {
+    "dept_label": "Dialysis",
+    "target_dept": "Dialysis",
+    "filter_descs": null
+  },
+  "nephro": {
+    "dept_label": "Dialysis",
+    "target_dept": "Dialysis",
+    "filter_descs": null
+  },
+  "nephrology": {
+    "dept_label": "Dialysis",
+    "target_dept": "Dialysis",
+    "filter_descs": null
+  },
+  "டயாலிசிஸ்": {
+    "dept_label": "Dialysis",
+    "target_dept": "Dialysis",
+    "filter_descs": null
+  },
+  "சிறுநீரகம்": {
+    "dept_label": "Dialysis",
+    "target_dept": "Dialysis",
+    "filter_descs": null
+  },
+  "siruneeragam": {
+    "dept_label": "Dialysis",
+    "target_dept": "Dialysis",
+    "filter_descs": null
+  },
+  "siruneer": {
+    "dept_label": "Dialysis",
+    "target_dept": "Dialysis",
+    "filter_descs": null
+  },
+  "நெப்ரோ": {
+    "dept_label": "Dialysis",
+    "target_dept": "Dialysis",
+    "filter_descs": null
+  },
+  "pharmacy": {
+    "dept_label": "Pharmacy",
+    "target_dept": "Pharmacy",
+    "filter_descs": null
+  },
+  "மருந்தகம்": {
+    "dept_label": "Pharmacy",
+    "target_dept": "Pharmacy",
+    "filter_descs": null
+  },
+  "மருந்து": {
+    "dept_label": "Pharmacy",
+    "target_dept": "Pharmacy",
+    "filter_descs": null
+  },
+  "மருந்துகள்": {
+    "dept_label": "Pharmacy",
+    "target_dept": "Pharmacy",
+    "filter_descs": null
+  },
+  "பார்மசி": {
+    "dept_label": "Pharmacy",
+    "target_dept": "Pharmacy",
+    "filter_descs": null
+  },
+  "marunthagam": {
+    "dept_label": "Pharmacy",
+    "target_dept": "Pharmacy",
+    "filter_descs": null
+  },
+  "marunthu": {
+    "dept_label": "Pharmacy",
+    "target_dept": "Pharmacy",
+    "filter_descs": null
+  },
+  "marunthukal": {
+    "dept_label": "Pharmacy",
+    "target_dept": "Pharmacy",
+    "filter_descs": null
+  },
+  "eye": {
+    "dept_label": "Ophthalmology",
+    "target_dept": "Ophthalmology",
+    "filter_descs": null
+  },
+  "ophthalmology": {
+    "dept_label": "Ophthalmology",
+    "target_dept": "Ophthalmology",
+    "filter_descs": null
+  },
+  "ophthal": {
+    "dept_label": "Ophthalmology",
+    "target_dept": "Ophthalmology",
+    "filter_descs": null
+  },
+  "கண்": {
+    "dept_label": "Ophthalmology",
+    "target_dept": "Ophthalmology",
+    "filter_descs": null
+  },
+  "கண் மருத்துவம்": {
+    "dept_label": "Ophthalmology",
+    "target_dept": "Ophthalmology",
+    "filter_descs": null
+  },
+  "kan": {
+    "dept_label": "Ophthalmology",
+    "target_dept": "Ophthalmology",
+    "filter_descs": null
+  },
+  "kann": {
+    "dept_label": "Ophthalmology",
+    "target_dept": "Ophthalmology",
+    "filter_descs": null
+  },
+  "derma": {
+    "dept_label": "Dermatology",
+    "target_dept": "Dermatology",
+    "filter_descs": null
+  },
+  "dermatology": {
+    "dept_label": "Dermatology",
+    "target_dept": "Dermatology",
+    "filter_descs": null
+  },
+  "skin": {
+    "dept_label": "Dermatology",
+    "target_dept": "Dermatology",
+    "filter_descs": null
+  },
+  "தோல்": {
+    "dept_label": "Dermatology",
+    "target_dept": "Dermatology",
+    "filter_descs": null
+  },
+  "thol": {
+    "dept_label": "Dermatology",
+    "target_dept": "Dermatology",
+    "filter_descs": null
+  },
+  "டெர்மா": {
+    "dept_label": "Dermatology",
+    "target_dept": "Dermatology",
+    "filter_descs": null
+  },
+  "security": {
+    "dept_label": "Security",
+    "target_dept": "Security",
+    "filter_descs": null
+  },
+  "gate": {
+    "dept_label": "Security",
+    "target_dept": "General",
+    "filter_descs": [
+      "main gate",
+      "vehicle shed"
+    ]
+  },
+  "பாதுகாப்பு": {
+    "dept_label": "Security",
+    "target_dept": "Security",
+    "filter_descs": null
+  },
+  "வாயில்": {
+    "dept_label": "Security",
+    "target_dept": "General",
+    "filter_descs": [
+      "main gate",
+      "vehicle shed"
+    ]
+  },
+  "கேட்": {
+    "dept_label": "Security",
+    "target_dept": "General",
+    "filter_descs": [
+      "main gate",
+      "vehicle shed"
+    ]
+  },
+  "paathukaapu": {
+    "dept_label": "Security",
+    "target_dept": "Security",
+    "filter_descs": null
+  },
+  "vaayil": {
+    "dept_label": "Security",
+    "target_dept": "General",
+    "filter_descs": [
+      "main gate",
+      "vehicle shed"
+    ]
+  },
+  "icu": {
+    "dept_label": "ICU",
+    "target_dept": "ICU",
+    "filter_descs": null
+  },
+  "தீவிர சிகிச்சை": {
+    "dept_label": "ICU",
+    "target_dept": "ICU",
+    "filter_descs": null
+  },
+  "தீவிர": {
+    "dept_label": "ICU",
+    "target_dept": "ICU",
+    "filter_descs": null
+  },
+  "theevira": {
+    "dept_label": "ICU",
+    "target_dept": "ICU",
+    "filter_descs": null
+  },
+  "theevira sigichai": {
+    "dept_label": "ICU",
+    "target_dept": "ICU",
+    "filter_descs": null
+  },
+  "ஐசியு": {
+    "dept_label": "ICU",
+    "target_dept": "ICU",
+    "filter_descs": null
+  },
+  "pediatric": {
+    "dept_label": "Paediatrics",
+    "target_dept": "Paediatrics",
+    "filter_descs": null
+  },
+  "pediatrics": {
+    "dept_label": "Paediatrics",
+    "target_dept": "Paediatrics",
+    "filter_descs": null
+  },
+  "paediatric": {
+    "dept_label": "Paediatrics",
+    "target_dept": "Paediatrics",
+    "filter_descs": null
+  },
+  "paediatrics": {
+    "dept_label": "Paediatrics",
+    "target_dept": "Paediatrics",
+    "filter_descs": null
+  },
+  "child": {
+    "dept_label": "Paediatrics",
+    "target_dept": "Paediatrics",
+    "filter_descs": null
+  },
+  "குழந்தை": {
+    "dept_label": "Paediatrics",
+    "target_dept": "Paediatrics",
+    "filter_descs": null
+  },
+  "பிள்ளை": {
+    "dept_label": "Paediatrics",
+    "target_dept": "Paediatrics",
+    "filter_descs": null
+  },
+  "kuzhanthai": {
+    "dept_label": "Paediatrics",
+    "target_dept": "Paediatrics",
+    "filter_descs": null
+  },
+  "kulandhai": {
+    "dept_label": "Paediatrics",
+    "target_dept": "Paediatrics",
+    "filter_descs": null
+  },
+  "pillai": {
+    "dept_label": "Paediatrics",
+    "target_dept": "Paediatrics",
+    "filter_descs": null
+  },
+  "gynaec": {
+    "dept_label": "Gynaecology",
+    "target_dept": "Gynaecology",
+    "filter_descs": null
+  },
+  "gynaecology": {
+    "dept_label": "Gynaecology",
+    "target_dept": "Gynaecology",
+    "filter_descs": null
+  },
+  "obg": {
+    "dept_label": "Gynaecology",
+    "target_dept": "Gynaecology",
+    "filter_descs": null
+  },
+  "maternity": {
+    "dept_label": "Gynaecology",
+    "target_dept": "Gynaecology",
+    "filter_descs": null
+  },
+  "delivery": {
+    "dept_label": "Gynaecology",
+    "target_dept": "Gynaecology",
+    "filter_descs": null
+  },
+  "மகப்பேறு": {
+    "dept_label": "Gynaecology",
+    "target_dept": "Gynaecology",
+    "filter_descs": null
+  },
+  "தாய்": {
+    "dept_label": "Gynaecology",
+    "target_dept": "Gynaecology",
+    "filter_descs": null
+  },
+  "பிரசவம்": {
+    "dept_label": "Gynaecology",
+    "target_dept": "Gynaecology",
+    "filter_descs": null
+  },
+  "magaperu": {
+    "dept_label": "Gynaecology",
+    "target_dept": "Gynaecology",
+    "filter_descs": null
+  },
+  "thaai": {
+    "dept_label": "Gynaecology",
+    "target_dept": "Gynaecology",
+    "filter_descs": null
+  },
+  "pirasavam": {
+    "dept_label": "Gynaecology",
+    "target_dept": "Gynaecology",
+    "filter_descs": null
+  },
+  "general surgery": {
+    "dept_label": "General Surgery",
+    "target_dept": "General Surgery",
+    "filter_descs": null
+  },
+  "surgery": {
+    "dept_label": "General Surgery",
+    "target_dept": "General Surgery",
+    "filter_descs": null
+  },
+  "அறுவை": {
+    "dept_label": "General Surgery",
+    "target_dept": "General Surgery",
+    "filter_descs": null
+  },
+  "அறுவை சிகிச்சை": {
+    "dept_label": "General Surgery",
+    "target_dept": "General Surgery",
+    "filter_descs": null
+  },
+  "aruvai": {
+    "dept_label": "General Surgery",
+    "target_dept": "General Surgery",
+    "filter_descs": null
+  },
+  "aruvai sigichai": {
+    "dept_label": "General Surgery",
+    "target_dept": "General Surgery",
+    "filter_descs": null
+  },
+  "ot": {
+    "dept_label": "Anaesthesia & Operation Theatre",
+    "target_dept": "Anaesthesia & Operation Theatre",
+    "filter_descs": null
+  },
+  "operation theatre": {
+    "dept_label": "Anaesthesia & Operation Theatre",
+    "target_dept": "Anaesthesia & Operation Theatre",
+    "filter_descs": null
+  },
+  "anaesthesia": {
+    "dept_label": "Anaesthesia & Operation Theatre",
+    "target_dept": "Anaesthesia & Operation Theatre",
+    "filter_descs": null
+  },
+  "ent": {
+    "dept_label": "ENT",
+    "target_dept": "ENT",
+    "filter_descs": null
+  },
+  "காது": {
+    "dept_label": "ENT",
+    "target_dept": "ENT",
+    "filter_descs": null
+  },
+  "காது மூக்கு தொண்டை": {
+    "dept_label": "ENT",
+    "target_dept": "ENT",
+    "filter_descs": null
+  },
+  "kaathu": {
+    "dept_label": "ENT",
+    "target_dept": "ENT",
+    "filter_descs": null
+  },
+  "radiology": {
+    "dept_label": "Radiology",
+    "target_dept": "Radiology",
+    "filter_descs": null
+  },
+  "xray": {
+    "dept_label": "Radiology",
+    "target_dept": "Radiology",
+    "filter_descs": null
+  },
+  "mri": {
+    "dept_label": "Radiology",
+    "target_dept": "Radiology",
+    "filter_descs": null
+  },
+  "ct": {
+    "dept_label": "Radiology",
+    "target_dept": "Radiology",
+    "filter_descs": null
+  },
+  "scan": {
+    "dept_label": "Radiology",
+    "target_dept": "Radiology",
+    "filter_descs": null
+  },
+  "ultrasound": {
+    "dept_label": "Radiology",
+    "target_dept": "Radiology",
+    "filter_descs": null
+  },
+  "usg": {
+    "dept_label": "Radiology",
+    "target_dept": "Radiology",
+    "filter_descs": null
+  },
+  "எக்ஸ்ரே": {
+    "dept_label": "Radiology",
+    "target_dept": "Radiology",
+    "filter_descs": null
+  },
+  "ஸ்கேன்": {
+    "dept_label": "Radiology",
+    "target_dept": "Radiology",
+    "filter_descs": null
+  },
+  "ரேடியாலஜி": {
+    "dept_label": "Radiology",
+    "target_dept": "Radiology",
+    "filter_descs": null
+  },
+  "lab": {
+    "dept_label": "Laboratory",
+    "target_dept": "Laboratory",
+    "filter_descs": null
+  },
+  "laboratory": {
+    "dept_label": "Laboratory",
+    "target_dept": "Laboratory",
+    "filter_descs": null
+  },
+  "பரிசோதனை": {
+    "dept_label": "Laboratory",
+    "target_dept": "Laboratory",
+    "filter_descs": null
+  },
+  "ரத்த பரிசோதனை": {
+    "dept_label": "Laboratory",
+    "target_dept": "Laboratory",
+    "filter_descs": null
+  },
+  "பரிசோதனை கூடம்": {
+    "dept_label": "Laboratory",
+    "target_dept": "Laboratory",
+    "filter_descs": null
+  },
+  "maintenance": {
+    "dept_label": "Maintenance",
+    "target_dept": "Maintenance",
+    "filter_descs": null
+  },
+  "ac": {
+    "dept_label": "Maintenance",
+    "target_dept": "Maintenance",
+    "filter_descs": null
+  },
+  "plumber": {
+    "dept_label": "Maintenance",
+    "target_dept": "Maintenance",
+    "filter_descs": null
+  },
+  "electrical": {
+    "dept_label": "Maintenance",
+    "target_dept": "Maintenance",
+    "filter_descs": null
+  },
+  "பராமரிப்பு": {
+    "dept_label": "Maintenance",
+    "target_dept": "Maintenance",
+    "filter_descs": null
+  },
+  "paramarippu": {
+    "dept_label": "Maintenance",
+    "target_dept": "Maintenance",
+    "filter_descs": null
+  },
+  "biomedical": {
+    "dept_label": "Biomedical",
+    "target_dept": "Biomedical",
+    "filter_descs": null
+  },
+  "biomed": {
+    "dept_label": "Biomedical",
+    "target_dept": "Biomedical",
+    "filter_descs": null
+  },
+  "quality": {
+    "dept_label": "Quality",
+    "target_dept": "Quality",
+    "filter_descs": null
+  },
+  "nabh": {
+    "dept_label": "Quality",
+    "target_dept": "Quality",
+    "filter_descs": null
+  },
+  "தரம்": {
+    "dept_label": "Quality",
+    "target_dept": "Quality",
+    "filter_descs": null
+  },
+  "ms office": {
+    "dept_label": "MS Office",
+    "target_dept": "MS Office",
+    "filter_descs": null
+  },
+  "superintendent": {
+    "dept_label": "MS Office",
+    "target_dept": "MS Office",
+    "filter_descs": null
+  },
+  "ns office": {
+    "dept_label": "NS Office",
+    "target_dept": "NS Office",
+    "filter_descs": null
+  },
+  "nursing": {
+    "dept_label": "NS Office",
+    "target_dept": "NS Office",
+    "filter_descs": null
+  },
+  "செவிலியர்": {
+    "dept_label": "NS Office",
+    "target_dept": "NS Office",
+    "filter_descs": null
+  },
+  "physio": {
+    "dept_label": "Physiotherapy",
+    "target_dept": "Physiotherapy",
+    "filter_descs": null
+  },
+  "physiotherapy": {
+    "dept_label": "Physiotherapy",
+    "target_dept": "Physiotherapy",
+    "filter_descs": null
+  },
+  "உடற்பயிற்சி": {
+    "dept_label": "Physiotherapy",
+    "target_dept": "Physiotherapy",
+    "filter_descs": null
+  },
+  "cardio": {
+    "dept_label": "Cardiology",
+    "target_dept": "Cardiology",
+    "filter_descs": null
+  },
+  "cardiology": {
+    "dept_label": "Cardiology",
+    "target_dept": "Cardiology",
+    "filter_descs": null
+  },
+  "heart": {
+    "dept_label": "Cardiology",
+    "target_dept": "Cardiology",
+    "filter_descs": null
+  },
+  "இதயம்": {
+    "dept_label": "Cardiology",
+    "target_dept": "Cardiology",
+    "filter_descs": null
+  },
+  "ithayam": {
+    "dept_label": "Cardiology",
+    "target_dept": "Cardiology",
+    "filter_descs": null
+  },
+  "psychiatry": {
+    "dept_label": "Psychiatry",
+    "target_dept": "Psychiatry",
+    "filter_descs": null
+  },
+  "மனநலம்": {
+    "dept_label": "Psychiatry",
+    "target_dept": "Psychiatry",
+    "filter_descs": null
+  },
+  "siddha": {
+    "dept_label": "Siddha",
+    "target_dept": "Siddha",
+    "filter_descs": null
+  },
+  "சித்தா": {
+    "dept_label": "Siddha",
+    "target_dept": "Siddha",
+    "filter_descs": null
+  },
+  "purchase": {
+    "dept_label": "Purchase",
+    "target_dept": "Purchase",
+    "filter_descs": null
+  },
+  "stores": {
+    "dept_label": "Purchase",
+    "target_dept": "Purchase",
+    "filter_descs": null
+  },
+  "கொள்முதல்": {
+    "dept_label": "Purchase",
+    "target_dept": "Purchase",
+    "filter_descs": null
+  },
+  "laundry": {
+    "dept_label": "Laundry",
+    "target_dept": "Laundry",
+    "filter_descs": null
+  },
+  "சலவை": {
+    "dept_label": "Laundry",
+    "target_dept": "Laundry",
+    "filter_descs": null
+  },
+  "cssd": {
+    "dept_label": "CSSD",
+    "target_dept": "CSSD",
+    "filter_descs": null
+  },
+  "art": {
+    "dept_label": "ART",
+    "target_dept": "ART",
+    "filter_descs": null
+  },
+  "lift": {
+    "dept_label": "Service Lift",
+    "target_dept": "Service Lift",
+    "filter_descs": null
+  },
+  "elevator": {
+    "dept_label": "Service Lift",
+    "target_dept": "Service Lift",
+    "filter_descs": null
+  }
+}
