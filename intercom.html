@@ -2034,28 +2034,27 @@
         </div>
         <script>
             function backToMainPortal(event) {
-                if (window.backToMainPortal) return window.backToMainPortal(event);
+                if (window.backToMainPortal && window.backToMainPortal !== backToMainPortal) {
+                    return window.backToMainPortal(event);
+                }
                 if (event && event.preventDefault) event.preventDefault();
                 if (window.opener && !window.opener.closed) {
                     try { window.opener.focus(); } catch(e) {}
-                    try { window.close(); return false; } catch(e) {}
-                }
-                try { window.close(); } catch(e) {}
-                setTimeout(function() {
-                    if (!window.closed) {
-                        if (window.history.length > 1 && document.referrer && document.referrer.includes('index.html')) {
+                    try { window.close(); } catch(e) {}
+                    if (window.closed) return false;
+                    setTimeout(function() {
+                        try { window.opener.focus(); window.close(); } catch(e) {}
+                        if (!window.closed && window.history.length > 1) {
                             window.history.back();
-                        } else {
-                            try {
-                                const w = window.open('./index.html', 'aph_main_portal');
-                                if (w) { try { w.focus(); } catch(e) {} }
-                                try { window.close(); } catch(e) {}
-                            } catch(e) {
-                                window.location.href = './index.html';
-                            }
                         }
-                    }
-                }, 100);
+                    }, 150);
+                    return false;
+                }
+                if (window.history.length > 1) {
+                    window.history.back();
+                    return false;
+                }
+                window.location.href = './index.html';
                 return false;
             }
 

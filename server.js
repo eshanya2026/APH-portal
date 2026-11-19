@@ -148,6 +148,123 @@ const requestListener = (req, res) => {
     return;
   }
 
+  // API Route: /api/cms/data (GET)
+  if (pathname === '/api/cms/data' && req.method === 'GET') {
+    const query = parsedUrl.query || {};
+    const cmsType = (query.type || '').trim().toLowerCase();
+    const allowed = {
+      'announcements': 'data/announcements.json',
+      'committees': 'data/committees.json',
+      'manuals': 'data/manuals.json'
+    };
+    if (!allowed[cmsType]) {
+      res.writeHead(400, setCommonHeaders('application/json; charset=utf-8'));
+      res.end(JSON.stringify({ error: 'Invalid CMS type. Supported: announcements, committees, manuals.' }));
+      return;
+    }
+    const fpath = path.join(BASE_DIR, allowed[cmsType]);
+    if (fs.existsSync(fpath)) {
+      try {
+        const raw = fs.readFileSync(fpath, 'utf8');
+        res.writeHead(200, setCommonHeaders('application/json; charset=utf-8', {
+          'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0'
+        }));
+        res.end(raw);
+      } catch (err) {
+        res.writeHead(500, setCommonHeaders('application/json; charset=utf-8'));
+        res.end(JSON.stringify({ error: 'Failed to read data file: ' + err.message }));
+      }
+    } else {
+      res.writeHead(404, setCommonHeaders('application/json; charset=utf-8'));
+      res.end(JSON.stringify({ error: 'Data file not found.' }));
+    }
+    return;
+  }
+
+  // API Route: /api/cms/login (POST)
+  if (pathname === '/api/cms/login' && req.method === 'POST') {
+    let body = '';
+    req.on('data', chunk => { body += chunk; });
+    req.on('end', () => {
+      try {
+        const payload = JSON.parse(body || '{}');
+        const username = (payload.username || '').trim();
+        const password = (payload.password || '').trim();
+        const expected = process.env.APH_CMS_PASSKEY || 'aph@2026';
+
+        if (['admin', 'aph_admin', 'administrator', 'aph'].includes(username.toLowerCase()) && password === expected) {
+          const resp = JSON.stringify({
+            status: 'success',
+            message: 'Admin login successful.',
+            username: username,
+            name: 'Hospital Administrator',
+            passkey: expected
+          });
+          res.writeHead(200, setCommonHeaders('application/json; charset=utf-8'));
+          res.end(resp);
+        } else {
+          res.writeHead(401, setCommonHeaders('application/json; charset=utf-8'));
+          res.end(JSON.stringify({ error: 'Invalid administrator username or password.' }));
+        }
+      } catch (e) {
+        res.writeHead(400, setCommonHeaders('application/json; charset=utf-8'));
+        res.end(JSON.stringify({ error: 'Bad request.' }));
+      }
+    });
+    return;
+  }
+
+  // API Route: /api/cms/save (POST)
+  if (pathname === '/api/cms/save' && req.method === 'POST') {
+    let body = '';
+    req.on('data', chunk => { body += chunk; });
+    req.on('end', () => {
+      try {
+        const payload = JSON.parse(body || '{}');
+        const passkey = (payload.passkey || '').trim();
+        const cmsType = (payload.type || '').trim().toLowerCase();
+        const data = payload.data;
+
+        const expected = process.env.APH_CMS_PASSKEY || 'aph@2026';
+        if (passkey !== expected) {
+          res.writeHead(401, setCommonHeaders('application/json; charset=utf-8'));
+          res.end(JSON.stringify({ error: 'Invalid administrative passkey.' }));
+          return;
+        }
+
+        const allowed = {
+          'announcements': 'data/announcements.json',
+          'committees': 'data/committees.json',
+          'manuals': 'data/manuals.json'
+        };
+        if (!allowed[cmsType]) {
+          res.writeHead(400, setCommonHeaders('application/json; charset=utf-8'));
+          res.end(JSON.stringify({ error: 'Unsupported CMS type: ' + cmsType }));
+          return;
+        }
+
+        const targetFile = path.join(BASE_DIR, allowed[cmsType]);
+        if (fs.existsSync(targetFile)) {
+          try { fs.copyFileSync(targetFile, targetFile + '.bak'); } catch (e) {}
+        }
+
+        let cleanStr = JSON.stringify(data, null, 2);
+        cleanStr = cleanStr.replace(/:1111\/files\//g, ':3000/files/').replace(/:2222\/files\//g, ':3000/files/');
+
+        const tmpFile = targetFile + '.tmp';
+        fs.writeFileSync(tmpFile, cleanStr, 'utf8');
+        fs.renameSync(tmpFile, targetFile);
+
+        res.writeHead(200, setCommonHeaders('application/json; charset=utf-8'));
+        res.end(JSON.stringify({ status: 'success', message: `${cmsType} updated successfully.` }));
+      } catch (err) {
+        res.writeHead(500, setCommonHeaders('application/json; charset=utf-8'));
+        res.end(JSON.stringify({ error: 'Failed to save CMS data: ' + err.message }));
+      }
+    });
+    return;
+  }
+
   // Static File Serving (GET/HEAD only)
   if (req.method !== 'GET' && req.method !== 'HEAD') {
     res.writeHead(405, setCommonHeaders('text/plain'));
@@ -158,6 +275,12 @@ const requestListener = (req, res) => {
   // Default to index.html for root path
   if (pathname === '/') {
     pathname = '/index.html';
+  } else if (pathname === '/admin' || pathname === '/admin/' || pathname === '/admin.html') {
+    pathname = '/admin.html';
+  } else if (pathname === '/cms.html' || pathname === '/cms') {
+    res.writeHead(302, { 'Location': '/admin', 'Cache-Control': 'no-cache' });
+    res.end();
+    return;
   }
 
   // URL decoding for filenames with spaces (e.g. "His%20User%20Creation.pdf")

@@ -5911,6 +5911,33 @@ class APHPortalRequestHandler(SimpleHTTPRequestHandler):
             self.send_json_response(200, search_result)
             return
 
+        # CMS Data GET endpoint
+        if self.path.startswith('/api/cms/data'):
+            parsed = urllib.parse.urlparse(self.path)
+            params = urllib.parse.parse_qs(parsed.query)
+            cms_type = params.get('type', [''])[0].strip().lower()
+            allowed_files = {
+                'announcements': 'data/announcements.json',
+                'committees': 'data/committees.json',
+                'manuals': 'data/manuals.json'
+            }
+            if cms_type not in allowed_files:
+                self.send_json_response(400, {'error': 'Invalid CMS resource type. Supported: announcements, committees, manuals.'})
+                return
+            fpath = os.path.join(BASE_DIR, allowed_files[cms_type])
+            if os.path.exists(fpath):
+                try:
+                    with open(fpath, 'r', encoding='utf-8') as f:
+                        content = json.load(f)
+                    self.send_json_response(200, content, extra_headers=[
+                        ('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
+                    ])
+                except Exception as e:
+                    self.send_json_response(500, {'error': f'Failed to parse {cms_type}.json: {str(e)}'})
+            else:
+                self.send_json_response(404, {'error': f'{cms_type}.json not found.'})
+            return
+
         if self.path.startswith('/files/'):
             # When accessed on a non-3000 port (e.g. 1111), redirect to the primary files host on port 3000
             req_port = self.server.server_port if hasattr(self.server, 'server_port') else PORT
@@ -5940,6 +5967,31 @@ class APHPortalRequestHandler(SimpleHTTPRequestHandler):
                     return
 
         clean_path = self.path.split('?')[0].rstrip('/')
+        # Route /admin or /admin/ to admin.html; redirect /cms.html to /admin
+        if clean_path in ['/admin', '/admin.html']:
+            candidate_path = os.path.join(BASE_DIR, 'admin.html')
+            if not os.path.isfile(candidate_path):
+                candidate_path = os.path.join(BASE_DIR, 'cms.html')
+            if os.path.isfile(candidate_path):
+                try:
+                    with open(candidate_path, 'rb') as f:
+                        raw = f.read().decode('utf-8', errors='replace')
+                    raw = raw.replace(':1111/files/', ':3000/files/').replace(':2222/files/', ':3000/files/')
+                    body = raw.encode('utf-8')
+                    self.send_response(200)
+                    self.send_header('Content-Type', 'text/html; charset=utf-8')
+                    self.send_header('Content-Length', str(len(body)))
+                    self.end_headers()
+                    self.wfile.write(body)
+                    return
+                except Exception:
+                    pass
+        elif clean_path in ['/cms.html', '/cms']:
+            self.send_response(302)
+            self.send_header('Location', '/admin')
+            self.end_headers()
+            return
+
         if clean_path.endswith('.html') or clean_path == '' or clean_path.endswith('.json'):
             candidate_path = self.translate_path(self.path)
             if os.path.isdir(candidate_path):
@@ -6164,6 +6216,136 @@ class APHPortalRequestHandler(SimpleHTTPRequestHandler):
             except Exception as e:
                 fallback = generate_catalog_fallback_result(query if 'query' in locals() else '')
                 self.send_json_response(200, fallback)
+            return
+
+        # 3. CMS Admin Login Endpoint
+        if self.path == '/api/cms/login':
+            content_length = int(self.headers.get('Content-Length', 0))
+            post_data = self.rfile.read(content_length)
+            try:
+                body = json.loads(post_data.decode('utf-8')) if post_data else {}
+                username = body.get('username', '').strip()
+                password = body.get('password', '').strip()
+
+                if not username or not password:
+                    self.send_json_response(400, {'error': 'Both username and password are required.'})
+                    return
+
+                expected_passkey = os.environ.get('APH_CMS_PASSKEY', 'aph@2026')
+                is_admin = False
+                admin_name = "Hospital Administrator"
+
+                # Standard dedicated CMS admin account
+                if username.lower() in ['admin', 'aph_admin', 'administrator', 'aph'] and password == expected_passkey:
+                    is_admin = True
+                    admin_name = "Hospital Administrator"
+                else:
+                    # Also accept authorized hospital staff with MANAGEMENT privileges
+                    try:
+                        from security_auth import authenticate_and_issue_staff_token, ACCESS_MANAGEMENT
+                        ok, token_or_err, role, name = authenticate_and_issue_staff_token(username, password)
+                        if ok and role == ACCESS_MANAGEMENT:
+                            is_admin = True
+                            admin_name = name or "Medical Superintendent"
+                    except Exception:
+                        pass
+
+                if is_admin:
+                    from security_auth import create_signed_session_token, ACCESS_MANAGEMENT, build_session_cookie
+                    token = create_signed_session_token(username, ACCESS_MANAGEMENT, duration_seconds=86400)
+                    cookie_val = build_session_cookie(token, is_https=self.is_https_request(), max_age=86400)
+                    self.send_json_response(200, {
+                        'status': 'success',
+                        'message': 'Admin login successful.',
+                        'username': username,
+                        'name': admin_name,
+                        'token': token,
+                        'passkey': expected_passkey
+                    }, extra_headers=[('Set-Cookie', cookie_val)])
+                else:
+                    self.send_json_response(401, {'error': 'Invalid administrator username or password.'})
+            except Exception as e:
+                self.send_json_response(500, {'error': f'CMS login error: {str(e)}'})
+            return
+
+        # 4. Lightweight CMS Save Endpoint
+        if self.path == '/api/cms/save':
+            content_length = int(self.headers.get('Content-Length', 0))
+            post_data = self.rfile.read(content_length)
+            try:
+                body = json.loads(post_data.decode('utf-8')) if post_data else {}
+                passkey = body.get('passkey', '').strip()
+                token = body.get('token', '').strip() or self.headers.get('X-Session-Token', '').strip()
+                cms_type = body.get('type', '').strip().lower()
+                payload = body.get('data')
+
+                expected_passkey = os.environ.get('APH_CMS_PASSKEY', 'aph@2026')
+                is_auth = (passkey == expected_passkey)
+                if not is_auth and token:
+                    try:
+                        from security_auth import verify_signed_session_token, ACCESS_MANAGEMENT
+                        t_payload = verify_signed_session_token(token)
+                        if t_payload and t_payload.get('role') == ACCESS_MANAGEMENT:
+                            is_auth = True
+                    except Exception:
+                        pass
+
+                if not is_auth:
+                    self.send_json_response(401, {'error': 'Invalid administrator passkey or unauthenticated session.'})
+                    return
+
+                allowed_files = {
+                    'announcements': 'data/announcements.json',
+                    'committees': 'data/committees.json',
+                    'manuals': 'data/manuals.json'
+                }
+                if cms_type not in allowed_files:
+                    self.send_json_response(400, {'error': f'Unsupported CMS type: {cms_type}'})
+                    return
+
+                if payload is None:
+                    self.send_json_response(400, {'error': 'Data payload is required.'})
+                    return
+
+                target_file = os.path.join(BASE_DIR, allowed_files[cms_type])
+                os.makedirs(os.path.dirname(target_file), exist_ok=True)
+
+                # Create backup
+                if os.path.exists(target_file):
+                    import shutil
+                    try:
+                        shutil.copyfile(target_file, target_file + '.bak')
+                    except Exception as err:
+                        print(f"⚠️ CMS backup warning: {err}")
+
+                # Enforce port 3000 for all file document links
+                data_str = json.dumps(payload, indent=2, ensure_ascii=False)
+                data_str = data_str.replace(':1111/files/', ':3000/files/').replace(':2222/files/', ':3000/files/')
+                clean_payload = json.loads(data_str)
+
+                # Atomic write via temp file
+                temp_file = target_file + '.tmp'
+                with open(temp_file, 'w', encoding='utf-8') as f:
+                    json.dump(clean_payload, f, indent=2, ensure_ascii=False)
+                    f.flush()
+                    os.fsync(f.fileno())
+                os.replace(temp_file, target_file)
+
+                # Refresh in-memory registries if needed
+                if cms_type == 'announcements':
+                    pass
+                elif cms_type == 'committees':
+                    try:
+                        reload_committee_catalog()
+                    except Exception:
+                        pass
+
+                self.send_json_response(200, {
+                    'status': 'success',
+                    'message': f'{cms_type.capitalize()} updated successfully.'
+                })
+            except Exception as e:
+                self.send_json_response(500, {'error': f'Failed to save CMS data: {str(e)}'})
             return
 
         self.send_error(404, "Endpoint not found")

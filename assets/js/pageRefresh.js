@@ -9,50 +9,53 @@ window.backToMainPortal = function(e, targetHash) {
         e.preventDefault();
     }
 
-    // 1. If opened from an active opener window (e.g. main portal tab)
+    const cleanHash = targetHash ? (targetHash.startsWith('#') ? targetHash : '#' + targetHash) : '';
+
+    // 1. If opened from an active opener window (e.g. main portal tab is already open)
     if (window.opener && !window.opener.closed) {
         try {
-            if (targetHash && window.opener.location) {
-                const cleanHash = targetHash.startsWith('#') ? targetHash : '#' + targetHash;
+            if (cleanHash && window.opener.location) {
                 const base = window.opener.location.href.split('#')[0];
                 window.opener.location.replace(base + cleanHash);
             }
             window.opener.focus();
         } catch (err) {}
+        
+        // Attempt immediate window close
         try {
             window.close();
-            return false;
         } catch (err) {}
+
+        // If closed, return immediately
+        if (window.closed) {
+            return false;
+        }
+
+        // Give the browser 150ms to close or switch focus to opener
+        setTimeout(function() {
+            try {
+                window.opener.focus();
+                window.close();
+            } catch (err) {}
+
+            // DO NOT navigate this tab to index.html if opener is alive — that would create a duplicate tab!
+            // Instead, if the browser blocked window.close(), politely close history or show return notice.
+            if (!window.closed && window.history.length > 1) {
+                window.history.back();
+            }
+        }, 150);
+
+        return false;
     }
 
-    // 2. Try closing window directly (works if opened via script or target="_blank")
-    try {
-        window.close();
-    } catch (err) {}
+    // 2. If opened in same tab with history back to index.html
+    if (window.history.length > 1) {
+        window.history.back();
+        return false;
+    }
 
-    // 3. Fallback: if window did not close within 100ms
-    setTimeout(function() {
-        if (!window.closed) {
-            // If user navigated within this same tab from index.html
-            if (window.history.length > 1 && document.referrer && document.referrer.includes('index.html')) {
-                window.history.back();
-            } else {
-                // Focus existing named main portal window if it exists, or navigate
-                try {
-                    const cleanHash = targetHash ? (targetHash.startsWith('#') ? targetHash : '#' + targetHash) : '';
-                    const targetUrl = './index.html' + cleanHash;
-                    const portalWin = window.open(targetUrl, 'aph_main_portal');
-                    if (portalWin) {
-                        try { portalWin.focus(); } catch (err) {}
-                    }
-                    try { window.close(); } catch (err) {}
-                } catch (err) {
-                    window.location.href = './index.html' + (targetHash || '');
-                }
-            }
-        }
-    }, 100);
-
+    // 3. Fallback: No active opener window and no history stack, safely navigate to portal
+    window.location.href = './index.html' + cleanHash;
     return false;
 };
 

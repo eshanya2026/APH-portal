@@ -505,7 +505,7 @@
     const urlParams = new URLSearchParams(window.location.search);
     const initialQuery = urlParams.get('q') || urlParams.get('search') || '';
 
-    fetch('data/committees.json')
+    fetch('data/committees.json?_t=' + Date.now(), { cache: 'no-store' })
       .then(res => {
         if (!res.ok) throw new Error('HTTP ' + res.status);
         return res.json();

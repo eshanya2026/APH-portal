@@ -1,0 +1,20 @@
+[
+  {
+    "id": "announcement-1",
+    "badge": "IT",
+    "severity": "Information",
+    "message": "Incident reporting application is live",
+    "linkText": "click here to report your incident",
+    "linkUrl": "https://inc.mapims.edu.in/login",
+    "active": true
+  },
+  {
+    "id": "announcement-4",
+    "badge": "Clinical Policy",
+    "severity": "success",
+    "message": "Antibiotic Stewardship Policy (ASP 2026) officially approved and published in Governance Manuals.",
+    "linkText": "Governance Manuals",
+    "linkUrl": "./manuals.html",
+    "active": false
+  }
+]

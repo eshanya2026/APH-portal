@@ -1,0 +1,1509 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-900">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>APH Portal — Admin Dashboard</title>
+  <link rel="icon" type="image/png" href="assets/hospital-favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    @keyframes marquee-preview {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .animate-marquee-preview {
+      display: inline-flex;
+      animation: marquee-preview 24s linear infinite;
+    }
+    .animate-marquee-preview:hover {
+      animation-play-state: paused;
+    }
+    tr.dragging {
+      opacity: 0.35;
+      background-color: rgba(30, 58, 138, 0.4) !important;
+    }
+    tr.drop-target-above {
+      border-top: 2px solid #3b82f6 !important;
+    }
+    tr.drop-target-below {
+      border-bottom: 2px solid #3b82f6 !important;
+    }
+    .drag-handle {
+      cursor: grab;
+    }
+    .drag-handle:active {
+      cursor: grabbing;
+    }
+  </style>
+</head>
+<body class="h-full flex flex-col bg-slate-950 text-slate-100 antialiased selection:bg-blue-600 selection:text-white">
+
+  <!-- ================= TOP NAVIGATION BAR ================= -->
+  <header class="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      
+      <!-- Brand & Title -->
+      <div class="flex items-center gap-3">
+        <a href="./index.html" class="flex items-center gap-2.5 group">
+          <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20 group-hover:bg-blue-500 transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+            </svg>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-sm font-extrabold tracking-tight text-white">APH Portal Admin</span>
+              <span class="text-[10px] font-bold uppercase tracking-wider bg-blue-500/20 text-blue-400 border border-blue-500/30 px-2 py-0.5 rounded-full">Admin Panel</span>
+            </div>
+            <p class="text-[11px] text-slate-400">Adhiparasakthi Hospitals &amp; Research Institute</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Action Items & Auth Badge -->
+      <div class="flex items-center gap-3">
+        <!-- Admin Profile & Logout (visible when logged in) -->
+        <div id="admin-user-bar" class="hidden flex items-center gap-2">
+          <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-800/90 border border-slate-700">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            <span class="text-xs font-bold text-slate-200" id="header-admin-name">Administrator</span>
+            <span class="text-[9px] font-extrabold uppercase px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Admin</span>
+          </div>
+          <button type="button" onclick="handleAdminLogout()" class="px-3 py-1.5 rounded-xl text-xs font-bold text-rose-300 hover:text-white bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 transition-all flex items-center gap-1.5 cursor-pointer" title="Log out of CMS">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+            <span>Logout</span>
+          </button>
+        </div>
+
+        <!-- Back to Portal Link -->
+        <a href="./index.html" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 border border-slate-700 transition-all">
+          <span>&larr; Back to Portal</span>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ================= ADMIN LOGIN VIEW ================= -->
+  <div id="cms-login-view" class="flex-1 flex items-center justify-center px-4 py-12">
+    <div class="max-w-md w-full bg-slate-900/95 border border-slate-800 rounded-3xl p-8 shadow-2xl backdrop-blur-xl relative overflow-hidden">
+      <!-- Glow ambient decorative lights -->
+      <div class="absolute -top-24 -right-24 w-48 h-48 bg-blue-600/20 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-24 -left-24 w-48 h-48 bg-emerald-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <!-- Header & Icon -->
+      <div class="flex flex-col items-center text-center mb-6">
+        <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center shadow-lg shadow-blue-500/30 mb-3.5">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+          </svg>
+        </div>
+        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-blue-500/10 text-blue-400 border border-blue-500/20 mb-1.5">
+          Restricted Access
+        </div>
+        <h2 class="text-xl font-extrabold text-white tracking-tight">Hospital Admin Portal Login</h2>
+        <p class="text-xs text-slate-400 mt-1">Sign in with administrative credentials to manage announcements, committees &amp; manuals.</p>
+      </div>
+
+      <!-- Error Alert -->
+      <div id="login-error-alert" class="hidden mb-5 p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-2">
+        <svg class="w-4 h-4 shrink-0 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span id="login-error-msg">Invalid administrator credentials.</span>
+      </div>
+
+      <!-- Login Form -->
+      <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1.5" for="login-username">Admin Username</label>
+          <div class="relative">
+            <input type="text" id="login-username" required placeholder="admin" autofocus
+                   class="w-full pl-10 pr-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors">
+            <svg class="w-4 h-4 text-slate-500 absolute left-3.5 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1.5" for="login-password">Password</label>
+          <div class="relative">
+            <input type="password" id="login-password" required placeholder="••••••••"
+                   class="w-full pl-10 pr-10 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors">
+            <svg class="w-4 h-4 text-slate-500 absolute left-3.5 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+            <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3 top-2.5 text-slate-500 hover:text-slate-300 p-0.5 cursor-pointer" title="Toggle password visibility">
+              <svg id="pw-eye-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" id="btn-login-submit" class="w-full mt-2 py-2.5 px-4 rounded-xl text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/30 transition-all flex items-center justify-center gap-2 cursor-pointer">
+          <span id="login-btn-text">Sign In to Admin Portal</span>
+          <svg id="login-spinner" class="w-4 h-4 animate-spin hidden" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg>
+        </button>
+      </form>
+
+      <div class="mt-6 pt-5 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
+        <a href="./index.html" class="text-slate-400 hover:text-white flex items-center gap-1 transition-colors">
+          <span>&larr; Back to Hospital Portal</span>
+        </a>
+        <span class="text-slate-500">APH Intranet</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MAIN CMS DASHBOARD ================= -->
+  <main id="cms-dashboard" class="hidden flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col gap-6">
+
+    <!-- TAB HEADERS -->
+    <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-3">
+      <nav class="flex space-x-2" aria-label="Tabs">
+        <button type="button" onclick="switchTab('announcements')" id="tab-btn-announcements" class="tab-btn active px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 bg-blue-600 text-white shadow-md">
+          <span>📢 Announcements</span>
+          <span id="badge-count-announcements" class="px-1.5 py-0.5 rounded-full text-[10px] bg-white/20 text-white">0</span>
+        </button>
+        <button type="button" onclick="switchTab('committees')" id="tab-btn-committees" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 bg-slate-800 text-slate-400 hover:text-slate-200 hover:bg-slate-700/60 transition-all">
+          <span>🏛️ Committees &amp; MOM</span>
+          <span id="badge-count-committees" class="px-1.5 py-0.5 rounded-full text-[10px] bg-slate-700 text-slate-300">0</span>
+        </button>
+        <button type="button" onclick="switchTab('manuals')" id="tab-btn-manuals" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 bg-slate-800 text-slate-400 hover:text-slate-200 hover:bg-slate-700/60 transition-all">
+          <span>📚 Hospital Manuals</span>
+          <span id="badge-count-manuals" class="px-1.5 py-0.5 rounded-full text-[10px] bg-slate-700 text-slate-300">0</span>
+        </button>
+      </nav>
+
+      <div class="flex items-center gap-2">
+        <!-- Top Save Changes Button (Revealed when order is dragged/changed) -->
+        <button type="button" id="top-save-btn" onclick="savePendingOrder()" class="hidden px-4 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white flex items-center gap-2 shadow-lg shadow-emerald-600/30 transition-all cursor-pointer animate-pulse">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" /></svg>
+          <span id="top-save-text">Save Changes</span>
+          <span id="top-save-badge" class="px-1.5 py-0.5 rounded-full bg-white/20 text-[10px] font-extrabold uppercase">Unsaved</span>
+        </button>
+        <button type="button" onclick="reloadCurrentData()" title="Refresh latest data from server" class="px-3 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center gap-1.5 border border-slate-700 cursor-pointer">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+          <span>Refresh</span>
+        </button>
+        <button type="button" id="add-item-btn" onclick="openAddModal()" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white flex items-center gap-1.5 shadow-md shadow-blue-600/20 transition-all cursor-pointer">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+          <span id="add-btn-text">New Announcement</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ========================================================== -->
+    <!-- TAB 1: ANNOUNCEMENTS CONTENT                               -->
+    <!-- ========================================================== -->
+    <div id="tab-content-announcements" class="tab-pane flex flex-col gap-4">
+      
+      <!-- Live Ticker Preview Card -->
+      <div class="rounded-2xl bg-slate-900 border border-slate-800 p-4 shadow-sm">
+        <div class="flex items-center justify-between mb-2">
+          <div class="text-xs font-extrabold uppercase tracking-wider text-blue-400 flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>Live Portal Ticker Preview (Active Items)</span>
+          </div>
+          <span class="text-[11px] text-slate-400">Updates live on portal within 15 seconds</span>
+        </div>
+        <div class="relative overflow-hidden rounded-xl bg-slate-950 border border-slate-800/80 px-4 py-2.5">
+          <div id="announcement-preview-track" class="text-xs text-slate-200 whitespace-nowrap">
+            <span class="text-slate-500 italic">Loading active announcements...</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Announcements List Table -->
+      <div class="rounded-2xl bg-slate-900 border border-slate-800 overflow-hidden shadow-sm">
+        <div class="px-5 py-4 border-b border-slate-800 flex items-center justify-between gap-4">
+          <div>
+            <h2 class="text-sm font-bold text-white">Hospital Announcements &amp; Scrolling Marquee</h2>
+            <p class="text-xs text-slate-400">Toggle active switches to immediately broadcast or hide notifications on the home portal.</p>
+          </div>
+          <span id="announcements-active-summary" class="text-xs font-semibold text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2.5 py-1 rounded-lg">
+            0 Active Broadcasts
+          </span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-slate-950/60 text-slate-400 uppercase tracking-wider font-bold border-b border-slate-800 text-[10px]">
+              <tr>
+                <th class="px-3 py-3 w-20 text-center">Order</th>
+                <th class="px-4 py-3 w-16">Active</th>
+                <th class="px-4 py-3">Badge &amp; Severity</th>
+                <th class="px-4 py-3">Message Content</th>
+                <th class="px-4 py-3">Action Link</th>
+                <th class="px-5 py-3 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="announcements-table-body" class="divide-y divide-slate-800 text-slate-200">
+              <tr>
+                <td colspan="6" class="px-5 py-8 text-center text-slate-500">Loading announcements...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ========================================================== -->
+    <!-- TAB 2: COMMITTEES & MOM CONTENT                            -->
+    <!-- ========================================================== -->
+    <div id="tab-content-committees" class="tab-pane hidden flex flex-col gap-4">
+      
+      <!-- Filter Bar -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-3 bg-slate-900 border border-slate-800 p-3 rounded-2xl">
+        <div class="relative w-full sm:w-80">
+          <input type="text" id="committees-search" oninput="filterCommittees(this.value)" placeholder="Filter committees or MOM (e.g. CPR, BMW, QC)..." class="w-full pl-9 pr-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500">
+          <svg class="w-4 h-4 text-slate-500 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        </div>
+        <div class="text-xs text-slate-400">
+          Showing <span id="committees-count-display" class="font-bold text-white">0</span> documents
+        </div>
+      </div>
+
+      <!-- Committees List Table -->
+      <div class="rounded-2xl bg-slate-900 border border-slate-800 overflow-hidden shadow-sm">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-slate-950/60 text-slate-400 uppercase tracking-wider font-bold border-b border-slate-800 text-[10px]">
+              <tr>
+                <th class="px-3 py-3 w-20 text-center">Order</th>
+                <th class="px-4 py-3 w-16">New?</th>
+                <th class="px-4 py-3">Committee Document Title</th>
+                <th class="px-4 py-3">File URL (Port 3000)</th>
+                <th class="px-5 py-3 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="committees-table-body" class="divide-y divide-slate-800 text-slate-200">
+              <tr>
+                <td colspan="5" class="px-5 py-8 text-center text-slate-500">Loading committees...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ========================================================== -->
+    <!-- TAB 3: MANUALS & SOPS CONTENT                              -->
+    <!-- ========================================================== -->
+    <div id="tab-content-manuals" class="tab-pane hidden flex flex-col gap-4">
+      
+      <!-- Manual Categories Selector & Filter -->
+      <div class="bg-slate-900 border border-slate-800 p-3.5 rounded-2xl flex flex-col gap-3">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Select Edition &amp; Department Category:</span>
+          <div class="relative w-full sm:w-64">
+            <input type="text" id="manuals-search" oninput="filterManuals(this.value)" placeholder="Search manuals in category..." class="w-full pl-8 pr-3 py-1.5 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500">
+            <svg class="w-3.5 h-3.5 text-slate-500 absolute left-2.5 top-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          </div>
+        </div>
+
+        <!-- Category Pills -->
+        <div class="flex flex-wrap gap-1.5" id="manuals-category-pills">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Manuals List Table -->
+      <div class="rounded-2xl bg-slate-900 border border-slate-800 overflow-hidden shadow-sm">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-slate-950/60 text-slate-400 uppercase tracking-wider font-bold border-b border-slate-800 text-[10px]">
+              <tr>
+                <th class="px-3 py-3 w-20 text-center">Order</th>
+                <th class="px-4 py-3 w-16">New?</th>
+                <th class="px-4 py-3">Manual / SOP Title</th>
+                <th class="px-4 py-3">Document URL (Port 3000)</th>
+                <th class="px-5 py-3 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="manuals-table-body" class="divide-y divide-slate-800 text-slate-200">
+              <tr>
+                <td colspan="5" class="px-5 py-8 text-center text-slate-500">Loading manuals...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ================= MODALS ================= -->
+
+  <!-- 2. Announcement Edit/Add Modal -->
+  <div id="modal-announcement" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xs hidden">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full p-6 shadow-2xl relative">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-4">
+        <h3 id="modal-announcement-title" class="text-sm font-bold text-white">Add Announcement</h3>
+        <button type="button" onclick="closeModal('modal-announcement')" class="text-slate-400 hover:text-white">&times;</button>
+      </div>
+      
+      <form onsubmit="saveAnnouncementItem(event)" class="space-y-4 text-xs">
+        <input type="hidden" id="ann-edit-id">
+        <div>
+          <label class="block font-semibold text-slate-300 mb-1">Badge (Department / Category)</label>
+          <input type="text" id="ann-badge" required placeholder="e.g. IT, Blood Bank, Quality, Statutory" class="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-blue-500">
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-300 mb-1">Severity Style</label>
+          <select id="ann-severity" class="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-blue-500">
+            <option value="information">Information (Blue)</option>
+            <option value="urgent">Urgent / Alert (Amber)</option>
+            <option value="critical">Critical (Red)</option>
+            <option value="success">Success (Green)</option>
+          </select>
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-300 mb-1">Message Content (Appears in Marquee)</label>
+          <textarea id="ann-message" required rows="3" placeholder="Enter message text that will scroll on the portal..." class="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-blue-500"></textarea>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-slate-300 mb-1">Link Label (Optional)</label>
+            <input type="text" id="ann-linkText" placeholder="e.g. Click Here, View Policy" class="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-blue-500">
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-300 mb-1">Link Target URL (Optional)</label>
+            <input type="text" id="ann-linkUrl" placeholder="e.g. #quality or http://..." class="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-blue-500">
+          </div>
+        </div>
+        <div class="flex items-center gap-2 pt-2">
+          <input type="checkbox" id="ann-active" checked class="w-4 h-4 rounded text-blue-600 focus:ring-0 bg-slate-950 border-slate-800 cursor-pointer">
+          <label for="ann-active" class="font-semibold text-slate-200 cursor-pointer">Active (Show immediately on portal marquee)</label>
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-800">
+          <button type="button" onclick="closeModal('modal-announcement')" class="px-4 py-2 rounded-xl font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">Cancel</button>
+          <button type="submit" class="px-4 py-2 rounded-xl font-bold bg-blue-600 text-white hover:bg-blue-500">Save Announcement</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 3. Committee Document Edit/Add Modal -->
+  <div id="modal-committee" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xs hidden">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full p-6 shadow-2xl relative">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-4">
+        <h3 id="modal-committee-title" class="text-sm font-bold text-white">Add Committee Document</h3>
+        <button type="button" onclick="closeModal('modal-committee')" class="text-slate-400 hover:text-white">&times;</button>
+      </div>
+      
+      <form onsubmit="saveCommitteeItem(event)" class="space-y-4 text-xs">
+        <input type="hidden" id="comm-edit-index" value="-1">
+        <div>
+          <label class="block font-semibold text-slate-300 mb-1">Document Title</label>
+          <input type="text" id="comm-title" required placeholder="e.g. CPR MOM NOV - 2026, INFECTION CONTROL MOM" class="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-blue-500">
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-300 mb-1">PDF File URL (Strictly Port 3000)</label>
+          <input type="text" id="comm-url" required value="http://192.168.101.75:3000/files/" placeholder="http://192.168.101.75:3000/files/your-file.pdf" class="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white font-mono focus:outline-none focus:border-blue-500">
+          <p class="text-[10px] text-slate-500 mt-1">Hospital files server runs on port 3000. Just append the filename.</p>
+        </div>
+        <div class="flex items-center gap-2 pt-2">
+          <input type="checkbox" id="comm-isNew" checked class="w-4 h-4 rounded text-blue-600 focus:ring-0 bg-slate-950 border-slate-800 cursor-pointer">
+          <label for="comm-isNew" class="font-semibold text-slate-200 cursor-pointer">Mark as "NEW" badge</label>
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-800">
+          <button type="button" onclick="closeModal('modal-committee')" class="px-4 py-2 rounded-xl font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">Cancel</button>
+          <button type="submit" class="px-4 py-2 rounded-xl font-bold bg-blue-600 text-white hover:bg-blue-500">Save Document</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 4. Manual Edit/Add Modal -->
+  <div id="modal-manual" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xs hidden">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full p-6 shadow-2xl relative">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-4">
+        <h3 id="modal-manual-title" class="text-sm font-bold text-white">Add Manual / SOP</h3>
+        <button type="button" onclick="closeModal('modal-manual')" class="text-slate-400 hover:text-white">&times;</button>
+      </div>
+      
+      <form onsubmit="saveManualItem(event)" class="space-y-4 text-xs">
+        <input type="hidden" id="manual-edit-index" value="-1">
+        <div>
+          <label class="block font-semibold text-slate-300 mb-1">Target Category</label>
+          <select id="manual-target-category" class="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-blue-500">
+            <option value="5-nabh">5th Edition - NABH Departmental</option>
+            <option value="5-clinical">5th Edition - Clinical Protocols</option>
+            <option value="5-nonclinical">5th Edition - Non-Clinical</option>
+            <option value="5-policy">5th Edition - Hospital Policies</option>
+            <option value="6-nabh">6th Edition - NABH Departmental</option>
+            <option value="6-clinical">6th Edition - Clinical Protocols</option>
+            <option value="6-nonclinical">6th Edition - Non-Clinical</option>
+            <option value="6-policy">6th Edition - Hospital Policies</option>
+          </select>
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-300 mb-1">Manual / Protocol Title</label>
+          <input type="text" id="manual-title" required placeholder="e.g. ICU Infection Control Manual" class="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-blue-500">
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-300 mb-1">PDF File URL (Strictly Port 3000)</label>
+          <input type="text" id="manual-url" required value="http://192.168.101.75:3000/files/" placeholder="http://192.168.101.75:3000/files/your-file.pdf" class="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white font-mono focus:outline-none focus:border-blue-500">
+        </div>
+        <div class="flex items-center gap-2 pt-2">
+          <input type="checkbox" id="manual-isNew" class="w-4 h-4 rounded text-blue-600 focus:ring-0 bg-slate-950 border-slate-800 cursor-pointer">
+          <label for="manual-isNew" class="font-semibold text-slate-200 cursor-pointer">Mark as "NEW" badge</label>
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-800">
+          <button type="button" onclick="closeModal('modal-manual')" class="px-4 py-2 rounded-xl font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">Cancel</button>
+          <button type="submit" class="px-4 py-2 rounded-xl font-bold bg-blue-600 text-white hover:bg-blue-500">Save Manual</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Floating Save Changes Notification Bar (Appears when dragging/reordering documents) -->
+  <div id="unsaved-banner" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-slate-900/95 border-2 border-emerald-500/70 shadow-2xl rounded-2xl px-5 py-3.5 flex items-center gap-4 backdrop-blur-md transition-all duration-300 translate-y-32 opacity-0 pointer-events-none">
+    <div class="flex items-center gap-3">
+      <span class="relative flex h-3 w-3">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+      </span>
+      <div>
+        <p class="text-xs font-bold text-white flex items-center gap-1.5">
+          <span>Unsaved Document Order Changes</span>
+          <span id="unsaved-banner-tag" class="text-[10px] uppercase font-extrabold px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Committees</span>
+        </p>
+        <p class="text-[11px] text-slate-400">Click &ldquo;Save Changes&rdquo; to persist order and reflect immediately on portal.</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
+      <button type="button" onclick="discardPendingOrder()" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-semibold border border-slate-700 transition-colors cursor-pointer">
+        Discard
+      </button>
+      <button type="button" id="banner-save-btn" onclick="savePendingOrder()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-lg shadow-emerald-600/30 transition-all flex items-center gap-1.5 cursor-pointer">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" /></svg>
+        <span>Save Changes</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 pointer-events-none transition-all duration-300 flex items-center gap-2.5 px-4 py-3 rounded-2xl bg-slate-800/95 border border-slate-700 text-white text-xs font-semibold shadow-2xl backdrop-blur-md">
+    <span id="toast-icon" class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+    <span id="toast-message">Message text</span>
+  </div>
+
+  <!-- ================= CMS JAVASCRIPT LOGIC ================= -->
+  <script>
+    // State Store
+    let currentTab = 'announcements';
+    let announcementsData = [];
+    let committeesData = [];
+    let manualsData = {};
+    let activeManualCategory = '5-nabh';
+    let cmsPasskey = sessionStorage.getItem('aph_cms_passkey') || '';
+    let pendingChanges = {
+      announcements: false,
+      committees: false,
+      manuals: false
+    };
+
+    // Category labels map for manuals
+    const MANUAL_CATEGORIES = {
+      '5-nabh': '5th NABH',
+      '5-clinical': '5th Clinical',
+      '5-nonclinical': '5th Non-Clinical',
+      '5-policy': '5th Policies',
+      '6-nabh': '6th NABH',
+      '6-clinical': '6th Clinical',
+      '6-nonclinical': '6th Non-Clinical',
+      '6-policy': '6th Policies'
+    };
+
+    // Initialize CMS on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      initAuth();
+    });
+
+    // Toast Helper
+    let toastTimeout;
+    function showToast(msg, isError = false) {
+      const toast = document.getElementById('toast');
+      const text = document.getElementById('toast-message');
+      const icon = document.getElementById('toast-icon');
+      text.textContent = msg;
+      icon.className = isError ? 'w-2.5 h-2.5 rounded-full bg-rose-500' : 'w-2.5 h-2.5 rounded-full bg-emerald-400';
+      clearTimeout(toastTimeout);
+      toast.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+      }, 3500);
+    }
+
+    // Modal Helpers
+    function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+    function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+
+    // ================= ADMIN AUTH CONTROLLER =================
+    let currentAdminUser = null;
+
+    function initAuth() {
+      const savedUser = sessionStorage.getItem('aph_cms_user');
+      const savedPasskey = sessionStorage.getItem('aph_cms_passkey');
+      const savedToken = sessionStorage.getItem('aph_cms_token');
+
+      if (savedUser && (savedPasskey || savedToken)) {
+        currentAdminUser = {
+          username: savedUser,
+          name: sessionStorage.getItem('aph_cms_name') || savedUser,
+          passkey: savedPasskey || '',
+          token: savedToken || ''
+        };
+        cmsPasskey = savedPasskey || '';
+        showDashboard();
+      } else {
+        showLoginView();
+      }
+    }
+
+    function showDashboard() {
+      const loginView = document.getElementById('cms-login-view');
+      const dashboard = document.getElementById('cms-dashboard');
+      const userBar = document.getElementById('admin-user-bar');
+      const adminName = document.getElementById('header-admin-name');
+
+      if (loginView) loginView.classList.add('hidden');
+      if (dashboard) dashboard.classList.remove('hidden');
+      if (userBar) userBar.classList.remove('hidden');
+      if (adminName) adminName.textContent = currentAdminUser?.name || 'Administrator';
+
+      renderManualCategoryPills();
+      loadAllData();
+    }
+
+    function showLoginView() {
+      const loginView = document.getElementById('cms-login-view');
+      const dashboard = document.getElementById('cms-dashboard');
+      const userBar = document.getElementById('admin-user-bar');
+      const userInp = document.getElementById('login-username');
+
+      if (dashboard) dashboard.classList.add('hidden');
+      if (userBar) userBar.classList.add('hidden');
+      if (loginView) loginView.classList.remove('hidden');
+      if (userInp) setTimeout(() => userInp.focus(), 100);
+    }
+
+    async function handleAdminLogin(e) {
+      e.preventDefault();
+      const userInp = document.getElementById('login-username');
+      const pwInp = document.getElementById('login-password');
+      const errorAlert = document.getElementById('login-error-alert');
+      const errorMsg = document.getElementById('login-error-msg');
+      const btn = document.getElementById('btn-login-submit');
+      const btnText = document.getElementById('login-btn-text');
+      const spinner = document.getElementById('login-spinner');
+
+      const username = userInp.value.trim();
+      const password = pwInp.value.trim();
+
+      if (!username || !password) return;
+
+      errorAlert.classList.add('hidden');
+      btn.disabled = true;
+      btnText.textContent = 'Authenticating...';
+      spinner.classList.remove('hidden');
+
+      try {
+        const res = await fetch('/api/cms/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.error || 'Authentication failed. Please check your credentials.');
+        }
+
+        currentAdminUser = {
+          username: data.username,
+          name: data.name || data.username,
+          passkey: data.passkey || password,
+          token: data.token || ''
+        };
+        cmsPasskey = currentAdminUser.passkey;
+
+        sessionStorage.setItem('aph_cms_user', currentAdminUser.username);
+        sessionStorage.setItem('aph_cms_name', currentAdminUser.name);
+        sessionStorage.setItem('aph_cms_passkey', currentAdminUser.passkey);
+        if (currentAdminUser.token) {
+          sessionStorage.setItem('aph_cms_token', currentAdminUser.token);
+        }
+
+        showDashboard();
+        showToast(`Welcome, ${currentAdminUser.name}!`);
+      } catch (err) {
+        errorMsg.textContent = err.message;
+        errorAlert.classList.remove('hidden');
+        pwInp.value = '';
+        pwInp.focus();
+      } finally {
+        btn.disabled = false;
+        btnText.textContent = 'Sign In to Admin CMS';
+        spinner.classList.add('hidden');
+      }
+    }
+
+    async function handleAdminLogout() {
+      if (!confirm('Are you sure you want to log out of the CMS?')) return;
+      try {
+        await fetch('/api/auth/logout', { method: 'POST' });
+      } catch (e) {
+        // Ignore network err on logout
+      }
+      sessionStorage.removeItem('aph_cms_user');
+      sessionStorage.removeItem('aph_cms_name');
+      sessionStorage.removeItem('aph_cms_passkey');
+      sessionStorage.removeItem('aph_cms_token');
+      currentAdminUser = null;
+      cmsPasskey = '';
+      clearOrderChanged('announcements');
+      clearOrderChanged('committees');
+      clearOrderChanged('manuals');
+      showLoginView();
+      showToast('Logged out of CMS.');
+    }
+
+    function togglePasswordVisibility() {
+      const pw = document.getElementById('login-password');
+      if (pw.type === 'password') {
+        pw.type = 'text';
+      } else {
+        pw.type = 'password';
+      }
+    }
+
+    function ensurePasskey() {
+      if (!currentAdminUser || !cmsPasskey) {
+        showLoginView();
+        showToast('Administrator login required.', true);
+        return false;
+      }
+      return true;
+    }
+
+    // Tab Switching
+    function switchTab(tab) {
+      currentTab = tab;
+      document.querySelectorAll('.tab-btn').forEach(b => {
+        b.className = 'tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 bg-slate-800 text-slate-400 hover:text-slate-200 hover:bg-slate-700/60 transition-all';
+      });
+      const activeBtn = document.getElementById(`tab-btn-${tab}`);
+      if (activeBtn) {
+        activeBtn.className = 'tab-btn active px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 bg-blue-600 text-white shadow-md';
+      }
+
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.add('hidden'));
+      document.getElementById(`tab-content-${tab}`).classList.remove('hidden');
+
+      const addBtnText = document.getElementById('add-btn-text');
+      if (tab === 'announcements') addBtnText.textContent = 'New Announcement';
+      else if (tab === 'committees') addBtnText.textContent = 'New Committee MOM';
+      else if (tab === 'manuals') addBtnText.textContent = 'New Manual / SOP';
+
+      updateUnsavedUI();
+    }
+
+    function openAddModal() {
+      if (currentTab === 'announcements') {
+        document.getElementById('modal-announcement-title').textContent = 'Add Announcement';
+        document.getElementById('ann-edit-id').value = '';
+        document.getElementById('ann-badge').value = 'General';
+        document.getElementById('ann-severity').value = 'information';
+        document.getElementById('ann-message').value = '';
+        document.getElementById('ann-linkText').value = '';
+        document.getElementById('ann-linkUrl').value = '';
+        document.getElementById('ann-active').checked = true;
+        openModal('modal-announcement');
+      } else if (currentTab === 'committees') {
+        document.getElementById('modal-committee-title').textContent = 'Add Committee Document';
+        document.getElementById('comm-edit-index').value = '-1';
+        document.getElementById('comm-title').value = '';
+        document.getElementById('comm-url').value = 'http://192.168.101.75:3000/files/';
+        document.getElementById('comm-isNew').checked = true;
+        openModal('modal-committee');
+      } else if (currentTab === 'manuals') {
+        document.getElementById('modal-manual-title').textContent = 'Add Manual / SOP';
+        document.getElementById('manual-edit-index').value = '-1';
+        document.getElementById('manual-target-category').value = activeManualCategory;
+        document.getElementById('manual-title').value = '';
+        document.getElementById('manual-url').value = 'http://192.168.101.75:3000/files/';
+        document.getElementById('manual-isNew').checked = false;
+        openModal('modal-manual');
+      }
+    }
+
+    // Load Data
+    async function loadAllData() {
+      await Promise.all([
+        loadAnnouncements(),
+        loadCommittees(),
+        loadManuals()
+      ]);
+    }
+
+    async function reloadCurrentData() {
+      if (pendingChanges[currentTab]) {
+        if (!confirm(`You have unsaved order changes in ${currentTab}. Refreshing will discard them. Continue?`)) {
+          return;
+        }
+        clearOrderChanged(currentTab);
+      }
+      showToast('Refreshing latest records...');
+      if (currentTab === 'announcements') await loadAnnouncements();
+      else if (currentTab === 'committees') await loadCommittees();
+      else if (currentTab === 'manuals') await loadManuals();
+      showToast('Data refreshed.');
+    }
+
+    // 1. ANNOUNCEMENTS API & RENDERING
+    async function loadAnnouncements() {
+      try {
+        const res = await fetch('/api/cms/data?type=announcements', { cache: 'no-store' });
+        announcementsData = await res.json();
+        if (!Array.isArray(announcementsData)) announcementsData = [];
+      } catch (err) {
+        console.error('Failed to load announcements:', err);
+      }
+      renderAnnouncementsTable();
+      renderAnnouncementPreview();
+    }
+
+    function renderAnnouncementsTable() {
+      const tbody = document.getElementById('announcements-table-body');
+      document.getElementById('badge-count-announcements').textContent = announcementsData.length;
+      
+      const activeCount = announcementsData.filter(a => a.active).length;
+      document.getElementById('announcements-active-summary').textContent = `${activeCount} Active Broadcast${activeCount === 1 ? '' : 's'}`;
+
+      if (announcementsData.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" class="px-5 py-8 text-center text-slate-500">No announcements found. Click "New Announcement" to create one.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = announcementsData.map((item, idx) => {
+        const sevColor = {
+          'urgent': 'text-amber-400 bg-amber-500/10 border-amber-500/30',
+          'critical': 'text-rose-400 bg-rose-500/10 border-rose-500/30',
+          'success': 'text-emerald-400 bg-emerald-500/10 border-emerald-500/30',
+          'information': 'text-blue-400 bg-blue-500/10 border-blue-500/30'
+        }[item.severity?.toLowerCase()] || 'text-blue-400 bg-blue-500/10 border-blue-500/30';
+
+        return `
+          <tr draggable="true" data-type="announcements" data-index="${idx}"
+              ondragstart="handleDragStart(event, 'announcements', ${idx})"
+              ondragover="handleDragOver(event, 'announcements', ${idx})"
+              ondragleave="handleDragLeave(event)"
+              ondrop="handleDrop(event, 'announcements', ${idx})"
+              ondragend="handleDragEnd(event)"
+              class="hover:bg-slate-800/40 transition-colors group">
+            <td class="px-3 py-3 text-center whitespace-nowrap">
+              <div class="flex items-center justify-center gap-1 select-none">
+                <span class="drag-handle p-1 text-slate-500 hover:text-blue-400 rounded hover:bg-slate-800 transition-colors" title="Drag row to reorder position in marquee">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 8h16M4 16h16" /></svg>
+                </span>
+                <span class="text-[11px] font-mono font-bold text-slate-400 w-5 text-right">${idx + 1}</span>
+                <div class="flex flex-col ml-0.5">
+                  <button type="button" onclick="moveItem('announcements', ${idx}, -1)" ${idx === 0 ? 'disabled' : ''} class="text-[9px] text-slate-500 hover:text-white disabled:opacity-20 leading-none py-0.5 cursor-pointer" title="Move Up">▲</button>
+                  <button type="button" onclick="moveItem('announcements', ${idx}, 1)" ${idx === announcementsData.length - 1 ? 'disabled' : ''} class="text-[9px] text-slate-500 hover:text-white disabled:opacity-20 leading-none py-0.5 cursor-pointer" title="Move Down">▼</button>
+                </div>
+              </div>
+            </td>
+            <td class="px-4 py-3">
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" ${item.active ? 'checked' : ''} onchange="toggleAnnouncementActive(${idx}, this.checked)" class="sr-only peer">
+                <div class="w-8 h-4 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-blue-600"></div>
+              </label>
+            </td>
+            <td class="px-4 py-3 whitespace-nowrap">
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold border ${sevColor}">
+                <span>${escapeHtml(item.badge || 'Alert')}</span>
+              </span>
+            </td>
+            <td class="px-4 py-3">
+              <div class="font-medium text-slate-200">${escapeHtml(item.message)}</div>
+            </td>
+            <td class="px-4 py-3 whitespace-nowrap text-slate-400">
+              ${item.linkText ? `<a href="${item.linkUrl || '#'}" target="_blank" class="text-blue-400 hover:underline flex items-center gap-1">${escapeHtml(item.linkText)} &rarr;</a>` : '<span class="text-slate-600">None</span>'}
+            </td>
+            <td class="px-5 py-3 text-right whitespace-nowrap">
+              <button type="button" onclick="editAnnouncementItem(${idx})" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-blue-400 font-semibold text-[11px] mr-1.5 transition-colors">Edit</button>
+              <button type="button" onclick="deleteAnnouncementItem(${idx})" class="px-2.5 py-1 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 font-semibold text-[11px] transition-colors">Delete</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function renderAnnouncementPreview() {
+      const track = document.getElementById('announcement-preview-track');
+      const activeItems = announcementsData.filter(a => a.active);
+      if (activeItems.length === 0) {
+        track.innerHTML = '<span class="text-slate-500 italic">No announcements currently marked as active. Toggle a switch above to broadcast.</span>';
+        return;
+      }
+      track.innerHTML = activeItems.map(item => `
+        <span class="inline-flex items-center gap-2 mr-8">
+          <span class="px-1.5 py-0.2 rounded text-[10px] font-extrabold uppercase bg-blue-500/20 text-blue-300 border border-blue-500/30">${escapeHtml(item.badge || 'INFO')}</span>
+          <span class="text-slate-100">${escapeHtml(item.message)}</span>
+          ${item.linkText ? `<span class="text-blue-400 font-bold underline">${escapeHtml(item.linkText)}</span>` : ''}
+        </span>
+      `).join(' • ');
+    }
+
+    async function toggleAnnouncementActive(idx, isChecked) {
+      if (!ensurePasskey()) {
+        renderAnnouncementsTable();
+        return;
+      }
+      announcementsData[idx].active = isChecked;
+      await saveAnnouncementsToServer();
+      renderAnnouncementPreview();
+      showToast(`Announcement ${isChecked ? 'activated' : 'deactivated'}.`);
+    }
+
+    function editAnnouncementItem(idx) {
+      const item = announcementsData[idx];
+      document.getElementById('modal-announcement-title').textContent = 'Edit Announcement';
+      document.getElementById('ann-edit-id').value = item.id || `announcement-${idx+1}`;
+      document.getElementById('ann-badge').value = item.badge || '';
+      document.getElementById('ann-severity').value = item.severity || 'information';
+      document.getElementById('ann-message').value = item.message || '';
+      document.getElementById('ann-linkText').value = item.linkText || '';
+      document.getElementById('ann-linkUrl').value = item.linkUrl || '';
+      document.getElementById('ann-active').checked = !!item.active;
+      openModal('modal-announcement');
+    }
+
+    async function saveAnnouncementItem(e) {
+      e.preventDefault();
+      if (!ensurePasskey()) return;
+
+      const editId = document.getElementById('ann-edit-id').value;
+      const newItem = {
+        id: editId || `announcement-${Date.now()}`,
+        badge: document.getElementById('ann-badge').value.trim(),
+        severity: document.getElementById('ann-severity').value,
+        message: document.getElementById('ann-message').value.trim(),
+        linkText: document.getElementById('ann-linkText').value.trim(),
+        linkUrl: document.getElementById('ann-linkUrl').value.trim(),
+        active: document.getElementById('ann-active').checked
+      };
+
+      if (editId) {
+        const foundIdx = announcementsData.findIndex(a => a.id === editId);
+        if (foundIdx >= 0) announcementsData[foundIdx] = newItem;
+        else announcementsData.push(newItem);
+      } else {
+        announcementsData.unshift(newItem);
+      }
+
+      await saveAnnouncementsToServer();
+      closeModal('modal-announcement');
+      renderAnnouncementsTable();
+      renderAnnouncementPreview();
+      showToast('Announcement saved successfully.');
+    }
+
+    async function deleteAnnouncementItem(idx) {
+      if (!ensurePasskey()) return;
+      if (!confirm(`Delete announcement "${announcementsData[idx].message.slice(0, 40)}..."?`)) return;
+      announcementsData.splice(idx, 1);
+      await saveAnnouncementsToServer();
+      renderAnnouncementsTable();
+      renderAnnouncementPreview();
+      showToast('Announcement deleted.');
+    }
+
+    async function saveAnnouncementsToServer() {
+      await saveCmsData('announcements', announcementsData);
+    }
+
+    // 2. COMMITTEES API & RENDERING
+    async function loadCommittees() {
+      try {
+        const res = await fetch('/api/cms/data?type=committees', { cache: 'no-store' });
+        committeesData = await res.json();
+        if (!Array.isArray(committeesData)) committeesData = [];
+      } catch (err) {
+        console.error('Failed to load committees:', err);
+      }
+      renderCommitteesTable(committeesData);
+    }
+
+    function renderCommitteesTable(items) {
+      const tbody = document.getElementById('committees-table-body');
+      document.getElementById('badge-count-committees').textContent = committeesData.length;
+      document.getElementById('committees-count-display').textContent = items.length;
+
+      if (items.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" class="px-5 py-8 text-center text-slate-500">No committee records match your search.</td></tr>';
+        return;
+      }
+
+      const isFiltered = items.length !== committeesData.length;
+
+      tbody.innerHTML = items.map((item, originalIdx) => {
+        // Find real index in committeesData
+        const realIdx = committeesData.indexOf(item);
+        return `
+          <tr draggable="${!isFiltered}" data-type="committees" data-index="${realIdx}"
+              ondragstart="handleDragStart(event, 'committees', ${realIdx})"
+              ondragover="handleDragOver(event, 'committees', ${realIdx})"
+              ondragleave="handleDragLeave(event)"
+              ondrop="handleDrop(event, 'committees', ${realIdx})"
+              ondragend="handleDragEnd(event)"
+              class="hover:bg-slate-800/40 transition-colors group">
+            <td class="px-3 py-3 text-center whitespace-nowrap">
+              <div class="flex items-center justify-center gap-1 select-none">
+                <span class="${!isFiltered ? 'drag-handle' : 'opacity-30 cursor-not-allowed'} p-1 text-slate-500 hover:text-blue-400 rounded hover:bg-slate-800 transition-colors" title="${!isFiltered ? 'Drag row to reorder position' : 'Clear search filter to drag and reorder'}">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 8h16M4 16h16" /></svg>
+                </span>
+                <span class="text-[11px] font-mono font-bold text-slate-400 w-5 text-right">${realIdx + 1}</span>
+                <div class="flex flex-col ml-0.5">
+                  <button type="button" onclick="moveItem('committees', ${realIdx}, -1)" ${realIdx === 0 ? 'disabled' : ''} class="text-[9px] text-slate-500 hover:text-white disabled:opacity-20 leading-none py-0.5 cursor-pointer" title="Move Up">▲</button>
+                  <button type="button" onclick="moveItem('committees', ${realIdx}, 1)" ${realIdx === committeesData.length - 1 ? 'disabled' : ''} class="text-[9px] text-slate-500 hover:text-white disabled:opacity-20 leading-none py-0.5 cursor-pointer" title="Move Down">▼</button>
+                </div>
+              </div>
+            </td>
+            <td class="px-4 py-3 whitespace-nowrap">
+              ${item.isNew ? '<span class="px-1.5 py-0.5 rounded text-[10px] font-extrabold uppercase bg-amber-500/20 text-amber-300 border border-amber-500/30">New</span>' : '<span class="text-slate-600">—</span>'}
+            </td>
+            <td class="px-4 py-3">
+              <span class="font-bold text-slate-200">${escapeHtml(item.title)}</span>
+            </td>
+            <td class="px-4 py-3 font-mono text-[11px] text-slate-400">
+              <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="hover:text-blue-400 hover:underline flex items-center gap-1 truncate max-w-md">
+                <span>${escapeHtml(item.url)}</span>
+                <svg class="w-3 h-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+              </a>
+            </td>
+            <td class="px-5 py-3 text-right whitespace-nowrap">
+              <button type="button" onclick="editCommitteeItem(${realIdx})" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-blue-400 font-semibold text-[11px] mr-1.5 transition-colors">Edit</button>
+              <button type="button" onclick="deleteCommitteeItem(${realIdx})" class="px-2.5 py-1 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 font-semibold text-[11px] transition-colors">Delete</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function filterCommittees(query) {
+      const q = (query || '').toLowerCase().trim();
+      if (!q) {
+        renderCommitteesTable(committeesData);
+        return;
+      }
+      const filtered = committeesData.filter(c => (c.title || '').toLowerCase().includes(q) || (c.url || '').toLowerCase().includes(q));
+      renderCommitteesTable(filtered);
+    }
+
+    function editCommitteeItem(idx) {
+      const item = committeesData[idx];
+      document.getElementById('modal-committee-title').textContent = 'Edit Committee Document';
+      document.getElementById('comm-edit-index').value = idx;
+      document.getElementById('comm-title').value = item.title || '';
+      document.getElementById('comm-url').value = item.url || 'http://192.168.101.75:3000/files/';
+      document.getElementById('comm-isNew').checked = !!item.isNew;
+      openModal('modal-committee');
+    }
+
+    async function saveCommitteeItem(e) {
+      e.preventDefault();
+      if (!ensurePasskey()) return;
+
+      const idx = parseInt(document.getElementById('comm-edit-index').value, 10);
+      let rawUrl = document.getElementById('comm-url').value.trim();
+      // Enforce port 3000
+      rawUrl = rawUrl.replace(':1111/files/', ':3000/files/').replace(':2222/files/', ':3000/files/');
+
+      const item = {
+        title: document.getElementById('comm-title').value.trim(),
+        url: rawUrl,
+        isNew: document.getElementById('comm-isNew').checked
+      };
+
+      if (idx >= 0 && idx < committeesData.length) {
+        committeesData[idx] = item;
+      } else {
+        committeesData.unshift(item);
+      }
+
+      await saveCmsData('committees', committeesData);
+      closeModal('modal-committee');
+      filterCommittees(document.getElementById('committees-search').value);
+      showToast('Committee record saved successfully.');
+    }
+
+    async function deleteCommitteeItem(idx) {
+      if (!ensurePasskey()) return;
+      if (!confirm(`Delete committee document "${committeesData[idx].title}"?`)) return;
+      committeesData.splice(idx, 1);
+      await saveCmsData('committees', committeesData);
+      filterCommittees(document.getElementById('committees-search').value);
+      showToast('Committee record deleted.');
+    }
+
+    // 3. MANUALS API & RENDERING
+    async function loadManuals() {
+      try {
+        const res = await fetch('/api/cms/data?type=manuals', { cache: 'no-store' });
+        manualsData = await res.json();
+        if (!manualsData || typeof manualsData !== 'object') manualsData = {};
+      } catch (err) {
+        console.error('Failed to load manuals:', err);
+      }
+      renderManualCategoryPills();
+      renderManualsTable();
+    }
+
+    function renderManualCategoryPills() {
+      const container = document.getElementById('manuals-category-pills');
+      let totalManuals = 0;
+      Object.keys(MANUAL_CATEGORIES).forEach(k => {
+        totalManuals += Array.isArray(manualsData[k]) ? manualsData[k].length : 0;
+      });
+      document.getElementById('badge-count-manuals').textContent = totalManuals;
+
+      container.innerHTML = Object.entries(MANUAL_CATEGORIES).map(([catKey, catLabel]) => {
+        const count = Array.isArray(manualsData[catKey]) ? manualsData[catKey].length : 0;
+        const isActive = catKey === activeManualCategory;
+        return `
+          <button type="button" onclick="selectManualCategory('${catKey}')" class="px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all ${isActive ? 'bg-blue-600 text-white shadow-sm' : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'}">
+            <span>${catLabel}</span>
+            <span class="px-1.5 py-0.2 rounded-full text-[10px] ${isActive ? 'bg-white/20 text-white' : 'bg-slate-800 text-slate-400'}">${count}</span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function selectManualCategory(catKey) {
+      activeManualCategory = catKey;
+      renderManualCategoryPills();
+      renderManualsTable();
+    }
+
+    function renderManualsTable() {
+      const tbody = document.getElementById('manuals-table-body');
+      const list = Array.isArray(manualsData[activeManualCategory]) ? manualsData[activeManualCategory] : [];
+      const q = (document.getElementById('manuals-search').value || '').toLowerCase().trim();
+
+      const filtered = q ? list.filter(m => (m.title || '').toLowerCase().includes(q) || (m.url || '').toLowerCase().includes(q)) : list;
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" class="px-5 py-8 text-center text-slate-500">No manuals found in this category.</td></tr>';
+        return;
+      }
+
+      const isFiltered = filtered.length !== list.length;
+
+      tbody.innerHTML = filtered.map((item) => {
+        const realIdx = list.indexOf(item);
+        return `
+          <tr draggable="${!isFiltered}" data-type="manuals" data-index="${realIdx}"
+              ondragstart="handleDragStart(event, 'manuals', ${realIdx})"
+              ondragover="handleDragOver(event, 'manuals', ${realIdx})"
+              ondragleave="handleDragLeave(event)"
+              ondrop="handleDrop(event, 'manuals', ${realIdx})"
+              ondragend="handleDragEnd(event)"
+              class="hover:bg-slate-800/40 transition-colors group">
+            <td class="px-3 py-3 text-center whitespace-nowrap">
+              <div class="flex items-center justify-center gap-1 select-none">
+                <span class="${!isFiltered ? 'drag-handle' : 'opacity-30 cursor-not-allowed'} p-1 text-slate-500 hover:text-blue-400 rounded hover:bg-slate-800 transition-colors" title="${!isFiltered ? 'Drag row to reorder position' : 'Clear search filter to drag and reorder'}">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 8h16M4 16h16" /></svg>
+                </span>
+                <span class="text-[11px] font-mono font-bold text-slate-400 w-5 text-right">${realIdx + 1}</span>
+                <div class="flex flex-col ml-0.5">
+                  <button type="button" onclick="moveItem('manuals', ${realIdx}, -1)" ${realIdx === 0 ? 'disabled' : ''} class="text-[9px] text-slate-500 hover:text-white disabled:opacity-20 leading-none py-0.5 cursor-pointer" title="Move Up">▲</button>
+                  <button type="button" onclick="moveItem('manuals', ${realIdx}, 1)" ${realIdx === list.length - 1 ? 'disabled' : ''} class="text-[9px] text-slate-500 hover:text-white disabled:opacity-20 leading-none py-0.5 cursor-pointer" title="Move Down">▼</button>
+                </div>
+              </div>
+            </td>
+            <td class="px-4 py-3 whitespace-nowrap">
+              ${item.isNew ? '<span class="px-1.5 py-0.5 rounded text-[10px] font-extrabold uppercase bg-amber-500/20 text-amber-300 border border-amber-500/30">New</span>' : '<span class="text-slate-600">—</span>'}
+            </td>
+            <td class="px-4 py-3">
+              <span class="font-bold text-slate-200">${escapeHtml(item.title)}</span>
+            </td>
+            <td class="px-4 py-3 font-mono text-[11px] text-slate-400">
+              <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="hover:text-blue-400 hover:underline flex items-center gap-1 truncate max-w-md">
+                <span>${escapeHtml(item.url)}</span>
+                <svg class="w-3 h-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+              </a>
+            </td>
+            <td class="px-5 py-3 text-right whitespace-nowrap">
+              <button type="button" onclick="editManualItem('${activeManualCategory}', ${realIdx})" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-blue-400 font-semibold text-[11px] mr-1.5 transition-colors">Edit</button>
+              <button type="button" onclick="deleteManualItem('${activeManualCategory}', ${realIdx})" class="px-2.5 py-1 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 font-semibold text-[11px] transition-colors">Delete</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function filterManuals() {
+      renderManualsTable();
+    }
+
+    function editManualItem(catKey, idx) {
+      const item = manualsData[catKey][idx];
+      document.getElementById('modal-manual-title').textContent = 'Edit Manual / SOP';
+      document.getElementById('manual-edit-index').value = idx;
+      document.getElementById('manual-target-category').value = catKey;
+      document.getElementById('manual-title').value = item.title || '';
+      document.getElementById('manual-url').value = item.url || 'http://192.168.101.75:3000/files/';
+      document.getElementById('manual-isNew').checked = !!item.isNew;
+      openModal('modal-manual');
+    }
+
+    async function saveManualItem(e) {
+      e.preventDefault();
+      if (!ensurePasskey()) return;
+
+      const idx = parseInt(document.getElementById('manual-edit-index').value, 10);
+      const targetCat = document.getElementById('manual-target-category').value;
+      let rawUrl = document.getElementById('manual-url').value.trim();
+      rawUrl = rawUrl.replace(':1111/files/', ':3000/files/').replace(':2222/files/', ':3000/files/');
+
+      const item = {
+        title: document.getElementById('manual-title').value.trim(),
+        url: rawUrl,
+        isNew: document.getElementById('manual-isNew').checked
+      };
+
+      if (!Array.isArray(manualsData[targetCat])) manualsData[targetCat] = [];
+
+      if (idx >= 0 && targetCat === activeManualCategory && idx < manualsData[targetCat].length) {
+        manualsData[targetCat][idx] = item;
+      } else {
+        manualsData[targetCat].unshift(item);
+      }
+
+      await saveCmsData('manuals', manualsData);
+      closeModal('modal-manual');
+      activeManualCategory = targetCat;
+      renderManualCategoryPills();
+      renderManualsTable();
+      showToast('Manual saved successfully.');
+    }
+
+    async function deleteManualItem(catKey, idx) {
+      if (!ensurePasskey()) return;
+      if (!confirm(`Delete manual "${manualsData[catKey][idx].title}"?`)) return;
+      manualsData[catKey].splice(idx, 1);
+      await saveCmsData('manuals', manualsData);
+      renderManualCategoryPills();
+      renderManualsTable();
+      showToast('Manual deleted.');
+    }
+
+    // Generic Backend Save Helper
+    async function saveCmsData(type, data) {
+      if (!ensurePasskey()) throw new Error('Admin login required.');
+      try {
+        const res = await fetch('/api/cms/save', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            type: type,
+            passkey: cmsPasskey,
+            token: currentAdminUser?.token || '',
+            data: data
+          })
+        });
+        const result = await res.json();
+        if (!res.ok) {
+          if (res.status === 401) {
+            showLoginView();
+            throw new Error('Admin session expired or unauthorized. Please sign in again.');
+          }
+          throw new Error(result.error || `HTTP ${res.status}`);
+        }
+        return result;
+      } catch (err) {
+        showToast(err.message, true);
+        throw err;
+      }
+    }
+
+    // ================= DRAG & DROP ORDERING ENGINE =================
+    let draggedType = null;
+    let draggedIndex = null;
+    let dragTargetIndex = null;
+
+    function handleDragStart(e, type, index) {
+      draggedType = type;
+      draggedIndex = index;
+      dragTargetIndex = index;
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/plain', String(index));
+      const row = e.target.closest('tr');
+      if (row) {
+        row.classList.add('dragging');
+      }
+    }
+
+    function handleDragOver(e, type, index) {
+      if (draggedType !== type) return;
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      
+      const row = e.target.closest('tr');
+      if (!row) return;
+
+      document.querySelectorAll('.drop-target-above, .drop-target-below').forEach(el => {
+        el.classList.remove('drop-target-above', 'drop-target-below');
+      });
+
+      const rect = row.getBoundingClientRect();
+      const midY = rect.top + rect.height / 2;
+      if (e.clientY < midY) {
+        row.classList.add('drop-target-above');
+        dragTargetIndex = index;
+      } else {
+        row.classList.add('drop-target-below');
+        dragTargetIndex = index + 1;
+      }
+    }
+
+    function handleDragLeave(e) {
+      const row = e.target.closest('tr');
+      if (row && !row.contains(e.relatedTarget)) {
+        row.classList.remove('drop-target-above', 'drop-target-below');
+      }
+    }
+
+    async function handleDrop(e, type, index) {
+      if (draggedType !== type) return;
+      e.preventDefault();
+      
+      const fromIdx = draggedIndex;
+      let toIdx = dragTargetIndex !== null ? dragTargetIndex : index;
+      cleanupDragStyles();
+
+      if (fromIdx === null || toIdx === null) return;
+      if (fromIdx < toIdx) toIdx -= 1;
+      if (fromIdx === toIdx) return;
+
+      if (type === 'announcements') {
+        const [moved] = announcementsData.splice(fromIdx, 1);
+        announcementsData.splice(toIdx, 0, moved);
+        renderAnnouncementsTable();
+        renderAnnouncementPreview();
+        markOrderChanged('announcements');
+        showToast(`Announcement moved to position #${toIdx + 1}. Click 'Save Changes' to update portal.`);
+      } else if (type === 'committees') {
+        const [moved] = committeesData.splice(fromIdx, 1);
+        committeesData.splice(toIdx, 0, moved);
+        filterCommittees(document.getElementById('committees-search').value);
+        markOrderChanged('committees');
+        showToast(`Committee document moved to position #${toIdx + 1}. Click 'Save Changes' to update portal.`);
+      } else if (type === 'manuals') {
+        const list = manualsData[activeManualCategory] || [];
+        const [moved] = list.splice(fromIdx, 1);
+        list.splice(toIdx, 0, moved);
+        renderManualsTable();
+        markOrderChanged('manuals');
+        showToast(`Manual moved to position #${toIdx + 1}. Click 'Save Changes' to update portal.`);
+      }
+    }
+
+    function handleDragEnd(e) {
+      cleanupDragStyles();
+    }
+
+    function cleanupDragStyles() {
+      document.querySelectorAll('tr').forEach(tr => {
+        tr.classList.remove('dragging', 'drop-target-above', 'drop-target-below');
+      });
+      draggedType = null;
+      draggedIndex = null;
+      dragTargetIndex = null;
+    }
+
+    // Step-by-step move helper (up/down arrow buttons)
+    async function moveItem(type, index, delta) {
+      const targetIdx = index + delta;
+
+      if (type === 'announcements') {
+        if (targetIdx < 0 || targetIdx >= announcementsData.length) return;
+        const temp = announcementsData[index];
+        announcementsData[index] = announcementsData[targetIdx];
+        announcementsData[targetIdx] = temp;
+        renderAnnouncementsTable();
+        renderAnnouncementPreview();
+        markOrderChanged('announcements');
+        showToast(`Announcement moved to #${targetIdx + 1}. Click 'Save Changes' to update portal.`);
+      } else if (type === 'committees') {
+        if (targetIdx < 0 || targetIdx >= committeesData.length) return;
+        const temp = committeesData[index];
+        committeesData[index] = committeesData[targetIdx];
+        committeesData[targetIdx] = temp;
+        filterCommittees(document.getElementById('committees-search').value);
+        markOrderChanged('committees');
+        showToast(`Committee moved to #${targetIdx + 1}. Click 'Save Changes' to update portal.`);
+      } else if (type === 'manuals') {
+        const list = manualsData[activeManualCategory] || [];
+        if (targetIdx < 0 || targetIdx >= list.length) return;
+        const temp = list[index];
+        list[index] = list[targetIdx];
+        list[targetIdx] = temp;
+        renderManualsTable();
+        markOrderChanged('manuals');
+        showToast(`Manual moved to #${targetIdx + 1}. Click 'Save Changes' to update portal.`);
+      }
+    }
+
+    // ================= UNSAVED ORDER & SAVE CHANGES CONTROLLER =================
+    function markOrderChanged(type) {
+      pendingChanges[type] = true;
+      updateUnsavedUI();
+    }
+
+    function clearOrderChanged(type) {
+      pendingChanges[type] = false;
+      updateUnsavedUI();
+    }
+
+    function updateUnsavedUI() {
+      const hasAnyUnsaved = Object.values(pendingChanges).some(v => v === true);
+      const topSaveBtn = document.getElementById('top-save-btn');
+      const unsavedBanner = document.getElementById('unsaved-banner');
+      const bannerTag = document.getElementById('unsaved-banner-tag');
+      const topBadge = document.getElementById('top-save-badge');
+
+      const activeUnsavedTypes = Object.keys(pendingChanges).filter(k => pendingChanges[k]);
+      
+      if (hasAnyUnsaved) {
+        window.onbeforeunload = () => "You have unsaved document order changes. Are you sure you want to leave?";
+        if (topSaveBtn) topSaveBtn.classList.remove('hidden');
+        if (unsavedBanner) {
+          unsavedBanner.classList.remove('translate-y-32', 'opacity-0', 'pointer-events-none');
+          unsavedBanner.classList.add('translate-y-0', 'opacity-100');
+        }
+        const labelMap = { announcements: 'Announcements', committees: 'Committees', manuals: 'Manuals' };
+        const labelStr = activeUnsavedTypes.map(t => labelMap[t] || t).join(', ');
+        if (bannerTag) bannerTag.textContent = labelStr;
+        if (topBadge) topBadge.textContent = `${activeUnsavedTypes.length} Unsaved`;
+      } else {
+        window.onbeforeunload = null;
+        if (topSaveBtn) topSaveBtn.classList.add('hidden');
+        if (unsavedBanner) {
+          unsavedBanner.classList.remove('translate-y-0', 'opacity-100');
+          unsavedBanner.classList.add('translate-y-32', 'opacity-0', 'pointer-events-none');
+        }
+      }
+    }
+
+    async function savePendingOrder(specificType = null) {
+      const targetType = specificType || (pendingChanges[currentTab] ? currentTab : (Object.keys(pendingChanges).find(k => pendingChanges[k]) || currentTab));
+      
+      if (!pendingChanges[targetType]) {
+        showToast('No pending order changes to save.');
+        return;
+      }
+
+      if (!ensurePasskey()) {
+        showToast('Unlock CMS admin passkey to save order changes.', true);
+        return;
+      }
+
+      const saveBtn = document.getElementById('top-save-btn');
+      const bannerBtn = document.getElementById('banner-save-btn');
+      const topText = document.getElementById('top-save-text');
+      
+      if (topText) topText.textContent = 'Saving...';
+      if (bannerBtn) bannerBtn.innerHTML = '<span>Saving...</span>';
+      if (saveBtn) saveBtn.disabled = true;
+      if (bannerBtn) bannerBtn.disabled = true;
+
+      try {
+        let payload = null;
+        if (targetType === 'announcements') {
+          payload = announcementsData;
+        } else if (targetType === 'committees') {
+          payload = committeesData;
+        } else if (targetType === 'manuals') {
+          payload = manualsData;
+        }
+
+        await saveCmsData(targetType, payload);
+        clearOrderChanged(targetType);
+
+        const typeLabels = {
+          announcements: 'Announcements',
+          committees: 'Committees & MOM',
+          manuals: 'Hospital Manuals'
+        };
+        showToast(`✅ ${typeLabels[targetType] || 'Document'} order saved! Reflected live on portal.`);
+      } catch (err) {
+        showToast(`Failed to save order: ${err.message}`, true);
+      } finally {
+        if (topText) topText.textContent = 'Save Changes';
+        if (bannerBtn) bannerBtn.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" /></svg><span>Save Changes</span>';
+        if (saveBtn) saveBtn.disabled = false;
+        if (bannerBtn) bannerBtn.disabled = false;
+      }
+    }
+
+    async function discardPendingOrder() {
+      const targetType = pendingChanges[currentTab] ? currentTab : (Object.keys(pendingChanges).find(k => pendingChanges[k]) || currentTab);
+      const labelMap = { announcements: 'Announcements', committees: 'Committees & MOM', manuals: 'Hospital Manuals' };
+      const displayLabel = labelMap[targetType] || targetType;
+
+      if (!confirm(`Discard all pending order changes for ${displayLabel}? This will revert to the saved order.`)) {
+        return;
+      }
+
+      if (targetType === 'announcements') {
+        await loadAnnouncements();
+      } else if (targetType === 'committees') {
+        await loadCommittees();
+      } else if (targetType === 'manuals') {
+        await loadManuals();
+      }
+      clearOrderChanged(targetType);
+      showToast(`Reverted ${displayLabel} to saved order.`);
+    }
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      return String(text)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+  </script>
+</body>
+</html>
+
