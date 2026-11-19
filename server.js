@@ -10,8 +10,11 @@ const path = require('node:path');
 const url = require('node:url');
 const { executeSearch } = require('./search_engine');
 
-// Port Configuration: Default to 3000 (override via CLI arg or PORT env)
-const PORT = parseInt(process.argv[2] || process.env.PORT || '3000', 10);
+// Port Configuration: Port Series (1111, 2222, 3000)
+const cliPorts = process.argv.slice(2).filter(a => !isNaN(parseInt(a, 10))).map(a => parseInt(a, 10));
+const envPorts = (process.env.PORTS || process.env.PORT || '1111,2222,3000').split(/[, ]+/).filter(Boolean).map(a => parseInt(a, 10));
+const PORTS = cliPorts.length > 0 ? cliPorts : (envPorts.length > 0 ? envPorts : [1111, 2222, 3000]);
+const PORT = PORTS[0];
 const BASE_DIR = __dirname;
 const FILES_DIR = path.join(BASE_DIR, 'files');
 const DATA_DIR = path.join(BASE_DIR, 'data');
@@ -69,9 +72,9 @@ function setCommonHeaders(contentType, extra = {}) {
 }
 
 // ------------------------------------------------------------------------------
-// HTTP Server
+// HTTP Server Request Handler
 // ------------------------------------------------------------------------------
-const server = http.createServer((req, res) => {
+const requestListener = (req, res) => {
   const parsedUrl = url.parse(req.url, true);
   let pathname = parsedUrl.pathname || '/';
 
@@ -254,16 +257,22 @@ const server = http.createServer((req, res) => {
       }
     });
   });
-});
+};
 
 // ------------------------------------------------------------------------------
-// Start Server
+// Start Server Series
 // ------------------------------------------------------------------------------
-server.listen(PORT, '0.0.0.0', () => {
-  console.log(`========================================================================`);
-  console.log(`🏥 APH Hospital Intranet Server (Node.js Engine) Running on Port: ${PORT}`);
-  console.log(`🌐 Localhost:     http://localhost:${PORT}`);
-  console.log(`🌐 Hospital LAN:  http://192.168.101.75:${PORT}`);
-  console.log(`🚀 Ready to serve clinical records, forms vault, & AI search.`);
-  console.log(`========================================================================`);
+console.log(`========================================================================`);
+console.log(`🏥 APH Hospital Intranet Server (Node.js Engine)`);
+console.log(`📡 Configured Port Series: ${PORTS.join(', ')}`);
+console.log(`========================================================================`);
+
+PORTS.forEach(p => {
+  const s = http.createServer(requestListener);
+  s.listen(p, '0.0.0.0', () => {
+    console.log(`🚀 Serving on http://localhost:${p} (Hospital LAN: http://192.168.101.75:${p})`);
+  });
+  s.on('error', (err) => {
+    console.log(`⚠️  Port ${p} could not be bound (${err.message}). Skipping...`);
+  });
 });

@@ -10,6 +10,7 @@ import os
 import sys
 import json
 import re
+import threading
 import urllib.request
 import urllib.error
 import urllib.parse
@@ -47,12 +48,48 @@ from security_auth import (
     SERVICE_ACCOUNTS
 )
 
-PORT = int(os.environ.get('PORT', 3000))
-if len(sys.argv) > 1:
-    try:
-        PORT = int(sys.argv[1])
-    except ValueError:
-        pass
+def get_configured_ports() -> List[int]:
+    """
+    Parse configured port series from CLI arguments, PORTS, or PORT environment variables.
+    Default series: [1111, 2222, 3000] (runs primary 1111, secondary 2222, and legacy 3000).
+    """
+    ports: List[int] = []
+    # 1. CLI arguments (e.g. `python3 server.py 1111 2222` or `python3 server.py 1111,2222`)
+    if len(sys.argv) > 1:
+        for arg in sys.argv[1:]:
+            for p in str(arg).replace(',', ' ').split():
+                try:
+                    p_int = int(p)
+                    if p_int not in ports and 1 <= p_int <= 65535:
+                        ports.append(p_int)
+                except ValueError:
+                    pass
+    # 2. PORTS environment variable (e.g. PORTS="1111,2222")
+    env_ports = os.environ.get('PORTS', '')
+    if env_ports:
+        for p in env_ports.replace(',', ' ').split():
+            try:
+                p_int = int(p)
+                if p_int not in ports and 1 <= p_int <= 65535:
+                    ports.append(p_int)
+            except ValueError:
+                pass
+    # 3. PORT environment variable (e.g. PORT="1111")
+    env_port = os.environ.get('PORT', '')
+    if env_port:
+        try:
+            p_int = int(env_port)
+            if p_int not in ports and 1 <= p_int <= 65535:
+                ports.append(p_int)
+        except ValueError:
+            pass
+    # 4. Default port series: [1111, 2222, 3000]
+    if not ports:
+        ports = [1111, 2222, 3000]
+    return ports
+
+CONFIGURED_PORTS = get_configured_ports()
+PORT = CONFIGURED_PORTS[0]
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CATALOG_PATH = os.path.join(BASE_DIR, 'data', 'portal_catalog.json')
@@ -5811,10 +5848,8 @@ class APHPortalRequestHandler(SimpleHTTPRequestHandler):
             if req_level != ACCESS_PUBLIC:
                 role, _ = extract_verified_role(self.headers, {})
                 if role == ACCESS_PUBLIC:
-                    client_ip = self.client_address[0] if hasattr(self, 'client_address') else ''
                     referer = self.headers.get('Referer', '')
-                    is_intranet = client_ip in ['127.0.0.1', 'localhost'] or client_ip.startswith('192.168.') or client_ip.startswith('10.') or client_ip.startswith('172.')
-                    if (is_intranet or self.is_trusted_origin(referer)) and req_level in [ACCESS_STAFF, ACCESS_CLINICAL]:
+                    if self.is_trusted_origin(referer) and req_level in [ACCESS_STAFF, ACCESS_CLINICAL]:
                         role = req_level
                 allowed = ROLE_PERMISSIONS.get(role, [ACCESS_PUBLIC])
                 if req_level not in allowed:
@@ -5866,38 +5901,44 @@ class APHPortalRequestHandler(SimpleHTTPRequestHandler):
             if req_level != ACCESS_PUBLIC:
                 role, _ = extract_verified_role(self.headers, {})
                 if role == ACCESS_PUBLIC:
-                    client_ip = self.client_address[0] if hasattr(self, 'client_address') else ''
                     referer = self.headers.get('Referer', '')
-                    is_intranet = client_ip in ['127.0.0.1', 'localhost'] or client_ip.startswith('192.168.') or client_ip.startswith('10.') or client_ip.startswith('172.')
-                    if (is_intranet or self.is_trusted_origin(referer)) and req_level in [ACCESS_STAFF, ACCESS_CLINICAL]:
+                    if self.is_trusted_origin(referer) and req_level in [ACCESS_STAFF, ACCESS_CLINICAL]:
                         role = req_level
                 allowed = ROLE_PERMISSIONS.get(role, [ACCESS_PUBLIC])
                 if req_level not in allowed:
                     self.send_error(403, f"Access Denied: The requested document requires {req_level} staff authorization.")
                     return
 
-        # Dynamically adapt port for HTML/JSON requests if running on non-default port
-        if PORT != 3000:
-            clean_path = self.path.split('?')[0].rstrip('/')
-            if clean_path.endswith('.html') or clean_path == '' or clean_path.endswith('.json'):
-                candidate_path = self.translate_path(self.path)
-                if os.path.isdir(candidate_path):
-                    candidate_path = os.path.join(candidate_path, 'index.html')
-                if os.path.isfile(candidate_path):
-                    try:
-                        with open(candidate_path, 'rb') as f:
-                            raw = f.read().decode('utf-8', errors='replace')
-                        raw = raw.replace(':3000', f':{PORT}')
-                        body = raw.encode('utf-8')
-                        self.send_response(200)
-                        ctype = self.guess_type(candidate_path)
-                        self.send_header('Content-Type', f'{ctype}; charset=utf-8')
-                        self.send_header('Content-Length', str(len(body)))
-                        self.end_headers()
-                        self.wfile.write(body)
-                        return
-                    except Exception:
-                        pass
+        # Dynamically adapt port for HTML/JSON requests based on the client's request
+        req_port = self.server.server_port if hasattr(self.server, 'server_port') else PORT
+        host_hdr = self.headers.get('Host', '')
+        if ':' in host_hdr:
+            try:
+                req_port = int(host_hdr.split(':')[-1])
+            except ValueError:
+                pass
+
+        clean_path = self.path.split('?')[0].rstrip('/')
+        if clean_path.endswith('.html') or clean_path == '' or clean_path.endswith('.json'):
+            candidate_path = self.translate_path(self.path)
+            if os.path.isdir(candidate_path):
+                candidate_path = os.path.join(candidate_path, 'index.html')
+            if os.path.isfile(candidate_path):
+                try:
+                    with open(candidate_path, 'rb') as f:
+                        raw = f.read().decode('utf-8', errors='replace')
+                    if req_port != 3000:
+                        raw = raw.replace(':3000', f':{req_port}')
+                    body = raw.encode('utf-8')
+                    self.send_response(200)
+                    ctype = self.guess_type(candidate_path)
+                    self.send_header('Content-Type', f'{ctype}; charset=utf-8')
+                    self.send_header('Content-Length', str(len(body)))
+                    self.end_headers()
+                    self.wfile.write(body)
+                    return
+                except Exception:
+                    pass
 
         super().do_GET()
 
@@ -6107,8 +6148,15 @@ class APHPortalRequestHandler(SimpleHTTPRequestHandler):
         self.send_error(404, "Endpoint not found")
 
     def send_json_response(self, status_code, data, extra_headers=None):
-        if PORT != 3000 and isinstance(data, (dict, list)):
-            data_str = json.dumps(data, ensure_ascii=False).replace(':3000', f':{PORT}')
+        req_port = self.server.server_port if hasattr(self.server, 'server_port') else PORT
+        host_hdr = self.headers.get('Host', '') if hasattr(self, 'headers') and self.headers else ''
+        if ':' in host_hdr:
+            try:
+                req_port = int(host_hdr.split(':')[-1])
+            except ValueError:
+                pass
+        if req_port != 3000 and isinstance(data, (dict, list)):
+            data_str = json.dumps(data, ensure_ascii=False).replace(':3000', f':{req_port}')
             body = data_str.encode('utf-8')
         else:
             body = json.dumps(data, ensure_ascii=False).encode('utf-8')
@@ -6124,11 +6172,41 @@ class APHPortalRequestHandler(SimpleHTTPRequestHandler):
 if __name__ == '__main__':
     web_dir = os.path.dirname(os.path.abspath(__file__))
     os.chdir(web_dir)
-    server_address = ('', PORT)
-    httpd = ThreadingHTTPServer(server_address, APHPortalRequestHandler)
-    print(f"🚀 APH Hospital Intranet Server with Verified AI Search running on http://localhost:{PORT}")
+
+    ports = get_configured_ports()
+    servers = []
+
+    print("========================================================================")
+    print("🏥 APH Hospital Intranet Server (Multi-Port Series Engine)")
+    print(f"📡 Configured Port Series: {', '.join(map(str, ports))}")
+    print("========================================================================")
+
+    for p in ports:
+        try:
+            httpd = ThreadingHTTPServer(('', p), APHPortalRequestHandler)
+            servers.append(httpd)
+            print(f"🚀 Serving on http://localhost:{p} (Hospital LAN: http://192.168.101.75:{p})")
+        except OSError as e:
+            print(f"⚠️  Port {p} could not be bound ({e}). Skipping...")
+
+    if not servers:
+        print("❌ Fatal: No ports in the configured series could be bound. Exiting.")
+        sys.exit(1)
+
+    threads = []
+    for s in servers[1:]:
+        t = threading.Thread(target=s.serve_forever, daemon=True)
+        t.start()
+        threads.append(t)
+
     try:
-        httpd.serve_forever()
+        servers[0].serve_forever()
     except KeyboardInterrupt:
-        print("\nServer stopped.")
-        httpd.server_close()
+        print("\n🛑 Stopping server series...")
+        for s in servers:
+            try:
+                s.shutdown()
+                s.server_close()
+            except Exception:
+                pass
+        print("✅ All servers stopped.")

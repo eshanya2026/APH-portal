@@ -6,15 +6,18 @@ services:
     container_name: aph-hospital-portal
     restart: unless-stopped
     ports:
+      - "1111:1111"
+      - "2222:2222"
       - "3000:3000"
     environment:
-      - PORT=3000
+      - PORT=1111
+      - PORTS=1111,2222,3000
       - PYTHONUNBUFFERED=1
     volumes:
       # Optional: bind mount PDF cache and data so updates persist without rebuilding
       - ./data:/app/data
     healthcheck:
-      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:3000/', timeout=2)"]
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:1111/', timeout=2)"]
       interval: 30s
       timeout: 5s
       retries: 3

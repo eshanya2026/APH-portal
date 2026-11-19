@@ -4,20 +4,22 @@ setlocal enabledelayedexpansion
 title Stop APH Hospital Intranet Server
 cd /d "%~dp0"
 
-set PORT=3000
-if not "%~1"=="" set PORT=%~1
+set PORTS=1111 2222 3000 1234
+if not "%~1"=="" set PORTS=%*
 
 echo ========================================================================
-echo 🛑 Stopping APH Hospital Intranet Server on Port: %PORT%
+echo 🛑 Stopping APH Hospital Intranet Server on Port Series: %PORTS%
 echo ========================================================================
 
 set STOPPED=0
 
-:: Terminate any process listening on the port
-for /f "tokens=5" %%a in ('netstat -aon 2^>nul ^| findstr ":%PORT%" ^| findstr "LISTENING"') do (
-    echo Terminating process on port %PORT% (PID: %%a)...
-    taskkill /F /PID %%a >nul 2>&1
-    set STOPPED=1
+:: Terminate any process listening on the port series
+for %%p in (%PORTS%) do (
+    for /f "tokens=5" %%a in ('netstat -aon 2^>nul ^| findstr ":%%p" ^| findstr "LISTENING"') do (
+        echo Terminating process on port %%p (PID: %%a)...
+        taskkill /F /PID %%a >nul 2>&1
+        set STOPPED=1
+    )
 )
 
 :: Terminate any lingering server.py processes

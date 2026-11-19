@@ -3,29 +3,28 @@
 # APH Hospital Intranet Portal - Stop Script (Node.js Engine)
 # ==============================================================================
 
-PORT="${1:-${PORT:-3000}}"
+PORTS="${*:-${PORTS:-${PORT:-1111 2222 3000 1234}}}"
 
 echo "========================================================================"
-echo "🛑 Stopping APH Hospital Intranet Server on Port: ${PORT}"
+echo "🛑 Stopping APH Hospital Intranet Server on Port Series: ${PORTS}"
 echo "========================================================================"
 
 STOPPED=false
 
-# 1. Kill by port via lsof
-PIDS=$(lsof -ti :${PORT} 2>/dev/null || true)
-if [ -n "$PIDS" ]; then
-    echo "Found listening process on port ${PORT} (PID: ${PIDS}). Terminating..."
-    kill -15 $PIDS 2>/dev/null || true
-    sleep 1
-    kill -9 $PIDS 2>/dev/null || true
-    STOPPED=true
-fi
-
-# 2. Kill by port via fuser if still listening
-if lsof -ti :${PORT} >/dev/null 2>&1; then
-    fuser -k -9 ${PORT}/tcp 2>/dev/null || true
-    STOPPED=true
-fi
+for P in $PORTS; do
+    PIDS=$(lsof -ti :${P} 2>/dev/null || true)
+    if [ -n "$PIDS" ]; then
+        echo "Found listening process on port ${P} (PID: ${PIDS}). Terminating..."
+        kill -15 $PIDS 2>/dev/null || true
+        sleep 0.5
+        kill -9 $PIDS 2>/dev/null || true
+        STOPPED=true
+    fi
+    if lsof -ti :${P} >/dev/null 2>&1; then
+        fuser -k -9 ${P}/tcp 2>/dev/null || true
+        STOPPED=true
+    fi
+done
 
 # 3. Kill any lingering node server.js process
 NODE_PIDS=$(pgrep -f "node server.js" 2>/dev/null || true)
