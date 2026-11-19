@@ -10,10 +10,10 @@ const path = require('node:path');
 const url = require('node:url');
 const { executeSearch } = require('./search_engine');
 
-// Port Configuration: Port Series (1111, 2222, 3000)
+// Port Configuration: Default to Port 1111
 const cliPorts = process.argv.slice(2).filter(a => !isNaN(parseInt(a, 10))).map(a => parseInt(a, 10));
-const envPorts = (process.env.PORTS || process.env.PORT || '1111,2222,3000').split(/[, ]+/).filter(Boolean).map(a => parseInt(a, 10));
-const PORTS = cliPorts.length > 0 ? cliPorts : (envPorts.length > 0 ? envPorts : [1111, 2222, 3000]);
+const envPorts = (process.env.PORTS || process.env.PORT || '1111').split(/[, ]+/).filter(Boolean).map(a => parseInt(a, 10));
+const PORTS = cliPorts.length > 0 ? cliPorts : (envPorts.length > 0 ? envPorts : [1111]);
 const PORT = PORTS[0];
 const BASE_DIR = __dirname;
 const FILES_DIR = path.join(BASE_DIR, 'files');
@@ -104,9 +104,8 @@ const requestListener = (req, res) => {
           const result = executeSearch(query);
 
           let jsonStr = JSON.stringify(result);
-          if (PORT !== 3000) {
-            jsonStr = jsonStr.replace(/:3000/g, `:${PORT}`);
-          }
+          // All file document links must strictly use port 3000 so files open reliably
+          jsonStr = jsonStr.replace(/:1111\/files\//g, ':3000/files/').replace(/:2222\/files\//g, ':3000/files/');
 
           const outBytes = Buffer.from(jsonStr, 'utf-8');
           res.writeHead(200, setCommonHeaders('application/json; charset=utf-8', {
@@ -127,9 +126,8 @@ const requestListener = (req, res) => {
       const result = executeSearch(query);
 
       let jsonStr = JSON.stringify(result);
-      if (PORT !== 3000) {
-        jsonStr = jsonStr.replace(/:3000/g, `:${PORT}`);
-      }
+      // All file document links must strictly use port 3000 so files open reliably
+      jsonStr = jsonStr.replace(/:1111\/files\//g, ':3000/files/').replace(/:2222\/files\//g, ':3000/files/');
 
       const outBytes = Buffer.from(jsonStr, 'utf-8');
       res.writeHead(200, setCommonHeaders('application/json; charset=utf-8', {
@@ -175,6 +173,13 @@ const requestListener = (req, res) => {
 
   // If path starts with /files/, check files directory, root, and pdf_cache (including subdirs and basenames)
   if (decodedPath.startsWith('/files/')) {
+    const hostPort = (req.headers.host || '').split(':')[1] || '';
+    if (hostPort && hostPort !== '3000') {
+      res.writeHead(302, { 'Location': `http://192.168.101.75:3000${pathname}`, 'Cache-Control': 'no-cache' });
+      res.end();
+      return;
+    }
+
     const filename = decodedPath.replace(/^\/files\//, '');
     const baseName = path.basename(filename);
     const cleanName = filename.replace(/[^a-zA-Z0-9_\-\.]/g, '_');
@@ -229,7 +234,8 @@ const requestListener = (req, res) => {
           return;
         }
 
-        const adapted = content.replace(/:3000/g, `:${PORT}`);
+        // All file document links must strictly use port 3000 so files open reliably
+        const adapted = content.replace(/:1111\/files\//g, ':3000/files/').replace(/:2222\/files\//g, ':3000/files/');
         const outBuf = Buffer.from(adapted, 'utf-8');
         res.writeHead(200, setCommonHeaders(contentType, { 'Content-Length': outBuf.length }));
         if (req.method === 'HEAD') {

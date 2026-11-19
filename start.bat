@@ -4,11 +4,11 @@ setlocal enabledelayedexpansion
 title APH Hospital Intranet Server (Python Engine)
 cd /d "%~dp0"
 
-set PORTS=1111 2222
-if not "%~1"=="" set PORTS=%*
+set PORT=1111
+if not "%~1"=="" set PORT=%~1
 
 echo ========================================================================
-echo 🏥 Starting APH Hospital Intranet Server (Port Series: %PORTS%)
+echo 🏥 Starting APH Hospital Intranet Server on Port: %PORT%
 echo ========================================================================
 
 :: 1. Check if Python is installed
@@ -50,8 +50,8 @@ if not exist "server.py" (
     exit /b 1
 )
 
-:: 3. Terminate any previous process listening on the port series
-for %%p in (%PORTS% 1234 3000) do (
+:: 3. Terminate any previous process listening on this port
+for %%p in (%PORT% 1234 3000 2222) do (
     for /f "tokens=5" %%a in ('netstat -aon 2^>nul ^| findstr ":%%p" ^| findstr "LISTENING"') do (
         echo ⚠️  Found previous process running on port %%p (PID: %%a). Stopping...
         taskkill /F /PID %%a >nul 2>&1
@@ -60,19 +60,18 @@ for %%p in (%PORTS% 1234 3000) do (
 
 echo.
 echo ========================================================================
-echo 🚀 APH Hospital Portal Starting (Port Series Engine)...
+echo 🚀 APH Hospital Portal Starting (Port %PORT%)...
 echo.
-echo 🌐 Access URLs (Port Series):
-for %%p in (%PORTS%) do (
-    echo    • Port %%p:  http://localhost:%%p  ^|  http://192.168.101.75:%%p
-)
+echo 🌐 Access URLs:
+echo    • Localhost:       http://localhost:%PORT%
+echo    • Hospital LAN:    http://192.168.101.75:%PORT%
 echo.
 echo ℹ️  Keep this Command Prompt window open while using the portal.
 echo    To stop the server: Press Ctrl + C or run stop.bat.
 echo ========================================================================
 echo.
 
-%PY_CMD% server.py %PORTS%
+%PY_CMD% server.py %PORT%
 
 if %errorlevel% neq 0 (
     echo.

@@ -307,7 +307,7 @@
     <div class='wrapper'>
         <header>
             <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1050px; flex-wrap: wrap; gap: 8px;">
-                <a href="./index.html" style="color: #ffffff; text-decoration: none; font-size: 12px; font-weight: 600; background: rgba(255,255,255,0.2); padding: 5px 12px; border-radius: 16px; transition: background 0.2s;">&larr; Back to Main Portal</a>
+                <a href="./index.html" target="aph_main_portal" onclick="return window.backToMainPortal ? window.backToMainPortal(event) : backToMainPortal(event);" style="color: #ffffff; text-decoration: none; font-size: 12px; font-weight: 600; background: rgba(255,255,255,0.2); padding: 5px 12px; border-radius: 16px; transition: background 0.2s;">&larr; Back to Main Portal</a>
                 <a href="http://192.168.101.75/assets/sub%20files/intercom.html" target="_blank" rel="noopener noreferrer" style="color: #ffffff; text-decoration: none; font-size: 12px; font-weight: 600; background: rgba(255,255,255,0.2); padding: 5px 12px; border-radius: 16px; transition: background 0.2s; display: inline-flex; align-items: center; gap: 5px;">
                     <span>🏢 Official Campus Directory (All Depts)</span>
                 </a>
@@ -2033,6 +2033,32 @@
             </section>
         </div>
         <script>
+            function backToMainPortal(event) {
+                if (window.backToMainPortal) return window.backToMainPortal(event);
+                if (event && event.preventDefault) event.preventDefault();
+                if (window.opener && !window.opener.closed) {
+                    try { window.opener.focus(); } catch(e) {}
+                    try { window.close(); return false; } catch(e) {}
+                }
+                try { window.close(); } catch(e) {}
+                setTimeout(function() {
+                    if (!window.closed) {
+                        if (window.history.length > 1 && document.referrer && document.referrer.includes('index.html')) {
+                            window.history.back();
+                        } else {
+                            try {
+                                const w = window.open('./index.html', 'aph_main_portal');
+                                if (w) { try { w.focus(); } catch(e) {} }
+                                try { window.close(); } catch(e) {}
+                            } catch(e) {
+                                window.location.href = './index.html';
+                            }
+                        }
+                    }
+                }, 100);
+                return false;
+            }
+
             const s = document.getElementById('search');
             const clearBtn = document.getElementById('clear-search-btn');
             let ALL_CARDS_DATA = [];

@@ -1,11 +1,11 @@
 [
   {
     "id": "announcement-1",
-    "badge": "Quality",
+    "badge": "IT",
     "severity": "Information",
-    "message": "Code RRT Activation Form is published in Forms Hub).",
-    "linkText": "Common Forms Hub",
-    "linkUrl": "#forms",
+    "message": "Incident reporting application is live",
+    "linkText": "click here to report your incident",
+    "linkUrl": "https://inc.mapims.edu.in/login",
     "active": true
   },
   {
@@ -24,7 +24,7 @@
     "message": "STAT Alert: O-Negative (O-) units needed for emergency reserves. Dial Ext 2131.",
     "linkText": "",
     "linkUrl": "",
-    "active": true
+    "active": false
   },
   {
     "id": "announcement-4",

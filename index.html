@@ -330,42 +330,51 @@
       position: relative;
       height: 100%;
       min-width: 0;
-    }
-    .announcement-slide {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      overflow: hidden;
       display: flex;
       align-items: center;
-      will-change: transform, opacity;
-      transition: transform 0.45s cubic-bezier(0.2, 1, 0.3, 1), opacity 0.35s ease;
+      mask-image: linear-gradient(to right, transparent, black 16px, black calc(100% - 16px), transparent);
+      -webkit-mask-image: linear-gradient(to right, transparent, black 16px, black calc(100% - 16px), transparent);
     }
-    .announcement-slide.slide-active {
-      transform: translateX(0);
-      opacity: 1;
-      pointer-events: auto;
+    .marquee-track {
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      will-change: transform;
+      animation: marquee-scroll 45s linear infinite;
     }
-    .announcement-slide.slide-exit-left {
-      transform: translateX(-100%);
-      opacity: 0;
-      pointer-events: none;
+    #announcement-viewport:hover .marquee-track,
+    .marquee-track.is-paused {
+      animation-play-state: paused !important;
     }
-    .announcement-slide.slide-enter-right {
-      transform: translateX(100%);
-      opacity: 0;
-      pointer-events: none;
+    @keyframes marquee-scroll {
+      0% {
+        transform: translate3d(0, 0, 0);
+      }
+      100% {
+        transform: translate3d(-50%, 0, 0);
+      }
     }
-    .announcement-slide.slide-exit-right {
-      transform: translateX(100%);
-      opacity: 0;
-      pointer-events: none;
+    .marquee-group {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
     }
-    .announcement-slide.slide-enter-left {
-      transform: translateX(-100%);
-      opacity: 0;
-      pointer-events: none;
+    .marquee-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0 0.85rem;
+      flex-shrink: 0;
+    }
+    .marquee-separator {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255, 255, 255, 0.45);
+      font-size: 0.65rem;
+      padding: 0 0.4rem;
+      user-select: none;
     }
     #announcement-counter,
     #announcement-pause-btn {
@@ -378,16 +387,10 @@
       }
     }
     @media (prefers-reduced-motion: reduce) {
-      .announcement-slide {
-        transition: opacity 0.25s ease !important;
+      .marquee-track {
+        animation: none !important;
         transform: none !important;
-      }
-      .announcement-slide.slide-exit-left,
-      .announcement-slide.slide-exit-right,
-      .announcement-slide.slide-enter-right,
-      .announcement-slide.slide-enter-left {
-        opacity: 0 !important;
-        transform: none !important;
+        overflow-x: auto;
       }
     }
   </style>
@@ -495,25 +498,25 @@
           </span>
         </div>
 
-        <!-- Center: Single Active Announcement Viewport (Dynamically rendered from data/announcements.json) -->
-        <div id="announcement-viewport" class="relative flex-1 overflow-hidden h-full flex items-center mx-2 sm:mx-4 min-w-0" aria-live="polite" title="Hover to pause rotation"></div>
+        <!-- Center: Continuous Right-to-Left Marquee Viewport (Dynamically rendered from data/announcements.json) -->
+        <div id="announcement-viewport" class="relative flex-1 overflow-hidden h-full flex items-center mx-2 sm:mx-4 min-w-0" aria-live="polite" title="Hover to pause marquee"></div>
 
-        <!-- Right: Action Controls (Seamless transparent anchor, counter & controls) -->
+        <!-- Right: Action Controls (Transparent counter, pause & dismiss) -->
         <div class="flex items-center gap-0.5 sm:gap-1.5 shrink-0 pl-1.5 sm:pl-3 border-l border-white/30 z-10">
           <span id="announcement-counter" class="items-center justify-center px-2 py-0.5 rounded-full bg-white/20 text-[10px] font-bold tracking-widest text-white select-none mr-0.5">
-            1 / 4
+            LIVE TICKER
           </span>
-          <button type="button" id="announcement-prev-btn" onclick="prevAnnouncement()" class="p-1 sm:p-1.5 text-white/90 hover:text-white hover:bg-white/15 rounded-md transition-colors cursor-pointer focus:outline-none" title="Previous announcement" aria-label="Previous announcement">
+          <button type="button" id="announcement-prev-btn" onclick="prevAnnouncement()" style="display:none;" class="p-1 sm:p-1.5 text-white/90 hover:text-white hover:bg-white/15 rounded-md transition-colors cursor-pointer focus:outline-none" title="Previous announcement" aria-label="Previous announcement">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
             </svg>
           </button>
-          <button type="button" id="announcement-next-btn" onclick="nextAnnouncement(true)" class="p-1 sm:p-1.5 text-white/90 hover:text-white hover:bg-white/15 rounded-md transition-colors cursor-pointer focus:outline-none" title="Next announcement" aria-label="Next announcement">
+          <button type="button" id="announcement-next-btn" onclick="nextAnnouncement(true)" style="display:none;" class="p-1 sm:p-1.5 text-white/90 hover:text-white hover:bg-white/15 rounded-md transition-colors cursor-pointer focus:outline-none" title="Next announcement" aria-label="Next announcement">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
             </svg>
           </button>
-          <button type="button" id="announcement-pause-btn" onclick="toggleAnnouncementPlayback()" class="p-1 sm:p-1.5 text-white/90 hover:text-white hover:bg-white/15 rounded-md transition-colors cursor-pointer focus:outline-none" title="Pause announcements" aria-label="Pause announcements">
+          <button type="button" id="announcement-pause-btn" onclick="toggleAnnouncementPlayback()" class="p-1 sm:p-1.5 text-white/90 hover:text-white hover:bg-white/15 rounded-md transition-colors cursor-pointer focus:outline-none" title="Pause marquee" aria-label="Pause marquee">
             <svg id="announcement-pause-icon" class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
               <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
             </svg>
@@ -834,7 +837,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
       
       <!-- Box 1: Manuals -->
-      <a href="./manuals.html" target="_blank" rel="noopener noreferrer" class="governance-card gov-manuals group bg-white rounded-3xl p-7 sm:p-8 border border-slate-200/90 shadow-sm flex flex-col justify-between">
+      <a href="./manuals.html" target="_blank" rel="opener" class="governance-card gov-manuals group bg-white rounded-3xl p-7 sm:p-8 border border-slate-200/90 shadow-sm flex flex-col justify-between">
         <div>
           <div class="flex items-center justify-between mb-5">
             <div class="w-14 h-14 rounded-2xl bg-blue-50 border border-blue-200/70 p-3 flex items-center justify-center text-blue-600 shadow-sm group-hover:bg-blue-600 group-hover:text-white transition-all duration-200">
@@ -863,7 +866,7 @@
       </a>
 
       <!-- Box 2: List of Committees -->
-      <a href="./comitee.html" target="_blank" rel="noopener noreferrer" class="governance-card gov-committees group bg-white rounded-3xl p-7 sm:p-8 border border-slate-200/90 shadow-sm flex flex-col justify-between">
+      <a href="./comitee.html" target="_blank" rel="opener" class="governance-card gov-committees group bg-white rounded-3xl p-7 sm:p-8 border border-slate-200/90 shadow-sm flex flex-col justify-between">
         <div>
           <div class="flex items-center justify-between mb-5">
             <div class="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-200/70 p-3 flex items-center justify-center text-emerald-600 shadow-sm group-hover:bg-emerald-600 group-hover:text-white transition-all duration-200">
@@ -2019,7 +2022,7 @@
       <div class="p-2.5 sm:p-3 grid grid-cols-2 gap-2">
         
         <!-- 1. Intercom Hotline -->
-        <a href="./intercom.html" target="_blank" rel="noopener noreferrer" 
+        <a href="./intercom.html" target="_blank" rel="opener" 
            class="group/tile flex items-center gap-2 p-2 rounded-xl bg-slate-50 hover:bg-rose-50/80 dark:bg-slate-800/60 dark:hover:bg-rose-950/30 border border-slate-200/70 dark:border-slate-700/70 hover:border-rose-300 dark:hover:border-rose-700 shadow-sm hover:shadow transition-all duration-200 hover:-translate-y-0.5"
            title="Campus Intercom Directory" aria-label="Campus Intercom Directory">
           <div class="relative w-8 h-8 rounded-lg bg-rose-600 text-white flex items-center justify-center shrink-0 shadow-sm group-hover/tile:scale-105 transition-transform">
@@ -2182,6 +2185,13 @@
   <!-- JAVASCRIPT LOGIC                                                          -->
   <!-- ========================================================================= -->
   <script>
+    window.name = "aph_main_portal";
+    function getLinkRel(u) {
+      if (!u) return 'rel="noopener noreferrer"';
+      const isInternal = (!u.startsWith('http://') && !u.startsWith('https://')) || (window.location && u.includes(window.location.host));
+      return isInternal ? 'rel="opener"' : 'rel="noopener noreferrer"';
+    }
+
     // Toast display helper
     let toastTimeout;
     function showToast(message) {
@@ -6395,7 +6405,7 @@
             `;
           } else {
             html += `
-              <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="p-3 hover:bg-blue-50 flex items-center justify-between gap-3 text-left transition-colors group">
+              <a href="${item.url}" target="_blank" ${getLinkRel(item.url)} class="p-3 hover:bg-blue-50 flex items-center justify-between gap-3 text-left transition-colors group">
                 <div class="min-w-0">
                   <div class="font-bold text-xs sm:text-sm text-slate-900 group-hover:text-blue-600 truncate">${escapeHtml(item.title)}</div>
                   <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">${item.category}</span>
@@ -7354,7 +7364,7 @@
               <span>${actionLabel}</span>
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
             </button>`
-          : `<a href="${matchedDirect.url}" target="_blank" rel="noopener noreferrer"
+          : `<a href="${matchedDirect.url}" target="_blank" ${getLinkRel(matchedDirect.url)}
                class="px-4 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white font-extrabold text-xs rounded-xl shadow-lg transition-all text-center shrink-0 flex items-center justify-center gap-1.5 cursor-pointer">
               <span>${actionLabel}</span>
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
@@ -7523,7 +7533,7 @@
             `;
           } else {
             html += `
-              <a href="${escapeHtml(targetUrl)}" target="_blank" rel="noopener noreferrer" 
+              <a href="${escapeHtml(targetUrl)}" target="_blank" ${getLinkRel(targetUrl)} 
                  class="group p-3 rounded-xl bg-slate-800/80 hover:bg-blue-900/40 border border-slate-700/80 hover:border-blue-500/60 transition-all duration-150 flex items-center justify-between gap-3 shadow-xs">
                 <div class="min-w-0 flex items-center gap-2.5">
                   <span class="w-7 h-7 rounded-lg ${isPdf ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30' : 'bg-blue-500/20 text-blue-300 border border-blue-500/30'} flex items-center justify-center shrink-0">
@@ -7719,10 +7729,7 @@
       }
     }
 
-    function createSlideElement(item) {
-      const slide = document.createElement('div');
-      slide.className = 'announcement-slide';
-
+    function createMarqueeItemHtml(item) {
       const sev = (item.severity || item.badgeType || 'warning').toLowerCase();
       let sevStyle = {
         cls: 'bg-white text-amber-950 shadow-xs',
@@ -7752,11 +7759,12 @@
       let messageHtml = escapeHtml(item.message || '');
       if (item.linkText && item.linkUrl) {
         const escapedLinkText = escapeHtml(item.linkText);
+        const isAnchor = item.linkUrl.startsWith('#');
         const isExternal = item.linkUrl.startsWith('http') || item.linkUrl.endsWith('.html') || item.linkUrl.endsWith('.pdf');
         const linkAttrs = isExternal 
-          ? `href="${escapeHtml(item.linkUrl)}" target="_blank" rel="noopener noreferrer"` 
+          ? `href="${escapeHtml(item.linkUrl)}" target="_blank" ${getLinkRel(item.linkUrl)}` 
           : `href="${escapeHtml(item.linkUrl)}"`;
-        const linkTag = `<a ${linkAttrs} class="underline font-bold hover:text-white transition-opacity hover:opacity-90">${escapedLinkText}</a>`;
+        const linkTag = `<a ${linkAttrs} class="underline font-bold text-amber-200 hover:text-white transition-colors cursor-pointer">${escapedLinkText}</a>`;
         
         if (messageHtml.includes(escapedLinkText)) {
           messageHtml = messageHtml.replace(escapedLinkText, linkTag);
@@ -7768,18 +7776,17 @@
       const badgeText = escapeHtml(item.badge || sevStyle.label);
       const rawMessage = (item.message || '').replace(/"/g, '&quot;');
 
-      slide.innerHTML = `
-        <div class="w-full flex items-center gap-1.5 sm:gap-2.5 overflow-hidden text-[11px] sm:text-xs min-w-0">
+      return `
+        <div class="marquee-item text-[11px] sm:text-xs">
           <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded ${sevStyle.cls} text-[9px] sm:text-[9.5px] font-black uppercase tracking-wider shrink-0 select-none">
             <span class="text-[9.5px] leading-none">${sevStyle.icon}</span>
             <span>${badgeText}</span>
           </span>
-          <span class="text-white font-medium truncate min-w-0" title="${rawMessage}">
+          <span class="text-white font-medium" title="${rawMessage}">
             ${messageHtml}
           </span>
         </div>
       `;
-      return slide;
     }
 
     function renderAnnouncements(items) {
@@ -7797,14 +7804,14 @@
       const counter = document.getElementById('announcement-counter');
       if (!viewport || !bar) return;
 
+      if (prevBtn) prevBtn.style.display = 'none';
+      if (nextBtn) nextBtn.style.display = 'none';
+
       // When all announcements are removed or empty
       if (announcementsList.length === 0) {
-        stopAnnouncementTimer();
         viewport.innerHTML = '';
         applyAnnouncementState(false, false);
         if (reopenBtn) reopenBtn.style.display = 'none';
-        if (prevBtn) prevBtn.style.display = 'none';
-        if (nextBtn) nextBtn.style.display = 'none';
         if (pauseBtn) pauseBtn.style.display = 'none';
         if (counter) counter.style.display = 'none';
         return;
@@ -7812,151 +7819,71 @@
 
       // Show alert icon in top navbar when announcements exist
       if (reopenBtn) reopenBtn.style.display = '';
-
-      // Clamp index within bounds of current list
-      if (currentAnnouncementIndex < 0 || currentAnnouncementIndex >= announcementsList.length) {
-        currentAnnouncementIndex = 0;
+      if (pauseBtn) pauseBtn.style.display = '';
+      if (counter) {
+        counter.style.display = '';
+        counter.textContent = announcementsList.length === 1 ? 'LIVE TICKER' : `${announcementsList.length} ALERTS`;
       }
 
-      const hasMultiple = announcementsList.length > 1;
-      if (hasMultiple) {
-        if (prevBtn) prevBtn.style.display = '';
-        if (nextBtn) nextBtn.style.display = '';
-        if (pauseBtn) pauseBtn.style.display = '';
-        if (counter) counter.style.display = '';
-      } else {
-        if (prevBtn) prevBtn.style.display = 'none';
-        if (nextBtn) nextBtn.style.display = 'none';
-        if (pauseBtn) pauseBtn.style.display = 'none';
-        if (counter) counter.style.display = 'none';
+      // Build seamless continuous marquee track scrolling right to left
+      const singleGroupItems = announcementsList.map(item => createMarqueeItemHtml(item)).join('<span class="marquee-separator">✦</span>');
+      const repeatCount = announcementsList.length === 1 ? 4 : (announcementsList.length === 2 ? 2 : 1);
+      let groupHtml = '';
+      for (let i = 0; i < repeatCount; i++) {
+        groupHtml += singleGroupItems + '<span class="marquee-separator">✦</span>';
       }
 
-      // Cleanly render the active announcement
-      viewport.innerHTML = '';
-      const initialSlide = createSlideElement(announcementsList[currentAnnouncementIndex]);
-      initialSlide.classList.add('slide-active');
-      viewport.appendChild(initialSlide);
-      updateAnnouncementCounter();
+      viewport.innerHTML = `
+        <div class="marquee-track ${isAnnouncementPaused ? 'is-paused' : ''}" id="announcement-marquee-track">
+          <div class="marquee-group">${groupHtml}</div>
+          <div class="marquee-group" aria-hidden="true">${groupHtml}</div>
+        </div>
+      `;
 
-      stopAnnouncementTimer();
-      if (hasMultiple && !isAnnouncementPaused) {
-        startAnnouncementTimer();
-      }
-    }
-
-    function goToAnnouncement(targetIndex, direction = 'next') {
-      if (isAnnouncementTransitioning || announcementsList.length <= 1) return;
-      const viewport = document.getElementById('announcement-viewport');
-      if (!viewport) return;
-
-      const currentSlide = viewport.querySelector('.announcement-slide.slide-active');
-      if (!currentSlide) {
-        currentAnnouncementIndex = targetIndex;
-        renderAnnouncements(announcementsList);
-        return;
-      }
-
-      isAnnouncementTransitioning = true;
-      currentAnnouncementIndex = targetIndex;
-
-      const nextSlide = createSlideElement(announcementsList[currentAnnouncementIndex]);
-
-      if (direction === 'next') {
-        nextSlide.classList.add('slide-enter-right');
-        viewport.appendChild(nextSlide);
-        void nextSlide.offsetWidth; // trigger reflow
-
-        currentSlide.classList.remove('slide-active');
-        currentSlide.classList.add('slide-exit-left');
-
-        nextSlide.classList.remove('slide-enter-right');
-        nextSlide.classList.add('slide-active');
-      } else {
-        nextSlide.classList.add('slide-enter-left');
-        viewport.appendChild(nextSlide);
-        void nextSlide.offsetWidth; // trigger reflow
-
-        currentSlide.classList.remove('slide-active');
-        currentSlide.classList.add('slide-exit-right');
-
-        nextSlide.classList.remove('slide-enter-left');
-        nextSlide.classList.add('slide-active');
-      }
-
-      updateAnnouncementCounter();
-
-      setTimeout(() => {
-        if (currentSlide && currentSlide.parentNode === viewport) {
-          currentSlide.remove();
+      // Set comfortable, uniform reading speed (~55px/sec)
+      requestAnimationFrame(() => {
+        const track = document.getElementById('announcement-marquee-track');
+        if (track) {
+          const firstGroup = track.querySelector('.marquee-group');
+          if (firstGroup) {
+            const width = firstGroup.offsetWidth;
+            const duration = Math.max(20, Math.round(width / 55));
+            track.style.animationDuration = `${duration}s`;
+          }
         }
-        isAnnouncementTransitioning = false;
-      }, 480);
+      });
     }
 
-    function nextAnnouncement(isManual = false) {
-      if (announcementsList.length <= 1) return;
-      const nextIdx = (currentAnnouncementIndex + 1) % announcementsList.length;
-      goToAnnouncement(nextIdx, 'next');
-      if (isManual && !isAnnouncementPaused) {
-        resetAnnouncementTimer();
-      }
-    }
-
-    function prevAnnouncement() {
-      if (announcementsList.length <= 1) return;
-      const prevIdx = (currentAnnouncementIndex - 1 + announcementsList.length) % announcementsList.length;
-      goToAnnouncement(prevIdx, 'prev');
-      if (!isAnnouncementPaused) {
-        resetAnnouncementTimer();
-      }
-    }
-
-    function updateAnnouncementCounter() {
-      const counter = document.getElementById('announcement-counter');
-      if (!counter || announcementsList.length <= 1) return;
-      counter.textContent = `${currentAnnouncementIndex + 1} / ${announcementsList.length}`;
-    }
-
-    function startAnnouncementTimer() {
-      stopAnnouncementTimer();
-      if (announcementsList.length > 1 && !isAnnouncementPaused) {
-        announcementTimer = setInterval(() => {
-          nextAnnouncement(false);
-        }, ANNOUNCEMENT_INTERVAL_MS);
-      }
-    }
-
-    function stopAnnouncementTimer() {
-      if (announcementTimer) {
-        clearInterval(announcementTimer);
-        announcementTimer = null;
-      }
-    }
-
-    function resetAnnouncementTimer() {
-      stopAnnouncementTimer();
-      startAnnouncementTimer();
-    }
+    function goToAnnouncement() {}
+    function nextAnnouncement() {}
+    function prevAnnouncement() {}
+    function updateAnnouncementCounter() {}
+    function startAnnouncementTimer() {}
+    function stopAnnouncementTimer() {}
+    function resetAnnouncementTimer() {}
 
     function toggleAnnouncementPlayback() {
       const icon = document.getElementById('announcement-pause-icon');
       const btn = document.getElementById('announcement-pause-btn');
+      const track = document.getElementById('announcement-marquee-track');
 
       isAnnouncementPaused = !isAnnouncementPaused;
+      if (track) {
+        track.classList.toggle('is-paused', isAnnouncementPaused);
+      }
+
       if (isAnnouncementPaused) {
-        stopAnnouncementTimer();
         if (icon) {
           icon.innerHTML = '<path d="M8 5v14l11-7z"/>';
         }
-        if (btn) btn.setAttribute('title', 'Resume announcements');
-        showToast('Announcement auto-scroll paused');
+        if (btn) btn.setAttribute('title', 'Resume marquee');
+        showToast('Announcement marquee paused');
       } else {
-        startAnnouncementTimer();
         if (icon) {
           icon.innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
         }
-        if (btn) btn.setAttribute('title', 'Pause announcements');
-        showToast('Announcement auto-scroll resumed');
+        if (btn) btn.setAttribute('title', 'Pause marquee');
+        showToast('Announcement marquee resumed');
       }
     }
 
@@ -7965,16 +7892,19 @@
       applyAnnouncementState(!isDismissed, false);
       loadAnnouncements();
 
-      const bar = document.getElementById('hospital-announcement-bar');
-      if (bar) {
-        bar.addEventListener('mouseenter', () => {
-          if (!isAnnouncementPaused) stopAnnouncementTimer();
-        });
-        bar.addEventListener('mouseleave', () => {
-          if (!isAnnouncementPaused) startAnnouncementTimer();
-        });
-        bar.addEventListener('touchstart', () => {
-          if (!isAnnouncementPaused) stopAnnouncementTimer();
+      const viewport = document.getElementById('announcement-viewport');
+      if (viewport) {
+        viewport.addEventListener('touchstart', () => {
+          const track = document.getElementById('announcement-marquee-track');
+          if (track && !isAnnouncementPaused) {
+            track.classList.add('is-paused');
+          }
+        }, { passive: true });
+        viewport.addEventListener('touchend', () => {
+          const track = document.getElementById('announcement-marquee-track');
+          if (track && !isAnnouncementPaused) {
+            track.classList.remove('is-paused');
+          }
         }, { passive: true });
       }
 

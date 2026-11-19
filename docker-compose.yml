@@ -7,11 +7,8 @@ services:
     restart: unless-stopped
     ports:
       - "1111:1111"
-      - "2222:2222"
-      - "3000:3000"
     environment:
       - PORT=1111
-      - PORTS=1111,2222,3000
       - PYTHONUNBUFFERED=1
     volumes:
       # Optional: bind mount PDF cache and data so updates persist without rebuilding

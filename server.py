@@ -83,9 +83,9 @@ def get_configured_ports() -> List[int]:
                 ports.append(p_int)
         except ValueError:
             pass
-    # 4. Default port series: [1111, 2222, 3000]
+    # 4. Default port: 1111
     if not ports:
-        ports = [1111, 2222, 3000]
+        ports = [1111]
     return ports
 
 CONFIGURED_PORTS = get_configured_ports()
@@ -5844,6 +5844,21 @@ class APHPortalRequestHandler(SimpleHTTPRequestHandler):
             self.send_error(403, "Access to sensitive file or configuration is strictly prohibited.")
             return
         if self.path.startswith('/files/'):
+            # When accessed on a non-3000 port (e.g. 1111), redirect to the primary files host on port 3000
+            req_port = self.server.server_port if hasattr(self.server, 'server_port') else PORT
+            host_hdr = self.headers.get('Host', '')
+            if ':' in host_hdr:
+                try:
+                    req_port = int(host_hdr.split(':')[-1])
+                except ValueError:
+                    pass
+            if req_port != 3000:
+                target_url = f"http://192.168.101.75:3000{self.path}"
+                self.send_response(302)
+                self.send_header('Location', target_url)
+                self.end_headers()
+                return
+
             req_level = get_file_required_access_level(self.path)
             if req_level != ACCESS_PUBLIC:
                 role, _ = extract_verified_role(self.headers, {})
@@ -5897,6 +5912,21 @@ class APHPortalRequestHandler(SimpleHTTPRequestHandler):
             return
 
         if self.path.startswith('/files/'):
+            # When accessed on a non-3000 port (e.g. 1111), redirect to the primary files host on port 3000
+            req_port = self.server.server_port if hasattr(self.server, 'server_port') else PORT
+            host_hdr = self.headers.get('Host', '')
+            if ':' in host_hdr:
+                try:
+                    req_port = int(host_hdr.split(':')[-1])
+                except ValueError:
+                    pass
+            if req_port != 3000:
+                target_url = f"http://192.168.101.75:3000{self.path}"
+                self.send_response(302)
+                self.send_header('Location', target_url)
+                self.end_headers()
+                return
+
             req_level = get_file_required_access_level(self.path)
             if req_level != ACCESS_PUBLIC:
                 role, _ = extract_verified_role(self.headers, {})
@@ -5909,15 +5939,6 @@ class APHPortalRequestHandler(SimpleHTTPRequestHandler):
                     self.send_error(403, f"Access Denied: The requested document requires {req_level} staff authorization.")
                     return
 
-        # Dynamically adapt port for HTML/JSON requests based on the client's request
-        req_port = self.server.server_port if hasattr(self.server, 'server_port') else PORT
-        host_hdr = self.headers.get('Host', '')
-        if ':' in host_hdr:
-            try:
-                req_port = int(host_hdr.split(':')[-1])
-            except ValueError:
-                pass
-
         clean_path = self.path.split('?')[0].rstrip('/')
         if clean_path.endswith('.html') or clean_path == '' or clean_path.endswith('.json'):
             candidate_path = self.translate_path(self.path)
@@ -5927,8 +5948,8 @@ class APHPortalRequestHandler(SimpleHTTPRequestHandler):
                 try:
                     with open(candidate_path, 'rb') as f:
                         raw = f.read().decode('utf-8', errors='replace')
-                    if req_port != 3000:
-                        raw = raw.replace(':3000', f':{req_port}')
+                    # All file document links must strictly use port 3000 so files open reliably
+                    raw = raw.replace(':1111/files/', ':3000/files/').replace(':2222/files/', ':3000/files/')
                     body = raw.encode('utf-8')
                     self.send_response(200)
                     ctype = self.guess_type(candidate_path)
@@ -6148,15 +6169,10 @@ class APHPortalRequestHandler(SimpleHTTPRequestHandler):
         self.send_error(404, "Endpoint not found")
 
     def send_json_response(self, status_code, data, extra_headers=None):
-        req_port = self.server.server_port if hasattr(self.server, 'server_port') else PORT
-        host_hdr = self.headers.get('Host', '') if hasattr(self, 'headers') and self.headers else ''
-        if ':' in host_hdr:
-            try:
-                req_port = int(host_hdr.split(':')[-1])
-            except ValueError:
-                pass
-        if req_port != 3000 and isinstance(data, (dict, list)):
-            data_str = json.dumps(data, ensure_ascii=False).replace(':3000', f':{req_port}')
+        if isinstance(data, (dict, list)):
+            data_str = json.dumps(data, ensure_ascii=False)
+            # All file document links must strictly use port 3000 so files open reliably
+            data_str = data_str.replace(':1111/files/', ':3000/files/').replace(':2222/files/', ':3000/files/')
             body = data_str.encode('utf-8')
         else:
             body = json.dumps(data, ensure_ascii=False).encode('utf-8')
