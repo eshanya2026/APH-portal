@@ -2395,6 +2395,10 @@ def resolve_exact_registered_resource(query, intent):
     Resolves explicit, unambiguous registered hospital resources.
     Returns matched resource dict or None.
     """
+    # Guard: If query has telephony/intercom intent, let directory resolution take first preference!
+    if intent == SearchIntent.FIND_DIRECTORY or is_telephony_query(query):
+        return None
+
     q_lower = query.lower().strip()
     q_norm = fuzzy_normalize_query(q_lower.replace("-", " "))
     tokens = clean_and_tokenize(q_norm)

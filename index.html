@@ -3053,7 +3053,9 @@
       { title: 'Quality & Accreditation Intercom Extensions: Quality Manager (2380), Quality Team (2381 / 2382)', category: 'Administrative Telephony', url: './intercom.html', external: true },
       { title: 'Medical Superintendent MS Office Intercom Extensions: MS (2880), Secretary (2881)', category: 'Administrative Telephony', url: './intercom.html', external: true },
       { title: 'Pharmacy & Drug Dispensing Intercom Extensions: Central (2656), OP (2635), IP (2135 / 2136), Casualty (2801)', category: 'Pharmacy Telephony', url: './intercom.html', external: true },
-      { title: 'Campus Security & Main Gate Intercom Extensions: Main Gate (2800), A Zone (2767), B Zone (2768), C Zone (2769)', category: 'Security Telephony', url: './intercom.html', external: true }
+      { title: 'Campus Security & Main Gate Intercom Extensions: Main Gate (2800), A Zone (2767), B Zone (2768), C Zone (2769)', category: 'Security Telephony', url: './intercom.html', external: true },
+      { title: 'MRD Department Intercom Extensions: MRO (2601), MRD 1 (2602), MRD 2 (2603), Record Room (2704)', category: 'Administrative Telephony', url: './intercom.html?dept=MRD', external: true },
+      { title: 'HR Department Intercom Extensions: Senior Manager (2882), Jr Executive (2883), Assistant (2884)', category: 'Administrative Telephony', url: './intercom.html?dept=HR', external: true }
     ];
 
     function closeAiSearchPanel() {
@@ -5747,6 +5749,12 @@
     function detectDirectDocumentAction(rawQuery) {
       if (!rawQuery) return null;
       const q = rawQuery.trim();
+
+      // Guard: If query has telephony or intercom intent, never trigger direct application/document auto-launch!
+      const isTelecom = /\b(intercom|inercom|intercoms|extension|extensions|ext|exts|call|calling|calls|phone|phones|telephone|telephones|tholaipesi|tholaipasi|inaippu|inaippugal|azhaippu|alaippu|koopidu|pesa|en|yenn|dial|dialing)\b/i.test(q) ||
+        /(தொலைபேசி|இணைப்பு|இணைப்புகள்|அழைப்பு|அழைப்புகள்|எண்|எண்கள்|போன்|கால்|கூப்பிடு|பேசு|தொடர்பு|இன்டர்காம்|எக்ஸ்டென்ஷன்)/.test(q);
+      if (isTelecom) return null;
+
       const normQ = fuzzyNormalizeQuery(q);
       for (const action of DIRECT_DOCUMENT_ACTIONS) {
         if (action.match(q) || (normQ && action.match(normQ))) return action;
@@ -7100,6 +7108,18 @@
         'unavu': { dept: 'Dietetics', exts: 'Dietician: 2018, Dietetics Incharge: 2197' },
 
         'radiology': { dept: 'Radiology', exts: 'Radiology Reception: 2700, MRI: 2690, CT: 2689, USG: 2691' },
+        'pacs': { dept: 'Radiology', exts: 'Radiology Reception: 2700, MRI: 2690, CT: 2689, USG: 2691' },
+        'medsynapse': { dept: 'Radiology', exts: 'Radiology Reception: 2700, MRI: 2690, CT: 2689, USG: 2691' },
+        'xray': { dept: 'Radiology', exts: 'Radiology Reception: 2700, MRI: 2690, CT: 2689, USG: 2691' },
+        'x-ray': { dept: 'Radiology', exts: 'Radiology Reception: 2700, MRI: 2690, CT: 2689, USG: 2691' },
+        'ct scan': { dept: 'Radiology', exts: 'Radiology Reception: 2700, MRI: 2690, CT: 2689, USG: 2691' },
+        'mri': { dept: 'Radiology', exts: 'Radiology Reception: 2700, MRI: 2690, CT: 2689, USG: 2691' },
+        'his': { dept: 'IT', exts: 'IT Hardware: 2226, IT Software: 2228, Manager: 2227, DGM: 2224' },
+        'hrms': { dept: 'HR', exts: 'HR Senior Manager: 2882, Jr Executive: 2883, Assistant: 2884' },
+        'pruworks': { dept: 'HR', exts: 'HR Senior Manager: 2882, Jr Executive: 2883, Assistant: 2884' },
+        'lineloom': { dept: 'Front Office', exts: 'Front Office: 2005, Reception: 2004, OPD Registration: 2006' },
+        'barcode': { dept: 'Pathology', exts: 'Pathology HOD: 2500, Central Lab: 2501' },
+        'mhc': { dept: 'Master Health Checkup', exts: 'MHC Reception: 2170, MHC Medical Officer: 2171' },
         'security': { dept: 'Security', exts: 'Main Gate: 2800, A Zone Security: 2767, B Zone: 2768, C Zone: 2769' },
         'biomedical': { dept: 'Biomedical', exts: 'Biomedical HOD: 2535, Biomedical Engg: 2536, 2537' },
         'quality': { dept: 'Quality', exts: 'Quality Manager: 2380, Quality Team: 2381, 2382' },
@@ -7292,6 +7312,25 @@
             badge: 'Full Directory'
           }
         ];
+
+        // Related applications shown underneath / after the intercom directory
+        const clientDeptApps = {
+          'Radiology': [{ title: 'M - PACS (Medsynapse Radiology Viewer)', url: 'http://192.168.101.224/User_Login.asp', category: 'Core Systems', badge: 'PACS System' }],
+          'IT': [
+            { title: 'IT Incident Reporting Application', url: 'https://inc.mapims.edu.in/login', category: 'In-House Apps', badge: 'Incident App' },
+            { title: 'HIS System (AOSTA Backbone Login)', url: 'http://192.168.103.37/BB15SE/Backbone/admin/login.aspx', category: 'Core Systems', badge: 'HIS System' }
+          ],
+          'HR': [{ title: 'PruWorks HRMS Portal', url: 'https://mapims-hrms.tecvinesolutions.com', category: 'Core Systems', badge: 'HRMS Portal' }],
+          'MRD': [{ title: 'MRD Medical Records Portal', url: 'http://www.mapimsmrd.com/mapimsmrd/', category: 'Core Systems', badge: 'MRD Portal' }],
+          'Pathology': [{ title: 'Pathology Barcode Generator App', url: 'http://192.168.103.158:8081', category: 'In-House Apps', badge: 'Barcode App' }],
+          'Biomedical': [{ title: 'Campus Ticketing & Maintenance Desk', url: 'http://www.mapimshis.com/mapims/', category: 'In-House Apps', badge: 'Maintenance Desk' }],
+          'Master Health Checkup': [{ title: 'MAPIMS AI Health Assessment (MHC)', url: 'https://mh.mapims.edu.in/', category: 'In-House Apps', badge: 'MHC App' }]
+        };
+
+        const matchedKey = Object.keys(clientDeptApps).find(k => matchedClientIntercom.dept.toLowerCase().includes(k.toLowerCase()));
+        if (matchedKey && clientDeptApps[matchedKey]) {
+          finalLinks.push(...clientDeptApps[matchedKey]);
+        }
       } else if (isTelecomQuery) {
         finalLinks = [
           {

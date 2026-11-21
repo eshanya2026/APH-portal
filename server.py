@@ -904,7 +904,59 @@ DEPARTMENT_INTERCOM_ALIASES = {
     'cssd': ('CSSD', 'CSSD', None),
     'art': ('ART', 'ART', None),
     'lift': ('Service Lift', 'Service Lift', None),
-    'elevator': ('Service Lift', 'Service Lift', None)
+    'elevator': ('Service Lift', 'Service Lift', None),
+
+    # Core System / Application Keywords mapped to respective departments for Telephony Lookups
+    'pacs': ('Radiology', 'Radiology', None),
+    'medsynapse': ('Radiology', 'Radiology', None),
+    'xray': ('Radiology', 'Radiology', None),
+    'x-ray': ('Radiology', 'Radiology', None),
+    'ct scan': ('Radiology', 'Radiology', None),
+    'mri': ('Radiology', 'Radiology', None),
+    'ultrasound': ('Radiology', 'Radiology', None),
+    'his': ('IT', 'Admin Office', ['it hardware support', 'it software support', 'it manager', 'dgm & it head']),
+    'aosta': ('IT', 'Admin Office', ['it hardware support', 'it software support', 'it manager', 'dgm & it head']),
+    'hrms': ('HR', 'Admin Office', ['hr senior manager', 'hr jr executive', 'hr assistant']),
+    'pruworks': ('HR', 'Admin Office', ['hr senior manager', 'hr jr executive', 'hr assistant']),
+    'lineloom': ('Front Office', 'Front Office', None),
+    'token': ('Front Office', 'Front Office', None),
+    'barcode': ('Pathology', 'Pathology', None),
+    'mhc': ('Master Health Checkup', 'Master Health Checkup', None),
+    'ticketing': ('Biomedical', 'Biomedical', None)
+}
+
+DEPARTMENT_APPLICATIONS = {
+    'Radiology': [
+        {'title': 'M - PACS (Medsynapse Radiology Viewer)', 'url': 'http://192.168.101.224/User_Login.asp', 'category': 'Core Systems', 'badge': 'PACS System'}
+    ],
+    'IT': [
+        {'title': 'IT Incident Reporting Application', 'url': 'https://inc.mapims.edu.in/login', 'category': 'In-House Apps', 'badge': 'Incident App'},
+        {'title': 'HIS System (AOSTA Backbone Login)', 'url': 'http://192.168.103.37/BB15SE/Backbone/admin/login.aspx', 'category': 'Core Systems', 'badge': 'HIS System'}
+    ],
+    'HR': [
+        {'title': 'PruWorks HRMS Portal', 'url': 'https://mapims-hrms.tecvinesolutions.com', 'category': 'Core Systems', 'badge': 'HRMS Portal'}
+    ],
+    'MRD': [
+        {'title': 'MRD Medical Records Portal', 'url': 'http://www.mapimsmrd.com/mapimsmrd/', 'category': 'Core Systems', 'badge': 'MRD Portal'}
+    ],
+    'Pathology': [
+        {'title': 'Pathology Barcode Generator App', 'url': 'http://192.168.103.158:8081', 'category': 'In-House Apps', 'badge': 'Barcode App'}
+    ],
+    'Biomedical': [
+        {'title': 'Campus Ticketing & Maintenance Desk', 'url': 'http://www.mapimshis.com/mapims/', 'category': 'In-House Apps', 'badge': 'Maintenance Desk'}
+    ],
+    'Maintenance': [
+        {'title': 'Campus Ticketing & Maintenance Desk', 'url': 'http://www.mapimshis.com/mapims/', 'category': 'In-House Apps', 'badge': 'Maintenance Desk'}
+    ],
+    'Master Health Checkup': [
+        {'title': 'MAPIMS AI Health Assessment (MHC)', 'url': 'https://mh.mapims.edu.in/', 'category': 'In-House Apps', 'badge': 'MHC App'}
+    ],
+    'Front Office': [
+        {'title': 'LineLoom OPD Token Display System', 'url': 'http://192.168.103.158:8086', 'category': 'In-House Apps', 'badge': 'Token System'}
+    ],
+    'OPD': [
+        {'title': 'LineLoom OPD Token Display System', 'url': 'http://192.168.103.158:8086', 'category': 'In-House Apps', 'badge': 'Token System'}
+    ]
 }
 
 def find_intercom_department(query):
@@ -2200,6 +2252,14 @@ PORTAL_APP_URLS = {
 def tag_app_auto_open(resp: Dict[str, Any], registered: Optional[Dict[str, Any]] = None, intent: Any = None) -> Dict[str, Any]:
     if not isinstance(resp, dict):
         return resp
+    # Never auto-open if intent is directory/telephony lookup or auto-open is explicitly disabled
+    if intent == SearchIntent.FIND_DIRECTORY or (resp.get("auto_open_url") is None and "auto_open_url" in resp):
+        resp["auto_open"] = False
+        resp["auto_open_url"] = None
+        resp["auto_open_title"] = None
+        resp["is_app"] = False
+        return resp
+
     # Do NOT tag on-page section anchors or hub pages as external apps to open in a new tab
     if registered and (registered.get("intent_type") == SearchIntent.NAVIGATE_SECTION or registered.get("id") in ["SECTION_CONSENT_VAULT", "SECTION_COMMON_FORMS", "SECTION_HR_FORMS", "SECTION_IT_FORMS", "DIR_FORMS_HUB", "SECTION_TARIFF_STOCK", "SECTION_QUICK_SHORTCUTS"]):
         resp["is_section"] = True
@@ -4330,15 +4390,31 @@ def execute_search_pipeline(query: str, verified_role: str = ACCESS_PUBLIC) -> D
     if year_circ_res:
         return year_circ_res
 
-    # 0c. Canonical Resource Registry & Explicit Intent Resolution
+    # 0c. Telephony & Department Intercom priority check
     intent = classify_search_intent(query)
+    q_lower = query.lower()
+    is_telecom = (
+        intent == SearchIntent.FIND_DIRECTORY or
+        is_telephony_query(query) or
+        any(k in q_lower for k in ['intercom', 'inercom', 'extension', 'ext', 'number', 'phone', 'call', 'contact', 'tholaipesi', 'inaippu'])
+    )
+    matched_dept = find_intercom_department(query)
+
+    # If the user is querying about telephony or intercom, Intercom Directory MUST be first preference
+    if is_telecom and (matched_dept or is_telephony_query(query)):
+        telecom_res = generate_catalog_fallback_result(query)
+        telecom_res["auto_open_url"] = None
+        telecom_res["auto_open_title"] = None
+        telecom_res["is_app"] = False
+        return telecom_res
+
+    # 0d. Canonical Resource Registry & Explicit Intent Resolution
     registered = resolve_exact_registered_resource(query, intent)
 
     if registered and not should_route_to_knowledge_retrieval(query, intent, registered):
         return tag_app_auto_open(build_canonical_response_for_resource(query, registered, intent), registered, intent)
 
     # 1. Telephony and Department Intercom Directory Lookups resolve deterministically
-    matched_dept = find_intercom_department(query)
     if (matched_dept or is_telephony_query(query)) and not should_route_to_knowledge_retrieval(query, intent, registered):
         return tag_app_auto_open(generate_catalog_fallback_result(query), registered, intent)
 
@@ -4858,18 +4934,36 @@ def generate_catalog_fallback_result(query, candidates=None):
         ext_strs = [f"**{e['desc']}: {e['ext']}**" for e in matched_dept['extensions'][:6]]
         floor_info = f" ({matched_dept['floor']})" if matched_dept.get('floor') else ""
 
+        # Related application lookup for this department (to show after directory)
+        related_apps = DEPARTMENT_APPLICATIONS.get(dept_label, [])
+        if not related_apps:
+            base_dept = matched_dept.get('dept', '')
+            related_apps = DEPARTMENT_APPLICATIONS.get(base_dept, [])
+
+        app_info_en = ""
+        app_info_ta = ""
+        if related_apps:
+            app_titles = " / ".join([a['title'] for a in related_apps])
+            app_info_en = f" Related department application: **{app_titles}**."
+            app_info_ta = f" தொடர்புடைய மென்பொருள் / பயன்பாடு: **{app_titles}**."
+
         if is_tamil:
-            answer = f"**{dept_label}** துறையின் அதிகாரப்பூர்வ தொலைபேசி / இன்டர்காம் இணைப்பு எண்கள்: {', '.join(ext_strs)}. முழுமையான துறை தொடர்பு பட்டியலை கீழே உள்ள இணைப்பில் பார்க்கலாம்."
+            answer = f"**{dept_label}** துறையின் அதிகாரப்பூர்வ தொலைபேசி / இன்டர்காம் இணைப்பு எண்கள்: {', '.join(ext_strs)}.{app_info_ta} முழுமையான தொடர்பு பட்டியலை கீழே உள்ள இணைப்பில் பார்க்கலாம்."
             suggestions = [f"{dept_label} Ext: {matched_dept['extensions'][0]['ext']}", f"{dept_label} Intercom Directory", "அவசர பிரிவு: 2001 / 2800"]
         else:
-            answer = f"The intercom extension numbers for **{dept_label}**{floor_info} are: {', '.join(ext_strs)}. You can access the department directory below."
+            answer = f"The intercom extension numbers for **{dept_label}**{floor_info} are: {', '.join(ext_strs)}.{app_info_en} You can access the department directory below."
             suggestions = [f"{dept_label} Ext: {matched_dept['extensions'][0]['ext']}", f"{dept_label} Intercom Directory", "Campus Directory"]
 
         links = [
             {"title": f"{dept_label} Department Intercom Directory", "url": dept_url, "category": "Staff Directory", "badge": f"{dept_label} Directory"},
             {"title": "Official Campus Intercom Directory (Full Hospital)", "url": "http://192.168.101.75/assets/sub%20files/intercom.html", "category": "Staff Directory", "badge": "Full Directory"}
         ]
-        return {"answer": answer, "links": links, "suggestions": suggestions}
+        # Append related applications AFTER the intercom directory
+        for a in related_apps:
+            links.append(a)
+            suggestions.insert(1, a['title'])
+
+        return {"answer": answer, "links": links, "suggestions": suggestions[:4], "auto_open_url": None, "is_app": False}
 
     if is_telecom_query and not matched_dept:
         if is_tamil:
@@ -6016,6 +6110,10 @@ class APHPortalRequestHandler(SimpleHTTPRequestHandler):
         super().do_GET()
 
     def translate_path(self, path):
+        clean = path.split('?')[0].rstrip('/')
+        if clean in ['/admin', '/admin/']:
+            return os.path.join(BASE_DIR, 'admin.html')
+
         orig_path = super().translate_path(path)
         try:
             common = os.path.commonpath([os.path.abspath(orig_path), os.path.abspath(BASE_DIR)])
